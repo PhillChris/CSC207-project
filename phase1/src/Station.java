@@ -1,3 +1,3 @@
 public interface Station {
-  void charge();
+  void charge(Trip chargedTrip);
 }

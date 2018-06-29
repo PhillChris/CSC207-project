@@ -17,7 +17,7 @@ public class Trip {
 
     }
 
-    void addFare(float value){
+    void addFee(float value){
 
     }
 

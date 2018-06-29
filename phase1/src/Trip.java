@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.List;
 
 /** Represents an object of Trip */
 public class Trip {
@@ -48,13 +49,14 @@ public class Trip {
    * @return true if continuous trip, false otherwise
    */
   boolean isContinuousTrip(Station newStation, Date time) {
-    if (TransitSystem.routes.get(startStation.getRoute()).contains(newStation)
-        && timeStarted.getDate() == time.getDate()
-        && (time.getHours() - timeStarted.getHours() < MAXTRIPLENGTH)) {
-      return true;
-    } else {
-      return false;
-    }
+    //    if (TransitSystem.routes.get(startStation.getRoute()).contains(newStation)
+    //        && timeStarted.getDate() == time.getDate()
+    //        && (time.getHours() - timeStarted.getHours() < MAXTRIPLENGTH)) {
+
+    // list containing all valid routes associated with this trips startStation
+    List<Station> route = TransitSystem.routes.get(startStation.getRoute());
+
+    return route.contains(newStation) && (timeStarted.getTime() - time.getTime() < MAXTRIPLENGTH);
   }
 
   /** @return The StartStation for this Trip */

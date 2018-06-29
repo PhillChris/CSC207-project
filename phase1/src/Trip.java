@@ -22,15 +22,16 @@ public class Trip {
     tripFee = station.getInitialFee();
   }
 
-    /**
-     * End this Trip
-     * @param station the station where this Trip ends
-     * @param endTime the station where this Trip continuous
-     */
+  /**
+   * End this Trip
+   *
+   * @param station the station where this Trip ends
+   * @param endTime the station where this Trip continuous
+   */
   void endTrip(Station station, Date endTime) {
-      endStation = station;
-      timeEnded = endTime;
-      tripFee += station.getFinalFee(startStation);
+    endStation = station;
+    timeEnded = endTime;
+    tripFee += station.getFinalFee(startStation);
   }
 
   double getFee() {
@@ -56,9 +57,7 @@ public class Trip {
     }
   }
 
-    /**
-     * @return The StartStation for this Trip
-     */
+  /** @return The StartStation for this Trip */
   Station getStartStation() {
     return startStation;
   }

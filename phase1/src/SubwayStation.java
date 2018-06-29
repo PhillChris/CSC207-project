@@ -13,7 +13,7 @@ public class SubwayStation implements Station {
    * @param name the name of this SubwayStation
    * @param route the name of the route to which this BusStation belongs
    */
-  public SubwayStation(String name, ArrayList<Station> route) {
+  public SubwayStation(String name, String route) {
     this.name = name;
     this.route = route;
     associatedBus = null;
@@ -34,7 +34,7 @@ public class SubwayStation implements Station {
    *
    * @return the fixed cost of taking the subway (not the per-station cost)
    */
-  public double getInitalFee() {
+  public double getInitialFee() {
     return this.initialFee;
   }
 

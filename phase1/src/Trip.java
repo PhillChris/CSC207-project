@@ -30,9 +30,8 @@ public class Trip {
   void endTrip(Station station, Date endTime) {
       endStation = station;
       timeEnded = endTime;
+      tripFee += station.getFinalFee(startStation);
   }
-
-  void addFee(double value) {}
 
   double getFee() {
     if (tripFee < MAXFEE) {

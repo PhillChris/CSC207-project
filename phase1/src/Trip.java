@@ -48,7 +48,7 @@ public class Trip {
    * @return true if continuous trip, false otherwise
    */
   boolean isContinuousTrip(Station newStation, Date time) {
-    if (TransitSystem.routes[startStation.route].contains(newStation)
+    if (TransitSystem.routes.get(startStation.getRoute()).contains(newStation)
         && timeStarted.getDate() == time.getDate()
         && (time.getHours() - timeStarted.getHours() < MAXTRIPLENGTH)) {
       return true;

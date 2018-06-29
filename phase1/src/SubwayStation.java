@@ -2,8 +2,9 @@ import java.util.ArrayList;
 
 public class SubwayStation implements Station {
   private String name;
-  private ArrayList<Station> route;
-  private float perStationFee = 0.5f;
+  private String route;
+  private double initialFee = 0.0;
+  private double perStationFee = 0.5;
   private BusStation associatedBus;
 
   /**
@@ -29,14 +30,23 @@ public class SubwayStation implements Station {
   }
 
   /**
-   * Adds the appropriate fare to a card for riding the subway. Called at the end of a subway ride.
+   * Called at the beginning of a subway ride.
    *
-   * @param chargedTrip the trip to add fare to for the given subway ride
+   * @return the fixed cost of taking the subway (not the per-station cost)
    */
-  public void charge(Trip chargedTrip) {
-    chargedTrip.addFee(
-        this.perStationFee
-            * Math.abs(
-                this.route.indexOf(this) - this.route.indexOf(chargedTrip.getStartStation())));
+  public double getInitalFee() {
+    return this.initialFee;
+  }
+
+  /**
+   * Called at the end of a subway ride.
+   *
+   * @param initialStation the station at which this subway trip started
+   * @return the per-station fare of the subway ride (i.e. without including fixed cost)
+   */
+  public double getFinalFee(Station initialStation) {
+    ArrayList<Station> thisRoute = TransitSystem.getRoutes().get(this.route);
+    return this.perStationFee
+        * Math.abs(thisRoute.indexOf(this) - thisRoute.indexOf(initialStation));
   }
 }

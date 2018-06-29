@@ -1,3 +1,4 @@
 public interface Station {
-  void charge(Trip chargedTrip);
+  double getInitialFee();
+  double getFinalFee(Station initialStation);
 }

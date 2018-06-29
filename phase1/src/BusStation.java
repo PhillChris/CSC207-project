@@ -1,9 +1,7 @@
-import java.util.ArrayList;
-
 public class BusStation implements Station {
   private String name;
-  private ArrayList<Station> route;
-  private float initialFee = 2.0f;
+  private String route;
+  private double initialFee = 2.0;
   private SubwayStation associatedSubway;
 
   /**
@@ -29,11 +27,20 @@ public class BusStation implements Station {
   }
 
   /**
-   * Adds the appropriate fare to a card for riding the bus. Called at the beginning of a bus trip.
+   * Called at the beginning of a bus ride
    *
-   * @param chargedTrip the trip to add fare to for the given bus ride
+   * @return the constant fare for this bus ride
    */
-  public void charge(Trip chargedTrip) {
-    chargedTrip.addFare(this.initialFee);
+  public double getInitialFee() {
+    return this.initialFee;
+  }
+
+  /**
+   * Called at the end of a bus ride
+   *
+   * @return the per-station fare for this bus ride
+   */
+  public double getFinalFee(Station initialStation) {
+    return 0;
   }
 }

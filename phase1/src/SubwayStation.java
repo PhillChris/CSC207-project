@@ -19,13 +19,28 @@ public class SubwayStation implements Station {
     associatedBus = null;
   }
 
+  /** @return the name of this subway station */
+  public String getName() {
+    return this.name;
+  }
+
+  /** @return the route of this subway station */
+  public String getRoute() {
+    return this.route;
+  }
+
+  /** @return the associated bus station to this subway station */
+  public Station getAssociatedStation() {
+    return this.associatedBus;
+  }
+
   /**
    * Associates a given BusStation with this SubwayStation (i.e. if they are the same station), for
    * the purpose of measuring single-trip continuity.
    *
-   * @param associatedBus the Subway Station which this
+   * @param associatedStation the station associated with this station
    */
-  public void associateBus(BusStation associatedBus) {
+  public void associate(Station associatedStation) {
     this.associatedBus = associatedBus;
   }
 

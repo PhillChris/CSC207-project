@@ -49,6 +49,9 @@ public class Trip {
     }
   }
 
+    /**
+     * @return The StartStation for this Trip
+     */
   Station getStartStation() {
     return startStation;
   }

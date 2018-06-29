@@ -22,7 +22,15 @@ public class Trip {
     tripFee = station.getInitialFee();
   }
 
-  void endTrip(Station endStation) {}
+    /**
+     * End this Trip
+     * @param station the station where this Trip ends
+     * @param endTime the station where this Trip continuous
+     */
+  void endTrip(Station station, Date endTime) {
+      endStation = station;
+      timeEnded = endTime;
+  }
 
   void addFee(double value) {}
 

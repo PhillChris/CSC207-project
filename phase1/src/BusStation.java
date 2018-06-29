@@ -2,7 +2,7 @@ public class BusStation implements Station {
   private String name;
   private String route;
   private double initialFee = 2.0;
-  private SubwayStation associatedSubway;
+  private Station associatedStation;
 
   /**
    * Constructs a new instance of BusStation.
@@ -13,7 +13,7 @@ public class BusStation implements Station {
   public BusStation(String name, String route) {
     this.name = name;
     this.route = route;
-    this.associatedSubway = null;
+    this.associatedStation = null;
   }
 
   /** @return the name of this bus station */
@@ -28,7 +28,7 @@ public class BusStation implements Station {
 
   /** @return the associated subway station to this bus station */
   public Station getAssociatedStation() {
-    return this.associatedSubway;
+    return this.associatedStation;
   }
 
   /**
@@ -38,7 +38,7 @@ public class BusStation implements Station {
    * @param associatedStation the station associated with this station
    */
   public void associate(Station associatedStation) {
-    this.associatedSubway = associatedSubway;
+    this.associatedStation = associatedStation;
   }
 
   /**

@@ -6,11 +6,17 @@ public class Trip {
     Date timeEnded;
     Station startStation;
     Station endStation;
-    float tripFee;
+    double tripFee;
 
-
-    public Trip(Date startTime, Station startStation){
-
+    /**
+     * Construct a new instance of Trip
+     * @param startTime Time which the trip is started
+     * @param station Station which the trip is started
+     */
+    public Trip(Date startTime, Station station){
+        timeStarted = startTime;
+        startStation = station;
+        tripFee = station.getInitialFee();
     }
 
     void endTrip(Station endStation){

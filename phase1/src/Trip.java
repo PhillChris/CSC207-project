@@ -3,6 +3,7 @@ import java.util.Date;
 /** Represents an object of Trip */
 public class Trip {
     static final double MAXFEE = 6.0;
+    static final double MAXTRIPLENGTH = 2.0;
     Date timeStarted;
     Date timeEnded;
     Station startStation;
@@ -38,8 +39,20 @@ public class Trip {
         }
     }
 
-    boolean isValidRoute (Station endStation) {
-        return true;
+    /**
+     * @param newStation new station
+     * @param time time for the start of the continuation
+     * @return true if continuous trip, false otherwise
+     */
+    boolean isContinuousTrip (Station newStation, Date time) {
+        if (TransitSystem.routes[startStation.route].contains(newStation) &&
+                timeStarted.getDate() == time.getDate() &&
+                (time.getHours() - timeStarted.getHours() < MAXTRIPLENGTH)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     Station getStartStation(){

@@ -2,6 +2,7 @@ import java.util.Date;
 
 /** Represents an object of Trip */
 public class Trip {
+    static final double MAXFEE = 6.0;
     Date timeStarted;
     Date timeEnded;
     Station startStation;
@@ -19,12 +20,22 @@ public class Trip {
         tripFee = station.getInitialFee();
     }
 
+
     void endTrip(Station endStation){
 
     }
 
-    void addFee(float value){
+    void addFee(double value){
 
+    }
+
+    double getFee(double){
+        if (tripFee < MAXFEE){
+            return tripFee;
+        }
+        else{
+            return MAXFEE;
+        }
     }
 
     boolean isValidRoute (Station endStation) {

@@ -29,7 +29,7 @@ public class Trip {
 
     }
 
-    double getFee(double){
+    double getFee(){
         if (tripFee < MAXFEE){
             return tripFee;
         }

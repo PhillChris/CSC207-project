@@ -8,9 +8,7 @@ public class Card {
    * A list containing a history of all trips this Card has created.
    */
   private List<Trip> allTrips;
-  /**
-   * The current trip this card is on. null when no active trip
-   */
+  /** The current trip this card is on. null when no active trip */
   private Trip currentTrip;
 
   private boolean isActive;
@@ -44,7 +42,13 @@ public class Card {
    * @return the average trip cost over all trips this Card has taken.
    */
   public double getAvgTripCost() {
-    return 0;
+    double total = 0;
+
+    for (Trip trip : allTrips) {
+      total += trip.getFee();
+    }
+    double avg = total / allTrips.size();
+    return avg;
   }
 
   public void tap(Station station, Date timeTapped) {}

@@ -56,7 +56,7 @@ public class Trip {
     // list containing all valid routes associated with this trips startStation
     List<Station> route = TransitSystem.getRoutes().get(startStation.getRoute());
 
-    return route.contains(newStation) && (timeStarted.getTime() - time.getTime() < MAXTRIPLENGTH);
+    return (endStation == newStation) && (timeStarted.getTime() - time.getTime() < MAXTRIPLENGTH);
   }
 
   /** @return The StartStation for this Trip */

@@ -94,4 +94,12 @@ public class Card {
   public void setActive(Boolean bool) {
     this.isActive = bool;
   }
+
+  /**
+   * Return up to the last three trips taken on this Card.
+   * @return a list containing up to the last three trips taken on this Card
+   */
+  public List<Trip> getLastThree() {
+    return allTrips.subList(Math.max(allTrips.size() - 3, 0), allTrips.size());
+  }
 }

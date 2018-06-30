@@ -59,6 +59,14 @@ public class Trip {
     return (endStation == newStation) && (timeStarted.getTime() - time.getTime() < MAXTRIPLENGTH);
   }
 
+  /**
+   * Set the endStation and timeEnded to none when the trip is being continued
+   */
+  void continueTrip(){
+    endStation = null;
+    timeEnded = null;
+  }
+
   /** @return The StartStation for this Trip */
   Station getStartStation() {
     return startStation;

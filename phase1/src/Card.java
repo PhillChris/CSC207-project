@@ -56,4 +56,12 @@ public class Card {
   public Trip getCurrentTrip() {
     return currentTrip;
   }
+
+  public List<Trip> getAllTrips() {
+    return allTrips;
+  }
+
+  public void setActive(Boolean bool) {
+    this.isActive = bool;
+  }
 }

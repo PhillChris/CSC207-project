@@ -1,7 +1,6 @@
 // TODO: Figure out how to do daily report stuff. Get clarification on "operating costs".
 
 import java.util.ArrayList;
-import java.util.List;
 
 /** Represents an AdminUser in a transit system. */
 public class AdminUser extends CardHolder {

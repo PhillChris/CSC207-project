@@ -4,7 +4,7 @@ import java.util.List;
 /** Represents an object of Trip */
 public class Trip {
   static final double MAXFEE = 6.0;
-  static final double MAXTRIPLENGTH = 2.0*60*60*1000;   // The maximum time in miliseconds
+  static final double MAXTRIPLENGTH = 2.0 * 60 * 60 * 1000; // The maximum time in miliseconds
   Date timeStarted;
   Date timeEnded;
   Station startStation;
@@ -56,7 +56,13 @@ public class Trip {
     // list containing all valid routes associated with this trips startStation
     List<Station> route = TransitSystem.getRoutes().get(startStation.getRoute());
 
-    return route.contains(newStation) && (timeStarted.getTime() - time.getTime() < MAXTRIPLENGTH);
+    return (endStation == newStation) && (timeStarted.getTime() - time.getTime() < MAXTRIPLENGTH);
+  }
+
+  /** Set the endStation and timeEnded to none when the trip is being continued */
+  void continueTrip() {
+    endStation = null;
+    timeEnded = null;
   }
 
   /** @return The StartStation for this Trip */

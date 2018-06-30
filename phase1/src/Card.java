@@ -71,7 +71,18 @@ public class Card {
     }
   }
 
-  private void tapIn(Station station, Date timeTapped) {}
+  /**
+   * Tap into the current station, creating a new Trip object with startStation station and
+   * timeStarted timeTapped. As of now this method is only called if there is no currentTrip on this
+   * Card.
+   *
+   * @param station    the station that this Card tapped in at.
+   * @param timeTapped the time at which this Card tapped in.
+   */
+  private void tapIn(Station station, Date timeTapped) {
+    Trip newTrip = new Trip(timeTapped, station);
+    this.currentTrip = newTrip;
+  }
 
   public Trip getCurrentTrip() {
     return currentTrip;

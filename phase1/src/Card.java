@@ -51,7 +51,25 @@ public class Card {
     return avg;
   }
 
-  public void tap(Station station, Date timeTapped) {}
+  public void tap(Station station, Date timeTapped) {
+    if (currentTrip == null) {
+      if (allTrips.size() > 0) { // check this to avoid index errors
+        Trip lastTrip = allTrips.get(-1);
+        Station associatedAtEndStation = lastTrip.endStation.getAssociatedStation();
+        // check that tapping into this station would be a continuous trip from last trip
+        if (associatedAtEndStation.equals(station)
+                && lastTrip.isContinuousTrip(station, timeTapped)) {
+//        if (lastTrip.isContinuousTrip(station, timeTapped)) {
+          currentTrip = lastTrip;
+          // restore the balance of last trip so the person does not get charged twice
+          this.balance += this.currentTrip.getFee();
+          currentTrip.tripFee += station.initialFee;
+        }
+      } else tapIn(station, timeTapped);
+    }
+  }
+
+  private void tapIn(Station station, Date timeTapped) {}
 
   public Trip getCurrentTrip() {
     return currentTrip;

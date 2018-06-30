@@ -4,7 +4,7 @@ import java.util.List;
 /** Represents an object of Trip */
 public class Trip {
   static final double MAXFEE = 6.0;
-  static final double MAXTRIPLENGTH = 2.0*60*60*1000;   // The maximum time in miliseconds
+  static final double MAXTRIPLENGTH = 2.0 * 60 * 60 * 1000; // The maximum time in miliseconds
   Date timeStarted;
   Date timeEnded;
   Station startStation;
@@ -59,10 +59,8 @@ public class Trip {
     return (endStation == newStation) && (timeStarted.getTime() - time.getTime() < MAXTRIPLENGTH);
   }
 
-  /**
-   * Set the endStation and timeEnded to none when the trip is being continued
-   */
-  void continueTrip(){
+  /** Set the endStation and timeEnded to none when the trip is being continued */
+  void continueTrip() {
     endStation = null;
     timeEnded = null;
   }

@@ -4,9 +4,7 @@ import java.util.List;
 public class Card {
   public static final int CARD_INITIAL_BALANCE = 19;
   private int balance;
-  /**
-   * A list containing a history of all trips this Card has created.
-   */
+  /** A list containing a history of all trips this Card has created. */
   private List<Trip> allTrips;
   /** The current trip this card is on. null when no active trip */
   private Trip currentTrip;
@@ -59,7 +57,7 @@ public class Card {
         Station associatedAtEndStation = lastTrip.endStation.getAssociatedStation();
         // check that tapping into this station would be a continuous trip from last trip
         if (associatedAtEndStation.equals(station)
-                && lastTrip.isContinuousTrip(station, timeTapped)) {
+            && lastTrip.isContinuousTrip(station, timeTapped)) {
           currentTrip = lastTrip;
           // restore the balance of last trip so the person does not get charged twice
           this.balance += this.currentTrip.getFee();

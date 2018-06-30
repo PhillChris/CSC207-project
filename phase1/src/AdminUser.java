@@ -1,5 +1,6 @@
 // TODO: Figure out how to do daily report stuff. Get clarification on "operating costs".
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** Represents an AdminUser in a transit system. */
@@ -21,7 +22,7 @@ public class AdminUser extends CardHolder {
    * @param name the name of the new route
    * @param route the list of stations in the new route
    */
-  public void addRoute(String name, List<Station> route) {
+  public void addRoute(String name, ArrayList<Station> route) {
     if (!TransitSystem.getRoutes().containsKey(name)) {
       TransitSystem.getRoutes().put(name, route);
     }

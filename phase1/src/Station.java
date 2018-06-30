@@ -34,7 +34,7 @@ public abstract class Station {
    * @return the per-station fare for this ride
    */
   public double getFinalFee(Station initialStation) {
-    ArrayList<Station> thisRoute = TransitSystem.getRoute(this.route);
+    ArrayList<Station> thisRoute = TransitSystem.getRoutes().get(this.route);
     return this.perStationFee
         * Math.abs(thisRoute.indexOf(this) - thisRoute.indexOf(initialStation));
   }

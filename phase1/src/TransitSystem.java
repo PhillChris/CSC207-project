@@ -14,7 +14,7 @@ public class TransitSystem {
     return 0;
   }
 
-  public static ArrayList<Station> getRoute(String route) {
-    return routes.get(route);
+  public static HashMap<String, ArrayList<Station>> getRoutes() {
+    return routes;
   }
 }

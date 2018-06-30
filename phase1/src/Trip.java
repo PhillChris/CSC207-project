@@ -54,7 +54,7 @@ public class Trip {
     //        && (time.getHours() - timeStarted.getHours() < MAXTRIPLENGTH)) {
 
     // list containing all valid routes associated with this trips startStation
-    List<Station> route = TransitSystem.getRoute(startStation.getRoute());
+    List<Station> route = TransitSystem.getRoutes().get(startStation.getRoute());
 
     return route.contains(newStation) && (timeStarted.getTime() - time.getTime() < MAXTRIPLENGTH);
   }

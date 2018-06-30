@@ -1,25 +1,19 @@
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.ArrayList;
+import java.util.List;
 
-/**
- * This wraps together all the contents of TransitSystem
- */
+/** This wraps together all the contents of TransitSystem */
 public class TransitSystem {
-    static HashMap<String, ArrayList<Station>> routes;
-    static ArrayList<Trip> allTrip;
-    static ArrayList<CardHolders> allUsers;
-    static int month;
-    static int day;
+  private static HashMap<String, List<Station>> routes;
+  private static List<Trip> allTrip;
+  private static List<CardHolder> allUsers;
+  private static int month;
+  private static int day;
 
+  public static double getTotalRevenues() {
+    return 0;
+  }
 
-    static double getTotalRevenues(){
-        return 0;
-    }
-
-    static HashMap<String, ArrayList<Station>> getRoutes(){
-        return routes;
-    }
-
-
+  public static HashMap<String, List<Station>> getRoutes() {
+    return routes;
+  }
 }

@@ -30,7 +30,7 @@ public class Card {
    *
    * @param toSubtract the amount of money to add to this Card's balance
    */
-  public void subtractBalance(int toSubtract) {
+  public void subtractBalance(double toSubtract) {
     this.balance -= toSubtract;
   }
 
@@ -67,7 +67,7 @@ public class Card {
         }
       }
       if (!foundContinuousTrip) tapIn(station, timeTapped);
-    }
+    } else tapOut(station, timeTapped);
   }
 
   /**
@@ -75,12 +75,19 @@ public class Card {
    * timeStarted timeTapped. As of now this method is only called if there is no currentTrip on this
    * Card.
    *
-   * @param station    the station that this Card tapped in at.
+   * @param station the station that this Card tapped in at.
    * @param timeTapped the time at which this Card tapped in.
    */
   private void tapIn(Station station, Date timeTapped) {
     Trip newTrip = new Trip(timeTapped, station);
     this.currentTrip = newTrip;
+  }
+
+  private void tapOut(Station station, Date timeTapped) {
+    currentTrip.endTrip(station, timeTapped);
+    this.subtractBalance(currentTrip.getFee());
+    allTrips.add(currentTrip);
+    currentTrip = null;
   }
 
   public Trip getCurrentTrip() {

@@ -32,7 +32,11 @@ public class Trip {
   void endTrip(Station station, Date endTime) {
     endStation = station;
     timeEnded = endTime;
-    tripFee += station.getFinalFee(startStation);
+    if (!isContinuousTrip(station, endTime)) {
+      tripFee = MAXFEE;
+    } else {
+      tripFee += station.getFinalFee(startStation);
+    }
   }
 
   double getFee() {

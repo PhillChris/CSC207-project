@@ -17,4 +17,8 @@ public class TransitSystem {
   public static HashMap<String, ArrayList<Station>> getRoutes() {
     return routes;
   }
+
+  public static void setRoutes(HashMap<String, ArrayList<Station>> newroutes) {
+    routes = newroutes;
+  }
 }

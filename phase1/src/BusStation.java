@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class BusStation extends Station {
   /**
    * Constructs a new instance of BusStation.
@@ -11,5 +13,12 @@ public class BusStation extends Station {
     this.initialFee = 2.0;
     this.perStationFee = 0.0;
     this.associatedStation = null;
+  }
+
+  public double getFinalFee(Station initialStation) {
+    ArrayList<Station> thisRoute = TransitSystem.getBusRoutes().get(this.route);
+    return this.perStationFee
+        * Math.abs(thisRoute.indexOf(this) - thisRoute.indexOf(initialStation));
+
   }
 }

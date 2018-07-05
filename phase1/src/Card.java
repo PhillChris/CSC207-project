@@ -1,4 +1,4 @@
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Card {
@@ -55,7 +55,7 @@ public class Card {
     return avg;
   }
 
-  public void tap(Station station, Date timeTapped) {
+  public void tap(Station station, LocalDate timeTapped) {
     if (currentTrip == null) {
       boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
       if (allTrips.size() > 0) { // check this to avoid index errors
@@ -84,12 +84,12 @@ public class Card {
    * @param station the station that this Card tapped in at.
    * @param timeTapped the time at which this Card tapped in.
    */
-  private void tapIn(Station station, Date timeTapped) {
+  private void tapIn(Station station, LocalDate timeTapped) {
     Trip newTrip = new Trip(timeTapped, station);
     this.currentTrip = newTrip;
   }
 
-  private void tapOut(Station station, Date timeTapped) {
+  private void tapOut(Station station, LocalDate timeTapped) {
     currentTrip.endTrip(station, timeTapped);
     this.subtractBalance(currentTrip.getFee());
     allTrips.add(currentTrip);

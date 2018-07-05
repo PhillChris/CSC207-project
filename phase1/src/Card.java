@@ -59,7 +59,7 @@ public class Card {
     if (currentTrip == null) {
       boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
       if (allTrips.size() > 0) { // check this to avoid index errors
-        Trip lastTrip = allTrips.get(-1);
+        Trip lastTrip = allTrips.get(allTrips.size() - 1);
         Station associatedAtEndStation = lastTrip.endStation.getAssociatedStation();
         // check that tapping into this station would be a continuous trip from last trip
         if (associatedAtEndStation.equals(station)

@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Card {
-  public static final int CARD_INITIAL_BALANCE = 19;
+  public static final int CARD_INITIAL_BALANCE = 1900;
   private int balance;
   /** A list containing a history of all trips this Card has created. */
   private List<Trip> allTrips;
@@ -17,7 +17,7 @@ public class Card {
     this.balance = CARD_INITIAL_BALANCE;
     this.isActive = true;
     this.id = cardCounter;
-    cardCounter++;
+    this.cardCounter++;
   }
 
   public int getId() { return this.id; }
@@ -36,7 +36,7 @@ public class Card {
    *
    * @param toSubtract the amount of money to add to this Card's balance
    */
-  public void subtractBalance(double toSubtract) {
+  public void subtractBalance(int toSubtract) {
     this.balance -= toSubtract;
   }
 

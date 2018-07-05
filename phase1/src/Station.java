@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public abstract class Station {
   protected String name;
   protected String route;
-  protected double initialFee;
-  protected double perStationFee;
+  protected int initialFee;
+  protected int perStationFee;
   protected Station associatedStation;
 
   /** @return the name of this station */
@@ -22,7 +22,7 @@ public abstract class Station {
    *
    * @return the constant fare for this type of station
    */
-  public double getInitialFee() {
+  public int getInitialFee() {
     return this.initialFee;
   }
 
@@ -33,7 +33,7 @@ public abstract class Station {
    *     transportation or vehicle lines).
    * @return the per-station fare for this ride
    */
-  public abstract double getFinalFee(Station initialStation);
+  public abstract int getFinalFee(Station initialStation);
 
   /**
    * @return the associated station to this station (i.e. the bus station in this subway station or

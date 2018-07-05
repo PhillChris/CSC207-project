@@ -4,13 +4,13 @@ import java.util.List;
 
 /** Represents an object of Trip */
 public class Trip {
-  static final double MAXFEE = 6.0;
+  static final int MAXFEE = 600;
   static final Duration MAXTRIPLENGTH = Duration.ofMinutes(120);
   LocalDate timeStarted;
   LocalDate timeEnded;
   Station startStation;
   Station endStation;
-  double tripFee;
+  int tripFee;
 
   /**
    * Construct a new instance of Trip
@@ -40,7 +40,7 @@ public class Trip {
     }
   }
 
-  double getFee() {
+  int getFee() {
     if (tripFee < MAXFEE) {
       return tripFee;
     } else {

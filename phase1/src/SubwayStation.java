@@ -10,12 +10,12 @@ public class SubwayStation extends Station {
   public SubwayStation(String name, String route) {
     this.name = name;
     this.route = route;
-    this.initialFee = 0.0;
-    this.perStationFee = 0.5;
+    this.initialFee = 0;
+    this.perStationFee = 50;
     this.associatedStation = null;
   }
 
-  public double getFinalFee(Station initialStation) {
+  public int getFinalFee(Station initialStation) {
     ArrayList<Station> thisRoute = TransitSystem.getSubwayRoutes().get(this.route);
     return this.perStationFee
         * Math.abs(thisRoute.indexOf(this) - thisRoute.indexOf(initialStation));

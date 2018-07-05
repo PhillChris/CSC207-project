@@ -33,5 +33,44 @@ public class TransitSystem {
     subwayRoutes = newroutes;
   }
 
+  public static void addBusRoute(String name, ArrayList<String> routes){
+    subwayRoutes.put(name, new ArrayList<Station>());
 
+  }
+  public static void addSubwayRoute(String name, ArrayList<String> routes){
+    subwayRoutes.put(name, new ArrayList<Station>());
+
+  }
+
+  public static void tap(ArrayList<String> cardInfo){
+
+  }
+
+  public static void addUser(ArrayList<String> userInfo){
+
+  }
+
+  public static void addCard(ArrayList<String> cardInfo){
+
+  }
+
+  public static void removeCard(ArrayList<String> cardInfo){
+
+  }
+
+  public static void reportTheft(ArrayList<String> userInfo){
+
+  }
+
+  public static void addFunds(ArrayList<String> userInfo){
+
+  }
+
+  public static void endDay(){
+
+  }
+
+  public static void monthlyExpenditue(){
+
+  }
 }

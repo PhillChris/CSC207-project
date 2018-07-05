@@ -8,13 +8,19 @@ public class Card {
   private List<Trip> allTrips;
   /** The current trip this card is on. null when no active trip */
   private Trip currentTrip;
+  private static int cardCounter = 1;
+  private int id;
 
   private boolean isActive;
 
-  public Card() {
+  public Card(String id) {
     this.balance = CARD_INITIAL_BALANCE;
     this.isActive = true;
+    this.id = cardCounter;
+    this.cardCounter++;
   }
+
+  public int getId() { return this.id; }
 
   /**
    * Add given int toAdd to this Card's balance.

@@ -22,6 +22,8 @@ public class CardHolder {
     this.cards = new ArrayList<Card>();
   }
 
+  public String getEmail () { return this.email; }
+
   /**
    * Add a card to this CardHolder's list of cards.
    *
@@ -30,6 +32,15 @@ public class CardHolder {
   public void addCard(Card card) {
     if (!this.cards.contains(card)) {
       this.cards.add(card);
+    }
+  }
+
+  public Card getCard(int cardId) throws CardNotFoundException{
+    for (Card tempCard: this.cards) {
+      if (tempCard.getId() == cardId) {
+        return tempCard;
+      } else {
+      throw new CardNotFoundException();
     }
   }
 

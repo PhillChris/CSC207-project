@@ -23,6 +23,8 @@ public class TransitSystem {
     return subwayRoutes;
   }
 
+  public static List<CardHolder> getUsers() {return allUsers; }
+
   public static void setBusRoutes(HashMap<String, ArrayList<Station>> newroutes) {
     busRoutes = newroutes;
   }
@@ -30,4 +32,6 @@ public class TransitSystem {
   public static void setSubwayRoutes(HashMap<String, ArrayList<Station>> newroutes) {
     subwayRoutes = newroutes;
   }
+
+
 }

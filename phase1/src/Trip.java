@@ -54,10 +54,6 @@ public class Trip {
    * @return true if continuous trip, false otherwise
    */
   boolean isContinuousTrip(Station newStation, LocalDate time) {
-    //    if (TransitSystem.routes.get(startStation.getRoute()).contains(newStation)
-    //        && timeStarted.getDate() == time.getDate()
-    //        && (time.getHours() - timeStarted.getHours() < MAXTRIPLENGTH)) {
-
     // list containing all valid routes associated with this trips startStation
     List<Station> route = TransitSystem.getRoutes().get(startStation.getRoute());
 
@@ -65,10 +61,16 @@ public class Trip {
     return (endStation == newStation) && (withinTimeLimit);
   }
 
-  /** Set the endStation and timeEnded to none when the trip is being continued */
-  void continueTrip() {
+  /**
+   * Set the endStation and timeEnded to none when the trip is being continued. Continue
+   * this trip from station.
+   *
+   * @param station the station that the trip is being continued from.
+   */
+  void continueTrip(Station station) {
     endStation = null;
     timeEnded = null;
+    tripFee += station.getInitialFee();
   }
 
   /** @return The StartStation for this Trip */

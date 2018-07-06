@@ -17,7 +17,7 @@ public class Card {
     this.balance = CARD_INITIAL_BALANCE;
     this.isActive = true;
     this.id = cardCounter;
-    this.cardCounter++;
+    cardCounter++;
   }
 
   public int getId() { return this.id; }

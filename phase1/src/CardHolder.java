@@ -36,12 +36,14 @@ public class CardHolder {
   }
 
   public Card getCard(int cardId) throws CardNotFoundException{
-    for (Card tempCard: this.cards) {
+    for (Card tempCard : this.cards) {
       if (tempCard.getId() == cardId) {
         return tempCard;
       } else {
-      throw new CardNotFoundException();
+        throw new CardNotFoundException();
+      }
     }
+    return null;
   }
 
   /**

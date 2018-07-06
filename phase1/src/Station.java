@@ -1,11 +1,11 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Station {
   protected String name;
   protected String route;
   protected int initialFee;
   protected int perStationFee;
-  protected Station associatedStation;
+  protected List<Station> associatedStations;
 
   /** @return the name of this station */
   public String getName() {
@@ -39,8 +39,8 @@ public abstract class Station {
    * @return the associated station to this station (i.e. the bus station in this subway station or
    *     the subway station connected to this bus station)
    */
-  public Station getAssociatedStation() {
-    return this.associatedStation;
+  public boolean isAssociatedStation(Station station) {
+    return this.associatedStations.contains(station);
   }
 
   /**
@@ -49,6 +49,6 @@ public abstract class Station {
    * @param associatedStation the station to be associated with this one.
    */
   public void associate(Station associatedStation) {
-    this.associatedStation = associatedStation;
+    this.associatedStations.add(associatedStation);
   }
 }

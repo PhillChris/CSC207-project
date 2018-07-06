@@ -75,10 +75,9 @@ public class Card {
     boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
     if (allTrips.size() > 0) { // check this to avoid index errors
       Trip lastTrip = allTrips.get(allTrips.size() - 1);
-      Station associatedAtEndStation = lastTrip.endStation.getAssociatedStation();
+      boolean associatedAtEndStation = lastTrip.endStation.isAssociatedStation(station);
       // check that tapping into this station would be a continuous trip from last trip
-      if (associatedAtEndStation.equals(station)
-              && lastTrip.isContinuousTrip(station, timeTapped)) {
+      if (associatedAtEndStation && lastTrip.isValidTrip(station, timeTapped)) {
         currentTrip = lastTrip;
         // restore the cost of last trip so the person does not get charged twice
         addBalance(this.currentTrip.getFee());

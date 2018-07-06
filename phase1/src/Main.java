@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Main {
@@ -15,73 +16,11 @@ public class Main {
    * @param args standard Java arguments
    * @throws IOException
    */
-  private static final int NEXT_WORD_SKIP = 2;
-
   public static void main(String[] args) throws IOException {
-    // Defining readers and writers
-    BufferedReader reader = new BufferedReader(new FileReader("events.txt"));
-    FileWriter writer = new FileWriter("output.txt");
-
-    // Reads the opening init line determining how many routes to make
-    String initLine = reader.readLine();
-    int lineIdx = 0;
-    ArrayList<Integer> routeLengths = new ArrayList<>();
-    while (lineIdx < initLine.length()) {
-      if ("0123456789".indexOf(initLine.charAt(lineIdx)) != -1) {
-        String tempValue = "";
-        while ("0123456789".indexOf(initLine.charAt(lineIdx)) != -1) {
-          tempValue += initLine.charAt(lineIdx);
-          lineIdx++;
-        }
-        routeLengths.add(Integer.parseInt(tempValue));
-      }
-      lineIdx++;
-    }
-
-    HashMap<String, ArrayList<Station>> subwayRoutes = new HashMap<>();
-    HashMap<String, ArrayList<Station>> busRoutes = new HashMap<>();
-
-    // Constructs all routes from events.txt
-    makeRoutes(subwayRoutes, routeLengths.get(0), reader, "Subway");
-    makeRoutes(busRoutes, routeLengths.get(1), reader, "Bus");
-
-    // Sets them to the transit system
-    TransitSystem.setSubwayRoutes(subwayRoutes);
-    TransitSystem.setBusRoutes(busRoutes);
-    TransitSystem.checkIntersection(); //todo: implement checkIntersection
-
-    // Reads out the remaining lines in events.txt, and makes the system act accordingly
-    String actionLine = reader.readLine();
-    while (actionLine != null) {
-      lineIdx = 0;
-      String actionName = "";
-      while (actionLine.charAt(lineIdx) != ':') {
-        actionName += actionLine.charAt(lineIdx);
-        lineIdx++;
-      }
-
-      // Call the appropriate action for this line of text
-      switch(actionName) {
-        case "TAP":
-          parseTap(actionLine, lineIdx, writer);
-          break;
-        case "NEWUSER":
-          break;
-        case "ADDCARD":
-          break;
-        case "REMOVECARD":
-          break;
-        case "REPORTTHEFT":
-          break;
-        case "ADDFUNDS":
-          break;
-        case "ENDDAY":
-          break;
-        case "MONTHLYEXPENDITURE":
-          break;
-      }
-
-      actionLine = reader.readLine();
+    try {
+      Parser.parse();
+    } catch (InitLineException init) {
+      Parser.write("Input line invalid, program not executable.");
     }
   }
 
@@ -102,8 +41,6 @@ public class Main {
         lineIdx++;
       }
 
-      lineIdx += NEXT_WORD_SKIP;
-
       while (lineIdx < tempRoute.length()) {
         String tempStation = "";
         while (lineIdx < tempRoute.length() && tempRoute.charAt(lineIdx) != ',') {
@@ -111,7 +48,6 @@ public class Main {
           lineIdx++;
         }
         stationNames.add(tempStation);
-        lineIdx += NEXT_WORD_SKIP;
       }
 
       // Generates all stations based on name data

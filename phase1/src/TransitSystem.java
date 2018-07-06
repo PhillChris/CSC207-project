@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.time.LocalDate;
 
 /** This wraps together all the contents of TransitSystem */
 public class TransitSystem {
@@ -10,6 +11,7 @@ public class TransitSystem {
   private static List<CardHolder> allUsers;
   private static int month;
   private static int day;
+  LocalDate currentTime;
 
   public static double getTotalRevenues() {
     return 0;

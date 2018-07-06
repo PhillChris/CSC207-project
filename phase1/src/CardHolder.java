@@ -1,6 +1,6 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.*;
 
 // TODO: Figure out how to calculate average monthly cost. Get clarification on "last three trips".
 
@@ -22,7 +22,17 @@ public class CardHolder {
     this.cards = new ArrayList<Card>();
   }
 
-  public String getEmail () { return this.email; }
+  public static int sumArrayList(List<Integer> array) {
+    int sum = 0;
+    for (Integer i : array) {
+      sum += i;
+    }
+    return sum;
+  }
+
+  public String getEmail() {
+    return this.email;
+  }
 
   /**
    * Add a card to this CardHolder's list of cards.
@@ -35,7 +45,7 @@ public class CardHolder {
     }
   }
 
-  public Card getCard(int cardId) throws CardNotFoundException{
+  public Card getCard(int cardId) throws CardNotFoundException {
     for (Card tempCard : this.cards) {
       if (tempCard.getId() == cardId) {
         return tempCard;
@@ -83,5 +93,40 @@ public class CardHolder {
     }
     // Return latest three trips.
     return allTrips.subList(allTrips.size() - 3, allTrips.size());
+  }
+
+  public float averageMonthly() {
+    // TODO: Use Strategy Design pattern instead?
+    // Map a list of costs of all trips taken during a month to the month
+    HashMap<YearMonth, List<Integer>> tripsByMonth = new HashMap<YearMonth, List<Integer>>();
+    for (Card card : cards) {
+      for (Trip trip : card.getAllTrips()) {
+        LocalDate tripStart = trip.getTimeStarted();
+        YearMonth tripMonthYear = YearMonth.of(tripStart.getYear(), tripStart.getMonth());
+        if (!tripsByMonth.containsKey(tripMonthYear)) {
+          tripsByMonth.put(tripMonthYear, new ArrayList<Integer>());
+        }
+        tripsByMonth.get(tripMonthYear).add(trip.getFee());
+      }
+    }
+
+    // Get total spent on trips per month
+    HashMap<YearMonth, Integer> monthlyTotal = new HashMap<YearMonth, Integer>();
+    for (Map.Entry<YearMonth, List<Integer>> entry : tripsByMonth.entrySet()) {
+      YearMonth month = entry.getKey();
+      List<Integer> costs = entry.getValue();
+      Integer totalCost = CardHolder.sumArrayList(costs);
+      monthlyTotal.put(month, totalCost);
+    }
+
+    // Calculate average
+    int total = 0;
+    for (int cost : monthlyTotal.values()) {
+      total += cost;
+    }
+
+    int numMonths = monthlyTotal.keySet().size();
+
+    return total / numMonths;
   }
 }

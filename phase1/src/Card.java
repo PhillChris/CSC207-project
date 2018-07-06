@@ -57,7 +57,7 @@ public class Card {
     return avg;
   }
 
-  public void tap(Station station, LocalDate timeTapped) {
+  public void tap(Station station, LocalDate timeTapped) throws InsufficientFundsException {
     if (currentTrip == null) {
       tapIn(station, timeTapped);
     } else tapOut(station, timeTapped);
@@ -71,11 +71,12 @@ public class Card {
    * @param station    the station that this Card tapped in at.
    * @param timeTapped the time at which this Card tapped in.
    */
-  private void tapIn(Station station, LocalDate timeTapped) {
+  private void tapIn(Station station, LocalDate timeTapped) throws InsufficientFundsException {
+    if (balance <= 0) throw new InsufficientFundsException();
+
     boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
     if (allTrips.size() > 0) { // check this to avoid index errors
       Trip lastTrip = allTrips.get(allTrips.size() - 1);
-      boolean associatedAtEndStation = lastTrip.endStation.isAssociatedStation(station);
       // check that tapping into this station would be a continuous trip from last trip
       if (lastTrip.isContinuousTrip(station, timeTapped)) {
         currentTrip = lastTrip; // continue the last trip

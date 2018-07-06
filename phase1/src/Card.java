@@ -80,10 +80,9 @@ public class Card {
       if (associatedAtEndStation.equals(station)
               && lastTrip.isContinuousTrip(station, timeTapped)) {
         currentTrip = lastTrip;
-        currentTrip.continueTrip();
-        // restore the balance of last trip so the person does not get charged twice
+        // restore the cost of last trip so the person does not get charged twice
         addBalance(this.currentTrip.getFee());
-        currentTrip.tripFee += station.initialFee;
+        currentTrip.continueTrip(station);
         foundContinuousTrip = true;
       }
     }

@@ -1,6 +1,5 @@
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.List;
 
 /** Represents an object of Trip */
 public class Trip {
@@ -33,7 +32,7 @@ public class Trip {
   void endTrip(Station station, LocalDate endTime) {
     endStation = station;
     timeEnded = endTime;
-    if (!isContinuousTrip(station, endTime)) {
+    if (!isValidTrip(station, endTime)) {
       tripFee = MAXFEE;
     } else {
       tripFee += station.getFinalFee(startStation);
@@ -49,18 +48,32 @@ public class Trip {
   }
 
   /**
+   * Checks if a trip is valid, provided it ends at newStation.
+   *
    * @param newStation new station
    * @param time time for the start of the continuation
    * @return true if continuous trip, false otherwise
    */
-  boolean isContinuousTrip(Station newStation, LocalDate time) {
-    boolean withinTimeLimit = Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
+  boolean isValidTrip(Station newStation, LocalDate time) {
+    boolean withinTimeLimit =
+            Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
     return (endStation == newStation) && (withinTimeLimit);
   }
 
   /**
-   * Set the endStation and timeEnded to none when the trip is being continued. Continue
-   * this trip from station.
+   * Checks if a trip is continuous. If true, then this trip may be continued from the endStation.
+   *
+   * @param newStation the station that is being checked for being a continuous trip.
+   * @param time       the time the newStation is being checked into.
+   */
+  public boolean isContinuousTrip(Station newStation, LocalDate time) {
+    boolean withinTimeLimit =
+            Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
+    return (this.endStation.isAssociatedStation(endStation) && withinTimeLimit);
+  }
+  /**
+   * Set the endStation and timeEnded to none when the trip is being continued. Continue this trip
+   * from station.
    *
    * @param station the station that the trip is being continued from.
    */

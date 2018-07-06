@@ -14,16 +14,5 @@ public class AdminUser extends CardHolder {
   public AdminUser(String name, String email) {
     super(name, email);
   }
-
-  /**
-   * Add a new route to the transit system if there is not already a route with the same name.
-   *
-   * @param name the name of the new route
-   * @param route the list of stations in the new route
-   */
-  public void addRoute(String name, ArrayList<Station> route) {
-    if (!TransitSystem.getRoutes().containsKey(name)) {
-      TransitSystem.getRoutes().put(name, route);
-    }
-  }
+  
 }

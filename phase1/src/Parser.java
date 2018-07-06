@@ -6,7 +6,7 @@ public class Parser {
     HashMap<String, Runnable> keyWords;
 
     public static void Parse(){
-        
+
     }
 
 

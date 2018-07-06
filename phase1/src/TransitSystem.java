@@ -41,36 +41,4 @@ public class TransitSystem {
     subwayRoutes.put(name, new ArrayList<Station>());
 
   }
-
-  public static void tap(List<String> cardInfo){
-
-  }
-
-  public static void addUser(List<String> userInfo){
-
-  }
-
-  public static void addCard(List<String> cardInfo){
-
-  }
-
-  public static void removeCard(List<String> cardInfo){
-
-  }
-
-  public static void reportTheft(List<String> userInfo){
-
-  }
-
-  public static void addFunds(List<String> userInfo){
-
-  }
-
-  public static void endDay(){
-
-  }
-
-  public static void monthlyExpenditue(){
-
-  }
 }

@@ -54,9 +54,6 @@ public class Trip {
    * @return true if continuous trip, false otherwise
    */
   boolean isContinuousTrip(Station newStation, LocalDate time) {
-    // list containing all valid routes associated with this trips startStation
-    List<Station> route = TransitSystem.getRoutes().get(startStation.getRoute());
-
     boolean withinTimeLimit = Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
     return (endStation == newStation) && (withinTimeLimit);
   }

@@ -5,8 +5,8 @@ import java.time.LocalDate;
 
 /** This wraps together all the contents of TransitSystem */
 public class TransitSystem {
-  private static HashMap<String, List<Station>> subwayRoutes = new HashMap<>();
-  private static HashMap<String, List<Station>> busRoutes = new HashMap<>();
+  private static HashMap<String, ArrayList<Station>> subwayRoutes = new HashMap<>();
+  private static HashMap<String, ArrayList<Station>> busRoutes = new HashMap<>();
   private static List<Trip> allTrip;
   private static List<CardHolder> allUsers;
   LocalDate currentTime;
@@ -15,11 +15,11 @@ public class TransitSystem {
     return 0;
   }
 
-  public static HashMap<String, List<Station>> getBusRoutes() {
+  public static HashMap<String, ArrayList<Station>> getBusRoutes() {
     return busRoutes;
   }
 
-  public static HashMap<String, List<Station>> getSubwayRoutes() {
+  public static HashMap<String, ArrayList<Station>> getSubwayRoutes() {
     return subwayRoutes;
   }
 

@@ -70,8 +70,12 @@ public class Parser {
     String actionLine = reader.readLine();
     while (actionLine != null) {
       ArrayList<String> tempLineWords =
-          new ArrayList<String>(Arrays.asList(actionLine.split(" | ")));
-      Parser.keyWords.get(tempLineWords.get(0)).apply(tempLineWords.subList(1, tempLineWords.size()));
+          new ArrayList<>(Arrays.asList(actionLine.split(" | ")));
+      if (tempLineWords.size() < 1) {
+        Parser.keyWords.get(tempLineWords.get(0)).apply(tempLineWords.subList(1, tempLineWords.size()));
+      } else {
+        Parser.keyWords.get(tempLineWords.get(0)).apply(new ArrayList<>());
+      }
       actionLine = reader.readLine();
     }
   }

@@ -3,12 +3,12 @@ import java.util.List;
 
 public class Card {
   public static final int CARD_INITIAL_BALANCE = 1900;
+  private static int cardCounter = 1;
   private int balance;
   /** A list containing a history of all trips this Card has created. */
   private List<Trip> allTrips;
   /** The current trip this card is on. null when no active trip */
   private Trip currentTrip;
-  private static int cardCounter = 1;
   private int id;
 
   private boolean isActive;
@@ -20,7 +20,9 @@ public class Card {
     cardCounter++;
   }
 
-  public int getId() { return this.id; }
+  public int getId() {
+    return this.id;
+  }
 
   /**
    * Add given int toAdd to this Card's balance.
@@ -57,22 +59,7 @@ public class Card {
 
   public void tap(Station station, LocalDate timeTapped) {
     if (currentTrip == null) {
-      boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
-      if (allTrips.size() > 0) { // check this to avoid index errors
-        Trip lastTrip = allTrips.get(allTrips.size() - 1);
-        Station associatedAtEndStation = lastTrip.endStation.getAssociatedStation();
-        // check that tapping into this station would be a continuous trip from last trip
-        if (associatedAtEndStation.equals(station)
-            && lastTrip.isContinuousTrip(station, timeTapped)) {
-          currentTrip = lastTrip;
-          currentTrip.continueTrip();
-          // restore the balance of last trip so the person does not get charged twice
-          this.balance += this.currentTrip.getFee();
-          currentTrip.tripFee += station.initialFee;
-          foundContinuousTrip = true;
-        }
-      }
-      if (!foundContinuousTrip) tapIn(station, timeTapped);
+      tapIn(station, timeTapped);
     } else tapOut(station, timeTapped);
   }
 
@@ -81,12 +68,29 @@ public class Card {
    * timeStarted timeTapped. As of now this method is only called if there is no currentTrip on this
    * Card.
    *
-   * @param station the station that this Card tapped in at.
+   * @param station    the station that this Card tapped in at.
    * @param timeTapped the time at which this Card tapped in.
    */
   private void tapIn(Station station, LocalDate timeTapped) {
-    Trip newTrip = new Trip(timeTapped, station);
-    this.currentTrip = newTrip;
+    boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
+    if (allTrips.size() > 0) { // check this to avoid index errors
+      Trip lastTrip = allTrips.get(allTrips.size() - 1);
+      Station associatedAtEndStation = lastTrip.endStation.getAssociatedStation();
+      // check that tapping into this station would be a continuous trip from last trip
+      if (associatedAtEndStation.equals(station)
+              && lastTrip.isContinuousTrip(station, timeTapped)) {
+        currentTrip = lastTrip;
+        currentTrip.continueTrip();
+        // restore the balance of last trip so the person does not get charged twice
+        addBalance(this.currentTrip.getFee());
+        currentTrip.tripFee += station.initialFee;
+        foundContinuousTrip = true;
+      }
+    }
+    if (!foundContinuousTrip) {
+      Trip newTrip = new Trip(timeTapped, station);
+      this.currentTrip = newTrip;
+    }
   }
 
   private void tapOut(Station station, LocalDate timeTapped) {
@@ -110,6 +114,7 @@ public class Card {
 
   /**
    * Return up to the last three trips taken on this Card.
+   *
    * @return a list containing up to the last three trips taken on this Card
    */
   public List<Trip> getLastThree() {

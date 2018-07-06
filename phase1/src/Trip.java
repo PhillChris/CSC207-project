@@ -61,6 +61,17 @@ public class Trip {
   }
 
   /**
+   * Checks if a trip is continuous. If true, then this trip may be continued from the endStation.
+   *
+   * @param newStation the station that is being checked for being a continuous trip.
+   * @param time       the time the newStation is being checked into.
+   */
+  public boolean isContinuousTrip(Station newStation, LocalDate time) {
+    boolean withinTimeLimit =
+            Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
+    return (this.endStation.isAssociatedStation(endStation) && withinTimeLimit);
+  }
+  /**
    * Set the endStation and timeEnded to none when the trip is being continued. Continue this trip
    * from station.
    *

@@ -77,8 +77,8 @@ public class Card {
       Trip lastTrip = allTrips.get(allTrips.size() - 1);
       boolean associatedAtEndStation = lastTrip.endStation.isAssociatedStation(station);
       // check that tapping into this station would be a continuous trip from last trip
-      if (associatedAtEndStation && lastTrip.isValidTrip(station, timeTapped)) {
-        currentTrip = lastTrip;
+      if (lastTrip.isContinuousTrip(station, timeTapped)) {
+        currentTrip = lastTrip; // continue the last trip
         // restore the cost of last trip so the person does not get charged twice
         addBalance(this.currentTrip.getFee());
         currentTrip.continueTrip(station);

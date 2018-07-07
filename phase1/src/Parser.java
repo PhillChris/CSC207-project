@@ -67,7 +67,7 @@ public class Parser {
         CardHolder.findUser(cardInfo.get(2)).addCard(card);
       }
       else{
-        write("Invalud input for addCard call");
+        write("Invalid input for addCard call");
       }
     } catch (UserNotFoundException e) {
       e.getMessage();
@@ -76,12 +76,57 @@ public class Parser {
 
   static void removeCard(List<String> cardInfo) throws IOException {
     LocalDate time = parseTime(cardInfo.get(1));
-
+    try{
+      if (time != null){
+        CardHolder user = CardHolder.findUser(cardInfo.get(2));
+        Card card = user.getCard(Integer.parseInt(cardInfo.get(3)));
+        user.removeCard(card);
+      }
+      else{
+        write("Invalid input for removeCard call");
+      }
+    } catch (UserNotFoundException a) {
+      write(a.getMessage());
+    } catch (CardNotFoundException b) {
+      write(b.getMessage());
+    }
   }
 
-  static void reportTheft(List<String> userInfo) {}
+  static void reportTheft(List<String> userInfo) throws IOException{
+    LocalDate time = parseTime(userInfo.get(1));
+    try{
+      if (time != null){
+        CardHolder user = CardHolder.findUser(userInfo.get(2));
+        Card card = user.getCard(Integer.parseInt(userInfo.get(3)));
+        user.suspendCard(card);
+      }
+      else{
+        write("Invalid input for reportTheft call");
+      }
+    } catch (UserNotFoundException a) {
+      write(a.getMessage());
+    } catch (CardNotFoundException b) {
+      write(b.getMessage());
+    }
+  }
 
-  static void addFunds(List<String> userInfo) {}
+  static void addFunds(List<String> userInfo) throws IOException{
+    LocalDate time = parseTime(userInfo.get(1));
+    try{
+      if (time != null){
+        CardHolder user = CardHolder.findUser(userInfo.get(2));
+        Card card = user.getCard(Integer.parseInt(userInfo.get(3)));
+        card.addBalance(Integer.parseInt(userInfo.get(4)));
+      }
+      else{
+        write("Invalid input for AddFunds call");
+      }
+    } catch (UserNotFoundException a) {
+      write(a.getMessage());
+    } catch (CardNotFoundException b) {
+      write(b.getMessage());
+    }
+  }
 
   static void endDay(List<String> emptyList) {}
 

@@ -6,6 +6,16 @@ public abstract class Station {
   protected int initialFee;
   protected int perStationFee;
   protected List<Station> associatedStations;
+  final int stationID;
+  private static int totalStations;
+
+  public Station(String name, Route route){
+    this.name = name;
+    this.route = route;
+    stationID = totalStations;
+    totalStations++;
+    this.associatedStations = null;
+  }
 
   /** @return the name of this station */
   public String getName() {

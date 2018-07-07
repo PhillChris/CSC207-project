@@ -8,10 +8,8 @@ public class SubwayStation extends Station {
    * @param route the name of the route to which this SubwayStation belongs
    */
   public SubwayStation(String name, Route route) {
-    this.name = name;
-    this.route = route;
+    super(name, route)
     this.initialFee = 0;
     this.perStationFee = 50;
-    this.associatedStations = null;
   }
 }

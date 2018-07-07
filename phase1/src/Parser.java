@@ -9,7 +9,7 @@ public class Parser {
 
   static BufferedWriter writer;
 
-  static void setWriter(BufferedWriter bufferedWriter){
+  static void setWriter(BufferedWriter bufferedWriter) {
     writer = bufferedWriter;
   }
 
@@ -17,42 +17,35 @@ public class Parser {
     writer.write(message + "/n");
   }
 
-
-
   /**
    * Taps a card
+   *
    * @param cardInfo The information of the card given by the user
    */
   static void tap(List<String> cardInfo) throws IOException {
-    try{
-    LocalDate time = parseTime(cardInfo.get(0));
-    if (time!=null){
-      CardHolder user = CardHolder.getCardholder(cardInfo.get(2));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(3)));
+    try {
+      LocalDate time = parseTime(cardInfo.get(0));
+      if (time != null) {
+        CardHolder user = CardHolder.getCardholder(cardInfo.get(2));
+        Card card = user.getCard(Integer.parseInt(cardInfo.get(3)));
+        Station station =
+            Route.getRoutes()
+                .get(Integer.parseInt(cardInfo.get(4)))
+                .findStation(Integer.parseInt(cardInfo.get(5)));
 
-      card.tap(cardInfo.get(4), time);
+        card.tap(station, time);
+      } else {
+        throw new TapException();
+      }
 
-
-    }
-    else{
-      throw new TapException();
-    }
-    }
-    catch (CardNotFoundException c){
+    } catch (InsufficientFundsException a) {
+      a.getMessage();
+    } catch (CardNotFoundException b) {
+      write(b.getMessage());
+    } catch (TapException c) {
       write(c.getMessage());
     }
-    catch (TapException e) {
-      write(e.getMessage());
-
-    }
-
-
-    }
-
-
-
-
-
+  }
 
   static void addUser(List<String> userInfo) {}
 
@@ -69,33 +62,31 @@ public class Parser {
   static void monthlyExpenditue(List<String> userInfo) {}
 
   static LocalDate parseTime(String time) throws IOException {
-    try{
-    String[] formatted = time.split("-");
-    LocalDate newTime = LocalDate.of(Integer.parseInt(formatted[0]), Integer.parseInt(formatted[1]),
-            Integer.parseInt(formatted[2]));
+    try {
+      String[] formatted = time.split("-");
+      LocalDate newTime =
+          LocalDate.of(
+              Integer.parseInt(formatted[0]),
+              Integer.parseInt(formatted[1]),
+              Integer.parseInt(formatted[2]));
 
-    if (currentTime == null){
-      currentTime = newTime;
-      return currentTime;
-    }
-    else{
-      if (currentTime.isAfter(newTime)){
-        throw new TimeException();
-      }
-      else{
+      if (currentTime == null) {
         currentTime = newTime;
         return currentTime;
+      } else {
+        if (currentTime.isAfter(newTime)) {
+          throw new TimeException();
+        } else {
+          currentTime = newTime;
+          return currentTime;
+        }
       }
-    }
-  }
-    catch (TimeException t){
+    } catch (TimeException t) {
       write(t.getMessage());
       return null;
 
-    }
-  catch (Exception e){
-    return null;
+    } catch (Exception e) {
+      return null;
     }
   }
-
 }

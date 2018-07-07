@@ -10,8 +10,8 @@ public abstract class Route {
   private static int totalRoutes = 0;
 
   public Route() {
-    totalRoutes++;
     routeNumber = totalRoutes;
+    totalRoutes++;
   }
 
   /** @return An arrayList of all RouteNames */

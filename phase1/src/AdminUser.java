@@ -8,7 +8,6 @@ import java.util.List;
 public class AdminUser extends CardHolder {
 
   private static List<Trip> allTrip;
-  private static List<CardHolder> allUsers;
 
   /**
    * Construct a new instance of AdminUser
@@ -20,9 +19,6 @@ public class AdminUser extends CardHolder {
     super(name, email);
   }
 
-  public static List<CardHolder> getAllUsers() {
-    return allUsers;
-  }
 
   public void dailyReports() throws IOException {
     HashMap<LocalDate, Integer> dailyTotals = CostCalculator.allUsersDailyTotals(getAllUsers());

@@ -8,6 +8,7 @@ import java.util.List;
 
 /** Represents a CardHolder in a transit system. */
 public class CardHolder {
+  private static HashMap<String, CardHolder> allUsers = new HashMap<>();
   private final String email;
   private List<Card> cards;
   private String name;
@@ -22,6 +23,11 @@ public class CardHolder {
     this.name = name;
     this.email = email;
     this.cards = new ArrayList<Card>();
+    allUsers.put(email, this);
+  }
+
+  public static CardHolder getCardholder(String email) {
+    return allUsers.get(email);
   }
 
   public String getEmail() {

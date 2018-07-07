@@ -18,6 +18,8 @@ public class Parser {
     writer.write(message + "/n");
   }
 
+
+
   /**
    * Taps a card
    * @param cardInfo The information of the card given by the user
@@ -26,7 +28,7 @@ public class Parser {
     try{
     String time = cardInfo.get(0);
     if (checkTimeOrder(time)){
-      
+
 
     }
     else{

@@ -7,9 +7,7 @@ public class SubwayRoute extends Route {
   /** An ArrayList of all the stations in this SubwayRoute */
   private ArrayList<SubwayStation> stations;
 
-  /**
-   * @param stationNames The names of the stations in this SubwayRoute
-   */
+  /** @param stationNames The names of the stations in this SubwayRoute */
   public SubwayRoute(ArrayList<String> stationNames) {
     super();
     ArrayList<SubwayStation> stations = new ArrayList<>();
@@ -38,16 +36,17 @@ public class SubwayRoute extends Route {
   public ArrayList<String> getStations() {
     ArrayList<String> stationNames = new ArrayList<>();
     for (Station s : stations) {
-    stationNames.add(s.name);
-  }
+      stationNames.add(s.name);
+    }
     return stationNames;
-}
+  }
 
-  public SubwayStation findStation(String stationName){
-    for (SubwayStation station: stations){
-      if (station.name.equals(stationName)){
+  public SubwayStation findStation(String stationName) {
+    for (SubwayStation station : stations) {
+      if (station.name.equals(stationName)) {
         return station;
       }
     }
     return null;
+  }
 }

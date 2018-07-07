@@ -26,10 +26,11 @@ public class Parser {
   static void tap(List<String> cardInfo) throws IOException {
     try{
     LocalDate time = parseTime(cardInfo.get(0));
-    if (checkTimeOrder(time)){
+    if (time!=null){
       CardHolder user = CardHolder.getCardholder(cardInfo.get(2));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(3)));
-      card.tap(cardInfo.get(4), cardInfo.get(0));
+
+      card.tap(cardInfo.get(4), time);
 
 
     }

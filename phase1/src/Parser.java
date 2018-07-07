@@ -23,7 +23,7 @@ public class Parser {
    * @param cardInfo The information of the card given by the user
    */
   static void tap(List<String> cardInfo) throws IOException {
-    LocalDate time = parseTime(cardInfo.get(0));
+    LocalDate time = parseTime(cardInfo.get(1));
     try {
       if (time != null) {
         CardHolder user = CardHolder.getCardholder(cardInfo.get(2));
@@ -35,20 +35,18 @@ public class Parser {
 
         card.tap(station, time);
       } else {
-        throw new TapException();
+        write("Invalid Input given for Tap call");
       }
 
     } catch (InsufficientFundsException a) {
       a.getMessage();
     } catch (CardNotFoundException b) {
       write(b.getMessage());
-    } catch (TapException c) {
-      write(c.getMessage());
     }
   }
 
   static void addUser(List<String> userInfo) throws IOException {
-    LocalDate time = parseTime(userInfo.get(0));
+    LocalDate time = parseTime(userInfo.get(1));
     if (time != null) {
       if (userInfo.get(2).equals("yes")) {
         AdminUser admin = new AdminUser(userInfo.get(3), userInfo.get(4));
@@ -56,19 +54,30 @@ public class Parser {
         CardHolder user = new CardHolder(userInfo.get(3), userInfo.get(4));
       }
     }
+    else{
+      write("Invalid Input given for addUser call");
+    }
   }
 
   static void addCard(List<String> cardInfo) throws IOException {
-    LocalDate time = parseTime(cardInfo.get(0));
+    LocalDate time = parseTime(cardInfo.get(1));
     try {
-      Card card = new Card();
-      CardHolder.findUser(cardInfo.get(2)).addCard(card);
+      if (time != null) {
+        Card card = new Card();
+        CardHolder.findUser(cardInfo.get(2)).addCard(card);
+      }
+      else{
+        write("Invalud input for addCard call");
+      }
     } catch (UserNotFoundException e) {
       e.getMessage();
     }
   }
 
-  static void removeCard(List<String> cardInfo) {}
+  static void removeCard(List<String> cardInfo) throws IOException {
+    LocalDate time = parseTime(cardInfo.get(1));
+
+  }
 
   static void reportTheft(List<String> userInfo) {}
 

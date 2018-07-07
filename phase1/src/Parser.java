@@ -5,22 +5,36 @@ import java.util.List;
 
 public class Parser {
 
+  /**
+   * The current time of the simulation
+   */
   static LocalDate currentTime;
 
+  /**
+   * The writer for the Parser to write to
+   */
   static BufferedWriter writer;
 
+  /**
+   * @param bufferedWriter The writer for this Parser
+   */
   static void setWriter(BufferedWriter bufferedWriter) {
     writer = bufferedWriter;
   }
 
+  /**
+   * @param message The message to be outputted through writer
+   * @throws IOException
+   */
   public static void write(String message) throws IOException {
     writer.write(message + "/n");
   }
 
+
   /**
-   * Taps a card
-   *
-   * @param cardInfo The information of the card given by the user
+   * Processes a card's tap request
+   * @param cardInfo Info given from the user
+   * @throws IOException
    */
   static void tap(List<String> cardInfo) throws IOException {
     LocalDate time = parseTime(cardInfo.get(0));
@@ -45,6 +59,11 @@ public class Parser {
     }
   }
 
+  /**
+   * Adds a new user to the Transit System
+   * @param userInfo Info given from the user
+   * @throws IOException
+   */
   static void addUser(List<String> userInfo) throws IOException {
     LocalDate time = parseTime(userInfo.get(0));
     if (time != null) {
@@ -58,6 +77,11 @@ public class Parser {
     }
   }
 
+  /**
+   * Adds a new card for a user
+   * @param cardInfo The info given from the user
+   * @throws IOException
+   */
   static void addCard(List<String> cardInfo) throws IOException {
     LocalDate time = parseTime(cardInfo.get(0));
     try {
@@ -72,6 +96,11 @@ public class Parser {
     }
   }
 
+  /**
+   * Removes a user's card
+   * @param cardInfo Information given from the user
+   * @throws IOException
+   */
   static void removeCard(List<String> cardInfo) throws IOException {
     LocalDate time = parseTime(cardInfo.get(0));
     try {
@@ -89,6 +118,11 @@ public class Parser {
     }
   }
 
+  /**
+   * Deactivates a user's card
+   * @param userInfo Information given from the user
+   * @throws IOException
+   */
   static void reportTheft(List<String> userInfo) throws IOException {
     LocalDate time = parseTime(userInfo.get(0));
     try {
@@ -106,6 +140,11 @@ public class Parser {
     }
   }
 
+  /**
+   * Adds funds to a card
+   * @param userInfo Information given from the user
+   * @throws IOException
+   */
   static void addFunds(List<String> userInfo) throws IOException {
     LocalDate time = parseTime(userInfo.get(0));
     try {
@@ -123,10 +162,20 @@ public class Parser {
     }
   }
 
+  /**
+   * Ends a day in the simulation
+   * @param emptyList Information given by the user
+   * @throws IOException
+   */
   static void endDay(List<String> emptyList) throws IOException {
     AdminUser.dailyReports();
   }
 
+  /**
+   * Gets the monthly expenditures for the Transit System
+   * @param userInfo Information given from the user
+   * @throws IOException
+   */
   static void monthlyExpenditue(List<String> userInfo) throws IOException {
     try {
       CardHolder user = CardHolder.findUser(userInfo.get(0));
@@ -137,6 +186,12 @@ public class Parser {
 
   }
 
+  /**
+   * Reads, check and updates the time of the simulation
+   * @param time The time inputted by the user
+   * @return The updated time or null if invalid input was given
+   * @throws IOException
+   */
   static LocalDate parseTime(String time) throws IOException {
     try {
       String[] formatted = time.split("-");

@@ -131,7 +131,9 @@ public class Parser {
         });
   }
 
-  public static void write(String message) {}
+  public static void write(String message) throws IOException {
+    Parser.writer.write(message + "/n");
+  }
 
   private static void tap(List<String> cardInfo) {}
 

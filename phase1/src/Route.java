@@ -1,19 +1,26 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 
+/** Represents an object of Route */
 public abstract class Route {
 
-  private static HashMap<String, ArrayList<Station>> Routes = new HashMap<>();
+  /** A list of all of the Routes */
+  protected static ArrayList<Route> Routes = new ArrayList<Route>();
+  /** The name of this route */
   protected String routeName;
-  protected ArrayList<Station> Stations;
 
-  public abstract boolean checkRoute();
-
-  public String getRouteName() {
-    return this.routeName;
+  public Route(String name){
+      name = routeName;
   }
 
-  public ArrayList<Station> getStations() {
-    return Stations;
+    /**
+     * @return An arrayList of all RouteNames
+     */
+  public static ArrayList<Route> getRoutes() {
+    return Routes;
   }
+
+    /**
+     * @return An ArrayList containing the names of all the stations in the route in order
+     */
+  public abstract ArrayList<String> getStations();
 }

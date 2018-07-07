@@ -42,4 +42,12 @@ public class SubwayRoute extends Route {
   }
     return stationNames;
 }
+
+  public SubwayStation findStation(String stationName){
+    for (SubwayStation station: stations){
+      if (station.name.equals(stationName)){
+        return station;
+      }
+    }
+    return null;
 }

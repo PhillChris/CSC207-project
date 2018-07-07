@@ -31,6 +31,15 @@ public class BusRoute extends Route {
     return false;
   }
 
+  public BusStation findStation(String stationName){
+    for (BusStation station: stations){
+      if (station.name.equals(stationName)){
+        return station;
+      }
+    }
+    return null;
+  }
+
   @Override
   public ArrayList<String> getStations() {
       ArrayList<String> stationNames = new ArrayList<>();

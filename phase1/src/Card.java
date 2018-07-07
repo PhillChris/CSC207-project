@@ -9,6 +9,7 @@ public class Card {
   private List<Trip> allTrips;
   /** The current trip this card is on. null when no active trip */
   private Trip currentTrip;
+
   private int id;
 
   private boolean isActive;
@@ -63,7 +64,7 @@ public class Card {
    * timeStarted timeTapped. As of now this method is only called if there is no currentTrip on this
    * Card.
    *
-   * @param station    the station that this Card tapped in at.
+   * @param station the station that this Card tapped in at.
    * @param timeTapped the time at which this Card tapped in.
    */
   private void tapIn(Station station, LocalDate timeTapped) throws InsufficientFundsException {

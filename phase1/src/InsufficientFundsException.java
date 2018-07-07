@@ -1,2 +1,1 @@
-public class InsufficientFundsException extends TransitException {
-}
+public class InsufficientFundsException extends TransitException {}

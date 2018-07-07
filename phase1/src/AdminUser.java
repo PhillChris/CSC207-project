@@ -25,8 +25,7 @@ public class AdminUser extends CardHolder {
   }
 
   public void dailyReports() throws IOException {
-    HashMap<LocalDate, Integer> dailyTotals =
-            CostCalculator.allUsersDailyTotals(getAllUsers());
+    HashMap<LocalDate, Integer> dailyTotals = CostCalculator.allUsersDailyTotals(getAllUsers());
     List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
     Collections.sort(dates);
 

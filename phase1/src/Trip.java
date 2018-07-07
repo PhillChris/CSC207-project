@@ -56,7 +56,7 @@ public class Trip {
    */
   boolean isValidTrip(Station newStation, LocalDate time) {
     boolean withinTimeLimit =
-            Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
+        Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
     return (endStation == newStation) && (withinTimeLimit);
   }
 
@@ -64,11 +64,11 @@ public class Trip {
    * Checks if a trip is continuous. If true, then this trip may be continued from the endStation.
    *
    * @param newStation the station that is being checked for being a continuous trip.
-   * @param time       the time the newStation is being checked into.
+   * @param time the time the newStation is being checked into.
    */
   public boolean isContinuousTrip(Station newStation, LocalDate time) {
     boolean withinTimeLimit =
-            Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
+        Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
     return (this.endStation.isAssociatedStation(endStation) && withinTimeLimit);
   }
   /**

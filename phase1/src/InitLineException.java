@@ -1,3 +1,1 @@
-public class InitLineException extends TransitException {
-
-}
+public class InitLineException extends TransitException {}

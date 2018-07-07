@@ -91,6 +91,7 @@ public class CardHolder {
 
   /**
    * Return the average amount this CardHolder spends on transportation each month.
+   *
    * @return
    */
   public float averageMonthly() {

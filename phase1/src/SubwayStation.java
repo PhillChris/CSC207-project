@@ -19,6 +19,5 @@ public class SubwayStation extends Station {
     ArrayList<Station> thisRoute = TransitSystem.getSubwayRoutes().get(this.route);
     return this.perStationFee
         * Math.abs(thisRoute.indexOf(this) - thisRoute.indexOf(initialStation));
-
   }
 }

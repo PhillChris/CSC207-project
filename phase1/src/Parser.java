@@ -47,7 +47,17 @@ public class Parser {
     }
   }
 
-  static void addUser(List<String> userInfo) {}
+  static void addUser(List<String> userInfo) throws IOException {
+    LocalDate time = parseTime(userInfo.get(0));
+    if (time != null){
+      if (userInfo.get(2).equals("yes")){
+        AdminUser admin = new AdminUser(userInfo.get(3), userInfo.get(4));
+      }
+      else{
+        CardHolder user = new CardHolder(userInfo.get(3), userInfo.get(4));
+      }
+    }
+  }
 
   static void addCard(List<String> cardInfo) {}
 

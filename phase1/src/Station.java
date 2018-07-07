@@ -2,7 +2,7 @@ import java.util.List;
 
 public abstract class Station {
   protected String name;
-  protected String route;
+  protected Route route;
   protected int initialFee;
   protected int perStationFee;
   protected List<Station> associatedStations;
@@ -13,7 +13,7 @@ public abstract class Station {
   }
 
   /** @return the name of this station's route */
-  public String getRoute() {
+  public Route getRoute() {
     return this.route;
   }
 

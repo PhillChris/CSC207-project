@@ -7,7 +7,7 @@ public class SubwayStation extends Station {
    * @param name the name of this SubwayStation
    * @param route the name of the route to which this SubwayStation belongs
    */
-  public SubwayStation(String name, String route) {
+  public SubwayStation(String name, Route route) {
     this.name = name;
     this.route = route;
     this.initialFee = 0;
@@ -16,8 +16,7 @@ public class SubwayStation extends Station {
   }
 
   public int getFinalFee(Station initialStation) {
-    ArrayList<Station> thisRoute = TransitSystem.getSubwayRoutes().get(this.route);
     return this.perStationFee
-        * Math.abs(thisRoute.indexOf(this) - thisRoute.indexOf(initialStation));
+        * Math.abs(route.getStations().indexOf(this) - route.getStations().indexOf(initialStation));
   }
 }

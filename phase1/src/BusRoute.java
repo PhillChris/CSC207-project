@@ -13,7 +13,7 @@ public class BusRoute extends Route {
 
     // Add stations to this Route
     for (String s : stationNames) {
-      BusStation station = new BusStation(s, name);
+      BusStation station = new BusStation(s, this);
       stations.add(station);
     }
     // Add itself to the ArrayLists of stations

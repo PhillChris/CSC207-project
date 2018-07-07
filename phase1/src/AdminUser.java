@@ -1,8 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 /** Represents an AdminUser in a transit system. */
 public class AdminUser extends CardHolder {
+
+  private static List<Trip> allTrip;
+  private static List<CardHolder> allUsers;
 
   /**
    * Construct a new instance of AdminUser
@@ -21,9 +20,13 @@ public class AdminUser extends CardHolder {
     super(name, email);
   }
 
+  public static List<CardHolder> getAllUsers() {
+    return allUsers;
+  }
+
   public void dailyReports() throws IOException {
     HashMap<LocalDate, Integer> dailyTotals =
-        CostCalculator.allUsersDailyTotals(TransitSystem.getAllUsers());
+            CostCalculator.allUsersDailyTotals(getAllUsers());
     List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
     Collections.sort(dates);
 

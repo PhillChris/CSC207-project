@@ -1,7 +1,9 @@
-// TODO: Figure out how to do daily report stuff. Get clarification on "operating costs".
-
+import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 /** Represents an AdminUser in a transit system. */
 public class AdminUser extends CardHolder {
 
@@ -14,5 +16,25 @@ public class AdminUser extends CardHolder {
   public AdminUser(String name, String email) {
     super(name, email);
   }
-  
+
+  public void dailyReports() throws IOException {
+    HashMap<LocalDate, Integer> dailyTotals =
+        CostCalculator.allUsersDailyTotals(TransitSystem.getAllUsers());
+    List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
+    Collections.sort(dates);
+
+    try (Writer writer =
+        new BufferedWriter(
+            new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"))) {
+      writer.write("Date       Revenue");
+      writer.write(System.lineSeparator());
+      for (LocalDate day : dates) {
+        String date = day.toString();
+        double total = dailyTotals.get(day) / 100;
+        String revenue = String.format("&.2f", total);
+        writer.write(String.format("%s %s", date, revenue));
+      }
+      ;
+    }
+  }
 }

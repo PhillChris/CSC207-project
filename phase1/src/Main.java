@@ -24,47 +24,6 @@ public class Main {
     }
   }
 
-  private static void makeRoutes(
-      HashMap<String, ArrayList<Station>> newRoutes,
-      int routeNum,
-      BufferedReader reader,
-      String stationType)
-      throws IOException {
-    for (int i = 0; i < routeNum; i++) {
-      String tempRoute = reader.readLine();
-      int lineIdx = 0;
-      String routeName = "";
-      ArrayList<String> stationNames = new ArrayList<>();
-
-      while (tempRoute.charAt(lineIdx) != ':') {
-        routeName += tempRoute.charAt(lineIdx);
-        lineIdx++;
-      }
-
-      while (lineIdx < tempRoute.length()) {
-        String tempStation = "";
-        while (lineIdx < tempRoute.length() && tempRoute.charAt(lineIdx) != ',') {
-          tempStation += tempRoute.charAt(lineIdx);
-          lineIdx++;
-        }
-        stationNames.add(tempStation);
-      }
-
-      // Generates all stations based on name data
-      ArrayList<Station> tempStations = new ArrayList<>();
-      for (int j = 0; j < stationNames.size(); j++) {
-        Station tempStation = new BusStation("INVALID TYPE", "INVALID TYPE");
-        if (stationType == "Bus") {
-          tempStation = new BusStation(stationNames.get(j), routeName);
-        } else if (stationType == "Subway") {
-          tempStation = new SubwayStation(stationNames.get(j), routeName);
-        }
-        tempStations.add(tempStation);
-      }
-      newRoutes.put(routeName, tempStations);
-    }
-  }
-
   private static void parseTap(String actionLine, int lineIdx, FileWriter writer) throws IOException {
     // Read cardholderId
     lineIdx += 7;
@@ -89,21 +48,5 @@ public class Main {
         }
       }
     }
-  }
-
-  private static String readWord(String actionLine, int lineIdx) {
-    String word = "";
-    while (lineIdx < actionLine.length() && actionLine.charAt(lineIdx) != ',') {
-      word += actionLine.charAt(lineIdx);
-      lineIdx++;
-    }
-    return word;
-  }
-
-  private static int getEndOfWord(String actionLine, int lineIdx) {
-    while (lineIdx < actionLine.length() && actionLine.charAt(lineIdx) != ',') {
-      lineIdx++;
-    }
-    return lineIdx;
   }
 }

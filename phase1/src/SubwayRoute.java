@@ -8,11 +8,10 @@ public class SubwayRoute extends Route {
   private ArrayList<SubwayStation> stations;
 
   /**
-   * @param name The name of this SubwayRoute
    * @param stationNames The names of the stations in this SubwayRoute
    */
-  public SubwayRoute(String name, ArrayList<String> stationNames) {
-    super(name);
+  public SubwayRoute(ArrayList<String> stationNames) {
+    super();
     ArrayList<SubwayStation> stations = new ArrayList<>();
 
     // Add stations to this Route

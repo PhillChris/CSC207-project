@@ -7,8 +7,8 @@ public class BusRoute extends Route {
   /** An ArrayList of all the stations in this BusRoute */
   private ArrayList<BusStation> stations;
 
-  public BusRoute(String name, ArrayList<String> stationNames) {
-    super(name);
+  public BusRoute(ArrayList<String> stationNames) {
+    super();
     ArrayList<BusStation> stations = new ArrayList<>();
 
     // Add stations to this Route

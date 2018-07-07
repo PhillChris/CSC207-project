@@ -6,10 +6,12 @@ public abstract class Route {
   /** A list of all of the Routes */
   protected static ArrayList<Route> Routes = new ArrayList<Route>();
   /** The name of this route */
-  protected String routeName;
+  protected int routeNumber;
+  private static int totalRoutes = 0;
 
-  public Route(String name) {
-    name = routeName;
+  public Route() {
+    totalRoutes++;
+    routeNumber = totalRoutes;
   }
 
   /** @return An arrayList of all RouteNames */
@@ -19,4 +21,8 @@ public abstract class Route {
 
   /** @return An ArrayList containing the names of all the stations in the route in order */
   public abstract ArrayList<String> getStations();
+
+  public int getRouteNumber(){
+    return routeNumber;
+  }
 }

@@ -5,7 +5,7 @@ public class SubwayRoute extends Route {
   /** An ArrayList of all the SubwayRoutes in the simulation */
   private static ArrayList<SubwayRoute> subwayRoutes;
   /** An ArrayList of all the stations in this SubwayRoute */
-  private ArrayList<Station> stations;
+  private ArrayList<SubwayStation> stations;
 
   /**
    * @param name The name of this SubwayRoute
@@ -13,7 +13,7 @@ public class SubwayRoute extends Route {
    */
   public SubwayRoute(String name, ArrayList<String> stationNames) {
     super(name);
-    ArrayList<Station> stations = new ArrayList<>();
+    ArrayList<SubwayStation> stations = new ArrayList<>();
 
     // Add stations to this Route
     for (String s : stationNames) {
@@ -39,8 +39,8 @@ public class SubwayRoute extends Route {
   public ArrayList<String> getStations() {
     ArrayList<String> stationNames = new ArrayList<>();
     for (Station s : stations) {
-      stationNames.add(s.name);
-    }
-    return stationNames;
+    stationNames.add(s.name);
   }
+    return stationNames;
+}
 }

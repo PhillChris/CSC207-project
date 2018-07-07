@@ -123,7 +123,9 @@ public class Parser {
     }
   }
 
-  static void endDay(List<String> emptyList) {}
+  static void endDay(List<String> emptyList) throws IOException {
+    AdminUser.dailyReports();
+  }
 
   static void monthlyExpenditue(List<String> userInfo) throws IOException {
     try {

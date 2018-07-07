@@ -52,7 +52,7 @@ public class TransitReader {
         Route newRoute = new SubwayRoute(tempLineWords);
         writer.write("Created new route:" + newRoute.getRouteNumber());
       } else {
-        writer.write("Failed to create route ");
+        writer.write("Failed to create new route");
       }
     }
 

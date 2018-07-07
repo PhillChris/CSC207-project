@@ -48,13 +48,8 @@ public class Card {
    * @return the average trip cost over all trips this Card has taken.
    */
   public double getAvgTripCost() {
-    double total = 0;
-
-    for (Trip trip : allTrips) {
-      total += trip.getFee();
-    }
-    double avg = total / allTrips.size();
-    return avg;
+    double total = allTrips.stream().mapToDouble(Trip::getFee).sum();
+    return total / allTrips.size();
   }
 
   public void tap(Station station, LocalDate timeTapped) throws InsufficientFundsException {

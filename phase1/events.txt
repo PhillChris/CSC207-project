@@ -1,0 +1,5 @@
+INIT | 2 | 2
+Subway Route 1 | Station A
+Subway Route 2 | Station B | Station C
+Bus Route 1 | Station D
+Bus Route 2 | Station E | Station F

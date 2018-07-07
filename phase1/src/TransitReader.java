@@ -22,6 +22,7 @@ public class TransitReader {
 
     // Build the command hashmap
     TransitReader.buildHashMap();
+    Parser.setWriter(writer);
 
     // Reads the opening init line determining how many routes to make
     String initLine = reader.readLine();
@@ -70,6 +71,7 @@ public class TransitReader {
     }
 
     // Execute remaining commands in events.txt
+    // TO DO: FIX THESE IF STATEMENTS
     String actionLine = reader.readLine();
     while (actionLine != null) {
       ArrayList<String> tempLineWords =

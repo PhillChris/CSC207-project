@@ -23,15 +23,15 @@ public class Parser {
    * @param cardInfo The information of the card given by the user
    */
   static void tap(List<String> cardInfo) throws IOException {
-    LocalDate time = parseTime(cardInfo.get(1));
+    LocalDate time = parseTime(cardInfo.get(0));
     try {
       if (time != null) {
-        CardHolder user = CardHolder.getCardholder(cardInfo.get(2));
-        Card card = user.getCard(Integer.parseInt(cardInfo.get(3)));
+        CardHolder user = CardHolder.getCardholder(cardInfo.get(1));
+        Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
         Station station =
             Route.getRoutes()
-                .get(Integer.parseInt(cardInfo.get(4)))
-                .findStation(Integer.parseInt(cardInfo.get(5)));
+                .get(Integer.parseInt(cardInfo.get(3)))
+                .findStation(Integer.parseInt(cardInfo.get(4)));
 
         card.tap(station, time);
       } else {
@@ -46,27 +46,25 @@ public class Parser {
   }
 
   static void addUser(List<String> userInfo) throws IOException {
-    LocalDate time = parseTime(userInfo.get(1));
+    LocalDate time = parseTime(userInfo.get(0));
     if (time != null) {
       if (userInfo.get(2).equals("yes")) {
-        AdminUser admin = new AdminUser(userInfo.get(3), userInfo.get(4));
+        AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(3));
       } else {
-        CardHolder user = new CardHolder(userInfo.get(3), userInfo.get(4));
+        CardHolder user = new CardHolder(userInfo.get(2), userInfo.get(3));
       }
-    }
-    else{
+    } else {
       write("Invalid Input given for addUser call");
     }
   }
 
   static void addCard(List<String> cardInfo) throws IOException {
-    LocalDate time = parseTime(cardInfo.get(1));
+    LocalDate time = parseTime(cardInfo.get(0));
     try {
       if (time != null) {
         Card card = new Card();
-        CardHolder.findUser(cardInfo.get(2)).addCard(card);
-      }
-      else{
+        CardHolder.findUser(cardInfo.get(1)).addCard(card);
+      } else {
         write("Invalid input for addCard call");
       }
     } catch (UserNotFoundException e) {
@@ -75,14 +73,13 @@ public class Parser {
   }
 
   static void removeCard(List<String> cardInfo) throws IOException {
-    LocalDate time = parseTime(cardInfo.get(1));
-    try{
-      if (time != null){
-        CardHolder user = CardHolder.findUser(cardInfo.get(2));
-        Card card = user.getCard(Integer.parseInt(cardInfo.get(3)));
+    LocalDate time = parseTime(cardInfo.get(0));
+    try {
+      if (time != null) {
+        CardHolder user = CardHolder.findUser(cardInfo.get(1));
+        Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
         user.removeCard(card);
-      }
-      else{
+      } else {
         write("Invalid input for removeCard call");
       }
     } catch (UserNotFoundException a) {
@@ -92,15 +89,14 @@ public class Parser {
     }
   }
 
-  static void reportTheft(List<String> userInfo) throws IOException{
-    LocalDate time = parseTime(userInfo.get(1));
-    try{
-      if (time != null){
-        CardHolder user = CardHolder.findUser(userInfo.get(2));
-        Card card = user.getCard(Integer.parseInt(userInfo.get(3)));
+  static void reportTheft(List<String> userInfo) throws IOException {
+    LocalDate time = parseTime(userInfo.get(0));
+    try {
+      if (time != null) {
+        CardHolder user = CardHolder.findUser(userInfo.get(1));
+        Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
         user.suspendCard(card);
-      }
-      else{
+      } else {
         write("Invalid input for reportTheft call");
       }
     } catch (UserNotFoundException a) {
@@ -110,15 +106,14 @@ public class Parser {
     }
   }
 
-  static void addFunds(List<String> userInfo) throws IOException{
-    LocalDate time = parseTime(userInfo.get(1));
-    try{
-      if (time != null){
-        CardHolder user = CardHolder.findUser(userInfo.get(2));
-        Card card = user.getCard(Integer.parseInt(userInfo.get(3)));
-        card.addBalance(Integer.parseInt(userInfo.get(4)));
-      }
-      else{
+  static void addFunds(List<String> userInfo) throws IOException {
+    LocalDate time = parseTime(userInfo.get(0));
+    try {
+      if (time != null) {
+        CardHolder user = CardHolder.findUser(userInfo.get(1));
+        Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
+        card.addBalance(Integer.parseInt(userInfo.get(3)));
+      } else {
         write("Invalid input for AddFunds call");
       }
     } catch (UserNotFoundException a) {
@@ -130,7 +125,15 @@ public class Parser {
 
   static void endDay(List<String> emptyList) {}
 
-  static void monthlyExpenditue(List<String> userInfo) {}
+  static void monthlyExpenditue(List<String> userInfo) throws IOException {
+    try {
+      CardHolder user = CardHolder.findUser(userInfo.get(0));
+      write("Monthly expenditures:" + user.averageMonthly());
+    } catch (UserNotFoundException e) {
+      write(e.getMessage())
+    }
+
+  }
 
   static LocalDate parseTime(String time) throws IOException {
     try {

@@ -41,9 +41,9 @@ public class SubwayRoute extends Route {
     return stationNames;
   }
 
-  public SubwayStation findStation(String stationName) {
+  public SubwayStation findStation(int stationId) {
     for (SubwayStation station : stations) {
-      if (station.name.equals(stationName)) {
+      if (station.stationID == stationId) {
         return station;
       }
     }

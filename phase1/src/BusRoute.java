@@ -31,9 +31,9 @@ public class BusRoute extends Route {
     return false;
   }
 
-  public BusStation findStation(String stationName){
+  public BusStation findStation(int stationID){
     for (BusStation station: stations){
-      if (station.name.equals(stationName)){
+      if (station.stationID == stationID){
         return station;
       }
     }

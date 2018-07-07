@@ -19,6 +19,10 @@ public class TransitReader {
    */
   public static void read(BufferedReader reader, BufferedWriter writer)
       throws IOException, InitLineException {
+
+    // Build the command hashmap
+    TransitReader.buildHashMap();
+
     // Reads the opening init line determining how many routes to make
     String initLine = reader.readLine();
     ArrayList<String> initLineWords =
@@ -44,17 +48,12 @@ public class TransitReader {
       String tempLine = reader.readLine();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
-      ArrayList<Station> tempStations = new ArrayList<>();
-      for (int j = 1; j < tempLineWords.size(); j++) {
-        tempStations.add(new SubwayStation(tempLineWords.get(j), tempLineWords.get(0)));
-        writer.write(
-            "Added subway station "
-                + tempLineWords.get(j)
-                + " on route "
-                + tempLineWords.get(0)
-                + "\n");
+      if (SubwayRoute.checkRoute(tempLineWords)) {
+        Route newRoute = new SubwayRoute("PlaceHolder", tempLineWords);
+        writer.write("Created new route:" + newRoute.routeName);
+      } else {
+        writer.write("Failed to create route ");
       }
-      TransitSystem.addSubwayRoute(tempLineWords.get(0), tempStations);
     }
 
     // Iterate through bus routes, constructing from events.txt
@@ -62,21 +61,13 @@ public class TransitReader {
       String tempLine = reader.readLine();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
-      ArrayList<Station> tempStations = new ArrayList<>();
-      for (int j = 1; j < tempLineWords.size(); j++) {
-        tempStations.add(new BusStation(tempLineWords.get(j), tempLineWords.get(0)));
-        writer.write(
-            "Added bus station "
-                + tempLineWords.get(j)
-                + " on route "
-                + tempLineWords.get(0)
-                + "\n");
+      if (BusRoute.checkRoute(tempLineWords)) {
+        Route newRoute = new BusRoute("PLaceHolder", tempLineWords);
+        writer.write("Created new route:" + newRoute.routeName);
+      } else {
+        writer.write("Failed to create new route");
       }
-      TransitSystem.addBusRoute(tempLineWords.get(0), tempStations);
     }
-
-    // Build the command hashmap
-    TransitReader.buildHashMap();
 
     // Execute remaining commands in events.txt
     String actionLine = reader.readLine();

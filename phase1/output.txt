@@ -1,6 +1,1 @@
-Added subway station Station A on route Subway Route 1
-Added subway station Station B on route Subway Route 2
-Added subway station Station C on route Subway Route 2
-Added bus station Station D on route Bus Route 1
-Added bus station Station E on route Bus Route 2
-Added bus station Station F on route Bus Route 2
+Failed to create route Failed to create route Failed to create new routeFailed to create new route

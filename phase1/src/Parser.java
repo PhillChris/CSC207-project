@@ -130,7 +130,7 @@ public class Parser {
       CardHolder user = CardHolder.findUser(userInfo.get(0));
       write("Monthly expenditures:" + user.averageMonthly());
     } catch (UserNotFoundException e) {
-      write(e.getMessage())
+      write(e.getMessage());
     }
 
   }

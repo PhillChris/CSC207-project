@@ -12,7 +12,7 @@ public class BusStation extends Station {
     this.route = route;
     this.initialFee = 200;
     this.perStationFee = 0;
-    this.associatedStation = null;
+    this.associatedStations = null;
   }
 
   public int getFinalFee(Station initialStation) {

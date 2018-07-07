@@ -7,7 +7,6 @@ import java.util.List;
 public class TransitSystem {
   private static HashMap<String, ArrayList<Station>> subwayRoutes = new HashMap<>();
   private static HashMap<String, ArrayList<Station>> busRoutes = new HashMap<>();
-  LocalDate currentTime;
 
   public static double getTotalRevenues() {
     return 0;

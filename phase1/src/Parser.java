@@ -1,8 +1,11 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Parser {
+
+  static LocalDate currentTime;
 
   public static void write(String message, FileWriter writer) throws IOException {
     writer.write(message + "/n");

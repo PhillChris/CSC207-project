@@ -33,4 +33,8 @@ public class TransitSystem {
   public static void addSubwayRoute(String name, List<Station> routes){
     subwayRoutes.put(name, new ArrayList<Station>());
   }
+
+  public static List<CardHolder> getAllUsers() {
+    return allUsers;
+  }
 }

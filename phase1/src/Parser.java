@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,9 +10,17 @@ import java.util.List;
 import java.util.function.Function;
 
 public class Parser {
+  private static final String SPLIT_SYMBOL = "\\s\\|\\s";
   static HashMap<String, Function<List<String>, Void>> keyWords = new HashMap<>();
+  private static BufferedWriter writer;
 
-  private static FileWriter writer;
+  static {
+    try {
+      writer = new BufferedWriter(new FileWriter("output.txt"));
+    } catch (IOException e) {
+
+    }
+  }
 
   /**
    * Parses the events.txt file, calling appropriate methods throughout the program
@@ -22,14 +31,14 @@ public class Parser {
   public static void parse() throws IOException, InitLineException {
     // Defining readers and writers
     BufferedReader reader = new BufferedReader(new FileReader("events.txt"));
-    Parser.writer = new FileWriter("output.txt");
 
     // Reads the opening init line determining how many routes to make
     String initLine = reader.readLine();
-    ArrayList<String> initLineWords = new ArrayList<String>(Arrays.asList(initLine.split(" | ")));
+    ArrayList<String> initLineWords =
+        new ArrayList<String>(Arrays.asList(initLine.split(SPLIT_SYMBOL)));
 
     if (initLineWords.size() != 3) {
-      throw new InitLineException();
+       throw new InitLineException();
     }
 
     int numSubwayRoutes;
@@ -46,10 +55,13 @@ public class Parser {
     // Iterate through subway routes, constructing from events.txt
     for (int i = 0; i < numSubwayRoutes; i++) {
       String tempLine = reader.readLine();
-      ArrayList<String> tempLineWords = new ArrayList<>(Arrays.asList(tempLine.split(" | ")));
+      ArrayList<String> tempLineWords =
+          new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
       ArrayList<Station> tempStations = new ArrayList<>();
       for (int j = 1; j < tempLineWords.size(); j++) {
         tempStations.add(new SubwayStation(tempLineWords.get(j), tempLineWords.get(0)));
+        Parser.writer.write(
+            "Added subway station " + tempLineWords.get(j) + " on route " + tempLineWords.get(0) + "\n");
       }
       TransitSystem.addSubwayRoute(tempLineWords.get(0), tempStations);
     }
@@ -57,27 +69,35 @@ public class Parser {
     // Iterate through bus routes, constructing from events.txt
     for (int i = 0; i < numBusRoutes; i++) {
       String tempLine = reader.readLine();
-      ArrayList<String> tempLineWords = new ArrayList<>(Arrays.asList(tempLine.split(" | ")));
+      ArrayList<String> tempLineWords =
+          new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
       ArrayList<Station> tempStations = new ArrayList<>();
       for (int j = 1; j < tempLineWords.size(); j++) {
         tempStations.add(new BusStation(tempLineWords.get(j), tempLineWords.get(0)));
+        Parser.writer.write(
+            "Added bus station " + tempLineWords.get(j) + " on route " + tempLineWords.get(0) + "\n");
       }
       TransitSystem.addBusRoute(tempLineWords.get(0), tempStations);
     }
 
-    // Build the command hashmap and execute remaining commands in events.txt
+    // Build the command hashmap and
     Parser.buildHashMap();
+
+    // Execute remaining commands in events.txt
     String actionLine = reader.readLine();
     while (actionLine != null) {
       ArrayList<String> tempLineWords =
-          new ArrayList<>(Arrays.asList(actionLine.split(" | ")));
+          new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
       if (tempLineWords.size() < 1) {
-        Parser.keyWords.get(tempLineWords.get(0)).apply(tempLineWords.subList(1, tempLineWords.size()));
+        Parser.keyWords
+            .get(tempLineWords.get(0))
+            .apply(tempLineWords.subList(1, tempLineWords.size()));
       } else {
         Parser.keyWords.get(tempLineWords.get(0)).apply(new ArrayList<>());
       }
       actionLine = reader.readLine();
     }
+    writer.close();
   }
 
   private static void buildHashMap() {
@@ -125,8 +145,8 @@ public class Parser {
         });
     Parser.keyWords.put(
         "MONTHLYEXPENDITURE",
-        (emptyList) -> {
-          Parser.monthlyExpenditue(emptyList);
+        (userInfo) -> {
+          Parser.monthlyExpenditue(userInfo);
           return null;
         });
   }
@@ -149,5 +169,5 @@ public class Parser {
 
   private static void endDay(List<String> emptyList) {}
 
-  private static void monthlyExpenditue(List<String> emptyList) {}
+  private static void monthlyExpenditue(List<String> userInfo) {}
 }

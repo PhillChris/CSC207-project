@@ -8,7 +8,7 @@ public class BusStation extends Station {
    * @param route the name of the route to which this BusStation belongs
    */
   public BusStation(String name, Route route) {
-    super(name, route)
+    super(name, route);
     this.initialFee = 200;
     this.perStationFee = 0;
   }

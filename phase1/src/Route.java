@@ -22,7 +22,7 @@ public abstract class Route {
   /** @return An ArrayList containing the names of all the stations in the route in order */
   public abstract ArrayList<String> getStations();
 
-  public abstract Station findStation(String stationName);
+  public abstract Station findStation(int stationID);
 
   public int getRouteNumber(){
     return routeNumber;

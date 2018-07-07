@@ -1,3 +1,3 @@
-public class CardNotFoundException extends Exception {
+public class CardNotFoundException extends TransitException {
 
 }

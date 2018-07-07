@@ -2,8 +2,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Parser {
@@ -16,7 +14,7 @@ public class Parser {
     writer = bufferedWriter;
   }
 
-  public static void write(String message, FileWriter writer) throws IOException {
+  public static void write(String message, BufferedWriter writer) throws IOException {
     writer.write(message + "/n");
   }
 
@@ -24,24 +22,29 @@ public class Parser {
    * Taps a card
    * @param cardInfo The information of the card given by the user
    */
-  static void tap(List<String> cardInfo) {
+  static void tap(List<String> cardInfo) throws IOException {
     try{
     String time = cardInfo.get(0);
     if (checkTimeOrder(time)){
+      
 
     }
     else{
-      throw TapException;
+      throw new TapException();
     }
     }
-    catch (TapException as e){
-      write()
+    catch (TapException e) {
+      write(e.getMessage(), writer);
+
+    }
+
+
     }
 
 
 
 
-  }
+
 
   static void addUser(List<String> userInfo) {}
 
@@ -60,10 +63,11 @@ public class Parser {
   static boolean checkTimeOrder(String time){
     try{
     String[] formatted = time.split("-");
-    LocalDate newTime = new LocalDate.of(Integer.parseInt(formatted[0]), Integer.parseInt(formatted[1]),
+    LocalDate newTime = LocalDate.of(Integer.parseInt(formatted[0]), Integer.parseInt(formatted[1]),
             Integer.parseInt(formatted[2]));
 
-    LocalDate.of()
+    if
+
 
 
 

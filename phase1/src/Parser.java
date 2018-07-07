@@ -80,7 +80,7 @@ public class Parser {
       TransitSystem.addBusRoute(tempLineWords.get(0), tempStations);
     }
 
-    // Build the command hashmap and
+    // Build the command hashmap
     Parser.buildHashMap();
 
     // Execute remaining commands in events.txt

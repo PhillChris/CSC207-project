@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -10,10 +13,12 @@ public class Main {
    * @throws IOException
    */
   public static void main(String[] args) throws IOException {
+    BufferedReader reader = new BufferedReader(new FileReader("events.txt"));
+    BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
     try {
-      Parser.parse();
+      TransitReader.read(reader, writer);
     } catch (InitLineException init) {
-      Parser.write("Input line invalid, program not executable.");
+      writer.write("Input line invalid, program not executable.");
     }
   }
 }

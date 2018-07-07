@@ -27,15 +27,6 @@ public abstract class Station {
   }
 
   /**
-   * Called at the end of a ride.
-   *
-   * @param initialStation the station at which this ride started (i.e. when last changing modes of
-   *     transportation or vehicle lines).
-   * @return the per-station fare for this ride
-   */
-  public abstract int getFinalFee(Station initialStation);
-
-  /**
    * @return the associated station to this station (i.e. the bus station in this subway station or
    *     the subway station connected to this bus station)
    */
@@ -50,5 +41,17 @@ public abstract class Station {
    */
   public void associate(Station associatedStation) {
     this.associatedStations.add(associatedStation);
+  }
+
+  /**
+   * Called at the end of a ride.
+   *
+   * @param initialStation the station at which this ride started (i.e. when last changing modes of
+   *     transportation or vehicle lines).
+   * @return the per-station fare for this ride
+   */
+  public int getFinalFee(Station initialStation) {
+    return this.perStationFee
+        * Math.abs(route.getStations().indexOf(this) - route.getStations().indexOf(initialStation));
   }
 }

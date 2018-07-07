@@ -14,9 +14,4 @@ public class SubwayStation extends Station {
     this.perStationFee = 50;
     this.associatedStations = null;
   }
-
-  public int getFinalFee(Station initialStation) {
-    return this.perStationFee
-        * Math.abs(route.getStations().indexOf(this) - route.getStations().indexOf(initialStation));
-  }
 }

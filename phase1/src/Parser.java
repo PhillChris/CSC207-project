@@ -23,8 +23,8 @@ public class Parser {
    * @param cardInfo The information of the card given by the user
    */
   static void tap(List<String> cardInfo) throws IOException {
+    LocalDate time = parseTime(cardInfo.get(0));
     try {
-      LocalDate time = parseTime(cardInfo.get(0));
       if (time != null) {
         CardHolder user = CardHolder.getCardholder(cardInfo.get(2));
         Card card = user.getCard(Integer.parseInt(cardInfo.get(3)));
@@ -49,17 +49,24 @@ public class Parser {
 
   static void addUser(List<String> userInfo) throws IOException {
     LocalDate time = parseTime(userInfo.get(0));
-    if (time != null){
-      if (userInfo.get(2).equals("yes")){
+    if (time != null) {
+      if (userInfo.get(2).equals("yes")) {
         AdminUser admin = new AdminUser(userInfo.get(3), userInfo.get(4));
-      }
-      else{
+      } else {
         CardHolder user = new CardHolder(userInfo.get(3), userInfo.get(4));
       }
     }
   }
 
-  static void addCard(List<String> cardInfo) {}
+  static void addCard(List<String> cardInfo) throws IOException {
+    LocalDate time = parseTime(cardInfo.get(0));
+    try {
+      Card card = new Card();
+      CardHolder.findUser(cardInfo.get(2)).addCard(card);
+    } catch (UserNotFoundException e) {
+      e.getMessage();
+    }
+  }
 
   static void removeCard(List<String> cardInfo) {}
 

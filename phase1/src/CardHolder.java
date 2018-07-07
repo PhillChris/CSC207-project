@@ -121,4 +121,13 @@ public class CardHolder {
   public List<Card> getCards() {
     return this.cards;
   }
+
+  public static CardHolder findUser(String email) throws UserNotFoundException{
+    if (allUsers.containsKey(email)) {
+      return allUsers.get(email);
+    }
+    else{
+      throw new UserNotFoundException();
+    }
+  }
 }

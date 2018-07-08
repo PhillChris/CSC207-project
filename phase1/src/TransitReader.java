@@ -44,6 +44,8 @@ public class TransitReader {
       throw new InitLineException();
     }
 
+    TransitTime.initDate(initLineWords.get(3));
+
     // Iterate through subway routes, constructing from events.txt
     for (int i = 0; i < numSubwayRoutes; i++) {
       String tempLine = reader.readLine();
@@ -64,10 +66,10 @@ public class TransitReader {
 
     // Execute remaining commands in events.txt
     String actionLine = reader.readLine();
-    while (actionLine != null) {
+    while (actionLine != "\n" && actionLine != null) {
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
-      if (tempLineWords.size() <= 1) {
+      if (tempLineWords.size() > 1) {
         TransitReader.keyWords
             .get(tempLineWords.get(0))
             .apply(tempLineWords.subList(1, tempLineWords.size()));

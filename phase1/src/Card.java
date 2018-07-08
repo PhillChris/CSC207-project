@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Card {
@@ -6,7 +7,7 @@ public class Card {
   private static int cardCounter = 1;
   private int balance;
   /** A list containing a history of all trips this Card has created. */
-  private List<Trip> allTrips;
+  private List<Trip> allTrips = new ArrayList<>();
   /** The current trip this card is on. null when no active trip */
   private Trip currentTrip;
 

@@ -1,4 +1,4 @@
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class CostCalculator {
     HashMap<YearMonth, List<Integer>> tripsByMonth = new HashMap<YearMonth, List<Integer>>();
     for (Card card : cards) {
       for (Trip trip : card.getAllTrips()) {
-        LocalDate tripStart = trip.getTimeStarted();
+        LocalDateTime tripStart = trip.getTimeStarted();
         YearMonth tripMonthYear = YearMonth.of(tripStart.getYear(), tripStart.getMonth());
         if (!tripsByMonth.containsKey(tripMonthYear)) {
           tripsByMonth.put(tripMonthYear, new ArrayList<Integer>());
@@ -36,11 +36,11 @@ public class CostCalculator {
    * @param cards
    * @return Hashmap with lists of trip costs for a given day
    */
-  public static HashMap<LocalDate, List<Integer>> getTripsByDay(List<Card> cards) {
-    HashMap<LocalDate, List<Integer>> tripsByDay = new HashMap<LocalDate, List<Integer>>();
+  public static HashMap<LocalDateTime, List<Integer>> getTripsByDay(List<Card> cards) {
+    HashMap<LocalDateTime, List<Integer>> tripsByDay = new HashMap<LocalDateTime, List<Integer>>();
     for (Card card : cards) {
       for (Trip trip : card.getAllTrips()) {
-        LocalDate tripDate = trip.getTimeStarted();
+        LocalDateTime tripDate = trip.getTimeStarted();
         if (!tripsByDay.containsKey(tripDate)) {
           tripsByDay.put(tripDate, new ArrayList<Integer>());
         }
@@ -74,11 +74,11 @@ public class CostCalculator {
    * @param costMap
    * @return
    */
-  public static HashMap<LocalDate, Integer> getDailyTotals(
-      HashMap<LocalDate, List<Integer>> costMap) {
-    HashMap<LocalDate, Integer> monthlyTotal = new HashMap<LocalDate, Integer>();
-    for (Map.Entry<LocalDate, List<Integer>> entry : costMap.entrySet()) {
-      LocalDate date = entry.getKey();
+  public static HashMap<LocalDateTime, Integer> getDailyTotals(
+      HashMap<LocalDateTime, List<Integer>> costMap) {
+    HashMap<LocalDateTime, Integer> monthlyTotal = new HashMap<LocalDateTime, Integer>();
+    for (Map.Entry<LocalDateTime, List<Integer>> entry : costMap.entrySet()) {
+      LocalDateTime date = entry.getKey();
       List<Integer> costs = entry.getValue();
       Integer totalCost = sumArrayList(costs);
       monthlyTotal.put(date, totalCost);
@@ -92,12 +92,12 @@ public class CostCalculator {
    * @param cardHolders
    * @return
    */
-  public static HashMap<LocalDate, Integer> allUsersDailyTotals(HashMap<String, CardHolder> cardHolders) {
+  public static HashMap<LocalDateTime, Integer> allUsersDailyTotals(HashMap<String, CardHolder> cardHolders) {
     List<Card> allCards = new ArrayList<Card>();
     for (CardHolder cardHolder : cardHolders.values()) {
       allCards.addAll(cardHolder.getCards());
     }
-    HashMap<LocalDate, List<Integer>> allUsersCosts = getTripsByDay(allCards);
+    HashMap<LocalDateTime, List<Integer>> allUsersCosts = getTripsByDay(allCards);
 
     return getDailyTotals(allUsersCosts);
   }

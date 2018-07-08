@@ -29,7 +29,7 @@ public class TransitReader {
     ArrayList<String> initLineWords =
         new ArrayList<String>(Arrays.asList(initLine.split(SPLIT_SYMBOL)));
 
-    if (initLineWords.size() != 3) {
+    if (initLineWords.size() != 4) {
       throw new InitLineException();
     }
 
@@ -119,13 +119,13 @@ public class TransitReader {
     TransitReader.keyWords.put(
         "ENDDAY",
         (emptyList) -> {
-          Parser.endDay(emptyList);
+          TransitTime.endDay(emptyList);
           return null;
         });
     TransitReader.keyWords.put(
         "MONTHLYEXPENDITURE",
         (userInfo) -> {
-          Parser.monthlyExpenditue(userInfo);
+          Parser.monthlyExpenditure(userInfo);
           return null;
         });
   }

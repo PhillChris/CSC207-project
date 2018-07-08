@@ -49,12 +49,9 @@ public class TransitReader {
       String tempLine = reader.readLine();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
-      if (SubwayRoute.checkRoute(tempLineWords)) {
         Route newRoute = new SubwayRoute(tempLineWords);
         writer.write("Created new route:" + newRoute.getRouteNumber());
-      } else {
         writer.write("Failed to create new subway route");
-      }
     }
 
     // Iterate through bus routes, constructing from events.txt
@@ -62,12 +59,8 @@ public class TransitReader {
       String tempLine = reader.readLine();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
-      if (BusRoute.checkRoute(tempLineWords)) {
         Route newRoute = new BusRoute(tempLineWords);
         writer.write("Created new route:" + newRoute.getRouteNumber());
-      } else {
-        writer.write("Failed to create new bus route");
-      }
     }
 
     // Execute remaining commands in events.txt

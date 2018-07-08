@@ -1,12 +1,12 @@
 import java.time.Duration;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /** Represents an object of Trip */
 public class Trip {
   static final int MAXFEE = 600;
   static final Duration MAXTRIPLENGTH = Duration.ofMinutes(120);
-  LocalDate timeStarted;
-  LocalDate timeEnded;
+  LocalDateTime timeStarted;
+  LocalDateTime timeEnded;
   Station startStation;
   Station endStation;
   int tripFee;
@@ -17,7 +17,7 @@ public class Trip {
    * @param startTime Time which the trip is started
    * @param station Station which the trip is started
    */
-  public Trip(LocalDate startTime, Station station) {
+  public Trip(LocalDateTime startTime, Station station) {
     timeStarted = startTime;
     startStation = station;
     tripFee = station.getInitialFee();
@@ -29,7 +29,7 @@ public class Trip {
    * @param station the station where this Trip ends
    * @param endTime the station where this Trip continuous
    */
-  void endTrip(Station station, LocalDate endTime) {
+  void endTrip(Station station, LocalDateTime endTime) {
     endStation = station;
     timeEnded = endTime;
     if (!isValidTrip(station, endTime)) {
@@ -54,7 +54,7 @@ public class Trip {
    * @param time time for the start of the continuation
    * @return true if continuous trip, false otherwise
    */
-  boolean isValidTrip(Station newStation, LocalDate time) {
+  boolean isValidTrip(Station newStation, LocalDateTime time) {
     boolean withinTimeLimit =
         Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
     return (endStation == newStation) && (withinTimeLimit);
@@ -66,7 +66,7 @@ public class Trip {
    * @param newStation the station that is being checked for being a continuous trip.
    * @param time the time the newStation is being checked into.
    */
-  public boolean isContinuousTrip(Station newStation, LocalDate time) {
+  public boolean isContinuousTrip(Station newStation, LocalDateTime time) {
     boolean withinTimeLimit =
         Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
     return (this.endStation.isAssociatedStation(endStation) && withinTimeLimit);
@@ -88,7 +88,7 @@ public class Trip {
     return startStation;
   }
 
-  public LocalDate getTimeStarted() {
+  public LocalDateTime getTimeStarted() {
     return timeStarted;
   }
 }

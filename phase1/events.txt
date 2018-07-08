@@ -1,4 +1,4 @@
-INIT | 2 | 2
+INIT | 2 | 2 | 2018-07-08
 Subway Route 1 | Station A
 Subway Route 2 | Station B | Station C
 Bus Route 1 | Station D

@@ -1,4 +1,4 @@
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Card {
@@ -53,7 +53,7 @@ public class Card {
     return total / allTrips.size();
   }
 
-  public void tap(Station station, LocalDate timeTapped) throws InsufficientFundsException {
+  public void tap(Station station, LocalDateTime timeTapped) throws InsufficientFundsException {
     if (currentTrip == null) {
       tapIn(station, timeTapped);
     } else tapOut(station, timeTapped);
@@ -67,7 +67,7 @@ public class Card {
    * @param station the station that this Card tapped in at.
    * @param timeTapped the time at which this Card tapped in.
    */
-  private void tapIn(Station station, LocalDate timeTapped) throws InsufficientFundsException {
+  private void tapIn(Station station, LocalDateTime timeTapped) throws InsufficientFundsException {
     if (balance <= 0) throw new InsufficientFundsException();
 
     boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
@@ -87,7 +87,7 @@ public class Card {
     }
   }
 
-  private void tapOut(Station station, LocalDate timeTapped) {
+  private void tapOut(Station station, LocalDateTime timeTapped) {
     currentTrip.endTrip(station, timeTapped);
     this.subtractBalance(currentTrip.getFee());
     allTrips.add(currentTrip);

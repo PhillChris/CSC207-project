@@ -38,8 +38,10 @@ public class Parser {
       Station station;
       if (stationType.equals("Bus")) {
         station = BusStation.getStations().get(stationName);
+        write("User " + user.getEmail() + " tapped on at " + stationName);
       } else {
         station = SubwayStation.getStations().get(stationName);
+        write("User " + user.getEmail() + " tapped on at " + stationName);
       }
       card.tap(station, time);
     } catch (InsufficientFundsException a) {
@@ -69,10 +71,11 @@ public class Parser {
    * @param cardInfo The info given from the user
    */
   static void addCard(List<String> cardInfo) {
-    LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
+     LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
     try {
       Card card = new Card();
-      CardHolder.findUser(cardInfo.get(1)).addCard(card);
+      CardHolder user = CardHolder.findUser(cardInfo.get(1));
+      user.addCard(card);
     } catch (UserNotFoundException e) {
       e.getMessage();
     }

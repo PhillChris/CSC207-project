@@ -40,12 +40,12 @@ public class Parser {
       } else {
         station = SubwayStation.getStations().get(stationName);
       }
+      card.tap(station, time);
       if (card.tripStarted()) {
         write("User " + user.getEmail() + " tapped on at " + stationName);
       } else {
         write("User " + user.getEmail() + " tapped off at " + stationName);
       }
-      card.tap(station, time);
     } catch (InsufficientFundsException a) {
       a.getMessage();
     } catch (CardNotFoundException b) {

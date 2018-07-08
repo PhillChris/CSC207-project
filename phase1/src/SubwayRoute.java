@@ -4,7 +4,7 @@ import java.util.List;
 public class SubwayRoute extends Route {
 
   /** An ArrayList of all the SubwayRoutes in the simulation */
-  private static ArrayList<SubwayRoute> subwayRoutes;
+  private static ArrayList<SubwayRoute> subwayRoutes = new ArrayList<>();
   /** An ArrayList of all the stations in this SubwayRoute */
 
   /** @param stationNames The names of the stations in this SubwayRoute */

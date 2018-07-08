@@ -9,13 +9,12 @@ public abstract class Station {
   protected String name;
   protected int initialFee;
   protected int perStationFee;
-  protected List<Station> associatedStations;
+  protected List<Station> associatedStations = new ArrayList<>();
 
   public Station(String name) {
     this.name = name;
     stationID = totalStations;
     totalStations++;
-    this.associatedStations = null;
   }
 
   public static HashMap<String, List<Station>> getAllStations() {
@@ -106,33 +105,6 @@ public abstract class Station {
       } else {
         return perStationFee * (Math.abs(secondStation - firstStation));
       }
-    }
-  }
-
-  /**
-   * @param station1 the first station in the Trip.
-   * @param station2 the second station in the Trip.
-   * @param routeStations the route we are querying for stations.
-   * @return distance between the two stations in the given route. -1 if stations aren't both
-   *     contained in the given route.
-   */
-  private int distanceInRoute(Station station1, Station station2, List<Station> routeStations) {
-    Integer firstStation = null;
-    Integer secondStation = null;
-    for (int i = 0; i <= routeStations.size(); i++) {
-      Station station = routeStations.get(i);
-      if (station1.equals(station)) {
-        firstStation = i;
-      }
-      if (station2.equals(station)) {
-        secondStation = i;
-      }
-    }
-    // check that both stations are in the route
-    if (firstStation != null && secondStation != null) {
-      return Math.abs(firstStation - secondStation) * perStationFee;
-    } else {
-      return -1;
     }
   }
 }

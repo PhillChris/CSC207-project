@@ -4,7 +4,7 @@ import java.util.List;
 public class BusRoute extends Route {
 
   /** An ArrayList of all the BusRoutes in the simulation */
-  private static ArrayList<BusRoute> busRoutes;
+  private static ArrayList<BusRoute> busRoutes = new ArrayList<>();
 
   public BusRoute(ArrayList<String> stationNames) {
     super();

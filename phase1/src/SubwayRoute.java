@@ -11,7 +11,7 @@ public class SubwayRoute extends Route {
     super();
     // Add stations to this Route
     for (String s : stationNames) {
-      Station station = new SubwayStation(s, this);
+      Station station = new SubwayStation(s);
       getStations().add(station);
       Station.addStation(station);
     }

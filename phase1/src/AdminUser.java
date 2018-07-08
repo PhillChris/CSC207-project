@@ -7,7 +7,7 @@ import java.util.List;
 /** Represents an AdminUser in a transit system. */
 public class AdminUser extends CardHolder {
 
-  private static List<Trip> allTrip;
+  private static List<Trip> allTrips;
 
   /**
    * Construct a new instance of AdminUser

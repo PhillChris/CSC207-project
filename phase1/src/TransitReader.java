@@ -50,7 +50,7 @@ public class TransitReader {
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
       Route newRoute = new SubwayRoute(tempLineWords);
-      writer.write("Created new route:" + newRoute.getRouteNumber() + "\n");
+      writer.write("Created new subway route:" + newRoute.getRouteNumber() + "\n");
     }
 
     // Iterate through bus routes, constructing from events.txt
@@ -59,7 +59,7 @@ public class TransitReader {
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
       Route newRoute = new BusRoute(tempLineWords);
-      writer.write("Created new route:" + newRoute.getRouteNumber() + "\n");
+      writer.write("Created new bus route:" + newRoute.getRouteNumber() + "\n");
     }
 
     // Execute remaining commands in events.txt

@@ -83,8 +83,7 @@ public class Card {
       }
     }
     if (!foundContinuousTrip) {
-      Trip newTrip = new Trip(timeTapped, station);
-      this.currentTrip = newTrip;
+      this.currentTrip = new Trip(timeTapped, station);
     }
   }
 

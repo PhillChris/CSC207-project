@@ -1,20 +1,27 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class Station {
+  private static int totalStations;
+  private static HashMap<String, List<Station>> allStations = new HashMap<>();
+  final int stationID;
   protected String name;
   protected Route route;
   protected int initialFee;
   protected int perStationFee;
   protected List<Station> associatedStations;
-  final int stationID;
-  private static int totalStations;
 
-  public Station(String name, Route route){
+  public Station(String name, Route route) {
     this.name = name;
     this.route = route;
     stationID = totalStations;
     totalStations++;
     this.associatedStations = null;
+  }
+
+  public static HashMap<String, List<Station>> getAllStations() {
+    return allStations;
   }
 
   /** @return the name of this station */
@@ -62,6 +69,19 @@ public abstract class Station {
    */
   public int getFinalFee(Station initialStation) {
     return this.perStationFee
-        * Math.abs(route.getStations().indexOf(this) - route.getStations().indexOf(initialStation));
+            * Math.abs(route.getStations().indexOf(this) - route.getStations().indexOf(initialStation));
+  }
+
+  public static void addStation(Station newStation) {
+    String stationName = newStation.name;
+    // if no station of this name, add it to allStations
+    if (!allStations.containsKey(stationName)) {
+      allStations.put(stationName, new ArrayList<>());
+      allStations.get(stationName).add(newStation);
+    }
+    // associate all stations of matching name
+    for (Station station : allStations.get(stationName)) {
+      station.associate(newStation);
+    }
   }
 }

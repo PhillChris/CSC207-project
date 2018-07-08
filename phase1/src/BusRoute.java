@@ -16,6 +16,7 @@ public class BusRoute extends Route {
     for (String s : stationNames) {
       Station station = new BusStation(s, this);
       getStations().add(station);
+      Station.addStation(station);
     }
     // Add itself to the ArrayLists of routeStations
     busRoutes.add(this);

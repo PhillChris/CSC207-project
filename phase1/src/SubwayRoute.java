@@ -18,7 +18,7 @@ public class SubwayRoute extends Route {
       } else {
         station = SubwayStation.getStations().get(s);
       }
-      getStations().add(station);
+      getRouteStations().add(station);
     }
     // Add itself to the ArrayLists of stations
     subwayRoutes.add(this);

@@ -18,7 +18,7 @@ public class BusRoute extends Route {
       } else {
         station = BusStation.getStations().get(s);
         }
-      getStations().add(station);
+      getRouteStations().add(station);
     }
     // Add itself to the ArrayLists of routeStations
     busRoutes.add(this);

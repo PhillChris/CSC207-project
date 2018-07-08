@@ -23,12 +23,12 @@ public abstract class Route {
     return Routes;
   }
 
-  public List<Station> getStations() {
+  public List<Station> getRouteStations() {
     return routeStations;
   }
 
   public Station findStation(int stationID) {
-    for (Station station : getStations()) {
+    for (Station station : getRouteStations()) {
       if (station.stationID == stationID) {
         return station;
       }

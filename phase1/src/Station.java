@@ -78,7 +78,7 @@ public abstract class Station {
       return 0;
     } else { // this saves useless searching
       for (Route route : Route.getRoutes()) {
-        for (int i = 0; i <= route.getStations().size(); i++) {
+        for (int i = 0; i < route.getStations().size(); i++) {
           Station station = route.getStations().get(i);
           if (station.equals(initialStation)) {
             firstStation = i;

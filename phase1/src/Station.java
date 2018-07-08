@@ -23,8 +23,8 @@ public abstract class Station {
   }
 
   /**
-   * Adds the newStation to allStations. Then associates all stations of the same name
-   * with newStation.
+   * Adds the newStation to allStations. Then associates all stations of the same name with
+   * newStation.
    *
    * @param newStation the station to be added to allStations.
    */
@@ -73,8 +73,7 @@ public abstract class Station {
   }
 
   /**
-   * Called at the end of a ride.
-   * NOTE: we can move this to subclasses, and use more specific Route
+   * Called at the end of a ride. NOTE: we can move this to subclasses, and use more specific Route
    * lists to get better runtime. This seems like it sacrifices extensibility though
    *
    * @param initialStation the station at which this ride started (i.e. when last changing modes of
@@ -82,17 +81,36 @@ public abstract class Station {
    * @return the per-station fare for this ride
    */
   public int getFinalFee(Station initialStation) {
-    if (perStationFee > 0) { // this saves useless searching
+    Integer firstStation = null;
+    Integer secondStation = null;
+    if (perStationFee==0){
+      return 0;
+    }
+    else { // this saves useless searching
       for (Route route : Route.getRoutes()) {
-        int distance = distanceInRoute(this, initialStation, route.getStations());
-        if (distance > -1) { // return the first valid trip containing these stations.
-          return perStationFee * distance;
+        for (int i = 0; i <= route.getStations().size(); i++) {
+          Station station = route.getStations().get(i);
+          if (station.equals(initialStation)) {
+            firstStation = i;
+          }
+          if (station.equals(this)) {
+            secondStation = i;
+          }
+        }
+        if (firstStation == null || secondStation == null) {
+          firstStation = null;
+          secondStation = null;
         }
       }
-      return Trip.MAXFEE; // no valid trips with given station so charge them MAXFEE.
+      if (firstStation==null && secondStation==null){
+        return Trip.MAXFEE;
+      }
+      else{
+        return perStationFee*(Math.abs(secondStation - firstStation));
+      }
+
     }
-    return 0;
-  }
+
 
   /**
    * @param station1 the first station in the Trip.

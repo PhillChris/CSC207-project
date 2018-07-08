@@ -1,21 +1,19 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class SubwayRoute extends Route {
 
   /** An ArrayList of all the SubwayRoutes in the simulation */
   private static ArrayList<SubwayRoute> subwayRoutes;
   /** An ArrayList of all the stations in this SubwayRoute */
-  private ArrayList<SubwayStation> stations;
 
   /** @param stationNames The names of the stations in this SubwayRoute */
   public SubwayRoute(ArrayList<String> stationNames) {
     super();
-    ArrayList<SubwayStation> stations = new ArrayList<>();
-
     // Add stations to this Route
     for (String s : stationNames) {
-      SubwayStation station = new SubwayStation(s, this);
-      stations.add(station);
+      Station station = new SubwayStation(s, this);
+      getStations().add(station);
     }
     // Add itself to the ArrayLists of stations
     subwayRoutes.add(this);
@@ -33,16 +31,16 @@ public class SubwayRoute extends Route {
   }
 
   /** @return The names of all the stations in this SubwayRoute */
-  public ArrayList<String> getStations() {
+  public List<String> getStationNames() {
     ArrayList<String> stationNames = new ArrayList<>();
-    for (Station s : stations) {
+    for (Station s : getStations()) {
       stationNames.add(s.name);
     }
     return stationNames;
   }
 
-  public SubwayStation findStation(int stationId) {
-    for (SubwayStation station : stations) {
+  public Station findStation(int stationId) {
+    for (Station station : getStations()) {
       if (station.stationID == stationId) {
         return station;
       }

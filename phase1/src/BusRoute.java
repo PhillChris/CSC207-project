@@ -4,19 +4,20 @@ public class BusRoute extends Route {
 
   /** An ArrayList of all the BusRoutes in the simulation */
   private static ArrayList<BusRoute> busRoutes;
-  /** An ArrayList of all the stations in this BusRoute */
-  private ArrayList<BusStation> stations;
+
+  /**
+   * An ArrayList of all the routeStations in this BusRoute
+   */
 
   public BusRoute(ArrayList<String> stationNames) {
     super();
-    ArrayList<BusStation> stations = new ArrayList<>();
 
-    // Add stations to this Route
+    // Add routeStations to this Route
     for (String s : stationNames) {
-      BusStation station = new BusStation(s, this);
-      stations.add(station);
+      Station station = new BusStation(s, this);
+      getStations().add(station);
     }
-    // Add itself to the ArrayLists of stations
+    // Add itself to the ArrayLists of routeStations
     busRoutes.add(this);
     Routes.add(this);
   }
@@ -31,8 +32,8 @@ public class BusRoute extends Route {
     return false;
   }
 
-  public BusStation findStation(int stationID){
-    for (BusStation station: stations){
+  public Station findStation(int stationID) {
+    for (Station station : getStations()){
       if (station.stationID == stationID){
         return station;
       }
@@ -40,10 +41,9 @@ public class BusRoute extends Route {
     return null;
   }
 
-  @Override
-  public ArrayList<String> getStations() {
+  public ArrayList<String> getStationNames() {
       ArrayList<String> stationNames = new ArrayList<>();
-      for (Station s : stations) {
+    for (Station s : getStations()) {
           stationNames.add(s.name);
       }
       return stationNames;

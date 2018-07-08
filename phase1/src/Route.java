@@ -1,13 +1,17 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /** Represents an object of Route */
 public abstract class Route {
 
   /** A list of all of the Routes */
   protected static ArrayList<Route> Routes = new ArrayList<Route>();
+
+  private static int totalRoutes = 0;
   /** The name of this route */
   protected int routeNumber;
-  private static int totalRoutes = 0;
+
+  private List<Station> routeStations = new ArrayList<>();
 
   public Route() {
     routeNumber = totalRoutes;
@@ -19,12 +23,13 @@ public abstract class Route {
     return Routes;
   }
 
-  /** @return An ArrayList containing the names of all the stations in the route in order */
-  public abstract ArrayList<String> getStations();
+  public List<Station> getStations() {
+    return routeStations;
+  }
 
   public abstract Station findStation(int stationID);
 
-  public int getRouteNumber(){
+  public int getRouteNumber() {
     return routeNumber;
   }
 }

@@ -24,10 +24,13 @@ public class Parser {
 
   /**
    * @param message The message to be outputted through writer
-   * @throws IOException
    */
-  public static void write(String message) throws IOException {
-    writer.write(message + "/n");
+  public static void write(String message) {
+    try {
+      writer.write(message + "/n");
+    } catch (IOException e) {
+      System.out.println("File not found, create an events.txt and rerun the program");
+    }
   }
 
 
@@ -36,7 +39,7 @@ public class Parser {
    * @param cardInfo Info given from the user
    * @throws IOException
    */
-  static void tap(List<String> cardInfo) throws IOException {
+  static void tap(List<String> cardInfo) {
     LocalDate time = parseTime(cardInfo.get(0));
     try {
       if (time != null) {
@@ -64,7 +67,7 @@ public class Parser {
    * @param userInfo Info given from the user
    * @throws IOException
    */
-  static void addUser(List<String> userInfo) throws IOException {
+  static void addUser(List<String> userInfo) {
     LocalDate time = parseTime(userInfo.get(0));
     if (time != null) {
       if (userInfo.get(2).equals("yes")) {
@@ -82,7 +85,7 @@ public class Parser {
    * @param cardInfo The info given from the user
    * @throws IOException
    */
-  static void addCard(List<String> cardInfo) throws IOException {
+  static void addCard(List<String> cardInfo) {
     LocalDate time = parseTime(cardInfo.get(0));
     try {
       if (time != null) {
@@ -101,7 +104,7 @@ public class Parser {
    * @param cardInfo Information given from the user
    * @throws IOException
    */
-  static void removeCard(List<String> cardInfo) throws IOException {
+  static void removeCard(List<String> cardInfo) {
     LocalDate time = parseTime(cardInfo.get(0));
     try {
       if (time != null) {
@@ -123,7 +126,7 @@ public class Parser {
    * @param userInfo Information given from the user
    * @throws IOException
    */
-  static void reportTheft(List<String> userInfo) throws IOException {
+  static void reportTheft(List<String> userInfo) {
     LocalDate time = parseTime(userInfo.get(0));
     try {
       if (time != null) {
@@ -145,7 +148,7 @@ public class Parser {
    * @param userInfo Information given from the user
    * @throws IOException
    */
-  static void addFunds(List<String> userInfo) throws IOException {
+  static void addFunds(List<String> userInfo) {
     LocalDate time = parseTime(userInfo.get(0));
     try {
       if (time != null) {
@@ -167,7 +170,7 @@ public class Parser {
    * @param emptyList Information given by the user
    * @throws IOException
    */
-  static void endDay(List<String> emptyList) throws IOException {
+  static void endDay(List<String> emptyList) {
     AdminUser.dailyReports();
   }
 
@@ -176,7 +179,7 @@ public class Parser {
    * @param userInfo Information given from the user
    * @throws IOException
    */
-  static void monthlyExpenditue(List<String> userInfo) throws IOException {
+  static void monthlyExpenditue(List<String> userInfo) {
     try {
       CardHolder user = CardHolder.findUser(userInfo.get(0));
       write("Monthly expenditures:" + user.averageMonthly());
@@ -190,9 +193,8 @@ public class Parser {
    * Reads, check and updates the time of the simulation
    * @param time The time inputted by the user
    * @return The updated time or null if invalid input was given
-   * @throws IOException
    */
-  static LocalDate parseTime(String time) throws IOException {
+  static LocalDate parseTime(String time) {
     try {
       String[] formatted = time.split("-");
       LocalDate newTime =

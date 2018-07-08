@@ -20,14 +20,15 @@ public class AdminUser extends CardHolder {
   }
 
 
-  public static void dailyReports() throws IOException {
+  public static void dailyReports() {
     HashMap<LocalDate, Integer> dailyTotals = CostCalculator.allUsersDailyTotals(CardHolder.getAllUsers());
     List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
     Collections.sort(dates);
 
-    try (Writer writer =
+    try {
+      Writer writer =
         new BufferedWriter(
-            new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"))) {
+                new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"));
       writer.write("Date       Revenue");
       writer.write(System.lineSeparator());
       for (LocalDate day : dates) {
@@ -36,7 +37,8 @@ public class AdminUser extends CardHolder {
         String revenue = String.format("&.2f", total);
         writer.write(String.format("%s %s", date, revenue));
       }
-      ;
+    } catch (IOException e) {
+      System.out.println("File could not be constructed. Daily reports will not be generated.");
     }
   }
 }

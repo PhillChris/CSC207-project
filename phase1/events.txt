@@ -3,10 +3,13 @@ Subway Route 1 | Station A
 Subway Route 2 | Station B | Station C
 Bus Route 1 | Station D
 Bus Route 2 | Station E | Station F
-ADDUSER | 2007-12-03T10:15:30 | yes | mango | s@fake.com
-ADDUSER | 2007-12-03T10:15:31 | yes | juice | s2@fake.com
-ADDUSER | 2007-12-03T10:15:32 | no | ice | 3@fake.com
-ADDUSER | 2007-12-03T10:15:33 | no | ice | 4@fake.com
-ADDCARD | 2007-12-03T10:15:34 | 4@fake.com 
-ADDCARD | 2007-12-03T10:15:35 | 3@fake.com
-TAP | 2007-12-03T10:15:36 | 3@fake.com | SUBWAY | Station A 
+ADDUSER | 15:30 | yes | mango | s@fake.com
+ADDUSER | 15:31 | yes | juice | s2@fake.com
+ADDUSER | 15:32 | no | ice | 3@fake.com
+ADDUSER | 15:33 | no | ice | 4@fake.com
+ADDCARD | 15:34 | 4@fake.com 
+ADDCARD | 15:35 | 3@fake.com
+TAP | 15:36 | 3@fake.com | SUBWAY | Station B
+TAP | 15:36 | 3@fake.com | SUBWAY | Station C
+ENDDAY
+

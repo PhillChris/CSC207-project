@@ -10,21 +10,15 @@ public class Parser {
    */
   static LocalDate currentTime;
 
-  /**
-   * The writer for the Parser to write to
-   */
+  /** The writer for the Parser to write to */
   static BufferedWriter writer;
 
-  /**
-   * @param bufferedWriter The writer for this Parser
-   */
+  /** @param bufferedWriter The writer for this Parser */
   static void setWriter(BufferedWriter bufferedWriter) {
     writer = bufferedWriter;
   }
 
-  /**
-   * @param message The message to be outputted through writer
-   */
+  /** @param message The message to be outputted through writer */
   public static void write(String message) {
     try {
       writer.write(message + "/n");
@@ -33,24 +27,27 @@ public class Parser {
     }
   }
 
-
-  // TODO: wait for Andre before touching this. I have an idea to make this cleaner possibly.
   /**
    * Processes a card's tap request
+   *
    * @param cardInfo Info given from the user
    * @throws IOException
    */
   static void tap(List<String> cardInfo) {
+
     LocalDate time = parseTime(cardInfo.get(0));
     try {
-        CardHolder user = CardHolder.getCardholder(cardInfo.get(1));
-        Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
-        Station station =
-            Route.getRoutes()
-                .get(Integer.parseInt(cardInfo.get(3)))
-                .findStation(Integer.parseInt(cardInfo.get(4)));
-
-        card.tap(station, time);
+      CardHolder user = CardHolder.getCardholder(cardInfo.get(1));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
+      String stationType = cardInfo.get(3);
+      String stationName = cardInfo.get(4);
+      Station station;
+      if (stationType.equals("Bus")) {
+        station = BusStation.getStations().get(stationName);
+      } else {
+        station = SubwayStation.getStations().get(stationName);
+      }
+      card.tap(station, time);
     } catch (InsufficientFundsException a) {
       a.getMessage();
     } catch (CardNotFoundException b) {
@@ -60,28 +57,28 @@ public class Parser {
 
   /**
    * Adds a new user to the Transit System
+   *
    * @param userInfo Info given from the user
-   * @throws IOException
    */
   static void addUser(List<String> userInfo) {
     LocalDate time = parseTime(userInfo.get(0));
-      if (userInfo.get(2).equals("yes")) {
-        AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(3));
-      } else {
-        CardHolder user = new CardHolder(userInfo.get(2), userInfo.get(3));
-      }
+    if (userInfo.get(2).equals("yes")) {
+      AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(3));
+    } else {
+      CardHolder user = new CardHolder(userInfo.get(2), userInfo.get(3));
+    }
   }
 
   /**
    * Adds a new card for a user
+   *
    * @param cardInfo The info given from the user
-   * @throws IOException
    */
   static void addCard(List<String> cardInfo) {
     LocalDate time = parseTime(cardInfo.get(0));
     try {
-        Card card = new Card();
-        CardHolder.findUser(cardInfo.get(1)).addCard(card);
+      Card card = new Card();
+      CardHolder.findUser(cardInfo.get(1)).addCard(card);
     } catch (UserNotFoundException e) {
       e.getMessage();
     }
@@ -89,15 +86,15 @@ public class Parser {
 
   /**
    * Removes a user's card
+   *
    * @param cardInfo Information given from the user
-   * @throws IOException
    */
   static void removeCard(List<String> cardInfo) {
     LocalDate time = parseTime(cardInfo.get(0));
     try {
-        CardHolder user = CardHolder.findUser(cardInfo.get(1));
-        Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
-        user.removeCard(card);
+      CardHolder user = CardHolder.findUser(cardInfo.get(1));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
+      user.removeCard(card);
     } catch (UserNotFoundException a) {
       write(a.getMessage());
     } catch (CardNotFoundException b) {
@@ -107,15 +104,15 @@ public class Parser {
 
   /**
    * Deactivates a user's card
+   *
    * @param userInfo Information given from the user
-   * @throws IOException
    */
   static void reportTheft(List<String> userInfo) {
     LocalDate time = parseTime(userInfo.get(0));
     try {
-        CardHolder user = CardHolder.findUser(userInfo.get(1));
-        Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
-        user.suspendCard(card);
+      CardHolder user = CardHolder.findUser(userInfo.get(1));
+      Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
+      user.suspendCard(card);
     } catch (UserNotFoundException a) {
       write(a.getMessage());
     } catch (CardNotFoundException b) {
@@ -125,15 +122,15 @@ public class Parser {
 
   /**
    * Adds funds to a card
+   *
    * @param userInfo Information given from the user
-   * @throws IOException
    */
   static void addFunds(List<String> userInfo) {
     LocalDate time = parseTime(userInfo.get(0));
     try {
-        CardHolder user = CardHolder.findUser(userInfo.get(1));
-        Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
-        card.addBalance(Integer.parseInt(userInfo.get(3)));
+      CardHolder user = CardHolder.findUser(userInfo.get(1));
+      Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
+      card.addBalance(Integer.parseInt(userInfo.get(3)));
     } catch (UserNotFoundException a) {
       write(a.getMessage());
     } catch (CardNotFoundException b) {
@@ -143,8 +140,8 @@ public class Parser {
 
   /**
    * Ends a day in the simulation
+   *
    * @param emptyList Information given by the user
-   * @throws IOException
    */
   static void endDay(List<String> emptyList) {
     AdminUser.dailyReports();
@@ -152,8 +149,8 @@ public class Parser {
 
   /**
    * Gets the monthly expenditures for the Transit System
+   *
    * @param userInfo Information given from the user
-   * @throws IOException
    */
   static void monthlyExpenditue(List<String> userInfo) {
     try {
@@ -162,11 +159,11 @@ public class Parser {
     } catch (UserNotFoundException e) {
       write(e.getMessage());
     }
-
   }
 
   /**
    * Reads, check and updates the time of the simulation
+   *
    * @param time The time inputted by the user
    * @return The updated time or null if invalid input was given
    */

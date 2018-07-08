@@ -43,7 +43,6 @@ public class Parser {
   static void tap(List<String> cardInfo) {
     LocalDate time = parseTime(cardInfo.get(0));
     try {
-      if (time != null) {
         CardHolder user = CardHolder.getCardholder(cardInfo.get(1));
         Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
         Station station =
@@ -52,10 +51,6 @@ public class Parser {
                 .findStation(Integer.parseInt(cardInfo.get(4)));
 
         card.tap(station, time);
-      } else {
-        write("Invalid Input given for Tap call");
-      }
-
     } catch (InsufficientFundsException a) {
       a.getMessage();
     } catch (CardNotFoundException b) {
@@ -70,15 +65,11 @@ public class Parser {
    */
   static void addUser(List<String> userInfo) {
     LocalDate time = parseTime(userInfo.get(0));
-    if (time != null) {
       if (userInfo.get(2).equals("yes")) {
         AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(3));
       } else {
         CardHolder user = new CardHolder(userInfo.get(2), userInfo.get(3));
       }
-    } else {
-      write("Invalid Input given for addUser call");
-    }
   }
 
   /**
@@ -89,12 +80,8 @@ public class Parser {
   static void addCard(List<String> cardInfo) {
     LocalDate time = parseTime(cardInfo.get(0));
     try {
-      if (time != null) {
         Card card = new Card();
         CardHolder.findUser(cardInfo.get(1)).addCard(card);
-      } else {
-        write("Invalid input for addCard call");
-      }
     } catch (UserNotFoundException e) {
       e.getMessage();
     }
@@ -108,13 +95,9 @@ public class Parser {
   static void removeCard(List<String> cardInfo) {
     LocalDate time = parseTime(cardInfo.get(0));
     try {
-      if (time != null) {
         CardHolder user = CardHolder.findUser(cardInfo.get(1));
         Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
         user.removeCard(card);
-      } else {
-        write("Invalid input for removeCard call");
-      }
     } catch (UserNotFoundException a) {
       write(a.getMessage());
     } catch (CardNotFoundException b) {
@@ -130,13 +113,9 @@ public class Parser {
   static void reportTheft(List<String> userInfo) {
     LocalDate time = parseTime(userInfo.get(0));
     try {
-      if (time != null) {
         CardHolder user = CardHolder.findUser(userInfo.get(1));
         Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
         user.suspendCard(card);
-      } else {
-        write("Invalid input for reportTheft call");
-      }
     } catch (UserNotFoundException a) {
       write(a.getMessage());
     } catch (CardNotFoundException b) {
@@ -152,13 +131,9 @@ public class Parser {
   static void addFunds(List<String> userInfo) {
     LocalDate time = parseTime(userInfo.get(0));
     try {
-      if (time != null) {
         CardHolder user = CardHolder.findUser(userInfo.get(1));
         Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
         card.addBalance(Integer.parseInt(userInfo.get(3)));
-      } else {
-        write("Invalid input for AddFunds call");
-      }
     } catch (UserNotFoundException a) {
       write(a.getMessage());
     } catch (CardNotFoundException b) {

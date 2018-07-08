@@ -32,11 +32,7 @@ public class Trip {
   void endTrip(Station station, LocalDateTime endTime) {
     endStation = station;
     timeEnded = endTime;
-    if (!isValidTrip(station, endTime)) {
-      tripFee = MAXFEE;
-    } else {
-      tripFee += station.getFinalFee(startStation);
-    }
+    tripFee += station.getFinalFee(startStation);
   }
 
   int getFee() {
@@ -54,23 +50,13 @@ public class Trip {
    * @param time time for the start of the continuation
    * @return true if continuous trip, false otherwise
    */
-  boolean isValidTrip(Station newStation, LocalDateTime time) {
-    boolean withinTimeLimit =
-        Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
-    return (endStation == newStation) && (withinTimeLimit);
-  }
-
-  /**
-   * Checks if a trip is continuous. If true, then this trip may be continued from the endStation.
-   *
-   * @param newStation the station that is being checked for being a continuous trip.
-   * @param time the time the newStation is being checked into.
-   */
   public boolean isContinuousTrip(Station newStation, LocalDateTime time) {
     boolean withinTimeLimit =
         Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
     return (this.endStation.isAssociatedStation(endStation) && withinTimeLimit);
+    // TODO: switch endStation argument to newStation
   }
+  
   /**
    * Set the endStation and timeEnded to none when the trip is being continued. Continue this trip
    * from station.

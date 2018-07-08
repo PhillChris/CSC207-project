@@ -37,6 +37,7 @@ public abstract class Station {
     // associate all stations of matching name
     for (Station station : allStations.get(stationName)) {
       station.associatedStations.add(newStation);
+      newStation.associatedStations.add(station);
     }
   }
 

@@ -83,10 +83,9 @@ public abstract class Station {
   public int getFinalFee(Station initialStation) {
     Integer firstStation = null;
     Integer secondStation = null;
-    if (perStationFee==0){
+    if (perStationFee == 0) {
       return 0;
-    }
-    else { // this saves useless searching
+    } else { // this saves useless searching
       for (Route route : Route.getRoutes()) {
         for (int i = 0; i <= route.getStations().size(); i++) {
           Station station = route.getStations().get(i);
@@ -102,15 +101,13 @@ public abstract class Station {
           secondStation = null;
         }
       }
-      if (firstStation==null && secondStation==null){
+      if (firstStation == null && secondStation == null) {
         return Trip.MAXFEE;
+      } else {
+        return perStationFee * (Math.abs(secondStation - firstStation));
       }
-      else{
-        return perStationFee*(Math.abs(secondStation - firstStation));
-      }
-
     }
-
+  }
 
   /**
    * @param station1 the first station in the Trip.

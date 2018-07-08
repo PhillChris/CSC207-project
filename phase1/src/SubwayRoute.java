@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class SubwayRoute extends Route {
 
@@ -19,24 +18,5 @@ public class SubwayRoute extends Route {
     // Add itself to the ArrayLists of stations
     subwayRoutes.add(this);
     Routes.add(this);
-  }
-
-  /**
-   * Check if the list of stationNames forms a valid SubwayRoute
-   *
-   * @param stationNames The list of station names
-   * @return
-   */
-  public static boolean checkRoute(ArrayList<String> stationNames) {
-    return false;
-  }
-
-  /** @return The names of all the stations in this SubwayRoute */
-  public List<String> getStationNames() {
-    ArrayList<String> stationNames = new ArrayList<>();
-    for (Station s : getStations()) {
-      stationNames.add(s.name);
-    }
-    return stationNames;
   }
 }

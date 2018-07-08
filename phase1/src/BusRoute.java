@@ -22,22 +22,4 @@ public class BusRoute extends Route {
     busRoutes.add(this);
     Routes.add(this);
   }
-
-  /**
-   * Check if the list of stationNames forms a valid SubwayRoute
-   *
-   * @param stationNames The list of station names
-   * @return
-   */
-  public static boolean checkRoute(ArrayList<String> stationNames) {
-    return false;
-  }
-
-  public ArrayList<String> getStationNames() {
-      ArrayList<String> stationNames = new ArrayList<>();
-    for (Station s : getStations()) {
-          stationNames.add(s.name);
-      }
-      return stationNames;
-  }
 }

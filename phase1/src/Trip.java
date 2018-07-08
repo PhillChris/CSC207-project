@@ -53,7 +53,7 @@ public class Trip {
   public boolean isContinuousTrip(Station newStation, LocalDateTime time) {
     boolean withinTimeLimit =
         Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
-    return (this.endStation.isAssociatedStation(endStation) && withinTimeLimit);
+    return (this.endStation.isAssociatedStation(newStation) && withinTimeLimit);
     // TODO: switch endStation argument to newStation
   }
 

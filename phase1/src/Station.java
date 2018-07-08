@@ -36,7 +36,7 @@ public abstract class Station {
     }
     // associate all stations of matching name
     for (Station station : allStations.get(stationName)) {
-      station.associate(newStation);
+      station.associatedStations.add(newStation);
     }
   }
 
@@ -60,15 +60,6 @@ public abstract class Station {
    */
   public boolean isAssociatedStation(Station station) {
     return this.associatedStations.contains(station);
-  }
-
-  /**
-   * Associates a given station with this one.
-   *
-   * @param associatedStation the station to be associated with this one.
-   */
-  public void associate(Station associatedStation) {
-    this.associatedStations.add(associatedStation);
   }
 
   /**

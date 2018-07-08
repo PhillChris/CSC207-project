@@ -14,7 +14,8 @@ public class Main {
     try {
       TransitReader.read(reader, writer);
     } catch (InitLineException init) {
-      writer.write("Input line invalid, program not executable.");
+      writer.write(init.getMessage());
     }
+    writer.close();
   }
 }

@@ -34,6 +34,7 @@ public class Parser {
   }
 
 
+  // TODO: wait for Andre before touching this. I have an idea to make this cleaner possibly.
   /**
    * Processes a card's tap request
    * @param cardInfo Info given from the user

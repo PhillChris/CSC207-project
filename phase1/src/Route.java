@@ -27,7 +27,14 @@ public abstract class Route {
     return routeStations;
   }
 
-  public abstract Station findStation(int stationID);
+  public Station findStation(int stationID) {
+    for (Station station : getStations()) {
+      if (station.stationID == stationID) {
+        return station;
+      }
+    }
+    return null;
+  }
 
   public int getRouteNumber() {
     return routeNumber;

@@ -32,15 +32,6 @@ public class BusRoute extends Route {
     return false;
   }
 
-  public Station findStation(int stationID) {
-    for (Station station : getStations()){
-      if (station.stationID == stationID){
-        return station;
-      }
-    }
-    return null;
-  }
-
   public ArrayList<String> getStationNames() {
       ArrayList<String> stationNames = new ArrayList<>();
     for (Station s : getStations()) {

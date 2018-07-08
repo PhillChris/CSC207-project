@@ -38,13 +38,4 @@ public class SubwayRoute extends Route {
     }
     return stationNames;
   }
-
-  public Station findStation(int stationId) {
-    for (Station station : getStations()) {
-      if (station.stationID == stationId) {
-        return station;
-      }
-    }
-    return null;
-  }
 }

@@ -56,7 +56,7 @@ public class Trip {
     return (this.endStation.isAssociatedStation(endStation) && withinTimeLimit);
     // TODO: switch endStation argument to newStation
   }
-  
+
   /**
    * Set the endStation and timeEnded to none when the trip is being continued. Continue this trip
    * from station.

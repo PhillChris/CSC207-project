@@ -108,31 +108,4 @@ public abstract class Station {
       }
     }
   }
-
-  /**
-   * @param station1 the first station in the Trip.
-   * @param station2 the second station in the Trip.
-   * @param routeStations the route we are querying for stations.
-   * @return distance between the two stations in the given route. -1 if stations aren't both
-   *     contained in the given route.
-   */
-  private int distanceInRoute(Station station1, Station station2, List<Station> routeStations) {
-    Integer firstStation = null;
-    Integer secondStation = null;
-    for (int i = 0; i <= routeStations.size(); i++) {
-      Station station = routeStations.get(i);
-      if (station1.equals(station)) {
-        firstStation = i;
-      }
-      if (station2.equals(station)) {
-        secondStation = i;
-      }
-    }
-    // check that both stations are in the route
-    if (firstStation != null && secondStation != null) {
-      return Math.abs(firstStation - secondStation) * perStationFee;
-    } else {
-      return -1;
-    }
-  }
 }

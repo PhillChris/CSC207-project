@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class BusRoute extends Route {
 
@@ -10,9 +11,21 @@ public class BusRoute extends Route {
 
     // Add routeStations to this Route
     for (String s : stationNames) {
-      Station station = new BusStation(s);
+      Station station = null; // stupid compiler error when not assigned null.
+      if (!Station.getAllStations().containsKey(s)) { // there are no stations with the same name.
+        station = new BusStation(s);
+        Station.addStation(station); // associate stations
+      } else {
+        List<Station> sameNameStations = Station.getAllStations().get(s);
+        for (Station sameNameStation : sameNameStations) {
+          // check if a station of the same name and type already exists.
+          if (sameNameStation instanceof BusStation) {
+            station = sameNameStation;
+          }
+        }
+
+      }
       getStations().add(station);
-      Station.addStation(station);
     }
     // Add itself to the ArrayLists of routeStations
     busRoutes.add(this);

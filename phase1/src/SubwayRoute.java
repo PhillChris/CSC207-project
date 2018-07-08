@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class SubwayRoute extends Route {
 
@@ -11,9 +12,21 @@ public class SubwayRoute extends Route {
     super();
     // Add stations to this Route
     for (String s : stationNames) {
-      Station station = new SubwayStation(s);
+      Station station = null; // stupid compiler error when not assigned null.
+      if (!Station.getAllStations().containsKey(s)) { // there are no stations with the same name.
+        station = new BusStation(s);
+        Station.addStation(station); // associate stations.
+      } else {
+        List<Station> sameNameStations = Station.getAllStations().get(s);
+        // check if a station of the same name and type already exists.
+        for (Station sameNameStation : sameNameStations) {
+          if (sameNameStation instanceof SubwayStation) {
+            station = sameNameStation;
+          }
+        }
+
+      }
       getStations().add(station);
-      Station.addStation(station);
     }
     // Add itself to the ArrayLists of stations
     subwayRoutes.add(this);

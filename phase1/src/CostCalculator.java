@@ -92,9 +92,9 @@ public class CostCalculator {
    * @param cardHolders
    * @return
    */
-  public static HashMap<LocalDate, Integer> allUsersDailyTotals(List<CardHolder> cardHolders) {
+  public static HashMap<LocalDate, Integer> allUsersDailyTotals(HashMap<String, CardHolder> cardHolders) {
     List<Card> allCards = new ArrayList<Card>();
-    for (CardHolder cardHolder : cardHolders) {
+    for (CardHolder cardHolder : cardHolders.values()) {
       allCards.addAll(cardHolder.getCards());
     }
     HashMap<LocalDate, List<Integer>> allUsersCosts = getTripsByDay(allCards);

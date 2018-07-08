@@ -130,4 +130,9 @@ public class CardHolder {
       throw new UserNotFoundException();
     }
   }
+
+  public static HashMap<String, CardHolder> getAllUsers() {
+    return allUsers;
+  }
+
 }

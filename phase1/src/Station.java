@@ -22,6 +22,12 @@ public abstract class Station {
     return allStations;
   }
 
+  /**
+   * Adds the newStation to allStations. Then associates all stations of the same name
+   * with newStation.
+   *
+   * @param newStation the station to be added to allStations.
+   */
   public static void addStation(Station newStation) {
     String stationName = newStation.name;
     // if no station of this name, add it to allStations
@@ -68,6 +74,8 @@ public abstract class Station {
 
   /**
    * Called at the end of a ride.
+   * NOTE: we can move this to subclasses, and use more specific Route
+   * lists to get better runtime. This seems like it sacrifices extensibility though
    *
    * @param initialStation the station at which this ride started (i.e. when last changing modes of
    *     transportation or vehicle lines).
@@ -87,11 +95,11 @@ public abstract class Station {
   }
 
   /**
-   * @param station1      the first station in the Trip.
-   * @param station2      the second station in the Trip.
+   * @param station1 the first station in the Trip.
+   * @param station2 the second station in the Trip.
    * @param routeStations the route we are querying for stations.
    * @return distance between the two stations in the given route. -1 if stations aren't both
-   * contained in the given route.
+   *     contained in the given route.
    */
   private int distanceInRoute(Station station1, Station station2, List<Station> routeStations) {
     Integer firstStation = null;

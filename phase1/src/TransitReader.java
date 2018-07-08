@@ -49,9 +49,8 @@ public class TransitReader {
       String tempLine = reader.readLine();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
-        Route newRoute = new SubwayRoute(tempLineWords);
-        writer.write("Created new route:" + newRoute.getRouteNumber());
-        writer.write("Failed to create new subway route");
+      Route newRoute = new SubwayRoute(tempLineWords);
+      writer.write("Created new route:" + newRoute.getRouteNumber() + "\n");
     }
 
     // Iterate through bus routes, constructing from events.txt
@@ -59,17 +58,16 @@ public class TransitReader {
       String tempLine = reader.readLine();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
-        Route newRoute = new BusRoute(tempLineWords);
-        writer.write("Created new route:" + newRoute.getRouteNumber());
+      Route newRoute = new BusRoute(tempLineWords);
+      writer.write("Created new route:" + newRoute.getRouteNumber() + "\n");
     }
 
     // Execute remaining commands in events.txt
-    // TO DO: FIX THESE IF STATEMENTS
     String actionLine = reader.readLine();
     while (actionLine != null) {
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
-      if (tempLineWords.size() < 1) {
+      if (tempLineWords.size() <= 1) {
         TransitReader.keyWords
             .get(tempLineWords.get(0))
             .apply(tempLineWords.subList(1, tempLineWords.size()));

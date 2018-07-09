@@ -71,6 +71,7 @@ public class Trip {
    */
   void continueTrip(Station station) {
     priorStops.add(endStation);
+    priorStops.add(station);
     endStation = null;
     timeEnded = null;
     maxFee -= tripFee;

@@ -1,11 +1,12 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class BusRoute extends Route {
 
   /** An ArrayList of all the BusRoutes in the simulation */
-  private static ArrayList<BusRoute> busRoutes = new ArrayList<>();
+  private static List<BusRoute> busRoutes = new ArrayList<>();
 
-  public BusRoute(ArrayList<String> stationNames) {
+  public BusRoute(List<String> stationNames) {
     super();
 
     // Add routeStations to this Route

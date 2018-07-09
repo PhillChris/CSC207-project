@@ -6,4 +6,5 @@ Bus Route 2 | Station E | Station F
 ADDUSER | 15:30 | yes | mango | s@fake.com
 ADDCARD | 15:34 | s@fake.com
 TAP | 15:36 | s@fake.com | 1 | SUBWAY | Station B
+TAP | 15:37 | s@fake.com | 1 | SUBWAY | Station C
 ENDDAY

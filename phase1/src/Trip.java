@@ -29,7 +29,7 @@ public class Trip {
    * @param station the station where this Trip ends
    * @param endTime the station where this Trip continuous
    */
-  void endTrip(Station station, LocalDateTime endTime) {
+  void endTrip(Station station, LocalDateTime endTime) throws InvalidTripException {
     endStation = station;
     timeEnded = endTime;
     tripFee += station.getFinalFee(startStation);

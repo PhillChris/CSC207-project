@@ -1,6 +1,5 @@
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -48,15 +47,19 @@ public class Parser {
       if (station == null) {
         throw new StationNotFoundException();
       }
-      card.tap(station, time);
+      try {
+        card.tap(station, time);
+      } catch (InvalidTripException t) {
+        write(t.getMessage());
+      }
 
       if (card.tripStarted()) {
         write("User " + user.getEmail() + " tapped on at " + stationName);
       } else {
         write("User " + user.getEmail() + " tapped off at " + stationName);
       }
-    } catch (TransitException a) {
-      write(a.getMessage());
+    } catch (TransitException b) {
+      write(b.getMessage());
     }
   }
 
@@ -67,7 +70,7 @@ public class Parser {
    */
   static void addUser(List<String> userInfo) {
     try {
-    LocalDateTime time = TransitTime.getTime(userInfo.get(0));
+      LocalDateTime time = TransitTime.getTime(userInfo.get(0));
     } catch (TransitException a) {
       a.getMessage();
     }

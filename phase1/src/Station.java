@@ -71,7 +71,7 @@ public abstract class Station {
    *     transportation or vehicle lines).
    * @return the per-station fare for this ride
    */
-  public int getFinalFee(Station initialStation) {
+  public int getFinalFee(Station initialStation) throws InvalidTripException {
     Integer firstStation = null;
     Integer secondStation = null;
     if (perStationFee == 0) {
@@ -93,7 +93,7 @@ public abstract class Station {
         }
       }
       if (firstStation == null && secondStation == null) {
-        return Trip.MAXFEE;
+        throw new InvalidTripException();
       } else {
         return perStationFee * (Math.abs(secondStation - firstStation));
       }

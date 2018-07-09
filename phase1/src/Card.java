@@ -54,7 +54,7 @@ public class Card {
   }
 
   public void tap(Station station, LocalDateTime timeTapped)
-          throws InsufficientFundsException, CardSuspendedException {
+          throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
     if (!this.isActive) {
       throw new CardSuspendedException();
     }
@@ -91,7 +91,7 @@ public class Card {
     }
   }
 
-  private void tapOut(Station station, LocalDateTime timeTapped) {
+  private void tapOut(Station station, LocalDateTime timeTapped) throws InvalidTripException {
     currentTrip.endTrip(station, timeTapped);
     this.subtractBalance(currentTrip.getFee());
     allTrips.add(currentTrip);

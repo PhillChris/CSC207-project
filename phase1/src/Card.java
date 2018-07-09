@@ -15,11 +15,10 @@ public class Card {
 
   private boolean isActive;
 
-  public Card() {
+  public Card(int cardID) {
     this.balance = CARD_INITIAL_BALANCE;
     this.isActive = true;
-    this.id = cardCounter;
-    cardCounter++;
+    this.id = cardID;
   }
 
   public int getId() {

@@ -12,6 +12,7 @@ public class CardHolder {
   private final String email;
   private List<Card> cards;
   private String name;
+  private int cardCounter;
 
   /**
    * Construct a new instance of CardHolder
@@ -24,6 +25,7 @@ public class CardHolder {
     this.email = email;
     this.cards = new ArrayList<Card>();
     allUsers.put(email, this);
+    cardCounter = 0;
   }
 
   public static CardHolder getCardholder(String email) {
@@ -39,7 +41,9 @@ public class CardHolder {
    *
    * @param card the card being added
    */
-  public void addCard(Card card) {
+  public void addCard() {
+    Card card = new Card(cardCounter);
+    cardCounter++;
     if (!this.cards.contains(card)) {
       this.cards.add(card);
     }

@@ -79,9 +79,8 @@ public class Parser {
   static void addCard(List<String> cardInfo) {
     LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
     try {
-      Card card = new Card();
       CardHolder user = CardHolder.findUser(cardInfo.get(1));
-      user.addCard(card);
+      user.addCard();
     } catch (UserNotFoundException e) {
       e.getMessage();
     }

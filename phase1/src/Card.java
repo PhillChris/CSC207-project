@@ -5,15 +5,15 @@ import java.util.List;
 public class Card {
   public static final int CARD_INITIAL_BALANCE = 1900;
   private static int cardCounter = 1;
-  private int balance;
-  /** A list containing a history of all trips this Card has created. */
-  private List<Trip> allTrips = new ArrayList<>();
   /** The current trip this card is on. null when no active trip */
   Trip currentTrip;
 
-  private int id;
-
   boolean isActive;
+  private int balance;
+  /** A list containing a history of all trips this Card has created. */
+  private List<Trip> allTrips = new ArrayList<>();
+
+  private int id;
 
   public Card(int cardID) {
     this.balance = CARD_INITIAL_BALANCE;
@@ -43,6 +43,13 @@ public class Card {
     this.balance -= toSubtract;
   }
 
+  Trip getLastTrip() {
+    if (allTrips.size() > 0) { // check this to avoid index errors
+      return allTrips.get(allTrips.size() - 1);
+    }
+    return null;
+  }
+
   /**
    * Tap into the current station, creating a new Trip object with startStation station and
    * timeStarted timeTapped. As of now this method is only called if there is no currentTrip on this
@@ -55,8 +62,8 @@ public class Card {
     if (balance <= 0) throw new InsufficientFundsException();
 
     boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
-    if (allTrips.size() > 0) { // check this to avoid index errors
-      Trip lastTrip = allTrips.get(allTrips.size() - 1);
+      Trip lastTrip = getLastTrip();
+    if (lastTrip != null) { // check this to avoid index errors
       // check that tapping into this station would be a continuous trip from last trip
       if (lastTrip.isContinuousTrip(station, timeTapped)) {
         currentTrip = lastTrip; // continue the last trip
@@ -75,6 +82,7 @@ public class Card {
     currentTrip.endTrip(station, timeTapped);
     subtractBalance(currentTrip.getFee());
     boolean validTrip = currentTrip.isValidTrip();
+    allTrips.add(currentTrip);
     currentTrip = null;
     if (!validTrip) {
       throw new InvalidTripException();

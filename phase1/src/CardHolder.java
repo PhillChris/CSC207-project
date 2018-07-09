@@ -95,12 +95,31 @@ public class CardHolder {
 
   public void tap(Card card, Station station, LocalDateTime timeTapped)
           throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
+
+    LocalDate date = TransitTime.getCurrentDate();
+    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
+
     if (!card.isActive) {
       throw new CardSuspendedException();
     }
     if (card.currentTrip == null) {
       card.tapIn(station, timeTapped);
-    } else card.tapOut(station, timeTapped);
+    } else {
+      card.tapOut(station, timeTapped);
+      Trip lastTrip = card.getLastTrip();
+      if (ExpenditureMonthly.containsKey(month)) {
+        ExpenditureMonthly.put(month, ExpenditureMonthly.get(month) + lastTrip.getFee());
+      }
+      else{
+        ExpenditureMonthly.put(month, lastTrip.getFee());
+      }
+      if (ExpenditureDaily.containsKey(month)) {
+        ExpenditureDaily.put(date, ExpenditureDaily.get(date) + lastTrip.getFee());
+      }
+      else {
+        ExpenditureDaily.put(date, lastTrip.getFee());
+      }
+    }
   }
 
   /**

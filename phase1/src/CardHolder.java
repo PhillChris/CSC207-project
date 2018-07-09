@@ -25,7 +25,7 @@ public class CardHolder {
     this.email = email;
     this.cards = new ArrayList<Card>();
     allUsers.put(email, this);
-    cardCounter = 0;
+    cardCounter = 1;
   }
 
   public static CardHolder getCardholder(String email) {

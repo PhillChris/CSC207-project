@@ -153,7 +153,8 @@ public class Parser {
   static void monthlyExpenditure(List<String> userInfo) {
     try {
       CardHolder user = CardHolder.findUser(userInfo.get(0));
-      write("Monthly expenditures:" + user.averageMonthly());
+      // TO DO: FIX THIS METHOD. NOT COMPLETE
+      //write("Monthly expenditures:" + user.averageMonthily());
     } catch (TransitException a) {
       write(a.getMessage());
     }

@@ -20,6 +20,6 @@ public class BusStation extends Station {
   }
 
   public static void addStation(BusStation station) {
-    busStations.put(station.name, station);
+    busStations.put(station.getName(), station);
   }
 }

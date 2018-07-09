@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,6 +14,8 @@ public class CardHolder {
   private List<Card> cards;
   private String name;
   private int cardCounter;
+  HashMap<YearMonth, Integer > ExpenditureMonthly;
+  HashMap<LocalDateTime, Integer > ExpenditureDaily;
 
   /**
    * Construct a new instance of CardHolder
@@ -26,6 +29,8 @@ public class CardHolder {
     this.cards = new ArrayList<Card>();
     allUsers.put(email, this);
     cardCounter = 1;
+    ExpenditureMonthly = new HashMap<>();
+    ExpenditureDaily = new HashMap<>();
   }
 
   public static CardHolder getCardholder(String email) {

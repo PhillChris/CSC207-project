@@ -23,6 +23,7 @@ public class AdminUser extends CardHolder {
   public static void dailyReports() {
     // The revenue collected for each day
     HashMap<LocalDateTime, Integer> dailyTotals = CostCalculator.allUsersDailyTotals(CardHolder.getAllUsers());
+    // The ArrayList of all the dates collected
     List<LocalDateTime> dates = new ArrayList<LocalDateTime>(dailyTotals.keySet());
     Collections.sort(dates);
 
@@ -36,7 +37,7 @@ public class AdminUser extends CardHolder {
         String date = day.toString();
         double total = dailyTotals.get(day) / 100;
         String revenue = String.format("&.2f", total);
-        writer.write(String.format("%s %s", date, revenue));
+        writer.write(String.format("%s %s", date + " $" + revenue));
       }
     } catch (IOException e) {
       System.out.println("File could not be constructed. Daily reports will not be generated.");

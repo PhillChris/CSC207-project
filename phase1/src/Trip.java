@@ -95,13 +95,15 @@ public class Trip {
     Integer firstStation = null;
     Integer secondStation = null;
     for (Route route : Route.getRoutes()) {
-      for (int i = 0; i < route.getRouteStations().size(); i++) {
-        Station station = route.getRouteStations().get(i);
-        if (station.equals(startStation)) {
-          firstStation = i;
-        }
-        if (station.equals(endStation)) {
-          secondStation = i;
+      if (firstStation == null && secondStation == null) {
+        for (int i = 0; i < route.getRouteStations().size(); i++) {
+          Station station = route.getRouteStations().get(i);
+          if (station.equals(startStation)) {
+            firstStation = i;
+          }
+          if (station.equals(endStation)) {
+            secondStation = i;
+          }
         }
       }
       if (firstStation == null || secondStation == null) {

@@ -1,5 +1,6 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /** Represents an object of Trip */
 public class Trip {
@@ -7,7 +8,7 @@ public class Trip {
   static final Duration MAXTRIPLENGTH = Duration.ofMinutes(120);
   LocalDateTime timeStarted;
   LocalDateTime timeEnded;
-  Station startStation;
+  ArrayList<Station> priorStops = new ArrayList<>();
   Station endStation;
   int tripFee;
   private int perStationFee;
@@ -21,9 +22,9 @@ public class Trip {
    */
   public Trip(LocalDateTime startTime, Station station) {
     timeStarted = startTime;
-    startStation = station;
     tripFee = station.getInitialFee();
     perStationFee = station.perStationFee;
+    priorStops.add(station);
   }
 
   /**
@@ -60,7 +61,6 @@ public class Trip {
     boolean withinTimeLimit =
         Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
     return (this.endStation.isAssociatedStation(newStation) && withinTimeLimit);
-    // TODO: switch endStation argument to newStation
   }
 
   /**
@@ -70,6 +70,7 @@ public class Trip {
    * @param station the station that the trip is being continued from.
    */
   void continueTrip(Station station) {
+    priorStops.add(endStation);
     endStation = null;
     timeEnded = null;
     tripFee += station.getInitialFee();
@@ -78,7 +79,7 @@ public class Trip {
 
   /** @return The StartStation for this Trip */
   Station getStartStation() {
-    return startStation;
+    return priorStops.get(0);
   }
 
   public LocalDateTime getTimeStarted() {
@@ -98,7 +99,7 @@ public class Trip {
       if (firstStation == null && secondStation == null) {
         for (int i = 0; i < route.getRouteStations().size(); i++) {
           Station station = route.getRouteStations().get(i);
-          if (station.equals(startStation)) {
+          if (station.equals(priorStops.get(priorStops.size() - 1))) {
             firstStation = i;
           }
           if (station.equals(endStation)) {

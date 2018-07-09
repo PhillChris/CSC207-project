@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /** Represents an object of Trip */
 public class Trip {
-  static final int MAXFEE = 600;
+  private int maxFee = 600;
   static final Duration MAXTRIPLENGTH = Duration.ofMinutes(120);
   LocalDateTime timeStarted;
   LocalDateTime timeEnded;
@@ -40,10 +40,10 @@ public class Trip {
   }
 
   int getFee() {
-    if (tripFee < MAXFEE) {
+    if (tripFee < maxFee) {
       return tripFee;
     } else {
-      return MAXFEE;
+      return maxFee;
     }
   }
 
@@ -73,7 +73,8 @@ public class Trip {
     priorStops.add(endStation);
     endStation = null;
     timeEnded = null;
-    tripFee += station.getInitialFee();
+    maxFee -= tripFee;
+    tripFee = station.getInitialFee();
     perStationFee = station.perStationFee;
   }
 
@@ -114,7 +115,7 @@ public class Trip {
     }
     if (firstStation == null && secondStation == null) {
       isValidTrip = false;
-      return Trip.MAXFEE;
+      return this.maxFee;
     } else {
       return perStationFee * (Math.abs(secondStation - firstStation));
     }

@@ -28,8 +28,10 @@ public class Parser {
    * @throws IOException
    */
   static void tap(List<String> cardInfo) {
+    // Get the time of the tap
     LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
     try {
+      // Find the user, station and
       CardHolder user = CardHolder.getCardholder(cardInfo.get(1));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
       String stationType = cardInfo.get(3);

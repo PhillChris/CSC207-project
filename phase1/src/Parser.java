@@ -146,15 +146,15 @@ public class Parser {
   }
 
   /**
-   * Gets the monthly expenditures for the Transit System
+   * Gets a user's average monthly expenditures for the Transit System
    *
    * @param userInfo Information given from the user
    */
   static void monthlyExpenditure(List<String> userInfo) {
     try {
       CardHolder user = CardHolder.findUser(userInfo.get(0));
-      // TO DO: FIX THIS METHOD. NOT COMPLETE
-      //write("Monthly expenditures:" + user.averageMonthily());
+      String averageMonthly = String.format("&.2f", user.getAvgMonthly());
+      write("User " + user.getEmail() +"'s average monthly expenditures: " + averageMonthly);
     } catch (TransitException a) {
       write(a.getMessage());
     }

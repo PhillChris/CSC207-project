@@ -49,13 +49,13 @@ public class Parser {
       }
       try {
         card.tap(station, time);
+        if (card.tripStarted()) {
+          write("User " + user.getEmail() + " tapped on at " + stationName);
+        } else {
+          write("User " + user.getEmail() + " tapped off at " + stationName);
+        }
       } catch (InvalidTripException t) {
         write(t.getMessage());
-      }
-
-      if (card.tripStarted()) {
-        write("User " + user.getEmail() + " tapped on at " + stationName);
-      } else {
         write("User " + user.getEmail() + " tapped off at " + stationName);
       }
     } catch (TransitException b) {

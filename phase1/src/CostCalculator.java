@@ -1,11 +1,8 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.YearMonth;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CostCalculator {
 
@@ -15,13 +12,13 @@ public class CostCalculator {
   /** Contains the expenditure per each day */
   static HashMap<LocalDate, Integer> DailyRevenue = new HashMap<>();
 
-  /**
-   * Return a hashmap mapping a list of trip costs associated with a list of cards to the month/year
-   * they were taken.
-   *
-   * @param cards
-   * @return Hashmap with lists of trip costs for a given month/year
-   */
+  /** Updates the expenditure and revenue in the entire system */
+  public static void update() {
+    updateUserRevenue();
+    updateSystemRevenue();
+  }
+
+  /** Updates the Daily and Monthly Expenditure of each User in the System */
   public static void updateUserRevenue() {
     // Get the current date and month
     LocalDate date = TransitTime.getCurrentDate();
@@ -56,13 +53,8 @@ public class CostCalculator {
     }
   }
 
-  /**
-   * Return a hashmap mapping the total revenue collected from a list of CardHolders to each day.
-   *
-   * @param cardHolders
-   * @return
-   */
-  public static void  updateSystemRevenue(HashMap<String, CardHolder> cardHolders) {
+  /** Updates the Daily and Monthly Revenue by the Transit System */
+  public static void updateSystemRevenue() {
     // Today's date and month
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
@@ -74,13 +66,12 @@ public class CostCalculator {
       CardHolder user = CardHolder.getAllUsers().get(userName);
       Daily += user.ExpenditureDaily.get(date);
       Monthly += user.ExpenditureMonthly.get(month);
-  }
+    }
     DailyRevenue.put(TransitTime.getCurrentDate(), Daily);
     if (MonthlyRevenue.keySet().contains(month)) {
       int currentRevenue = MonthlyRevenue.get(month);
       MonthlyRevenue.put(month, Monthly + currentRevenue);
-    }
-    else{
+    } else {
       MonthlyRevenue.put(month, Monthly);
     }
   }

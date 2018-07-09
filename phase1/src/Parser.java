@@ -31,17 +31,19 @@ public class Parser {
     // Get the time of the tap
     LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
     try {
-      // Find the user, station and
+      // Find the user, card and station from the given information
       CardHolder user = CardHolder.getCardholder(cardInfo.get(1));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
       String stationType = cardInfo.get(3);
       String stationName = cardInfo.get(4);
       Station station;
+      // Check if the station is a Bus or Subway
       if (stationType.equals("Bus")) {
         station = BusStation.getStations().get(stationName);
       } else {
         station = SubwayStation.getStations().get(stationName);
       }
+
       card.tap(station, time);
       if (card.tripStarted()) {
         write("User " + user.getEmail() + " tapped on at " + stationName);

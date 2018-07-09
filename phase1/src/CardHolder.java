@@ -82,17 +82,6 @@ public class CardHolder {
     }
   }
 
-  /**
-   * Suspend a card belonging to this CardHolder.
-   *
-   * @param card this CardHolder's card being suspended
-   */
-  public void suspendCard(Card card) {
-    if (this.cards.contains(card)) {
-      card.setActive(false);
-    }
-  }
-
   public void tap(Card card, Station station, LocalDateTime timeTapped)
           throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
 

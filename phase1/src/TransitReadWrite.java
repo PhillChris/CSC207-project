@@ -155,5 +155,12 @@ public class TransitReadWrite {
           UserParser.changeName(userInfo);
           return null;
         });
+    TransitReadWrite.keyWords.put(
+        "ACTIVATECARD",
+        (cardInfo) -> {
+          CardParser.activate(cardInfo);
+          return null;
+        });
   }
 }
+

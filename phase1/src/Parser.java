@@ -1,7 +1,6 @@
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 
 public class Parser {
@@ -16,7 +15,7 @@ public class Parser {
   /** @param message The message to be outputted through writer */
   public static void write(String message) {
     try {
-      writer.write(message + "/n");
+      writer.write(message + "\n");
     } catch (IOException e) {
       System.out.println("File not found, create an events.txt and rerun the program");
     }
@@ -38,12 +37,15 @@ public class Parser {
       Station station;
       if (stationType.equals("Bus")) {
         station = BusStation.getStations().get(stationName);
-        write("User " + user.getEmail() + " tapped on at " + stationName);
       } else {
         station = SubwayStation.getStations().get(stationName);
-        write("User " + user.getEmail() + " tapped on at " + stationName);
       }
       card.tap(station, time);
+      if (card.tripStarted()) {
+        write("User " + user.getEmail() + " tapped on at " + stationName);
+      } else {
+        write("User " + user.getEmail() + " tapped off at " + stationName);
+      }
     } catch (InsufficientFundsException a) {
       a.getMessage();
     } catch (CardNotFoundException b) {
@@ -71,7 +73,7 @@ public class Parser {
    * @param cardInfo The info given from the user
    */
   static void addCard(List<String> cardInfo) {
-     LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
+    LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
     try {
       Card card = new Card();
       CardHolder user = CardHolder.findUser(cardInfo.get(1));

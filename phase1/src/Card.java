@@ -95,6 +95,9 @@ public class Card {
     currentTrip = null;
   }
 
+  public boolean tripStarted() {
+    return currentTrip != null;
+  }
   public Trip getCurrentTrip() {
     return currentTrip;
   }

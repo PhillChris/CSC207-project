@@ -1,5 +1,0 @@
-Created new subway route:0
-Created new subway route:1
-Created new bus route:2
-Created new bus route:3
-User s@fake.com tapped on at Station B

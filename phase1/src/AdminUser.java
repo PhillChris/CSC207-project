@@ -21,6 +21,7 @@ public class AdminUser extends CardHolder {
 
 
   public static void dailyReports() {
+    // The revenue collected for each day
     HashMap<LocalDateTime, Integer> dailyTotals = CostCalculator.allUsersDailyTotals(CardHolder.getAllUsers());
     List<LocalDateTime> dates = new ArrayList<LocalDateTime>(dailyTotals.keySet());
     Collections.sort(dates);

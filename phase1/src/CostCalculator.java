@@ -21,7 +21,7 @@ public class CostCalculator {
    * @param cards
    * @return Hashmap with lists of trip costs for a given month/year
    */
-  public static void updateUserMonthlyCost(CardHolder user) {
+  public static void updateUserCosts(CardHolder user) {
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
     List<Card> cards = user.getCards();

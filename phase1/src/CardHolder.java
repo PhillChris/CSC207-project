@@ -15,6 +15,7 @@ public class CardHolder {
   private String name;
   private int cardCounter;
   HashMap<YearMonth, Integer > ExpenditureMonthly;
+  HashMap<LocalDate, Integer > ExpenditureDaily;
 
   /**
    * Construct a new instance of CardHolder
@@ -29,6 +30,7 @@ public class CardHolder {
     allUsers.put(email, this);
     cardCounter = 1;
     ExpenditureMonthly = new HashMap<>();
+    ExpenditureDaily = new HashMap<>();
   }
 
   public static CardHolder getCardholder(String email) {
@@ -123,6 +125,12 @@ public class CardHolder {
   public void addMonthlyFee(int monthlyFee){
     LocalDate date = TransitTime.getCurrentDate();
     ExpenditureMonthly.put(YearMonth.of(date.getYear(), date.getMonth()), monthlyFee);
+
+  }
+
+  public void addDailyFee(int dailyFee){
+    LocalDate date = TransitTime.getCurrentDate();
+    ExpenditureDaily.put(date, dailyFee);
 
   }
 

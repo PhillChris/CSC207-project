@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,34 +56,32 @@ public class CostCalculator {
     }
   }
 
-
   /**
    * Return a hashmap mapping the total revenue collected from a list of CardHolders to each day.
    *
    * @param cardHolders
    * @return
    */
-  public static void  updateSystemRevenue(
-      HashMap<String, CardHolder> cardHolders) {
+  public static void  updateSystemRevenue(HashMap<String, CardHolder> cardHolders) {
+    // Today's date and month
+    LocalDate date = TransitTime.getCurrentDate();
+    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
     int Daily = 0; // Revenue earned today from all CardHolders
-    int Monthy = 0; // Revenue earned t
+    int Monthly = 0; // Revenue earned this month
+
+    // Loop through all the user's
     for (String userName : CardHolder.getAllUsers().keySet()) {
       CardHolder user = CardHolder.getAllUsers().get(userName);
-      Daily += user.ExpenditureDaily.get(TransitTime.getCurrentDate());
-    }
-    DailyRevenue.put(TransitTime.getCurrentDate(), Daily);
+      Daily += user.ExpenditureDaily.get(date);
+      Monthly += user.ExpenditureMonthly.get(month);
   }
-  /**
-   * Sum the entries of an arraylist containing integers.
-   *
-   * @param array
-   * @return
-   */
-  public static int sumArrayList(List<Integer> array) {
-    int sum = 0;
-    for (Integer i : array) {
-      sum += i;
+    DailyRevenue.put(TransitTime.getCurrentDate(), Daily);
+    if (MonthlyRevenue.keySet().contains(month)) {
+      int currentRevenue = MonthlyRevenue.get(month);
+      MonthlyRevenue.put(month, Monthly + currentRevenue);
     }
-    return sum;
+    else{
+      MonthlyRevenue.put(month, Monthly);
+    }
   }
 }

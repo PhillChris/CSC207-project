@@ -26,7 +26,7 @@ public class CostCalculator {
   /** Updates the Daily and Monthly Expenditure of each User in the System */
   private static void updateUserRevenue() {
     // Get the current date and month
-    LocalDate date = TransitTime.getCurrentDate();
+    LocalDateTime date = TransitTime.currentTime;
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
 
     // Loop through all the Users in the System
@@ -42,11 +42,11 @@ public class CostCalculator {
         for (Trip trip : card.getAllTrips()) {
           LocalDateTime tripStart = trip.getTimeStarted();
           YearMonth tripMonthYear = YearMonth.of(tripStart.getYear(), tripStart.getMonth());
-          // If the Trip occured in the current month
+          // If the Trip occurred in the current month
           if (month.equals(tripMonthYear)) {
             monthlyCost += trip.getFee();
           }
-          // If the Trip occured in the current day
+          // If the Trip occurred in the current day
           if (date.equals(tripStart)) {
             dailyCost += trip.getFee();
           }

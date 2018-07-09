@@ -19,7 +19,7 @@ public class CostCalculator {
   }
 
   /** Updates the Daily and Monthly Expenditure of each User in the System */
-  public static void updateUserRevenue() {
+  private static void updateUserRevenue() {
     // Get the current date and month
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
@@ -54,7 +54,7 @@ public class CostCalculator {
   }
 
   /** Updates the Daily and Monthly Revenue by the Transit System */
-  public static void updateSystemRevenue() {
+  private static void updateSystemRevenue() {
     // Today's date and month
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());

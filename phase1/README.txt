@@ -98,7 +98,7 @@ ACTIVATECARD | cardholderemail@fakemail.io | card#
 
 --
 
-DAILYREPORT: todo implement this
+DAILYREPORTS: todo implement this
 
 --
 
@@ -159,6 +159,16 @@ Parameters:
 
 ----
 REPORT FETCHING
+
+One important functionality of this program is the ability for admin users to generate daily reports
+about the simulated transit system. Currently, our program daily reports will report the total amount
+of revenue collected from trips taken that day.  The days and their corresponding revenue's are displayed
+in chronological order. A sample daily report is given below.
+
+Date       Revenue
+2012-08-07 $500.50
+2012-08-06 $375.00
+2012-08-05 $638.50
 
 ----
 SAMPLE PROGRAM EXECUTION

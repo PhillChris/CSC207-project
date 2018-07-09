@@ -131,7 +131,6 @@ public class CardHolder {
   public void addDailyFee(int dailyFee){
     LocalDate date = TransitTime.getCurrentDate();
     ExpenditureDaily.put(date, dailyFee);
-
   }
 
 }

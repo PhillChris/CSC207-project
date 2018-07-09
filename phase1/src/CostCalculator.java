@@ -9,10 +9,10 @@ import java.util.Map;
 public class CostCalculator {
 
   /** Contains the expenditure for each method */
-  static HashMap<YearMonth, List<Integer>> MonthlyRevenue = new HashMap<>();
+  static HashMap<YearMonth, Integer> MonthlyRevenue = new HashMap<>();
 
   /** Contains the expenditure per each day */
-  static HashMap<LocalDateTime, List<Integer>> DailyRevenue = new HashMap<>();
+  static HashMap<LocalDate, Integer> DailyRevenue = new HashMap<>();
 
   /**
    * Return a hashmap mapping a list of trip costs associated with a list of cards to the month/year
@@ -21,7 +21,7 @@ public class CostCalculator {
    * @param cards
    * @return Hashmap with lists of trip costs for a given month/year
    */
-  public static void updateUserCosts(CardHolder user) {
+  public static void updateUserRevenue(CardHolder user) {
     // Get the current date and month
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
@@ -50,62 +50,6 @@ public class CostCalculator {
     user.addDailyFee(dailyCost);
   }
 
-  /**
-   * Return a hashmap mapping a list of trip costs associated with a list of cards to the day they
-   * were taken.
-   *
-   * @param cards
-   * @return Hashmap with lists of trip costs for a given day
-   */
-  public static HashMap<LocalDateTime, List<Integer>> getTripsByDay(List<Card> cards) {
-    HashMap<LocalDateTime, List<Integer>> tripsByDay = new HashMap<LocalDateTime, List<Integer>>();
-    for (Card card : cards) {
-      for (Trip trip : card.getAllTrips()) {
-        LocalDateTime tripDate = trip.getTimeStarted();
-        if (!tripsByDay.containsKey(tripDate)) {
-          tripsByDay.put(tripDate, new ArrayList<Integer>());
-        }
-        tripsByDay.get(tripDate).add(trip.getFee());
-      }
-    }
-    return tripsByDay;
-  }
-
-  /**
-   * Return a hashmap mapping the total spent in each month to month.
-   *
-   * @param costMap
-   * @return
-   */
-  public static HashMap<YearMonth, Integer> getMonthlyTotals(
-      HashMap<YearMonth, List<Integer>> costMap) {
-    HashMap<YearMonth, Integer> monthlyTotal = new HashMap<YearMonth, Integer>();
-    for (Map.Entry<YearMonth, List<Integer>> entry : costMap.entrySet()) {
-      YearMonth month = entry.getKey();
-      List<Integer> costs = entry.getValue();
-      Integer totalCost = sumArrayList(costs);
-      monthlyTotal.put(month, totalCost);
-    }
-    return monthlyTotal;
-  }
-
-  /**
-   * Return a hashmap mapping the total spent on each day to day
-   *
-   * @param costMap
-   * @return
-   */
-  public static HashMap<LocalDateTime, Integer> getDailyTotals(
-      HashMap<LocalDateTime, List<Integer>> costMap) {
-    HashMap<LocalDateTime, Integer> monthlyTotal = new HashMap<LocalDateTime, Integer>();
-    for (Map.Entry<LocalDateTime, List<Integer>> entry : costMap.entrySet()) {
-      LocalDateTime date = entry.getKey();
-      List<Integer> costs = entry.getValue();
-      Integer totalCost = sumArrayList(costs);
-      monthlyTotal.put(date, totalCost);
-    }
-    return monthlyTotal;
-  }
 
   /**
    * Return a hashmap mapping the total revenue collected from a list of CardHolders to each day.
@@ -113,15 +57,15 @@ public class CostCalculator {
    * @param cardHolders
    * @return
    */
-  public static HashMap<LocalDateTime, Integer> allUsersDailyTotals(
+  public static void  updateSystemRevenue(
       HashMap<String, CardHolder> cardHolders) {
-    List<Card> allCards = new ArrayList<Card>();
-    for (CardHolder cardHolder : cardHolders.values()) {
-      allCards.addAll(cardHolder.getCards());
+    int Daily = 0; // Revenue earned today from all CardHolders
+    int Monthy = 0; // Revenue earned t
+    for (String userName : CardHolder.getAllUsers().keySet()) {
+      CardHolder user = CardHolder.getAllUsers().get(userName);
+      Daily += user.ExpenditureDaily.get(TransitTime.getCurrentDate());
     }
-    HashMap<LocalDateTime, List<Integer>> allUsersCosts = getTripsByDay(allCards);
-
-    return getDailyTotals(allUsersCosts);
+    DailyRevenue.put(TransitTime.getCurrentDate(), Daily);
   }
   /**
    * Sum the entries of an arraylist containing integers.

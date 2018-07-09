@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -7,38 +8,35 @@ import java.util.Map;
 
 public class CostCalculator {
 
-  /**
-   * Contains the expenditure for each method
-   */
-  static HashMap<YearMonth, List<Integer>> ExpenditureMonthly = new HashMap<>();
+  /** Contains the expenditure for each method */
+  static HashMap<YearMonth, List<Integer>> MonthlyRevenue = new HashMap<>();
 
-  /**
-   * Contains the expenditure per each day
-   */
-  static HashMap<LocalDateTime, List<Integer>> ExpenditureDaily = new HashMap<>();
+  /** Contains the expenditure per each day */
+  static HashMap<LocalDateTime, List<Integer>> DailyRevenue = new HashMap<>();
 
   /**
    * Return a hashmap mapping a list of trip costs associated with a list of cards to the month/year
    * they were taken.
+   *
    * @param cards
    * @return Hashmap with lists of trip costs for a given month/year
    */
-  public static HashMap<YearMonth, List<Integer>> getTripsByMonth(List<Card> cards) {
-    HashMap<YearMonth, List<Integer>> tripsByMonth = new HashMap<YearMonth, List<Integer>>();
+  public static void updateUserMonthlyCost(CardHolder user) {
+    LocalDate date = TransitTime.getCurrentDate();
+    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
+    List<Card> cards = user.getCards();
+    int monthlyCost = 0;
     // Loop through all cards
     for (Card card : cards) {
       for (Trip trip : card.getAllTrips()) {
         LocalDateTime tripStart = trip.getTimeStarted();
         YearMonth tripMonthYear = YearMonth.of(tripStart.getYear(), tripStart.getMonth());
-        // Add monthly does not currently exist in dictionary, add the month
-        if (!tripsByMonth.containsKey(tripMonthYear)) {
-          tripsByMonth.put(tripMonthYear, new ArrayList<Integer>());
+        if (month.equals(tripMonthYear)) {
+          monthlyCost += trip.getFee();
         }
-        // Add the Trip's fee to the Month's ArrayList
-        tripsByMonth.get(tripMonthYear).add(trip.getFee());
       }
     }
-    return tripsByMonth;
+    user.addMonthlyFee(monthlyCost);
   }
 
   /**
@@ -104,7 +102,8 @@ public class CostCalculator {
    * @param cardHolders
    * @return
    */
-  public static HashMap<LocalDateTime, Integer> allUsersDailyTotals(HashMap<String, CardHolder> cardHolders) {
+  public static HashMap<LocalDateTime, Integer> allUsersDailyTotals(
+      HashMap<String, CardHolder> cardHolders) {
     List<Card> allCards = new ArrayList<Card>();
     for (CardHolder cardHolder : cardHolders.values()) {
       allCards.addAll(cardHolder.getCards());

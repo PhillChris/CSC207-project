@@ -38,9 +38,11 @@ public class AdminUser extends CardHolder {
       for (LocalDate day : dates) {
         String date = day.toString();
         double total = dailyTotals.get(day) / 100;
-        String revenue = String.format("&.2f", total);
+        String revenue = String.format("%.2f", total);
         writer.write(String.format("%s", date + " $" + revenue));
       }
+
+      writer.close();
 
     } catch (IOException e) {
       System.out.println("File could not be constructed. Daily reports will not be generated.");

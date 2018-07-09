@@ -13,7 +13,6 @@ public class Trip {
   private int perStationFee;
   private boolean isValidTrip = true;
 
-
   /**
    * Construct a new instance of Trip
    *
@@ -24,6 +23,7 @@ public class Trip {
     timeStarted = startTime;
     startStation = station;
     tripFee = station.getInitialFee();
+    perStationFee = station.perStationFee;
   }
 
   /**
@@ -36,7 +36,6 @@ public class Trip {
     endStation = station;
     timeEnded = endTime;
     tripFee += getFinalFee();
-    perStationFee = station.perStationFee;
   }
 
   int getFee() {
@@ -95,30 +94,26 @@ public class Trip {
   public int getFinalFee() {
     Integer firstStation = null;
     Integer secondStation = null;
-    if (perStationFee == 0) {
-      return 0;
-    } else { // this saves useless searching
-      for (Route route : Route.getRoutes()) {
-        for (int i = 0; i < route.getRouteStations().size(); i++) {
-          Station station = route.getRouteStations().get(i);
-          if (station.equals(startStation)) {
-            firstStation = i;
-          }
-          if (station.equals(endStation)) {
-            secondStation = i;
-          }
+    for (Route route : Route.getRoutes()) {
+      for (int i = 0; i < route.getRouteStations().size(); i++) {
+        Station station = route.getRouteStations().get(i);
+        if (station.equals(startStation)) {
+          firstStation = i;
         }
-        if (firstStation == null || secondStation == null) {
-          firstStation = null;
-          secondStation = null;
+        if (station.equals(endStation)) {
+          secondStation = i;
         }
       }
-      if (firstStation == null && secondStation == null) {
-        isValidTrip = false;
-        return Trip.MAXFEE;
-      } else {
-        return perStationFee * (Math.abs(secondStation - firstStation));
+      if (firstStation == null || secondStation == null) {
+        firstStation = null;
+        secondStation = null;
       }
+    }
+    if (firstStation == null && secondStation == null) {
+      isValidTrip = false;
+      return Trip.MAXFEE;
+    } else {
+      return perStationFee * (Math.abs(secondStation - firstStation));
     }
   }
 }

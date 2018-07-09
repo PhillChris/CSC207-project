@@ -22,8 +22,10 @@ public class CardParser {
       // Check if the station is a Bus or Subway
       if (stationType.equals("BUS")) {
         station = BusStation.getStations().get(stationName);
-      } else {
+      } else if (stationType.equals("SUBWAY")) {
         station = SubwayStation.getStations().get(stationName);
+      } else {
+        throw new InvalidStationTypeException();
       }
 
       if (station == null) {

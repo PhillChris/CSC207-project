@@ -50,6 +50,8 @@ public class Parser {
       a.getMessage();
     } catch (CardNotFoundException b) {
       write(b.getMessage());
+    } catch (CardSuspendedException c) {
+      write(c.getMessage());
     }
   }
 

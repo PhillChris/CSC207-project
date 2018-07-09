@@ -34,10 +34,10 @@ public class CostCalculator {
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
 
-    if (DailyRevenue.containsKey(date)) {
-      DailyRevenue.put(date, DailyRevenue.get(date) + fee);
+    if (MonthlyRevenue.containsKey(date)) {
+      MonthlyRevenue.put(month, DailyRevenue.get(date) + fee);
     } else {
-      DailyRevenue.put(date, fee);
+      MonthlyRevenue.put(month, fee);
     }
   }
 

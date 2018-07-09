@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
@@ -83,5 +84,9 @@ public class TransitTime {
             + +currentDay
             + ", "
             + currentYear);
+  }
+
+  public static LocalDate getCurrentDate(){
+    return currentTime.toLocalDate();
   }
 }

@@ -93,6 +93,7 @@ public class Card {
 
   private void tapOut(Station station, LocalDateTime timeTapped) throws InvalidTripException {
     currentTrip.endTrip(station, timeTapped);
+    subtractBalance(currentTrip.getFee());
     boolean validTrip = currentTrip.isValidTrip();
     currentTrip = null;
     if (!validTrip) {

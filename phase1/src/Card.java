@@ -9,19 +9,17 @@ public class Card {
   /** A list containing a history of all trips this Card has created. */
   private List<Trip> allTrips = new ArrayList<>();
   /** The current trip this card is on. null when no active trip */
-  private Trip currentTrip;
+  Trip currentTrip;
 
   private int id;
 
-  private boolean isActive;
+  boolean isActive;
 
   public Card(int cardID) {
     this.balance = CARD_INITIAL_BALANCE;
     this.isActive = true;
     this.id = cardID;
   }
-
-
 
   public int getId() {
     return this.id;
@@ -45,16 +43,6 @@ public class Card {
     this.balance -= toSubtract;
   }
 
-  public void tap(Station station, LocalDateTime timeTapped)
-      throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
-    if (!this.isActive) {
-      throw new CardSuspendedException();
-    }
-    if (currentTrip == null) {
-      tapIn(station, timeTapped);
-    } else tapOut(station, timeTapped);
-  }
-
   /**
    * Tap into the current station, creating a new Trip object with startStation station and
    * timeStarted timeTapped. As of now this method is only called if there is no currentTrip on this
@@ -63,7 +51,7 @@ public class Card {
    * @param station the station that this Card tapped in at.
    * @param timeTapped the time at which this Card tapped in.
    */
-  private void tapIn(Station station, LocalDateTime timeTapped) throws InsufficientFundsException {
+  void tapIn(Station station, LocalDateTime timeTapped) throws InsufficientFundsException {
     if (balance <= 0) throw new InsufficientFundsException();
 
     boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
@@ -83,7 +71,7 @@ public class Card {
     }
   }
 
-  private void tapOut(Station station, LocalDateTime timeTapped) throws InvalidTripException {
+  void tapOut(Station station, LocalDateTime timeTapped) throws InvalidTripException {
     currentTrip.endTrip(station, timeTapped);
     subtractBalance(currentTrip.getFee());
     boolean validTrip = currentTrip.isValidTrip();

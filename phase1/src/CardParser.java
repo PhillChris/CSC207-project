@@ -30,7 +30,7 @@ public class CardParser {
         throw new StationNotFoundException();
       }
       try {
-        card.tap(station, time);
+        user.tap(card, station, time);
         if (card.tripStarted()) {
           TransitReadWrite.write("User " + user.getEmail() + " tapped on at " + stationName);
         } else {

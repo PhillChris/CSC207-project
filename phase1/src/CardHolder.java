@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.*;
 
@@ -90,6 +91,16 @@ public class CardHolder {
     if (this.cards.contains(card)) {
       card.setActive(false);
     }
+  }
+
+  public void tap(Card card, Station station, LocalDateTime timeTapped)
+          throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
+    if (!card.isActive) {
+      throw new CardSuspendedException();
+    }
+    if (card.currentTrip == null) {
+      card.tapIn(station, timeTapped);
+    } else card.tapOut(station, timeTapped);
   }
 
   /**

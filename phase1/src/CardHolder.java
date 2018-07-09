@@ -61,7 +61,11 @@ public class CardHolder {
    *
    * @param card
    */
-  public void removeCard(Card card) {}
+  public void removeCard(Card card) {
+    if (this.cards.contains(card)) {
+      this.cards.remove(card);
+    }
+  }
 
   /**
    * Suspend a card belonging to this CardHolder.

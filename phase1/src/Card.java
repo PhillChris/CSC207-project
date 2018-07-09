@@ -61,7 +61,6 @@ public class Card {
       if (lastTrip.isContinuousTrip(station, timeTapped)) {
         currentTrip = lastTrip; // continue the last trip
         // restore the cost of last trip so the person does not get charged twice
-        addBalance(this.currentTrip.getFee());
         currentTrip.continueTrip(station);
         foundContinuousTrip = true;
       }

@@ -50,6 +50,13 @@ public class CardHolder {
     }
   }
 
+  /**
+   * Retrieves a card object given the number of this User
+   *
+   * @param cardId The user-specific id of this card
+   * @return
+   * @throws CardNotFoundException
+   */
   public Card getCard(int cardId) throws CardNotFoundException {
     for (Card tempCard : this.cards) {
       if (tempCard.getId() == cardId) {

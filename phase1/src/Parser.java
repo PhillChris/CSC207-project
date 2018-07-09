@@ -159,4 +159,14 @@ public class Parser {
       write(a.getMessage());
     }
   }
+
+  static void checkBalance(List<String> cardInfo) {
+    try {
+      CardHolder user = CardHolder.findUser(cardInfo.get(0));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
+      write("This card has " + card.getBalance() / 100.0 + " dollars remaining");
+    } catch (TransitException a) {
+      write(a.getMessage());
+    }
+  }
 }

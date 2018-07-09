@@ -101,6 +101,8 @@ public class Card {
     }
   }
 
+  public int getBalance() { return this.balance; }
+
   public boolean tripStarted() {
     return currentTrip != null;
   }

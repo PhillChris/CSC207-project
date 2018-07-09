@@ -35,7 +35,7 @@ public class CostCalculator {
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
 
     if (MonthlyRevenue.containsKey(date)) {
-      MonthlyRevenue.put(month, DailyRevenue.get(date) + fee);
+      MonthlyRevenue.put(month, MonthlyRevenue.get(date) + fee);
     } else {
       MonthlyRevenue.put(month, fee);
     }

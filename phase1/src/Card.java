@@ -43,16 +43,6 @@ public class Card {
     this.balance -= toSubtract;
   }
 
-  /**
-   * Return the average trip cost of this card.
-   *
-   * @return the average trip cost over all trips this Card has taken.
-   */
-  public double getAvgTripCost() {
-    double total = allTrips.stream().mapToDouble(Trip::getFee).sum();
-    return total / allTrips.size();
-  }
-
   public void tap(Station station, LocalDateTime timeTapped)
       throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
     if (!this.isActive) {
@@ -101,7 +91,9 @@ public class Card {
     }
   }
 
-  public int getBalance() { return this.balance; }
+  public int getBalance() {
+    return this.balance;
+  }
 
   public boolean tripStarted() {
     return currentTrip != null;

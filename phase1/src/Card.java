@@ -99,10 +99,6 @@ public class Card {
     return currentTrip != null;
   }
 
-  public Trip getCurrentTrip() {
-    return currentTrip;
-  }
-
   public List<Trip> getAllTrips() {
     return allTrips;
   }

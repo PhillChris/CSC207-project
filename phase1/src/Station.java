@@ -7,10 +7,9 @@ public abstract class Station {
   private static int totalStations;
   private static HashMap<String, List<Station>> allStations = new HashMap<>();
   final int stationID;
-  protected String name;
+  private String name;
   protected int initialFee;
   protected int perStationFee;
-  protected List<Station> associatedStations = new ArrayList<>();
 
   public Station(String name) {
     this.name = name;
@@ -35,11 +34,6 @@ public abstract class Station {
       allStations.put(stationName, new ArrayList<>());
       allStations.get(stationName).add(newStation);
     }
-    // associate all stations of matching name
-    for (Station station : allStations.get(stationName)) {
-      station.associatedStations.add(newStation);
-      newStation.associatedStations.add(station);
-    }
   }
 
   /** @return the name of this station */
@@ -60,8 +54,8 @@ public abstract class Station {
    * @return the associated station to this station (i.e. the bus station in this subway station or
    *     the subway station connected to this bus station)
    */
-  public boolean isAssociatedStation(Station station) {
-    return this.associatedStations.contains(station);
+  public boolean isAssociatedStation(Station otherStation) {
+    return this.name.equals(otherStation.getName());
   }
 
 }

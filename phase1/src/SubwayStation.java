@@ -18,6 +18,6 @@ public class SubwayStation extends Station {
   public static HashMap<String, SubwayStation> getStations() { return subwayStations; }
 
   public static void addStation(SubwayStation station) {
-    subwayStations.put(station.name, station);
+    subwayStations.put(station.getName(), station);
   }
 }

@@ -78,7 +78,7 @@ public class TransitTime {
         currentYear++;
       }
     }
-    Parser.write(
+    TransitReadWrite.write(
         "Day ended successfully: current day is "
             + currentMonth.toString()
             + " "

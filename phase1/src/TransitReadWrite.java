@@ -7,9 +7,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
-public class TransitReader {
+public class TransitReadWrite {
   private static final String SPLIT_SYMBOL = "\\s\\|\\s";
   static HashMap<String, Function<List<String>, Void>> keyWords = new HashMap<>();
+  /** The writer for the TransitReadWrite to write to */
+  static BufferedWriter writer;
+
+  /** @param message The message to be outputted through writer */
+  public static void write(String message) {
+    try {
+      writer.write(message + System.lineSeparator());
+    } catch (IOException e) {
+      System.out.println("File not found, create an events.txt and rerun the program");
+    }
+  }
 
   /**
    * Parses the events.txt file, calling appropriate methods throughout the program
@@ -21,8 +32,8 @@ public class TransitReader {
       throws IOException, InitLineException {
 
     // Build the command hashmap
-    TransitReader.buildHashMap();
-    Parser.setWriter(writer);
+    TransitReadWrite.buildHashMap();
+    TransitReadWrite.writer = writer;
 
     // Reads the opening init line determining how many routes to make
     String initLine = reader.readLine();
@@ -72,11 +83,11 @@ public class TransitReader {
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
       if (tempLineWords.size() > 1) {
-        TransitReader.keyWords
+        TransitReadWrite.keyWords
             .get(tempLineWords.get(0))
             .apply(tempLineWords.subList(1, tempLineWords.size()));
       } else {
-        TransitReader.keyWords.get(tempLineWords.get(0)).apply(new ArrayList<>());
+        TransitReadWrite.keyWords.get(tempLineWords.get(0)).apply(new ArrayList<>());
       }
       actionLine = reader.readLine();
     }
@@ -84,64 +95,64 @@ public class TransitReader {
   }
 
   private static void buildHashMap() {
-    TransitReader.keyWords.put(
+    TransitReadWrite.keyWords.put(
         "TAP",
         (cardInfo) -> {
-          Parser.tap(cardInfo);
+          CardParser.tap(cardInfo);
           return null;
         });
-    TransitReader.keyWords.put(
+    TransitReadWrite.keyWords.put(
         "ADDUSER",
         (userInfo) -> {
-          Parser.addUser(userInfo);
+          UserParser.addUser(userInfo);
           return null;
         });
-    TransitReader.keyWords.put(
+    TransitReadWrite.keyWords.put(
         "ADDCARD",
         (cardInfo) -> {
-          Parser.addCard(cardInfo);
+          CardParser.addCard(cardInfo);
           return null;
         });
-    TransitReader.keyWords.put(
+    TransitReadWrite.keyWords.put(
         "REMOVECARD",
         (cardInfo) -> {
-          Parser.removeCard(cardInfo);
+          CardParser.removeCard(cardInfo);
           return null;
         });
-    TransitReader.keyWords.put(
+    TransitReadWrite.keyWords.put(
         "REPORTTHEFT",
         (userInfo) -> {
-          Parser.reportTheft(userInfo);
+          CardParser.reportTheft(userInfo);
           return null;
         });
-    TransitReader.keyWords.put(
+    TransitReadWrite.keyWords.put(
         "ADDFUNDS",
         (userInfo) -> {
-          Parser.addFunds(userInfo);
+          CardParser.addFunds(userInfo);
           return null;
         });
-    TransitReader.keyWords.put(
+    TransitReadWrite.keyWords.put(
         "ENDDAY",
         (emptyList) -> {
           TransitTime.endDay(emptyList);
           return null;
         });
-    TransitReader.keyWords.put(
+    TransitReadWrite.keyWords.put(
         "MONTHLYEXPENDITURE",
         (userInfo) -> {
-          Parser.monthlyExpenditure(userInfo);
+          UserParser.monthlyExpenditure(userInfo);
           return null;
         });
-    TransitReader.keyWords.put(
+    TransitReadWrite.keyWords.put(
         "CHECKBALANCE",
         (cardInfo) -> {
-          Parser.checkBalance(cardInfo);
+          CardParser.checkBalance(cardInfo);
           return null;
         });
-    TransitReader.keyWords.put(
+    TransitReadWrite.keyWords.put(
         "CHANGENAME",
         (userInfo) -> {
-          Parser.changeName(userInfo);
+          UserParser.changeName(userInfo);
           return null;
         });
   }

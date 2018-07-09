@@ -39,18 +39,6 @@ public class CardHolder {
   }
 
   /**
-   * Add a card to this CardHolder's list of cards.
-   *
-   */
-  public void addCard() {
-    Card card = new Card(cardCounter);
-    cardCounter++;
-    if (!this.cards.contains(card)) {
-      this.cards.add(card);
-    }
-  }
-
-  /**
    * Retrieves a card object given the number of this User
    *
    * @param cardId The user-specific id of this card
@@ -64,6 +52,18 @@ public class CardHolder {
       }
     }
     throw new CardNotFoundException();
+  }
+
+  /**
+   * Add a card to this CardHolder's list of cards.
+   *
+   */
+  public void addCard() {
+    Card card = new Card(cardCounter);
+    cardCounter++;
+    if (!this.cards.contains(card)) {
+      this.cards.add(card);
+    }
   }
 
   public void changeName(String newName) {

@@ -1,5 +1,6 @@
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,9 +30,9 @@ public class Parser {
    */
   static void tap(List<String> cardInfo) {
     // Get the time of the tap
-    LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
     try {
       // Find the user, card and station from the given information
+      LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
       CardHolder user = CardHolder.getCardholder(cardInfo.get(1));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
       String stationType = cardInfo.get(3);
@@ -50,12 +51,8 @@ public class Parser {
       } else {
         write("User " + user.getEmail() + " tapped off at " + stationName);
       }
-    } catch (InsufficientFundsException a) {
-      a.getMessage();
-    } catch (CardNotFoundException b) {
-      write(b.getMessage());
-    } catch (CardSuspendedException c) {
-      write(c.getMessage());
+    } catch (TransitException a) {
+      write(a.getMessage());
     }
   }
 
@@ -65,7 +62,12 @@ public class Parser {
    * @param userInfo Info given from the user
    */
   static void addUser(List<String> userInfo) {
+    try {
     LocalDateTime time = TransitTime.getTime(userInfo.get(0));
+    } catch (TransitException a) {
+      a.getMessage();
+    }
+
     if (userInfo.get(2).equals("yes")) {
       AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(3));
     } else {
@@ -79,12 +81,12 @@ public class Parser {
    * @param cardInfo The info given from the user
    */
   static void addCard(List<String> cardInfo) {
-    LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
     try {
+      LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
       CardHolder user = CardHolder.findUser(cardInfo.get(1));
       user.addCard();
-    } catch (UserNotFoundException e) {
-      e.getMessage();
+    } catch (TransitException a) {
+      write(a.getMessage());
     }
   }
 
@@ -94,15 +96,13 @@ public class Parser {
    * @param cardInfo Information given from the user
    */
   static void removeCard(List<String> cardInfo) {
-    LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
     try {
+      LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
       CardHolder user = CardHolder.findUser(cardInfo.get(1));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
       user.removeCard(card);
-    } catch (UserNotFoundException a) {
+    } catch (TransitException a) {
       write(a.getMessage());
-    } catch (CardNotFoundException b) {
-      write(b.getMessage());
     }
   }
 
@@ -112,15 +112,13 @@ public class Parser {
    * @param userInfo Information given from the user
    */
   static void reportTheft(List<String> userInfo) {
-    LocalDateTime time = TransitTime.getTime(userInfo.get(0));
     try {
+      LocalDateTime time = TransitTime.getTime(userInfo.get(0));
       CardHolder user = CardHolder.findUser(userInfo.get(1));
       Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
       user.suspendCard(card);
-    } catch (UserNotFoundException a) {
+    } catch (TransitException a) {
       write(a.getMessage());
-    } catch (CardNotFoundException b) {
-      write(b.getMessage());
     }
   }
 
@@ -130,15 +128,13 @@ public class Parser {
    * @param userInfo Information given from the user
    */
   static void addFunds(List<String> userInfo) {
-    LocalDateTime time = TransitTime.getTime(userInfo.get(0));
     try {
+      LocalDateTime time = TransitTime.getTime(userInfo.get(0));
       CardHolder user = CardHolder.findUser(userInfo.get(1));
       Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
       card.addBalance(Integer.parseInt(userInfo.get(3)));
-    } catch (UserNotFoundException a) {
+    } catch (TransitException a) {
       write(a.getMessage());
-    } catch (CardNotFoundException b) {
-      write(b.getMessage());
     }
   }
 
@@ -151,8 +147,8 @@ public class Parser {
     try {
       CardHolder user = CardHolder.findUser(userInfo.get(0));
       write("Monthly expenditures:" + user.averageMonthly());
-    } catch (UserNotFoundException e) {
-      write(e.getMessage());
+    } catch (TransitException a) {
+      write(a.getMessage());
     }
   }
 }

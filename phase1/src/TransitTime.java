@@ -41,34 +41,26 @@ public class TransitTime {
    * @param time The time inputted by the user
    * @return The updated time or null if invalid input was given
    */
-  static LocalDateTime getTime(String time) {
-    try {
-      String[] formatted = time.split(":");
-      LocalDateTime newTime =
-          LocalDateTime.of(
-              currentYear,
-              currentMonth,
-              currentDay,
-              Integer.parseInt(formatted[0]),
-              Integer.parseInt(formatted[1]));
+  static LocalDateTime getTime(String time) throws TimeException {
+    String[] formatted = time.split(":");
+    LocalDateTime newTime =
+        LocalDateTime.of(
+            currentYear,
+            currentMonth,
+            currentDay,
+            Integer.parseInt(formatted[0]),
+            Integer.parseInt(formatted[1]));
 
-      if (currentTime == null) {
+    if (currentTime == null) {
+      currentTime = newTime;
+      return currentTime;
+    } else {
+      if (currentTime.isAfter(newTime)) {
+        throw new TimeException();
+      } else {
         currentTime = newTime;
         return currentTime;
-      } else {
-        if (currentTime.isAfter(newTime)) {
-          throw new TimeException();
-        } else {
-          currentTime = newTime;
-          return currentTime;
-        }
       }
-    } catch (TimeException t) {
-      Parser.write(t.getMessage());
-      return null;
-
-    } catch (Exception e) {
-      return null;
     }
   }
 

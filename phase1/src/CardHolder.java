@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -15,7 +15,6 @@ public class CardHolder {
   private String name;
   private int cardCounter;
   HashMap<YearMonth, Integer > ExpenditureMonthly;
-  HashMap<LocalDateTime, Integer > ExpenditureDaily;
 
   /**
    * Construct a new instance of CardHolder
@@ -30,7 +29,6 @@ public class CardHolder {
     allUsers.put(email, this);
     cardCounter = 1;
     ExpenditureMonthly = new HashMap<>();
-    ExpenditureDaily = new HashMap<>();
   }
 
   public static CardHolder getCardholder(String email) {
@@ -143,6 +141,12 @@ public class CardHolder {
 
   public static HashMap<String, CardHolder> getAllUsers() {
     return allUsers;
+  }
+
+  public void addMonthlyFee(int monthlyFee){
+    LocalDate date = TransitTime.getCurrentDate();
+    ExpenditureMonthly.put(YearMonth.of(date.getYear(), date.getMonth()), monthlyFee);
+
   }
 
 }

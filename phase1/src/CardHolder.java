@@ -53,11 +53,9 @@ public class CardHolder {
     for (Card tempCard : this.cards) {
       if (tempCard.getId() == cardId) {
         return tempCard;
-      } else {
-        throw new CardNotFoundException();
       }
     }
-    return null;
+    throw new CardNotFoundException();
   }
 
   /**

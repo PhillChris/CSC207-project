@@ -39,13 +39,17 @@ public class Parser {
       String stationName = cardInfo.get(4);
       Station station;
       // Check if the station is a Bus or Subway
-      if (stationType.equals("Bus")) {
+      if (stationType.equals("BUS")) {
         station = BusStation.getStations().get(stationName);
       } else {
         station = SubwayStation.getStations().get(stationName);
       }
 
+      if (station == null) {
+        throw new StationNotFoundException();
+      }
       card.tap(station, time);
+
       if (card.tripStarted()) {
         write("User " + user.getEmail() + " tapped on at " + stationName);
       } else {

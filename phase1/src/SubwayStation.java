@@ -15,9 +15,7 @@ public class SubwayStation extends Station {
     this.perStationFee = 50;
   }
 
-  public static HashMap<String, SubwayStation> getStations() {
-    return subwayStations;
-  }
+  public static HashMap<String, SubwayStation> getStations() { return subwayStations; }
 
   public static void addStation(SubwayStation station) {
     subwayStations.put(station.name, station);

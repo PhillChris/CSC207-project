@@ -3,10 +3,10 @@ import java.time.Month;
 import java.util.List;
 
 public class TransitTime {
-  /** The current year of this simulation*/
+  /** The current year of this simulation */
   static int currentYear;
 
-  /** The current month of this simulation*/
+  /** The current month of this simulation */
   static Month currentMonth;
 
   /** The current day of this simulation */
@@ -26,13 +26,7 @@ public class TransitTime {
     currentYear = Integer.parseInt(formatted[0]);
     currentMonth = Month.of(Integer.parseInt(formatted[1]));
     currentDay = Integer.parseInt(formatted[2]);
-    currentTime =
-        LocalDateTime.of(
-            currentYear,
-            currentMonth,
-            currentDay,
-            0,
-            0);
+    currentTime = LocalDateTime.of(currentYear, currentMonth, currentDay, 0, 0);
   }
 
   /**
@@ -82,5 +76,12 @@ public class TransitTime {
         currentYear++;
       }
     }
+    Parser.write(
+        "Day ended successfully: current day is "
+            + currentMonth.toString()
+            + " "
+            + +currentDay
+            + ", "
+            + currentYear);
   }
 }

@@ -15,7 +15,7 @@ public class Parser {
   /** @param message The message to be outputted through writer */
   public static void write(String message) {
     try {
-      writer.write(message + "\n");
+      writer.write(message + System.lineSeparator());
     } catch (IOException e) {
       System.out.println("File not found, create an events.txt and rerun the program");
     }
@@ -52,6 +52,8 @@ public class Parser {
       a.getMessage();
     } catch (CardNotFoundException b) {
       write(b.getMessage());
+    } catch (CardSuspendedException c) {
+      write(c.getMessage());
     }
   }
 

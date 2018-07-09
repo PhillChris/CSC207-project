@@ -54,7 +54,11 @@ public class Card {
     return total / allTrips.size();
   }
 
-  public void tap(Station station, LocalDateTime timeTapped) throws InsufficientFundsException {
+  public void tap(Station station, LocalDateTime timeTapped)
+          throws InsufficientFundsException, CardSuspendedException {
+    if (!this.isActive) {
+      throw new CardSuspendedException();
+    }
     if (currentTrip == null) {
       tapIn(station, timeTapped);
     } else tapOut(station, timeTapped);
@@ -98,6 +102,7 @@ public class Card {
   public boolean tripStarted() {
     return currentTrip != null;
   }
+
   public Trip getCurrentTrip() {
     return currentTrip;
   }

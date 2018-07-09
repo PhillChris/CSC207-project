@@ -8,21 +8,33 @@ import java.util.Map;
 public class CostCalculator {
 
   /**
+   * Contains the expenditure for each method
+   */
+  static HashMap<YearMonth, List<Integer>> ExpenditureMonthly = new HashMap<>();
+
+  /**
+   * Contains the expenditure per each day
+   */
+  static HashMap<LocalDateTime, List<Integer>> ExpenditureDaily = new HashMap<>();
+
+  /**
    * Return a hashmap mapping a list of trip costs associated with a list of cards to the month/year
    * they were taken.
-   *
    * @param cards
    * @return Hashmap with lists of trip costs for a given month/year
    */
   public static HashMap<YearMonth, List<Integer>> getTripsByMonth(List<Card> cards) {
     HashMap<YearMonth, List<Integer>> tripsByMonth = new HashMap<YearMonth, List<Integer>>();
+    // Loop through all cards
     for (Card card : cards) {
       for (Trip trip : card.getAllTrips()) {
         LocalDateTime tripStart = trip.getTimeStarted();
         YearMonth tripMonthYear = YearMonth.of(tripStart.getYear(), tripStart.getMonth());
+        // Add monthly does not currently exist in dictionary, add the month
         if (!tripsByMonth.containsKey(tripMonthYear)) {
           tripsByMonth.put(tripMonthYear, new ArrayList<Integer>());
         }
+        // Add the Trip's fee to the Month's ArrayList
         tripsByMonth.get(tripMonthYear).add(trip.getFee());
       }
     }

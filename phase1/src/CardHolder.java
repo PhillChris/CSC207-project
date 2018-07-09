@@ -103,29 +103,6 @@ public class CardHolder {
     return allTrips.subList(allTrips.size() - 3, allTrips.size());
   }
 
-  /**
-   * Return the average amount this CardHolder spends on transportation each month.
-   *
-   * @return
-   */
-  public float averageMonthly() {
-    // Map a list of costs of all trips taken during a month to the month
-    HashMap<YearMonth, List<Integer>> tripsByMonth = CostCalculator.getTripsByMonth(this.cards);
-
-    // Get total spent on trips per month
-    HashMap<YearMonth, Integer> monthlyTotal = CostCalculator.getMonthlyTotals(tripsByMonth);
-
-    // Calculate average
-    int total = 0;
-    for (int cost : monthlyTotal.values()) {
-      total += cost;
-    }
-
-    int numMonths = monthlyTotal.keySet().size();
-
-    return total / numMonths;
-  }
-
   public List<Card> getCards() {
     return this.cards;
   }

@@ -36,6 +36,7 @@ public class CostCalculator {
         }
       }
     }
+    // Update User's HashMap
     user.addMonthlyFee(monthlyCost);
   }
 

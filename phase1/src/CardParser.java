@@ -105,7 +105,7 @@ public class CardParser {
       LocalDateTime time = TransitTime.getTime(userInfo.get(0));
       CardHolder user = CardHolder.findUser(userInfo.get(1));
       Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
-      card.addBalance(Integer.parseInt(userInfo.get(3)));
+      card.addBalance(Integer.parseInt(userInfo.get(3)) * 100);
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }

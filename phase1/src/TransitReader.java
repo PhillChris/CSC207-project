@@ -51,7 +51,7 @@ public class TransitReader {
       String tempLine = reader.readLine();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
-      Route newRoute = new SubwayRoute(tempLineWords);
+      Route newRoute = new SubwayRoute(tempLineWords.subList(1, tempLineWords.size() - 1));
       writer.write("Created new subway route: " + newRoute.getRouteNumber() + "\n");
     }
 
@@ -60,7 +60,7 @@ public class TransitReader {
       String tempLine = reader.readLine();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
-      Route newRoute = new BusRoute(tempLineWords);
+      Route newRoute = new BusRoute(tempLineWords.subList(1, tempLineWords.size() - 1));
       writer.write("Created new bus route: " + newRoute.getRouteNumber() + "\n");
     }
 

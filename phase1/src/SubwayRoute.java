@@ -1,12 +1,13 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class SubwayRoute extends Route {
 
   /** An ArrayList of all the SubwayRoutes in the simulation */
-  private static ArrayList<SubwayRoute> subwayRoutes = new ArrayList<>();
+  private static List<SubwayRoute> subwayRoutes = new ArrayList<>();
 
   /** @param stationNames The names of the stations in this SubwayRoute */
-  public SubwayRoute(ArrayList<String> stationNames) {
+  public SubwayRoute(List<String> stationNames) {
     super();
     // Add stations to this Route
     for (String s : stationNames) {

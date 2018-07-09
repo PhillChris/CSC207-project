@@ -1,9 +1,6 @@
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 // TODO: Figure out how to calculate average monthly cost. Get clarification on "last three trips".
 
@@ -131,6 +128,16 @@ public class CardHolder {
   public void addDailyFee(int dailyFee){
     LocalDate date = TransitTime.getCurrentDate();
     ExpenditureDaily.put(date, dailyFee);
+  }
+
+  public int getAvgMonthly() {
+    List<Integer> monthlyCosts = new ArrayList<>(this.ExpenditureMonthly.values());
+    int total = 0;
+    for (Integer month : monthlyCosts) {
+      total += month;
+    }
+    int numMonths = this.ExpenditureMonthly.keySet().size();
+    return total / numMonths;
   }
 
 }

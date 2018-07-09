@@ -76,7 +76,7 @@ public class Parser {
     }
 
     if (userInfo.get(2).equals("yes")) {
-      AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(3));
+      AdminUser admin = new AdminUser(userInfo.get(2), userInfo.get(3));
     } else {
       CardHolder user = new CardHolder(userInfo.get(2), userInfo.get(3));
     }
@@ -155,6 +155,16 @@ public class Parser {
       CardHolder user = CardHolder.findUser(userInfo.get(0));
       String averageMonthly = String.format("&.2f", user.getAvgMonthly());
       write("User " + user.getEmail() +"'s average monthly expenditures: " + averageMonthly);
+    } catch (TransitException a) {
+      write(a.getMessage());
+    }
+  }
+
+  static void changeName(List<String> userInfo) {
+    try {
+      CardHolder user = CardHolder.findUser(userInfo.get(0));
+      String newName = userInfo.get(1);
+      user.changeName(newName);
     } catch (TransitException a) {
       write(a.getMessage());
     }

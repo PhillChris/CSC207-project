@@ -66,6 +66,10 @@ public class CardHolder {
     throw new CardNotFoundException();
   }
 
+  public void changeName(String newName) {
+    this.name = newName;
+  }
+
   /**
    * Remove a card from this CardHolder's list of cards.
    *

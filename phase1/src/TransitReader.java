@@ -138,5 +138,11 @@ public class TransitReader {
           Parser.checkBalance(cardInfo);
           return null;
         });
+    TransitReader.keyWords.put(
+        "CHANGENAME",
+        (userInfo) -> {
+          Parser.changeName(userInfo);
+          return null;
+        });
   }
 }

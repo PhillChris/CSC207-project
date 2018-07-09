@@ -7,10 +7,10 @@ import java.util.List;
 public class CostCalculator {
 
   /** Contains the expenditure for each method */
-  static HashMap<YearMonth, Integer> MonthlyRevenue = new HashMap<>();
+  private static HashMap<YearMonth, Integer> MonthlyRevenue = new HashMap<>();
 
   /** Contains the expenditure per each day */
-  static HashMap<LocalDate, Integer> DailyRevenue = new HashMap<>();
+  private static HashMap<LocalDate, Integer> DailyRevenue = new HashMap<>();
 
   /** Updates the expenditure and revenue in the entire system */
   public static void updateSystemRevenue(int fee) {

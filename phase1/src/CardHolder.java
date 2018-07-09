@@ -39,7 +39,6 @@ public class CardHolder {
   /**
    * Add a card to this CardHolder's list of cards.
    *
-   * @param card the card being added
    */
   public void addCard() {
     Card card = new Card(cardCounter);

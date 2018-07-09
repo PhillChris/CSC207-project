@@ -62,7 +62,7 @@ public class Card {
     if (balance <= 0) throw new InsufficientFundsException();
 
     boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
-      Trip lastTrip = getLastTrip();
+    Trip lastTrip = getLastTrip();
     if (lastTrip != null) { // check this to avoid index errors
       // check that tapping into this station would be a continuous trip from last trip
       if (lastTrip.isContinuousTrip(station, timeTapped)) {
@@ -110,5 +110,23 @@ public class Card {
    */
   public List<Trip> getLastThree() {
     return allTrips.subList(Math.max(allTrips.size() - 3, 0), allTrips.size());
+  }
+
+  /**
+   * Suspend a card belonging to this CardHolder.
+   *
+   * @param card this CardHolder's card being suspended
+   */
+  public void suspendCard(Card card) {
+    isActive = false;
+  }
+
+  /**
+   * Suspend a card belonging to this CardHolder.
+   *
+   * @param card this CardHolder's card being suspended
+   */
+  public void activateCard(Card card) {
+    isActive = true;
   }
 }

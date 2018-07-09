@@ -87,15 +87,18 @@ REPORTTHEFT: Deactivates a given card from the transit system, which can be reac
 with ACTIVATECARD.
 
 Usage:
-REPORTTHEFT | HH:MM | cardholderemail@fakemail.io | card#
+REPORTTHEFT | cardholderemail@fakemail.io | card#
 
 --
 
 ACTIVATE: todo implement this
 
+Usage:
+ACTIVATECARD | cardholderemail@fakemail.io | card#
+
 --
 
-DAILYEXPENDITURE: todo implement this
+DAILYREPORT: todo implement this
 
 --
 

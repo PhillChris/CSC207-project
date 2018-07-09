@@ -78,7 +78,6 @@ public class CardParser {
     }
   }
 
-
   /**
    * Deactivates a user's card
    *
@@ -86,10 +85,11 @@ public class CardParser {
    */
   static void reportTheft(List<String> userInfo) {
     try {
-      LocalDateTime time = TransitTime.getTime(userInfo.get(0));
-      CardHolder user = CardHolder.findUser(userInfo.get(1));
-      Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
-      user.suspendCard(card);
+      CardHolder user = CardHolder.findUser(userInfo.get(0));
+      Card card = user.getCard(Integer.parseInt(userInfo.get(1)));
+      card.suspendCard(card);
+      TransitReadWrite.write(
+          "Theft reported for user " + userInfo.get(0) + " card " + userInfo.get(1));
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }
@@ -116,6 +116,19 @@ public class CardParser {
       CardHolder user = CardHolder.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       TransitReadWrite.write("This card has " + card.getBalance() / 100.0 + " dollars remaining");
+    } catch (TransitException a) {
+      TransitReadWrite.write(a.getMessage());
+    }
+  }
+
+  static void activate(List<String> cardInfo) {
+    try {
+      CardHolder user = CardHolder.findUser(cardInfo.get(0));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
+      card.activateCard(card);
+      TransitReadWrite.write(
+          "Card reactivated for user " + cardInfo.get(0) + " card " + cardInfo.get(1));
+
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }

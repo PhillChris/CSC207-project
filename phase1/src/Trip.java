@@ -104,7 +104,7 @@ public class Trip {
           if (station.equals(startStation)) {
             firstStation = i;
           }
-          if (station.equals(this)) {
+          if (station.equals(endStation)) {
             secondStation = i;
           }
         }

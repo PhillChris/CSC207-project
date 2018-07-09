@@ -1,5 +1,5 @@
 import java.io.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,10 +21,9 @@ public class AdminUser extends CardHolder {
 
   public static void dailyReports() {
     // The revenue collected for each day
-    HashMap<LocalDateTime, Integer> dailyTotals =
-        CostCalculator.allUsersDailyTotals(CardHolder.getAllUsers());
+    HashMap<LocalDate, Integer> dailyTotals = CostCalculator.getDailyRevenue();
     // List of all the dates collected
-    List<LocalDateTime> dates = new ArrayList<LocalDateTime>(dailyTotals.keySet());
+    List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
     Collections.sort(dates);
 
     try {
@@ -36,7 +35,7 @@ public class AdminUser extends CardHolder {
       writer.write(System.lineSeparator());
 
       // Loop through all days and write each day's revenue
-      for (LocalDateTime day : dates) {
+      for (LocalDate day : dates) {
         String date = day.toString();
         double total = dailyTotals.get(day) / 100;
         String revenue = String.format("&.2f", total);

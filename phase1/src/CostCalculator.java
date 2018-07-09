@@ -18,6 +18,11 @@ public class CostCalculator {
     updateSystemRevenue();
   }
 
+  /** @return A HashMap containing the expenditure per each day */
+  public static HashMap<LocalDate, Integer> getDailyRevenue() {
+    return DailyRevenue;
+  }
+
   /** Updates the Daily and Monthly Expenditure of each User in the System */
   private static void updateUserRevenue() {
     // Get the current date and month

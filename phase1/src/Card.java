@@ -54,7 +54,7 @@ public class Card {
   }
 
   public void tap(Station station, LocalDateTime timeTapped)
-          throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
+      throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
     if (!this.isActive) {
       throw new CardSuspendedException();
     }
@@ -92,16 +92,17 @@ public class Card {
   }
 
   private void tapOut(Station station, LocalDateTime timeTapped) throws InvalidTripException {
-      currentTrip.endTrip(station, timeTapped);
-      if (currentTrip.isValidTrip()) {
-        currentTrip = null;
-      } else {
-        currentTrip = null;
-        throw new InvalidTripException();
-      }
+    currentTrip.endTrip(station, timeTapped);
+    boolean validTrip = currentTrip.isValidTrip();
+    currentTrip = null;
+    if (!validTrip) {
+      throw new InvalidTripException();
+    }
   }
 
-  public boolean tripStarted() { return currentTrip != null; }
+  public boolean tripStarted() {
+    return currentTrip != null;
+  }
 
   public Trip getCurrentTrip() {
     return currentTrip;

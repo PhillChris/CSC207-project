@@ -107,6 +107,7 @@ public class CardHolder {
     } else {
       card.tapOut(station, timeTapped);
       Trip lastTrip = card.getLastTrip();
+      CostCalculator.updateSystemRevenue(lastTrip.getFee());
       if (ExpenditureMonthly.containsKey(month)) {
         ExpenditureMonthly.put(month, ExpenditureMonthly.get(month) + lastTrip.getFee());
       }

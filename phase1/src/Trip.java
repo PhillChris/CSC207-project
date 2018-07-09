@@ -10,6 +10,9 @@ public class Trip {
   Station startStation;
   Station endStation;
   int tripFee;
+  private int perStationFee;
+  private boolean isValidTrip = true;
+
 
   /**
    * Construct a new instance of Trip
@@ -29,10 +32,11 @@ public class Trip {
    * @param station the station where this Trip ends
    * @param endTime the station where this Trip continuous
    */
-  void endTrip(Station station, LocalDateTime endTime) throws InvalidTripException {
+  void endTrip(Station station, LocalDateTime endTime) {
     endStation = station;
     timeEnded = endTime;
-    tripFee += station.getFinalFee(startStation);
+    tripFee += getFinalFee();
+    perStationFee = station.perStationFee;
   }
 
   int getFee() {
@@ -43,6 +47,9 @@ public class Trip {
     }
   }
 
+  public boolean isValidTrip() {
+    return isValidTrip;
+  }
   /**
    * Checks if a trip is valid, provided it ends at newStation.
    *
@@ -67,6 +74,7 @@ public class Trip {
     endStation = null;
     timeEnded = null;
     tripFee += station.getInitialFee();
+    perStationFee = station.perStationFee;
   }
 
   /** @return The StartStation for this Trip */
@@ -76,5 +84,41 @@ public class Trip {
 
   public LocalDateTime getTimeStarted() {
     return timeStarted;
+  }
+
+  /**
+   * Called at the end of a ride. NOTE: we can move this to subclasses, and use more specific Route
+   * lists to get better runtime. This seems like it sacrifices extensibility though
+   *
+   * @return the per-station fare for this ride
+   */
+  public int getFinalFee() {
+    Integer firstStation = null;
+    Integer secondStation = null;
+    if (perStationFee == 0) {
+      return 0;
+    } else { // this saves useless searching
+      for (Route route : Route.getRoutes()) {
+        for (int i = 0; i < route.getRouteStations().size(); i++) {
+          Station station = route.getRouteStations().get(i);
+          if (station.equals(startStation)) {
+            firstStation = i;
+          }
+          if (station.equals(this)) {
+            secondStation = i;
+          }
+        }
+        if (firstStation == null || secondStation == null) {
+          firstStation = null;
+          secondStation = null;
+        }
+      }
+      if (firstStation == null && secondStation == null) {
+        isValidTrip = false;
+        return Trip.MAXFEE;
+      } else {
+        return perStationFee * (Math.abs(secondStation - firstStation));
+      }
+    }
   }
 }

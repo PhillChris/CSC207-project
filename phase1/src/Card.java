@@ -1,4 +1,3 @@
-import java.lang.reflect.InaccessibleObjectException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,18 +92,13 @@ public class Card {
   }
 
   private void tapOut(Station station, LocalDateTime timeTapped) throws InvalidTripException {
-    try{
       currentTrip.endTrip(station, timeTapped);
-    }
-    catch (InvalidTripException t){
-      this.subtractBalance(Trip.MAXFEE);
-      currentTrip.endTrip(station, timeTapped);
-      currentTrip = null;
-      throw new InvalidTripException();
-    }
-    this.subtractBalance(currentTrip.getFee());
-    allTrips.add(currentTrip);
-    currentTrip = null;
+      if (currentTrip.isValidTrip()) {
+        currentTrip = null;
+      } else {
+        currentTrip = null;
+        throw new InvalidTripException();
+      }
   }
 
   public boolean tripStarted() {

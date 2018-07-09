@@ -63,40 +63,4 @@ public abstract class Station {
     return this.associatedStations.contains(station);
   }
 
-  /**
-   * Called at the end of a ride. NOTE: we can move this to subclasses, and use more specific Route
-   * lists to get better runtime. This seems like it sacrifices extensibility though
-   *
-   * @param initialStation the station at which this ride started (i.e. when last changing modes of
-   *     transportation or vehicle lines).
-   * @return the per-station fare for this ride
-   */
-  public int getFinalFee(Station initialStation) throws InvalidTripException {
-    Integer firstStation = null;
-    Integer secondStation = null;
-    if (perStationFee == 0) {
-      return 0;
-    } else { // this saves useless searching
-      for (Route route : Route.getRoutes()) {
-        for (int i = 0; i < route.getRouteStations().size(); i++) {
-          Station station = route.getRouteStations().get(i);
-          if (station.equals(initialStation)) {
-            firstStation = i;
-          }
-          if (station.equals(this)) {
-            secondStation = i;
-          }
-        }
-        if (firstStation == null || secondStation == null) {
-          firstStation = null;
-          secondStation = null;
-        }
-      }
-      if (firstStation == null && secondStation == null) {
-        throw new InvalidTripException();
-      } else {
-        return perStationFee * (Math.abs(secondStation - firstStation));
-      }
-    }
-  }
 }

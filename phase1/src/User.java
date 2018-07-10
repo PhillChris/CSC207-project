@@ -214,7 +214,7 @@ public class User {
       lastThreeTrips.remove(0);
     }
     if (!trip.isValidTrip()) {
-      throw new InvalidTripException();
+      throw new InvalidTripException(this.name, station.getName());
     }
   }
 

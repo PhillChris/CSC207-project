@@ -54,8 +54,6 @@ public class AdminUser extends CardHolder {
         writer.write(String.format("%s", date + " $" + revenue));
       }
       writer.close();
-
-      writer.close();
     } catch (IOException e) {
       System.out.println("File could not be constructed. Daily reports will not be generated.");
     }

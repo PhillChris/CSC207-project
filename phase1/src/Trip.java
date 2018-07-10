@@ -7,15 +7,15 @@ public class Trip {
   /** The maximum duration between the start of two continuous trips */
   static final Duration MAXTRIPLENGTH = Duration.ofMinutes(120);
   /** The time started by this trip */
-  LocalDateTime timeStarted;
+  private LocalDateTime timeStarted;
   /** The time ended by this trip */
-  LocalDateTime timeEnded;
+  private LocalDateTime timeEnded;
   /** The stops made along the trip before reaching the final station */
-  ArrayList<Station> priorStops = new ArrayList<>();
+  private ArrayList<Station> priorStops = new ArrayList<>();
   /** The station ended by this trip */
-  Station endStation;
+  private Station endStation;
   /** The current fee of this trip */
-  int tripFee;
+  private int tripFee;
   /** The maximum fee charged by this trip */
   private int maxFee = 600;
   /** The fee this trip charges itself per station travelled */
@@ -45,7 +45,7 @@ public class Trip {
   /**
    * @return The length of the current leg of this trip
    */
-  public int getTripLegLength(){
+  public int getTripLegLength() {
     return tripLegLength;
   }
 
@@ -71,9 +71,14 @@ public class Trip {
     }
   }
 
-  /** @return Whether this is a valid trip */
+  /**
+   * Returns whether or not this Trip is a valid Trip. Note: an unfinished trip is always invalid. A
+   * trip must be completed to be valid.
+   *
+   * @return true if this is a valid trip
+   */
   public boolean isValidTrip() {
-    return (timeEnded!=null && endStation!=null &&tripLegLength == -1);
+    return (timeEnded != null && endStation != null && tripLegLength != -1);
   }
   /**
    * Checks if a trip continues another trip
@@ -125,7 +130,7 @@ public class Trip {
       tripFee = this.maxFee;
       return this.maxFee;
     } else {
-      return perStationFee*tripLegLength;
+      return perStationFee * tripLegLength;
     }
   }
 

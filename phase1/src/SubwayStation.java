@@ -1,6 +1,9 @@
 import java.util.HashMap;
 
 public class SubwayStation extends Station {
+  private int SUBWAY_INITIAL_FEE = 0;
+  private int SUBWAY_PERSTATION_FEE = 50;
+
 
   private static HashMap<String, SubwayStation> subwayStations = new HashMap<>();
 
@@ -11,8 +14,8 @@ public class SubwayStation extends Station {
    */
   public SubwayStation(String name) {
     super(name);
-    this.initialFee = 0;
-    this.perStationFee = 50;
+    this.initialFee = SUBWAY_INITIAL_FEE;
+    this.perStationFee = SUBWAY_PERSTATION_FEE;
   }
 
   public static HashMap<String, SubwayStation> getStations() { return subwayStations; }

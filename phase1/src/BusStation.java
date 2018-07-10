@@ -1,6 +1,8 @@
 import java.util.HashMap;
 
 public class BusStation extends Station {
+  private int BUS_INITIAL_FEE = 200;
+  private int BUS_PERSTATION_FEE = 0;
 
   public static HashMap<String, BusStation> busStations = new HashMap<>();
 
@@ -11,8 +13,8 @@ public class BusStation extends Station {
    */
   public BusStation(String name) {
     super(name);
-    this.initialFee = 200;
-    this.perStationFee = 0;
+    this.initialFee = BUS_INITIAL_FEE;
+    this.perStationFee = BUS_PERSTATION_FEE;
   }
 
   public static HashMap<String, BusStation> getStations() {

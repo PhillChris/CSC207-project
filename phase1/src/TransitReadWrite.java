@@ -9,9 +9,11 @@ import java.util.function.Function;
 
 /** A class to handle all text file handling in the transit system simulation */
 public class TransitReadWrite {
+  /** The token which separates parameters in the events.txt file */
   private static final String SPLIT_SYMBOL = "\\s\\|\\s";
+  /** Stores the commands which can be execute from events.txt */
   static HashMap<String, Function<List<String>, Void>> keyWords = new HashMap<>();
-  /** The writer which writes output files */
+  /** The writer which writes to output.txt */
   static BufferedWriter writer;
 
   /**
@@ -51,12 +53,14 @@ public class TransitReadWrite {
     }
 
     int numRoutes;
+    // throws an error if the given number of routes is not parseable as an integer
     try {
       numRoutes = Integer.parseInt(initLineWords.get(1));
     } catch (NumberFormatException numberException) {
       throw new InitLineException();
     }
 
+    // Sets the initial date for the system
     TransitTime.initDate(initLineWords.get(2));
 
     /* Iterate through routes and names of stations given in the first lines of events.txt,

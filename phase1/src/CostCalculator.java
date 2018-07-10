@@ -8,16 +8,21 @@ public class CostCalculator {
 
   /** Contains the expenditure per each day */
   private static HashMap<LocalDate, Integer> dailyRevenue = new HashMap<>();
+  /** Contains the number of stations travelled per day by users */
+  private static HashMap<LocalDate, Integer> dailyLog = new HashMap<>();
 
   /** Updates the expenditure and revenue in the entire system */
-  public static void updateSystemRevenue(int fee) {
+  public static void updateSystemRevenue(int fee, int tripLength) {
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
 
     if (dailyRevenue.containsKey(date)) {
       dailyRevenue.put(date, dailyRevenue.get(date) + fee);
+      dailyLog.put(date, dailyLog.get(date) + tripLength);
+
     } else {
       dailyRevenue.put(date, fee);
+      dailyLog.put(date, tripLength);
     }
   }
 
@@ -32,16 +37,17 @@ public class CostCalculator {
     Writer writer =
         new BufferedWriter(
             new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"));
-    writer.write("Date       Revenue");
+    writer.write("Date       Revenue   Stations Travelled");
     writer.write(System.lineSeparator());
 
     // Loop through all days and write each day's revenue
     for (LocalDate day : dates) {
       writer.write(System.lineSeparator());
       String date = day.toString();
-      double total = dailyRevenue.get(day) / 100.0;
-      String revenue = String.format("%.2f", total);
-      writer.write(String.format("%s", date + " $" + revenue));
+      double  revenue = dailyRevenue.get(day) / 100.0;
+      int travelled=dailyLog.get(day);
+      String message = String.format("%.2f", revenue) + "    " + travelled;
+      writer.write(String.format("%s", date + " $" + message));
     }
     writer.close();
   }

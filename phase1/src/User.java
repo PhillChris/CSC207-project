@@ -204,8 +204,9 @@ public class User {
     card.setLastTrip(trip);
     card.setCurrentTrip(null);
     updateSpendingHistory(card); // Update's this User's spending history
-    CostCalculator.updateSystemRevenue(
-        card.getLastTrip().getFee()); // Update System's spending history
+    Trip lastTrip = card.getLastTrip();
+    // Update System's spending history
+    CostCalculator.updateSystemRevenue(trip.getFee(), Math.max(trip.getTripLegLength(), 0));
     if (!lastThreeTrips.contains(trip)) {
       lastThreeTrips.add(trip);
     }

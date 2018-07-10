@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/** Represents an object of Route */
-public class Route<T extends Station> {
+/** Represents a travel route in this transit system */
+public class Route {
 
-  /** A list of all of the Routes */
-  protected static ArrayList<Route> Routes = new ArrayList<Route>();
-
+  /** A list of all routes in the transit system */
+  protected static ArrayList<Route> routes = new ArrayList<Route>();
+  /** A static counter for the number of totalRoutes in the simulation, used to assign route ids */
   private static int totalRoutes = 0;
-  /** The name of this route */
-  protected int routeNumber;
-  /** List containing all the stations of this route in order */
+  /** The numerical id of this route */
+  protected int routeID;
+  /** List containing all the stations of this route in travel order */
   private List<Station> routeStations = new ArrayList<>();
 
   /**
@@ -20,7 +20,7 @@ public class Route<T extends Station> {
    * @param fact The factory used to construct the stations
    */
   public Route(List<String> stationNames, StationFactory fact) {
-    routeNumber = totalRoutes;
+    routeID = totalRoutes;
     totalRoutes++;
 
     for (String s : stationNames) {
@@ -30,21 +30,21 @@ public class Route<T extends Station> {
       if (!station.getStations().containsKey(s)) {
         Station.addStation(station);
       }
-      // station already exists
+      // station of the same type and same name already exists
       else {
         station = station.getStations().get(s);
       }
-      Routes.add(this);
       getRouteStations().add(station);
     }
+    routes.add(this);
   }
 
   /** @return An arrayList of all RouteNames */
   public static ArrayList<Route> getRoutes() {
-    return Routes;
+    return routes;
   }
 
-  /** @return List of the stations in this route */
+  /** @return A list of the stations in this route */
   public List<Station> getRouteStations() {
     return routeStations;
   }
@@ -52,8 +52,8 @@ public class Route<T extends Station> {
   /**
    * Find a station in this route with given ID
    *
-   * @param stationID the station ID used for search
-   * @return The station with the same stationID
+   * @param stationID the station ID to be searched for
+   * @return The station with the given stationID
    */
   public Station findStation(int stationID) {
     for (Station station : getRouteStations()) {
@@ -64,8 +64,8 @@ public class Route<T extends Station> {
     return null;
   }
 
-  /** @return This route's route number */
-  public int getRouteNumber() {
-    return routeNumber;
+  /** @return This route's routeID */
+  public int getRouteId() {
+    return routeID;
   }
 }

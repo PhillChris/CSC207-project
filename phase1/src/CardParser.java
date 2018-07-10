@@ -33,17 +33,11 @@ public class CardParser implements ObjectParser {
       if (station == null) {
         throw new StationNotFoundException();
       }
-      try {
-        user.tap(card, station, time);
-        // if this user has just started a trip
-        if (card.getTripStarted()) {
-          TransitReadWrite.write("User " + user.getEmail() + " tapped on at " + stationName);
-        } else {
-          TransitReadWrite.write("User " + user.getEmail() + " tapped off at " + stationName);
-        }
-      } catch (InvalidTripException t)  {
-        // if the trip having just been processed crossed over multiple routes
-        TransitReadWrite.write(t.getMessage());
+      user.tap(card, station, time);
+      // if this user has just started a trip
+      if (card.getTripStarted()) {
+        TransitReadWrite.write("User " + user.getEmail() + " tapped on at " + stationName);
+      } else {
         TransitReadWrite.write("User " + user.getEmail() + " tapped off at " + stationName);
       }
     } catch (TransitException b) {

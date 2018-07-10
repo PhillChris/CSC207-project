@@ -47,6 +47,7 @@ public class AdminUser extends CardHolder {
 
       // Loop through all days and write each day's revenue
       for (LocalDate day : dates) {
+        writer.write(System.lineSeparator());
         String date = day.toString();
         double total = dailyTotals.get(day) / 100;
         String revenue = String.format("%.2f", total);

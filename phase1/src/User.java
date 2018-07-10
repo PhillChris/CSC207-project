@@ -15,8 +15,6 @@ public class User {
   private ArrayList<Trip> lastThreeTrips = new ArrayList<>();
   /** HashMap linking each month to the total expenditure for that month */
   private HashMap<YearMonth, Integer> ExpenditureMonthly;
-  /** HashMap linking each day to the total expenditure for that day */
-  private HashMap<LocalDate, Integer> ExpenditureDaily;
   /** An ArrayList of this User's cards */
   private List<Card> cards;
   /** This User's name */
@@ -40,12 +38,6 @@ public class User {
     allUsers.put(email, this);
     cardCounter = 1;
     ExpenditureMonthly = new HashMap<>();
-    ExpenditureDaily = new HashMap<>();
-  }
-
-  /** Removes this user from the system */
-  public void removeUser() {
-    allUsers.remove(this.email);
   }
 
   /**
@@ -59,6 +51,11 @@ public class User {
     } else {
       throw new UserNotFoundException();
     }
+  }
+
+  /** Removes this user from the system */
+  public void removeUser() {
+    allUsers.remove(this.email);
   }
 
   /** @return This User's email */
@@ -82,7 +79,9 @@ public class User {
     throw new CardNotFoundException();
   }
 
-  public List<Card> getCards() { return this.cards;}
+  public List<Card> getCards() {
+    return this.cards;
+  }
 
   /** @return A String detaily average expenditure per month */
   public String getAvgMonthly() {
@@ -233,13 +232,6 @@ public class User {
       ExpenditureMonthly.put(month, ExpenditureMonthly.get(month) + lastTrip.getFee());
     } else {
       ExpenditureMonthly.put(month, lastTrip.getFee());
-    }
-
-    // Update Daily Expenditure History
-    if (ExpenditureDaily.containsKey(date)) {
-      ExpenditureDaily.put(date, ExpenditureDaily.get(date) + lastTrip.getFee());
-    } else {
-      ExpenditureDaily.put(date, lastTrip.getFee());
     }
   }
 }

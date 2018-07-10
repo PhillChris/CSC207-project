@@ -12,7 +12,8 @@ public class Main {
     BufferedReader reader = new BufferedReader(new FileReader("events.txt"));
     BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
     try {
-      TransitReadWrite.read(reader, writer);
+      TransitReadWrite.init(reader, writer);
+      TransitReadWrite.run(reader);
     } catch (InitLineException init) {
       writer.write(init.getMessage());
     }

@@ -34,13 +34,12 @@ public class TransitReadWrite {
   }
 
   /**
-   * Reads the events.txt file, calling appropriate methods for each line of the program to be
-   * executed. The proper format to use for events.txt can be found in README.txt
+   * Initializes the program (i.e. constructs routes) with initialization data from events.txt
    *
    * @throws IOException
    * @throws InitLineException
    */
-  public static void read(BufferedReader reader, BufferedWriter writer)
+  public static void init(BufferedReader reader, BufferedWriter writer)
       throws IOException, InitLineException {
 
     TransitReadWrite.buildHashMap();
@@ -87,10 +86,14 @@ public class TransitReadWrite {
         TransitReadWrite.write("Created new bus route");
       }
     }
-
-    run(reader);
   }
 
+  /**
+   * Runs the program (i.e. executes user commands) through commands provided in events.txt
+   *
+   * @param reader
+   * @throws IOException
+   */
   public static void run(BufferedReader reader) throws IOException {
     /* Iterate through remaining action lines and execute the corresponding
      * commands in events.txt, after initializing routes */

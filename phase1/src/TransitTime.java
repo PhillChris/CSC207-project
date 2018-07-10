@@ -4,14 +4,6 @@ import java.time.Month;
 import java.util.List;
 
 public class TransitTime {
-  /** The current year of this simulation */
-  static int currentYear;
-
-  /** The current month of this simulation */
-  static Month currentMonth;
-
-  /** The current day of this simulation */
-  static int currentDay;
 
   /** The current time of the simulation */
   static LocalDateTime currentTime;
@@ -24,9 +16,9 @@ public class TransitTime {
    */
   static void initDate(String initialDate) {
     String[] formatted = initialDate.split("-");
-    currentYear = Integer.parseInt(formatted[0]);
-    currentMonth = Month.of(Integer.parseInt(formatted[1]));
-    currentDay = Integer.parseInt(formatted[2]);
+    int currentYear = Integer.parseInt(formatted[0]);
+    Month currentMonth = Month.of(Integer.parseInt(formatted[1]));
+    int currentDay = Integer.parseInt(formatted[2]);
     currentTime = LocalDateTime.of(currentYear, currentMonth, currentDay, 0, 0);
   }
 
@@ -40,9 +32,9 @@ public class TransitTime {
     String[] formatted = time.split(":");
     LocalDateTime newTime =
         LocalDateTime.of(
-            currentYear,
-            currentMonth,
-            currentDay,
+            currentTime.getYear(),
+            currentTime.getMonth(),
+            currentTime.getDayOfMonth(),
             Integer.parseInt(formatted[0]),
             Integer.parseInt(formatted[1]));
 
@@ -65,24 +57,14 @@ public class TransitTime {
    * @param emptyList Information given by the user
    */
   static void endDay(List<String> emptyList) {
-    if (currentDay < currentMonth.length(false)) {
-      currentDay++;
-    } else {
-      currentDay = 1;
-      if (currentMonth.getValue() < 12) {
-        currentMonth = Month.of(currentMonth.getValue() + 1);
-      } else {
-        currentMonth = Month.of(1);
-        currentYear++;
-      }
-    }
+    currentTime = currentTime.plusDays(1);
     TransitReadWrite.write(
         "Day ended successfully: current day is "
-            + currentMonth.toString()
+            + currentTime.getMonth().toString()
             + " "
-            + +currentDay
+            + +currentTime.getDayOfMonth()
             + ", "
-            + currentYear);
+            + currentTime.getYear());
   }
 
   /**

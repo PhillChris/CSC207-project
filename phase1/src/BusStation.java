@@ -15,7 +15,7 @@ public class BusStation extends Station {
    */
   public BusStation(String name) {
     super(name);
-    this.initialFee = BUS_INITIAL_FEE;
+    this.setInitialFee(BUS_INITIAL_FEE);
     this.perStationFee = BUS_PERSTATION_FEE;
   }
 

@@ -7,7 +7,7 @@ public class UserParser {
    *
    * @param userInfo Information given from the user
    */
-  static void monthlyExpenditure(List<String> userInfo) {
+  void monthlyExpenditure(List<String> userInfo) {
     try {
       User user = User.findUser(userInfo.get(0));
       TransitReadWrite.write(user.getAvgMonthly());
@@ -21,7 +21,7 @@ public class UserParser {
    *
    * @param userInfo Info given from the user
    */
-  static void addUser(List<String> userInfo) {
+  void addUser(List<String> userInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(userInfo.get(0));
       if (userInfo.get(1).equals("yes")) {
@@ -34,7 +34,7 @@ public class UserParser {
     }
   }
 
-  static void changeName(List<String> userInfo) {
+  void changeName(List<String> userInfo) {
     try {
       User user = User.findUser(userInfo.get(0));
       String newName = userInfo.get(1);
@@ -44,7 +44,7 @@ public class UserParser {
     }
   }
 
-  static void dailyReports(List<String> userInfo) {
+  void dailyReports(List<String> userInfo) {
     try {
       AdminUser user = AdminUser.findAdminUser(userInfo.get(0));
       user.dailyReports();

@@ -9,7 +9,7 @@ public class CardParser {
    * @param cardInfo Info given from the user
    * @throws IOException
    */
-  static void tap(List<String> cardInfo) {
+  void tap(List<String> cardInfo) {
     // Get the time of the tap
     try {
       // Find the user, card and station from the given information
@@ -52,7 +52,7 @@ public class CardParser {
    *
    * @param cardInfo The info given from the user
    */
-  static void addCard(List<String> cardInfo) {
+  void addCard(List<String> cardInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
       User user = User.findUser(cardInfo.get(1));
@@ -67,7 +67,7 @@ public class CardParser {
    *
    * @param cardInfo Information given from the user
    */
-  static void removeCard(List<String> cardInfo) {
+  void removeCard(List<String> cardInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
       User user = User.findUser(cardInfo.get(1));
@@ -83,7 +83,7 @@ public class CardParser {
    *
    * @param userInfo Information given from the user
    */
-  static void reportTheft(List<String> userInfo) {
+  void reportTheft(List<String> userInfo) {
     try {
       User user = User.findUser(userInfo.get(0));
       Card card = user.getCard(Integer.parseInt(userInfo.get(1)));
@@ -100,7 +100,7 @@ public class CardParser {
    *
    * @param userInfo Information given from the user
    */
-  static void addFunds(List<String> userInfo) {
+  void addFunds(List<String> userInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(userInfo.get(0));
       User user = User.findUser(userInfo.get(1));
@@ -111,7 +111,7 @@ public class CardParser {
     }
   }
 
-  static void checkBalance(List<String> cardInfo) {
+  void checkBalance(List<String> cardInfo) {
     try {
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
@@ -121,7 +121,7 @@ public class CardParser {
     }
   }
 
-  static void activate(List<String> cardInfo) {
+  void activate(List<String> cardInfo) {
     try {
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));

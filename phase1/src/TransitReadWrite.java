@@ -15,6 +15,10 @@ public class TransitReadWrite {
   static HashMap<String, Function<List<String>, Void>> keyWords = new HashMap<>();
   /** The writer which writes to output.txt */
   static BufferedWriter writer;
+  /** Handles operations to be executed on users */
+  static UserParser userParser;
+  /** Handles operations to be executed on cards */
+  static CardParser cardParser;
 
   /**
    * Writes a given message to output.txt
@@ -41,6 +45,9 @@ public class TransitReadWrite {
 
     TransitReadWrite.buildHashMap();
     TransitReadWrite.writer = writer;
+
+    userParser = new UserParser();
+    cardParser = new CardParser();
 
     /* Reads the opening init line determining how many routes to make and
      * the current system date */
@@ -115,37 +122,37 @@ public class TransitReadWrite {
     TransitReadWrite.keyWords.put(
         "TAP",
         (cardInfo) -> {
-          CardParser.tap(cardInfo);
+          cardParser.tap(cardInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
         "ADDUSER",
         (userInfo) -> {
-          UserParser.addUser(userInfo);
+          userParser.addUser(userInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
         "ADDCARD",
         (cardInfo) -> {
-          CardParser.addCard(cardInfo);
+          cardParser.addCard(cardInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
         "REMOVECARD",
         (cardInfo) -> {
-          CardParser.removeCard(cardInfo);
+          cardParser.removeCard(cardInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
         "REPORTTHEFT",
         (userInfo) -> {
-          CardParser.reportTheft(userInfo);
+          cardParser.reportTheft(userInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
         "ADDFUNDS",
         (userInfo) -> {
-          CardParser.addFunds(userInfo);
+          cardParser.addFunds(userInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
@@ -157,31 +164,31 @@ public class TransitReadWrite {
     TransitReadWrite.keyWords.put(
         "MONTHLYEXPENDITURE",
         (userInfo) -> {
-          UserParser.monthlyExpenditure(userInfo);
+          userParser.monthlyExpenditure(userInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
         "CHECKBALANCE",
         (cardInfo) -> {
-          CardParser.checkBalance(cardInfo);
+          cardParser.checkBalance(cardInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
         "CHANGENAME",
         (userInfo) -> {
-          UserParser.changeName(userInfo);
+          userParser.changeName(userInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
         "ACTIVATECARD",
         (cardInfo) -> {
-          CardParser.activate(cardInfo);
+          cardParser.activate(cardInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
         "DAILYREPORTS",
         (userInfo) -> {
-          UserParser.dailyReports(userInfo);
+          userParser.dailyReports(userInfo);
           return null;
         });
   }

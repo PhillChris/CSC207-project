@@ -10,8 +10,7 @@ public class UserParser {
   static void monthlyExpenditure(List<String> userInfo) {
     try {
       CardHolder user = CardHolder.findUser(userInfo.get(0));
-      String averageMonthly = String.format("&.2f", user.getAvgMonthly());
-      TransitReadWrite.write("User " + user.getEmail() +"'s average monthly expenditures: " + averageMonthly);
+      TransitReadWrite.write(user.getAvgMonthly());
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }

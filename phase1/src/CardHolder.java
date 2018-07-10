@@ -78,14 +78,15 @@ public class CardHolder {
   }
 
   /** @return A String detaily average expenditure per month */
-  public int getAvgMonthly() {
-    List<Integer> monthlyCosts = new ArrayList<>(this.ExpenditureMonthly.values());
+  public String getAvgMonthly() {
+    String message = "Cost per month for user:" + this.email + System.lineSeparator();
+    List<YearMonth> months = new ArrayList<YearMonth>(this.ExpenditureMonthly.keySet());
     int total = 0;
-    for (Integer month : monthlyCosts) {
-      total += month;
+    for (YearMonth month : months) {
+      message += month.toString() + " : " + String.format("%.2f", ExpenditureMonthly.get(month)/30.0);
+      message += System.lineSeparator();
     }
-    int numMonths = this.ExpenditureMonthly.keySet().size();
-    return total / numMonths;
+    return message;
   }
 
   /**

@@ -14,7 +14,7 @@ public class CardParser {
     try {
       // Find the user, card and station from the given information
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
-      CardHolder user = CardHolder.findUser(cardInfo.get(1));
+      User user = User.findUser(cardInfo.get(1));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
       String stationType = cardInfo.get(3);
       String stationName = cardInfo.get(4);
@@ -55,7 +55,7 @@ public class CardParser {
   static void addCard(List<String> cardInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
-      CardHolder user = CardHolder.findUser(cardInfo.get(1));
+      User user = User.findUser(cardInfo.get(1));
       user.addCard();
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
@@ -70,7 +70,7 @@ public class CardParser {
   static void removeCard(List<String> cardInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
-      CardHolder user = CardHolder.findUser(cardInfo.get(1));
+      User user = User.findUser(cardInfo.get(1));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
       user.removeCard(card);
     } catch (TransitException a) {
@@ -85,7 +85,7 @@ public class CardParser {
    */
   static void reportTheft(List<String> userInfo) {
     try {
-      CardHolder user = CardHolder.findUser(userInfo.get(0));
+      User user = User.findUser(userInfo.get(0));
       Card card = user.getCard(Integer.parseInt(userInfo.get(1)));
       card.suspendCard();
       TransitReadWrite.write(
@@ -103,7 +103,7 @@ public class CardParser {
   static void addFunds(List<String> userInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(userInfo.get(0));
-      CardHolder user = CardHolder.findUser(userInfo.get(1));
+      User user = User.findUser(userInfo.get(1));
       Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
       card.addBalance(Integer.parseInt(userInfo.get(3)) * 100);
     } catch (TransitException a) {
@@ -113,7 +113,7 @@ public class CardParser {
 
   static void checkBalance(List<String> cardInfo) {
     try {
-      CardHolder user = CardHolder.findUser(cardInfo.get(0));
+      User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       TransitReadWrite.write("This card has " + card.getBalance() / 100.0 + " dollars remaining");
     } catch (TransitException a) {
@@ -123,7 +123,7 @@ public class CardParser {
 
   static void activate(List<String> cardInfo) {
     try {
-      CardHolder user = CardHolder.findUser(cardInfo.get(0));
+      User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       card.activateCard(card);
       TransitReadWrite.write(

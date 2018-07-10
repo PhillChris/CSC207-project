@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 /** Represents an AdminUser in a transit system. */
-public class AdminUser extends CardHolder {
+public class AdminUser extends User {
 
   private static HashMap<String, AdminUser> allAdminUsers = new HashMap<>();
 

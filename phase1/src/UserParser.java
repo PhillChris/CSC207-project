@@ -9,7 +9,7 @@ public class UserParser {
    */
   static void monthlyExpenditure(List<String> userInfo) {
     try {
-      CardHolder user = CardHolder.findUser(userInfo.get(0));
+      User user = User.findUser(userInfo.get(0));
       TransitReadWrite.write(user.getAvgMonthly());
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
@@ -27,7 +27,7 @@ public class UserParser {
       if (userInfo.get(1).equals("yes")) {
         AdminUser admin = new AdminUser(userInfo.get(2), userInfo.get(3));
       } else {
-        CardHolder user = new CardHolder(userInfo.get(2), userInfo.get(3));
+        User user = new User(userInfo.get(2), userInfo.get(3));
       }
     } catch (TransitException a) {
       a.getMessage();
@@ -36,7 +36,7 @@ public class UserParser {
 
   static void changeName(List<String> userInfo) {
     try {
-      CardHolder user = CardHolder.findUser(userInfo.get(0));
+      User user = User.findUser(userInfo.get(0));
       String newName = userInfo.get(1);
       user.changeName(newName);
     } catch (TransitException a) {

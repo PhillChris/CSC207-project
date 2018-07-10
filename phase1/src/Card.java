@@ -71,7 +71,7 @@ public class Card {
   /**
    * Activate this card
    *
-   * @param card this CardHolder's card being suspended
+   * @param card this User's card being suspended
    */
   public void activateCard(Card card) {
     isActive = true;

@@ -3,7 +3,7 @@ public class Card {
   /** The starting balance for all cards */
   public static final int CARD_INITIAL_BALANCE = 1900;
   /** The activity of this card */
-  boolean isActive;
+  private boolean isActive;
   /** The current trip this card is on. null when no active trip */
   private Trip currentTrip;
   /** The last trip completed by this card */
@@ -12,7 +12,6 @@ public class Card {
   private int balance;
   /** The cardID of this card */
   private int id;
-
   /**
    * Contruct a new card
    *
@@ -23,6 +22,13 @@ public class Card {
     this.isActive = true;
     this.id = cardID;
     lastTrip = null;
+  }
+
+  /**
+   * @return true if this card is not active
+   */
+  public boolean isSuspended() {
+    return !isActive;
   }
 
   /** @return The ID of this card */
@@ -102,7 +108,10 @@ public class Card {
 
   /** Returns a string representation of this card */
   public String toString() {
-    return "Card #" + this.id + " has " + String.format("$%.2f", this.balance / 100.0)
+    return "Card #"
+            + this.id
+            + " has "
+            + String.format("$%.2f", this.balance / 100.0)
             + " remaining";
   }
 }

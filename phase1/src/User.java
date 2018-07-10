@@ -12,7 +12,7 @@ public class User {
   /** The User's email */
   private final String email;
   /** An ArrayList of this User's last three trips */
-  ArrayList<Trip> lastThreeTrips = new ArrayList<>();
+  private ArrayList<Trip> lastThreeTrips = new ArrayList<>();
   /** HashMap linking each month to the total expenditure for that month */
   private HashMap<YearMonth, Integer> ExpenditureMonthly;
   /** HashMap linking each day to the total expenditure for that day */
@@ -152,7 +152,7 @@ public class User {
   public void tap(Card card, Station station, LocalDateTime timeTapped)
       throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
 
-    if (!card.isActive) {
+    if (card.isSuspended()) {
       throw new CardSuspendedException();
     }
     if (card.getCurrentTrip() == null) {

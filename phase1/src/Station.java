@@ -6,14 +6,13 @@ public abstract class Station {
   /** The unique ID of this station */
   final int stationID;
   /** The fee charged per station travelled by this station */
-  protected int perStationFee;
+  private int perStationFee;
   /**
    * The initial fee charged by this station at the start of a trip
    */
   private int initialFee;
   /** The name of this station */
   private String name;
-
   /**
    * Create a new instance of Station
    *
@@ -36,6 +35,14 @@ public abstract class Station {
     } else if (newStation instanceof SubwayStation) {
       SubwayStation.newSubwayStation(newStation);
     }
+  }
+
+  public int getPerStationFee() {
+    return perStationFee;
+  }
+
+  public void setPerStationFee(int perStationFee) {
+    this.perStationFee = perStationFee;
   }
 
   /** @return the name of this station */

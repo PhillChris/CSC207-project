@@ -109,16 +109,6 @@ public class Trip {
     perStationFee = station.getPerStationFee();
   }
 
-  /** @return The StartStation for this Trip */
-  Station getStartStation() {
-    return priorStops.get(0);
-  }
-
-  /** @return The start time for this Trip */
-  public LocalDateTime getTimeStarted() {
-    return timeStarted;
-  }
-
   /**
    * Updates and returns the fee of this trip, assuming this trip has ended
    *

@@ -34,7 +34,7 @@ public class User {
     }
     this.name = name;
     this.email = email;
-    this.cards = new ArrayList<Card>();
+    this.cards = new ArrayList<>();
     allUsers.put(email, this);
     cardCounter = 1;
     ExpenditureMonthly = new HashMap<>();
@@ -53,7 +53,9 @@ public class User {
     }
   }
 
-  /** Removes this user from the system */
+  /**
+   * Removes this user from the system.
+   */
   public void removeUser() {
     allUsers.remove(this.email);
   }
@@ -83,10 +85,10 @@ public class User {
     return this.cards;
   }
 
-  /** @return A String detaily average expenditure per month */
+  /** @return A String detailing average expenditure per month of this User. */
   public String getAvgMonthly() {
     String message = "Cost per month for user: " + this.name + System.lineSeparator();
-    List<YearMonth> months = new ArrayList<YearMonth>(this.ExpenditureMonthly.keySet());
+    List<YearMonth> months = new ArrayList<>(this.ExpenditureMonthly.keySet());
     int total = 0;
     for (YearMonth month : months) {
       message +=
@@ -109,9 +111,9 @@ public class User {
   }
 
   /**
-   * Change this User's name
+   * Change this User's name.
    *
-   * @param newName The new name of this User
+   * @param newName the new name of this User.
    */
   public void changeName(String newName) {
     this.name = newName;
@@ -123,9 +125,9 @@ public class User {
   }
 
   /**
-   * Remove a card from this User's list of cards.
+   * Remove a card from this User's list of cards. If this user does not own the card, do nothing.
    *
-   * @param card
+   * @param card the card to be removed from this Users collection of cards.
    */
   public void removeCard(Card card) {
     if (this.cards.contains(card)) {
@@ -162,7 +164,8 @@ public class User {
   }
 
   /**
-   * A helper method simulating this User starting a new trip
+   * A helper method simulating this User starting a new trip. This method starts a Trip on the
+   * given Card object.
    *
    * @param card The card which this User taps
    * @param station The station which this User taps at
@@ -189,7 +192,8 @@ public class User {
   }
 
   /**
-   * Helper method which simulates this User end a trip
+   * Helper method which simulates this User ending a trip. This method sets the given Card's
+   * current Trip to null and updates the Card's balance.
    *
    * @param card The card which this User taps
    * @param station The station which this User taps at
@@ -204,7 +208,6 @@ public class User {
     card.setLastTrip(trip);
     card.setCurrentTrip(null);
     updateSpendingHistory(card); // Update's this User's spending history
-    Trip lastTrip = card.getLastTrip();
     // Update System's spending history
     CostCalculator.updateSystemRevenue(trip.getFee(), Math.max(trip.getTripLegLength(), 0));
     if (!lastThreeTrips.contains(trip)) {

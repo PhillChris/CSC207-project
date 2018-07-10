@@ -80,9 +80,12 @@ public class TransitReadWrite {
     // Execute remaining commands in events.txt
     String actionLine = reader.readLine();
     while (actionLine != "\n" && actionLine != null) {
+      actionLine = actionLine.trim();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
-      if (tempLineWords.size() > 1) {
+      if (TransitReadWrite.keyWords.get(tempLineWords.get(0)) == null) {
+        TransitReadWrite.write("Invalid command: This command does not exist");
+      } else if (tempLineWords.size() > 1) {
         TransitReadWrite.keyWords
             .get(tempLineWords.get(0))
             .apply(tempLineWords.subList(1, tempLineWords.size()));

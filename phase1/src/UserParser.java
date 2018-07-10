@@ -1,11 +1,12 @@
 import java.time.LocalDateTime;
 import java.util.List;
 
+/** Parses all methods pertaining to users in the transit system */
 public class UserParser implements Parser {
   /**
-   * Gets a user's average monthly expenditures for the Transit System
+   * Generates a user's monthly expenditure profile
    *
-   * @param userInfo Information given from the user
+   * @param userInfo Information given for the user from TransitReadWrite.read
    */
   public void monthlyExpenditure(List<String> userInfo) {
     try {
@@ -17,9 +18,9 @@ public class UserParser implements Parser {
   }
 
   /**
-   * Adds a new user to the Transit System
+   * Processes an add user request from events.txt
    *
-   * @param userInfo Info given from the user
+   * @param userInfo Information given for the user from TransitReadWrite.read
    */
   public void add(List<String> userInfo) {
     try {
@@ -34,6 +35,11 @@ public class UserParser implements Parser {
     }
   }
 
+  /**
+   * Processes a change name request for a given user from events.txt
+   *
+   * @param userInfo Information given for the user from TransitReadWrite.read
+   */
   public void changeName(List<String> userInfo) {
     try {
       User user = User.findUser(userInfo.get(0));
@@ -44,6 +50,11 @@ public class UserParser implements Parser {
     }
   }
 
+  /**
+   * Processes a daily report request from events.txt
+   *
+   * @param userInfo Information given for the admin user from TransitReadWrite.read
+   */
   public void dailyReports(List<String> userInfo) {
     try {
       AdminUser user = AdminUser.findAdminUser(userInfo.get(0));
@@ -54,6 +65,11 @@ public class UserParser implements Parser {
     }
   }
 
+  /**
+   * Generates a report containing all of a given user's cards and balances
+   *
+   * @param userInfo Information given for the user from TransitReadWrite.read
+   */
   public void report(List<String> userInfo) {
     try {
       User user = User.findUser(userInfo.get(0));
@@ -67,6 +83,12 @@ public class UserParser implements Parser {
     }
   }
 
+  /**
+   * Processes a request for the last three trips traveled by a given user
+   * from events.txt
+   *
+   * @param userInfo Information given for the user from TransitReadWrite.read
+   */
   public void getLastThree(List<String> userInfo) {
     try {
       User user = User.findUser(userInfo.get(0));

@@ -2,17 +2,17 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/** Parses all methods pertaining to cards in the transit system */
 public class CardParser implements Parser {
   /**
    * Processes a card's tap request
    *
-   * @param cardInfo Info given from the user
+   * @param cardInfo Information given for the card from TransitReadWrite.read
    * @throws IOException
    */
   public void tap(List<String> cardInfo) {
-    // Get the time of the tap
     try {
-      // Find the user, card and station from the given information
+      // Find the time, user, card and station from the given information
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
       User user = User.findUser(cardInfo.get(1));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
@@ -28,17 +28,20 @@ public class CardParser implements Parser {
         throw new InvalidStationTypeException();
       }
 
+      // If no such station is found
       if (station == null) {
         throw new StationNotFoundException();
       }
       try {
         user.tap(card, station, time);
+        // if this user has just started a trip
         if (card.getTripStarted()) {
           TransitReadWrite.write("User " + user.getEmail() + " tapped on at " + stationName);
         } else {
           TransitReadWrite.write("User " + user.getEmail() + " tapped off at " + stationName);
         }
-      } catch (InvalidTripException t) {
+      } catch (InvalidTripException t)  {
+        // if the trip having just been processed crossed over multiple routes
         TransitReadWrite.write(t.getMessage());
         TransitReadWrite.write("User " + user.getEmail() + " tapped off at " + stationName);
       }
@@ -48,9 +51,9 @@ public class CardParser implements Parser {
   }
 
   /**
-   * Adds a new card for a user
+   * Processes an add card request
    *
-   * @param cardInfo The info given from the user
+   * @param cardInfo Information given for the card from TransitReadWrite.read
    */
   public void add(List<String> cardInfo) {
     try {
@@ -63,9 +66,9 @@ public class CardParser implements Parser {
   }
 
   /**
-   * Removes a user's card
+   * Processes a remove card request
    *
-   * @param cardInfo Information given from the user
+   * @param cardInfo Information given for the card from TransitReadWrite.read
    */
   public void removeCard(List<String> cardInfo) {
     try {
@@ -79,48 +82,63 @@ public class CardParser implements Parser {
   }
 
   /**
-   * Deactivates a user's card
+   * Process a theft report for a given card
    *
-   * @param userInfo Information given from the user
+   * @param cardInfo Information given for the card from TransitReadWrite.read
    */
-  public void reportTheft(List<String> userInfo) {
+  public void reportTheft(List<String> cardInfo) {
     try {
-      User user = User.findUser(userInfo.get(0));
-      Card card = user.getCard(Integer.parseInt(userInfo.get(1)));
+      User user = User.findUser(cardInfo.get(0));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       card.suspendCard();
       TransitReadWrite.write(
-          "Theft reported for user " + userInfo.get(0) + " card " + userInfo.get(1));
+          "Theft reported for user " + cardInfo.get(0) + " card " + cardInfo.get(1));
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }
   }
 
   /**
-   * Adds funds to a card
+   * Processes an add funds request for a given card
    *
-   * @param userInfo Information given from the user
+   * @param cardInfo Information given for the card from TransitReadWrite.read
    */
-  public void addFunds(List<String> userInfo) {
+  public void addFunds(List<String> cardInfo) {
     try {
-      LocalDateTime time = TransitTime.getTime(userInfo.get(0));
-      User user = User.findUser(userInfo.get(1));
-      Card card = user.getCard(Integer.parseInt(userInfo.get(2)));
-      card.addBalance(Integer.parseInt(userInfo.get(3)) * 100);
+      LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
+      User user = User.findUser(cardInfo.get(1));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
+      card.addBalance(Integer.parseInt(cardInfo.get(3)) * 100);
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }
   }
 
+  /**
+   * Creates a balance report for a given card
+   *
+   * @param cardInfo Information given for the card from TransitReadWrite.read
+   */
   public void report(List<String> cardInfo) {
     try {
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
-      TransitReadWrite.write("This card has " + card.getBalance() / 100.0 + " dollars remaining");
+      TransitReadWrite.write(
+          "This card the user card #"
+              + card.getId()
+              + " and has "
+              + String.format("%.2f", card.getBalance() / 100.0)
+              + " dollars remaining");
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }
   }
 
+  /**
+   * Processes a card activation request
+   *
+   * @param cardInfo Information given for the card from TransitReadWrite.read
+   */
   public void activate(List<String> cardInfo) {
     try {
       User user = User.findUser(cardInfo.get(0));

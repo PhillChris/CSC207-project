@@ -83,7 +83,7 @@ public class CardHolder {
     List<YearMonth> months = new ArrayList<YearMonth>(this.ExpenditureMonthly.keySet());
     int total = 0;
     for (YearMonth month : months) {
-      message += month.toString() + " : " + String.format("%.2f", ExpenditureMonthly.get(month)/30.0);
+      message += month.toString() + " : " + String.format("%.2f", ExpenditureMonthly.get(month)/3000.0);
       message += System.lineSeparator();
     }
     return message;

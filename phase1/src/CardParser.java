@@ -88,8 +88,8 @@ public class CardParser implements Parser {
    */
   public void reportTheft(List<String> cardInfo) {
     try {
-      User user = User.findUser(cardInfo.get(1)); // passing user email
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(2))); // passing cardID.
+      User user = User.findUser(cardInfo.get(0)); // passing user email
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(1))); // passing cardID.
       card.suspendCard();
       TransitReadWrite.write(
           "Theft reported for user " + cardInfo.get(0) + " card " + cardInfo.get(1));

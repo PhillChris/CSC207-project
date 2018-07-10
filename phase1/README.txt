@@ -172,7 +172,8 @@ Parameters:
   the sake of changing modes of transportation in a given trip)
 - Admin? can be yes or no, and determines whether or not the user being created is an admin user
 - userName is the username of this user. This can be changed by calling CHANGENAME
-- dollarsAdded is the dollar value of funds to add to the given card's balance
+- dollarsAdded is the dollar value of funds to add to the given card's balance.
+  IN INTEGER FORM ONLY: cent values not accepted
 - newName is the new user name to be passed to the system
 - adminuseremail@fakemail.io is an AdminUser email (when used as a parameter, it MUST be an AdminUser)
 

@@ -36,7 +36,7 @@ public class TransitReadWrite {
     TransitReadWrite.writer = writer;
 
     // Reads the opening init line determining how many routes to make
-    String initLine = reader.readLine();
+    String initLine = reader.readLine().trim();
     ArrayList<String> initLineWords =
         new ArrayList<String>(Arrays.asList(initLine.split(SPLIT_SYMBOL)));
 
@@ -59,7 +59,7 @@ public class TransitReadWrite {
 
     // Iterate through subway routes, constructing from events.txt
     for (int i = 0; i < numSubwayRoutes; i++) {
-      String tempLine = reader.readLine();
+      String tempLine = reader.readLine().trim();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
       Route newRoute = new SubwayRoute(tempLineWords.subList(1, tempLineWords.size()));
@@ -69,7 +69,7 @@ public class TransitReadWrite {
 
     // Iterate through bus routes, constructing from events.txt
     for (int i = 0; i < numBusRoutes; i++) {
-      String tempLine = reader.readLine();
+      String tempLine = reader.readLine().trim();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
       Route newRoute = new BusRoute(tempLineWords.subList(1, tempLineWords.size()));
@@ -78,11 +78,13 @@ public class TransitReadWrite {
     }
 
     // Execute remaining commands in events.txt
-    String actionLine = reader.readLine();
-    while (actionLine != null && actionLine.equals(System.lineSeparator())) {
+    String actionLine = reader.readLine().trim();
+    while (actionLine != "\n" && actionLine != null) {
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
-      if (tempLineWords.size() > 1) {
+      if (TransitReadWrite.keyWords.get(tempLineWords.get(0)) == null) {
+        TransitReadWrite.write("Invalid command: This command does not exist");
+      } else if (tempLineWords.size() > 1) {
         TransitReadWrite.keyWords
             .get(tempLineWords.get(0))
             .apply(tempLineWords.subList(1, tempLineWords.size()));

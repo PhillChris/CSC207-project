@@ -2,7 +2,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,13 +9,21 @@ import java.util.List;
 
 /** Represents a CardHolder in a transit system. */
 public class CardHolder {
+  /** HashMap linking each email to its CardHolder */
   private static HashMap<String, CardHolder> allUsers = new HashMap<>();
+  /** The CardHolder's email */
   private final String email;
-  private HashMap<YearMonth, Integer> ExpenditureMonthly;
-  private HashMap<LocalDate, Integer> ExpenditureDaily;
+  /** An ArrayList of this CardHolder's last three trips */
   ArrayList<Trip> lastThreeTrips = new ArrayList<>();
+  /** HashMap linking each month to the total expenditure for that month */
+  private HashMap<YearMonth, Integer> ExpenditureMonthly;
+  /** HashMap linking each day to the total expenditure for that day */
+  private HashMap<LocalDate, Integer> ExpenditureDaily;
+  /** An ArrayList of this CardHolder's cards */
   private List<Card> cards;
+  /** This CardHolder's name */
   private String name;
+  /** The id given to the next card added by the user */
   private int cardCounter;
 
   /**
@@ -26,7 +33,7 @@ public class CardHolder {
    * @param email the email of this CardHolder
    */
   public CardHolder(String name, String email) throws EmailInUseException {
-    if (allUsers.keySet().contains(email)) {
+    if (allUsers.keySet().contains(email)) { // If this CardHolder already exists
       throw new EmailInUseException();
     }
     this.name = name;
@@ -38,10 +45,11 @@ public class CardHolder {
     ExpenditureDaily = new HashMap<>();
   }
 
-  public static CardHolder getCardholder(String email) {
-    return allUsers.get(email);
-  }
-
+  /**
+   * @param email The email of a CardHolder
+   * @return The CardHolder with given email
+   * @throws UserNotFoundException Thrown if no such CardHolder has given email
+   */
   public static CardHolder findUser(String email) throws UserNotFoundException {
     if (allUsers.containsKey(email)) {
       return allUsers.get(email);
@@ -150,10 +158,10 @@ public class CardHolder {
     card.subtractBalance(trip.getFee());
     card.getAllTrips().add(trip);
     card.setCurrentTrip(null);
-    if (!lastThreeTrips.contains(trip)){
+    if (!lastThreeTrips.contains(trip)) {
       lastThreeTrips.add(trip);
     }
-    if (lastThreeTrips.size() == 4){
+    if (lastThreeTrips.size() == 4) {
       lastThreeTrips.remove(0);
     }
     if (!trip.isValidTrip()) {

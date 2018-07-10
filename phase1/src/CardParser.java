@@ -14,7 +14,7 @@ public class CardParser {
     try {
       // Find the user, card and station from the given information
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
-      CardHolder user = CardHolder.getCardholder(cardInfo.get(1));
+      CardHolder user = CardHolder.findUser(cardInfo.get(1));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
       String stationType = cardInfo.get(3);
       String stationName = cardInfo.get(4);

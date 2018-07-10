@@ -96,41 +96,4 @@ public class Card {
     }
     return null;
   }
-
-  /**
-   * Tap into the current station, creating a new Trip object with startStation station and
-   * timeStarted timeTapped. As of now this method is only called if there is no currentTrip on this
-   * Card.
-   *
-   * @param station the station that this Card tapped in at.
-   * @param timeTapped the time at which this Card tapped in.
-   */
-  void tapIn(Station station, LocalDateTime timeTapped) throws InsufficientFundsException {
-    if (balance <= 0) throw new InsufficientFundsException();
-
-    boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
-    Trip lastTrip = getLastTrip();
-    if (lastTrip != null) { // check this to avoid index errors
-      // check that tapping into this station would be a continuous trip from last trip
-      if (lastTrip.isContinuousTrip(station, timeTapped)) {
-        currentTrip = lastTrip; // continue the last trip
-        currentTrip.continueTrip(station);
-        foundContinuousTrip = true;
-      }
-    }
-    if (!foundContinuousTrip) {
-      this.currentTrip = new Trip(timeTapped, station);
-    }
-  }
-
-  void tapOut(Station station, LocalDateTime timeTapped) throws InvalidTripException {
-    currentTrip.endTrip(station, timeTapped);
-    subtractBalance(currentTrip.getFee());
-    boolean validTrip = currentTrip.isValidTrip();
-    allTrips.add(currentTrip);
-    currentTrip = null;
-    if (!validTrip) {
-      throw new InvalidTripException();
-    }
-  }
 }

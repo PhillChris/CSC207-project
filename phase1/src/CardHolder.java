@@ -14,6 +14,7 @@ public class CardHolder {
   private final String email;
   HashMap<YearMonth, Integer> ExpenditureMonthly;
   HashMap<LocalDate, Integer> ExpenditureDaily;
+  Trip[] lastThreeTrips = new Trip[3];
   private List<Card> cards;
   private String name;
   private int cardCounter;
@@ -110,11 +111,7 @@ public class CardHolder {
 
   /** Add a card to this CardHolder's list of cards. */
   public void addCard() {
-    Card card = new Card(cardCounter);
-    cardCounter++;
-    if (!this.cards.contains(card)) {
-      this.cards.add(card);
-    }
+    this.cards.add(new Card(cardCounter++));
   }
 
   /**
@@ -125,25 +122,6 @@ public class CardHolder {
   public void removeCard(Card card) {
     if (this.cards.contains(card)) {
       this.cards.remove(card);
-    }
-  }
-
-  public void tap(Card card, Station station, LocalDateTime timeTapped)
-      throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
-
-    LocalDate date = TransitTime.getCurrentDate();
-    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
-
-    if (!card.isActive) {
-      throw new CardSuspendedException();
-    }
-    if (card.currentTrip == null) {
-      card.tapIn(station, timeTapped);
-    } else {
-      card.tapOut(station, timeTapped);
-      Trip lastTrip = card.getLastTrip();
-      updateSpendingHistory(card);
-      CostCalculator.updateSystemRevenue(lastTrip.getFee());
     }
   }
 
@@ -165,6 +143,25 @@ public class CardHolder {
       ExpenditureDaily.put(date, ExpenditureDaily.get(date) + lastTrip.getFee());
     } else {
       ExpenditureDaily.put(date, lastTrip.getFee());
+    }
+  }
+
+  public void tap(Card card, Station station, LocalDateTime timeTapped)
+      throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
+
+    LocalDate date = TransitTime.getCurrentDate();
+    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
+
+    if (!card.isActive) {
+      throw new CardSuspendedException();
+    }
+    if (card.currentTrip == null) {
+      tapIn(card, station, timeTapped);
+    } else {
+      tapOut(card, station, timeTapped);
+      Trip lastTrip = card.getLastTrip();
+      updateSpendingHistory(card);
+      CostCalculator.updateSystemRevenue(lastTrip.getFee());
     }
   }
 

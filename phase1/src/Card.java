@@ -25,6 +25,45 @@ public class Card {
     return this.id;
   }
 
+  public int getBalance() {
+    return this.balance;
+  }
+
+  public List<Trip> getAllTrips() {
+    return allTrips;
+  }
+
+  public boolean getTripStarted() {
+    return currentTrip != null;
+  }
+
+  /**
+   * Return up to the last three trips taken on this Card.
+   *
+   * @return a list containing up to the last three trips taken on this Card
+   */
+  public List<Trip> getLastThree() {
+    return allTrips.subList(Math.max(allTrips.size() - 3, 0), allTrips.size());
+  }
+
+  /**
+   * Suspend a card belonging to this CardHolder.
+   *
+   * @param card this CardHolder's card being suspended
+   */
+  public void activateCard(Card card) {
+    isActive = true;
+  }
+
+  /**
+   * Suspend this card.
+   *
+   * @param card this CardHolder's card being suspended
+   */
+  public void suspendCard(Card card) {
+    isActive = false;
+  }
+
   /**
    * Add given int toAdd to this Card's balance.
    *
@@ -85,48 +124,5 @@ public class Card {
     if (!validTrip) {
       throw new InvalidTripException();
     }
-  }
-
-  public int getBalance() {
-    return this.balance;
-  }
-
-  public boolean tripStarted() {
-    return currentTrip != null;
-  }
-
-  public List<Trip> getAllTrips() {
-    return allTrips;
-  }
-
-  public void setActive(Boolean bool) {
-    this.isActive = bool;
-  }
-
-  /**
-   * Return up to the last three trips taken on this Card.
-   *
-   * @return a list containing up to the last three trips taken on this Card
-   */
-  public List<Trip> getLastThree() {
-    return allTrips.subList(Math.max(allTrips.size() - 3, 0), allTrips.size());
-  }
-
-  /**
-   * Suspend a card belonging to this CardHolder.
-   *
-   * @param card this CardHolder's card being suspended
-   */
-  public void suspendCard(Card card) {
-    isActive = false;
-  }
-
-  /**
-   * Suspend a card belonging to this CardHolder.
-   *
-   * @param card this CardHolder's card being suspended
-   */
-  public void activateCard(Card card) {
-    isActive = true;
   }
 }

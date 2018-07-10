@@ -44,37 +44,31 @@ public class TransitReadWrite {
       throw new InitLineException();
     }
 
-    int numSubwayRoutes;
-    int numBusRoutes;
-
+    int numRoutes;
     // Checks if the two parameters given for subway station and bus station numbers are valid ints
     try {
-      numSubwayRoutes = Integer.parseInt(initLineWords.get(1));
-      numBusRoutes = Integer.parseInt(initLineWords.get(2));
+      numRoutes = Integer.parseInt(initLineWords.get(1));
     } catch (NumberFormatException numberException) {
       throw new InitLineException();
     }
 
-    TransitTime.initDate(initLineWords.get(3));
+    TransitTime.initDate(initLineWords.get(2));
 
     // Iterate through subway routes, constructing from events.txt
-    for (int i = 0; i < numSubwayRoutes; i++) {
+    StationFactory subFact = new SubwayFactory();
+    StationFactory busFact = new BusFactory();
+    for (int i = 0; i < numRoutes; i++) {
       String tempLine = reader.readLine().trim();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
-      Route newRoute = new SubwayRoute(tempLineWords.subList(1, tempLineWords.size()));
-//      Route newRoute = new SubwayRoute(tempLineWords);
-      TransitReadWrite.write("Created new subway route: " + newRoute.getRouteNumber() + System.lineSeparator());
-    }
-
-    // Iterate through bus routes, constructing from events.txt
-    for (int i = 0; i < numBusRoutes; i++) {
-      String tempLine = reader.readLine().trim();
-      ArrayList<String> tempLineWords =
-          new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
-      Route newRoute = new BusRoute(tempLineWords.subList(1, tempLineWords.size()));
-//      Route newRoute = new BusRoute(tempLineWords);
-      TransitReadWrite.write("Created new bus route: " + newRoute.getRouteNumber() + System.lineSeparator());
+      List<String> stationNames = tempLineWords.subList(1, tempLineWords.size());
+      if (tempLineWords.get(0).equals("SUBWAY")){
+        Route newRoute = new Route(stationNames, subFact);
+        TransitReadWrite.write("Created new subway route: " + newRoute.getRouteNumber() + System.lineSeparator());
+      } else if (tempLineWords.get(0).equals("BUS")) {
+        Route newRoute = new Route(stationNames, busFact);
+        TransitReadWrite.write("Created new bus route: " + newRoute.getRouteNumber() + System.lineSeparator());
+        }
     }
 
     // Execute remaining commands in events.txt

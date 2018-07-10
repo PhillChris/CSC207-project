@@ -1,15 +1,14 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Station {
-  private static int totalStations;
+  private static int totalStations; // to ensure no station has the same ID.
   private static HashMap<String, List<Station>> allStations = new HashMap<>();
   final int stationID;
-  private String name;
   protected int initialFee;
   protected int perStationFee;
+  private String name;
 
   public Station(String name) {
     this.name = name;
@@ -30,9 +29,10 @@ public abstract class Station {
   public static void addStation(Station newStation) {
     String stationName = newStation.name;
     // if no station of this name, add it to allStations
-    if (!allStations.containsKey(stationName)) {
-      allStations.put(stationName, new ArrayList<>());
-      allStations.get(stationName).add(newStation);
+    if (newStation instanceof BusStation) {
+      BusStation.newBusStation(newStation);
+    } else if (newStation instanceof SubwayStation) {
+      SubwayStation.newSubwayStation(newStation);
     }
   }
 
@@ -58,4 +58,5 @@ public abstract class Station {
     return this.name.equals(otherStation.getName());
   }
 
+  public abstract HashMap<String, Station> getStations();
 }

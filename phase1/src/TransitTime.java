@@ -63,7 +63,7 @@ public class TransitTime {
             currentTime.getYear(), currentTime.getMonth(), currentTime.getDayOfMonth(), 0, 0);
     TransitReadWrite.write(
         "Day ended successfully: current day is "
-            + currentTime.getMonth().toString()
+            + currentTime.getMonth()
             + " "
             + +currentTime.getDayOfMonth()
             + ", "

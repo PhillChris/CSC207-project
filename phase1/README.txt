@@ -129,7 +129,6 @@ CHANGENAME | cardholderemail@fakemail.io | newName
 
 ENDDAY: Ends the given day, and sets the time to the following day. Does NOT
 print a dailyReport, but only handles the dateTime adjustment (for daily reports, see DAILYREPORTS)
-Note that leap years are not supported in this program.
 
 Usage:
 ENDDAY

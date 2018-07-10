@@ -31,7 +31,8 @@ following form, where STATIONTYPE is the type of stations in the given route IN 
 
 STATIONTYPE | StationName1 | StationName2 | StationName3 | ... | StationNameN |
 
-Note that self-intersecting, or circular, routes are not supported in this system.
+Note that self-intersecting, or circular, routes are not supported in this system. Stations in
+distinct routes are considered "intersecting" if and only if they have the same name.
 
 The remaining lines of the program are action lines, contributing to program execution.
 

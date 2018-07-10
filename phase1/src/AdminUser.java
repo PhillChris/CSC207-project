@@ -33,14 +33,8 @@ public class AdminUser extends User {
 
   /** Requests the production of a daily report to dailyReports.txt */
   public void dailyReports() {
-    // The revenue collected for each day
-    HashMap<LocalDate, Integer> dailyTotals = CostCalculator.getDailyRevenue();
-    // List of all the dates collected
-    List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
-    Collections.sort(dates);
-
     try {
-      CostCalculator.generateReport(dates);
+      CostCalculator.generateReport();
     } catch (IOException e) {
       System.out.println("File could not be constructed, daily reports will not be generated");
     }

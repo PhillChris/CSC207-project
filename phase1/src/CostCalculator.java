@@ -1,6 +1,8 @@
 import java.io.*;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class CostCalculator {
     return dailyRevenue;
   }
 
-  public static void generateReport(List<LocalDate> dates)
+  public static void generateReport()
       throws IOException {
     // Writes to dailyReports.txt
     Writer writer =
@@ -41,6 +43,12 @@ public class CostCalculator {
     writer.write(System.lineSeparator());
 
     // Loop through all days and write each day's revenue
+// The revenue collected for each day
+    HashMap<LocalDate, Integer> dailyTotals = CostCalculator.getDailyRevenue();
+    // List of all the dates collected
+    List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
+    dates.sort(Collections.reverseOrder());
+
     for (LocalDate day : dates) {
       writer.write(System.lineSeparator());
       String date = day.toString();

@@ -20,6 +20,7 @@ public class TransitTime {
     Month currentMonth = Month.of(Integer.parseInt(formatted[1]));
     int currentDay = Integer.parseInt(formatted[2]);
     currentTime = LocalDateTime.of(currentYear, currentMonth, currentDay, 0, 0);
+    CostCalculator.getDailyRevenue().put(currentTime.toLocalDate(), 0);
   }
 
   /**
@@ -58,18 +59,20 @@ public class TransitTime {
    */
   static void endDay(List<String> emptyList) {
     currentTime = currentTime.plusDays(1);
+    currentTime =
+        LocalDateTime.of(
+            currentTime.getYear(), currentTime.getMonth(), currentTime.getDayOfMonth(), 0, 0);
     TransitReadWrite.write(
         "Day ended successfully: current day is "
-            + currentTime.getMonth().toString()
+            + currentTime.getMonth()
             + " "
             + +currentTime.getDayOfMonth()
             + ", "
             + currentTime.getYear());
+    CostCalculator.getDailyRevenue().put(currentTime.toLocalDate(), 0);
   }
 
-  /**
-   * @return The current date in the transit system
-   */
+  /** @return The current date in the transit system */
   public static LocalDate getCurrentDate() {
     return currentTime.toLocalDate();
   }

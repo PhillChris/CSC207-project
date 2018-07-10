@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Represents a travel route in this transit system */
-public class Route {
+public class Route<T extends Station> {
 
   /** A list of all routes in the transit system */
   protected static ArrayList<Route> routes = new ArrayList<Route>();

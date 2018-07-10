@@ -64,7 +64,7 @@ public class TransitReadWrite {
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
       Route newRoute = new SubwayRoute(tempLineWords.subList(1, tempLineWords.size()));
 //      Route newRoute = new SubwayRoute(tempLineWords);
-      writer.write("Created new subway route: " + newRoute.getRouteNumber() + System.lineSeparator());
+      TransitReadWrite.write("Created new subway route: " + newRoute.getRouteNumber() + System.lineSeparator());
     }
 
     // Iterate through bus routes, constructing from events.txt
@@ -74,7 +74,7 @@ public class TransitReadWrite {
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
       Route newRoute = new BusRoute(tempLineWords.subList(1, tempLineWords.size()));
 //      Route newRoute = new BusRoute(tempLineWords);
-      writer.write("Created new bus route: " + newRoute.getRouteNumber() + System.lineSeparator());
+      TransitReadWrite.write("Created new bus route: " + newRoute.getRouteNumber() + System.lineSeparator());
     }
 
     // Execute remaining commands in events.txt

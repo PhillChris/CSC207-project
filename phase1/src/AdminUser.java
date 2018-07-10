@@ -8,6 +8,7 @@ import java.util.List;
 public class AdminUser extends CardHolder {
 
   private static List<Trip> allTrips;
+  private static HashMap<String, AdminUser> allAdminUsers = new HashMap<>();
 
   /**
    * Construct a new instance of AdminUser
@@ -17,9 +18,19 @@ public class AdminUser extends CardHolder {
    */
   public AdminUser(String name, String email) {
     super(name, email);
+    allAdminUsers.put(email, this);
   }
 
-  public static void dailyReports() {
+  public static AdminUser findAdminUser(String email) throws UserNotFoundException{
+    if (allAdminUsers.containsKey(email)) {
+      return allAdminUsers.get(email);
+    }
+    else{
+      throw new UserNotFoundException();
+    }
+  }
+
+  public void dailyReports() {
     // The revenue collected for each day
     HashMap<LocalDate, Integer> dailyTotals = CostCalculator.getDailyRevenue();
     // List of all the dates collected
@@ -42,6 +53,7 @@ public class AdminUser extends CardHolder {
         writer.write(String.format("%s", date + " $" + revenue));
       }
 
+      writer.close();
     } catch (IOException e) {
       System.out.println("File could not be constructed. Daily reports will not be generated.");
     }

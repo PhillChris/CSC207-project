@@ -29,7 +29,7 @@ public class UserParser {
       a.getMessage();
     }
 
-    if (userInfo.get(2).equals("yes")) {
+    if (userInfo.get(1).equals("yes")) {
       AdminUser admin = new AdminUser(userInfo.get(2), userInfo.get(3));
     } else {
       CardHolder user = new CardHolder(userInfo.get(2), userInfo.get(3));
@@ -41,6 +41,16 @@ public class UserParser {
       CardHolder user = CardHolder.findUser(userInfo.get(0));
       String newName = userInfo.get(1);
       user.changeName(newName);
+    } catch (TransitException a) {
+      TransitReadWrite.write(a.getMessage());
+    }
+  }
+
+  static void dailyReports(List<String> userInfo) {
+    try {
+      AdminUser user = AdminUser.findAdminUser(userInfo.get(0));
+      user.dailyReports();
+      TransitReadWrite.write("Published daily reports to dailyReports.txt");
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }

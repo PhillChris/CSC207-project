@@ -65,7 +65,6 @@ public class TransitTime {
    * @param emptyList Information given by the user
    */
   static void endDay(List<String> emptyList) {
-    AdminUser.dailyReports();
     if (currentDay < currentMonth.length(false)) {
       currentDay++;
     } else {

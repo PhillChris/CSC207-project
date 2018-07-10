@@ -161,6 +161,12 @@ public class TransitReadWrite {
           CardParser.activate(cardInfo);
           return null;
         });
+    TransitReadWrite.keyWords.put(
+        "DAILYREPORTS",
+        (userInfo) -> {
+          UserParser.dailyReports(userInfo);
+          return null;
+        });
   }
 }
 

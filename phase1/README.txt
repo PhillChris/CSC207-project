@@ -91,7 +91,8 @@ REPORTTHEFT | cardholderemail@fakemail.io | card#
 
 --
 
-ACTIVATE: todo implement this
+ACTIVATECARD: Activates a given card from the transit system, having been deactivated with
+REPORTTHEFT.
 
 Usage:
 ACTIVATECARD | cardholderemail@fakemail.io | card#
@@ -99,6 +100,8 @@ ACTIVATECARD | cardholderemail@fakemail.io | card#
 --
 
 DAILYREPORTS: todo implement this
+
+DAILYREPORTS | adminuseremail@fakemail.io |
 
 --
 
@@ -156,6 +159,7 @@ Parameters:
 - userName is the username of this user. This can be changed by calling CHANGENAME
 - dollarsAdded is the dollar value of funds to add to the given card's balance
 - newName is the new user name to be passed to the system
+- adminuseremail@fakemail.io is an AdminUser email (when used as a parameter, it MUST be an AdminUser)
 
 ----
 REPORT FETCHING

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-// TODO: Figure out how to calculate average monthly cost. Get clarification on "last three trips".
-
 /** Represents a CardHolder in a transit system. */
 public class CardHolder {
   /** HashMap linking each email to its CardHolder */

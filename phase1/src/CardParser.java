@@ -87,7 +87,7 @@ public class CardParser {
     try {
       CardHolder user = CardHolder.findUser(userInfo.get(0));
       Card card = user.getCard(Integer.parseInt(userInfo.get(1)));
-      card.suspendCard(card);
+      card.suspendCard();
       TransitReadWrite.write(
           "Theft reported for user " + userInfo.get(0) + " card " + userInfo.get(1));
     } catch (TransitException a) {

@@ -136,4 +136,9 @@ public class Trip {
       return perStationFee * (Math.abs(secondStation - firstStation));
     }
   }
+
+  /** @return A string representation of a trip */
+  public String toString() {
+    return "Trip started at " + priorStops.get(0) +  " and ended at " + endStation;
+  }
 }

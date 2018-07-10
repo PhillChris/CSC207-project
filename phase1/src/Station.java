@@ -53,4 +53,7 @@ public abstract class Station {
 
   /** @return HashMap of all stations of similar type */
   public abstract HashMap<String, Station> getStations();
+
+  /** @return A string representation of a station */
+  public String toString() { return this.name; }
 }

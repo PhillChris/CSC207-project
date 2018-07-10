@@ -77,6 +77,8 @@ public class User {
     throw new CardNotFoundException();
   }
 
+  public List<Card> getCards() { return this.cards;}
+
   /** @return A String detaily average expenditure per month */
   public String getAvgMonthly() {
     String message = "Cost per month for user: " + this.name + System.lineSeparator();
@@ -125,6 +127,11 @@ public class User {
     if (this.cards.contains(card)) {
       this.cards.remove(card);
     }
+  }
+
+  /** @return A string representation of a user */
+  public String toString() {
+    return this.name;
   }
 
   /**

@@ -99,4 +99,6 @@ public class Card {
   public void subtractBalance(int toSubtract) {
     this.balance -= toSubtract;
   }
+
+  public String toString() { return "Card #" + this.id + " " + this.balance / 100.0; }
 }

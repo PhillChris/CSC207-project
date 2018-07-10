@@ -141,6 +141,20 @@ CHECKBALANCE: Gets the current balance of the given card
 Usage:
 CHECKBALANCE | cardholderemail@fakemail.io | card#
 
+--
+
+GETLASTTHREE: Reports the last three trips of a given user to output.txt
+
+Usage:
+GETLASTTHREE | cardholderemail@fakemail.io
+
+--
+
+USERREPORT: Reports a given user's cards and the current balances on them to output.txt
+
+Usage:
+USERREPORT | cardholderemail@fakemail.io
+
 ---
 
 Parameters:

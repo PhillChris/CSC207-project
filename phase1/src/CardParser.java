@@ -123,12 +123,7 @@ public class CardParser implements Parser {
     try {
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
-      TransitReadWrite.write(
-          "This card the user card #"
-              + card.getId()
-              + " and has "
-              + String.format("%.2f", card.getBalance() / 100.0)
-              + " dollars remaining");
+      TransitReadWrite.write(user.getEmail() + "'s " + card.toString());
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }

@@ -45,17 +45,11 @@ public class UserParser implements ObjectParser {
   public void remove(List<String> userInfo) {
     try {
       ObjectParser.checkInput(userInfo, 1);
-      try {
-        // if the given user is an AdminUser
-        AdminUser admin = AdminUser.findAdminUser(userInfo.get(0));
-        admin.removeUser();
-        TransitReadWrite.write("Removed admin user " + admin);
-      } catch (UserNotFoundException a) {
-        // if the given user is not an AdminUser but is a User
-        User user = User.findUser(userInfo.get(0));
-        user.removeUser();
-        TransitReadWrite.write("Removed user " + user);
-      }
+      // if the given user is not an AdminUser but is a User
+      User user = User.findUser(userInfo.get(0));
+      user.removeUser();
+      TransitReadWrite.write("Removed user " + user);
+
     } catch (TransitException a) {
       a.getMessage();
     }

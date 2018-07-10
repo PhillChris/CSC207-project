@@ -25,14 +25,13 @@ public class UserParser {
   static void addUser(List<String> userInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(userInfo.get(0));
+      if (userInfo.get(1).equals("yes")) {
+        AdminUser admin = new AdminUser(userInfo.get(2), userInfo.get(3));
+      } else {
+        CardHolder user = new CardHolder(userInfo.get(2), userInfo.get(3));
+      }
     } catch (TransitException a) {
       a.getMessage();
-    }
-
-    if (userInfo.get(1).equals("yes")) {
-      AdminUser admin = new AdminUser(userInfo.get(2), userInfo.get(3));
-    } else {
-      CardHolder user = new CardHolder(userInfo.get(2), userInfo.get(3));
     }
   }
 

@@ -21,7 +21,10 @@ public class CardHolder {
    * @param name the name of this CardHolder
    * @param email the email of this CardHolder
    */
-  public CardHolder(String name, String email) {
+  public CardHolder(String name, String email) throws EmailInUseException{
+    if (allUsers.keySet().contains(email)) {
+      throw new EmailInUseException();
+    }
     this.name = name;
     this.email = email;
     this.cards = new ArrayList<Card>();

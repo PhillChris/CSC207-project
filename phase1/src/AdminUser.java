@@ -16,7 +16,7 @@ public class AdminUser extends CardHolder {
    * @param name the name of this AdminUser
    * @param email the email of this AdminUser
    */
-  public AdminUser(String name, String email) {
+  public AdminUser(String name, String email) throws EmailInUseException{
     super(name, email);
     allAdminUsers.put(email, this);
   }

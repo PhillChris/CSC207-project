@@ -79,11 +79,15 @@ public class User {
 
   /** @return A String detaily average expenditure per month */
   public String getAvgMonthly() {
-    String message = "Cost per month for user:" + this.email + System.lineSeparator();
+    String message = "Cost per month for user: " + this.name + System.lineSeparator();
     List<YearMonth> months = new ArrayList<YearMonth>(this.ExpenditureMonthly.keySet());
     int total = 0;
     for (YearMonth month : months) {
-      message += month.toString() + " : " + String.format("%.2f", ExpenditureMonthly.get(month)/3000.0);
+      message +=
+          month.toString()
+              + " : "
+              + String.format(
+                  "%.2f", ExpenditureMonthly.get(month) / (month.lengthOfMonth() * 100.0));
       message += System.lineSeparator();
     }
     return message;

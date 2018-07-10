@@ -129,7 +129,7 @@ ENDDAY
 
 --
 
-MONTHLYEXPENDITURE: Gets the average expenditure this month for the given user.
+MONTHLYEXPENDITURE: Gets a list of average daily expenditures for each month for a given user.
 
 Usage:
 MONTHLYEXPENDITURE | cardholderemail@fakemail.io

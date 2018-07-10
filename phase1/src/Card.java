@@ -1,17 +1,13 @@
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Card {
   public static final int CARD_INITIAL_BALANCE = 1900;
   private static int cardCounter = 1;
   /** The current trip this card is on. null when no active trip */
-  Trip currentTrip;
+  private Trip currentTrip;
+
+  private Trip lastTrip;
 
   boolean isActive;
   private int balance;
-  /** A list containing a history of all trips this Card has created. */
-  private List<Trip> allTrips = new ArrayList<>();
 
   private int id;
 
@@ -19,6 +15,7 @@ public class Card {
     this.balance = CARD_INITIAL_BALANCE;
     this.isActive = true;
     this.id = cardID;
+    lastTrip = null;
   }
 
   public int getId() {
@@ -29,25 +26,24 @@ public class Card {
     return this.balance;
   }
 
-  public Trip getCurrentTrip(){
+  public Trip getCurrentTrip() {
     return currentTrip;
   }
 
-  public List<Trip> getAllTrips() {
-    return allTrips;
+  Trip getLastTrip() {
+    return lastTrip;
+  }
+
+  void setLastTrip(Trip trip){
+    lastTrip =  trip;
+  }
+
+  public void setCurrentTrip(Trip trip) {
+    currentTrip = trip;
   }
 
   public boolean getTripStarted() {
     return currentTrip != null;
-  }
-
-  /**
-   * Return up to the last three trips taken on this Card.
-   *
-   * @return a list containing up to the last three trips taken on this Card
-   */
-  public List<Trip> getLastThree() {
-    return allTrips.subList(Math.max(allTrips.size() - 3, 0), allTrips.size());
   }
 
   /**
@@ -68,10 +64,6 @@ public class Card {
     isActive = false;
   }
 
-  public void setCurrentTrip(Trip trip){
-    currentTrip = trip;
-  }
-
   /**
    * Add given int toAdd to this Card's balance.
    *
@@ -88,12 +80,5 @@ public class Card {
    */
   public void subtractBalance(int toSubtract) {
     this.balance -= toSubtract;
-  }
-
-  Trip getLastTrip() {
-    if (allTrips.size() > 0) { // check this to avoid index errors
-      return allTrips.get(allTrips.size() - 1);
-    }
-    return null;
   }
 }

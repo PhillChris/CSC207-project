@@ -58,16 +58,17 @@ public class CardHolder {
     }
   }
 
+  /** @return This CardHolder's email */
   public String getEmail() {
     return this.email;
   }
 
   /**
-   * Retrieves a card object given the number of this User
+   * Retrieves this CardHolder's card with the given ID
    *
    * @param cardId The user-specific id of this card
-   * @return
-   * @throws CardNotFoundException
+   * @return The Card with the given ID
+   * @throws CardNotFoundException Thrown if this CardHolder contains no card with given ID
    */
   public Card getCard(int cardId) throws CardNotFoundException {
     for (Card tempCard : this.cards) {
@@ -78,6 +79,7 @@ public class CardHolder {
     throw new CardNotFoundException();
   }
 
+  /** @return A String detaily average expenditure per month */
   public int getAvgMonthly() {
     List<Integer> monthlyCosts = new ArrayList<>(this.ExpenditureMonthly.values());
     int total = 0;
@@ -97,6 +99,11 @@ public class CardHolder {
     return lastThreeTrips;
   }
 
+  /**
+   * Change this CardHolder's name
+   *
+   * @param newName The new name of this CardHolder
+   */
   public void changeName(String newName) {
     this.name = newName;
   }
@@ -117,29 +124,45 @@ public class CardHolder {
     }
   }
 
+  /**
+   * Updates card and user information after this CardHolder taps their card
+   *
+   * @param card The card which this CardHolder taps
+   * @param station The station which this CardHolder taps at
+   * @param timeTapped The time this CardHolder taps their Card
+   * @throws InsufficientFundsException Thrown if the given card contains a negative balance
+   * @throws CardSuspendedException Thrown if the given card is suspended
+   * @throws InvalidTripException Thrown if the final trip made by the user is invalid
+   */
   public void tap(Card card, Station station, LocalDateTime timeTapped)
       throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
 
     if (!card.isActive) {
       throw new CardSuspendedException();
     }
-    if (card.currentTrip == null) {
+    if (card.getCurrentTrip() == null) {
       tapIn(card, station, timeTapped);
     } else {
       tapOut(card, station, timeTapped);
-      updateSpendingHistory(card);
-      CostCalculator.updateSystemRevenue(card.getLastTrip().getFee());
     }
   }
 
+  /**
+   * A helper method simulating this CardHolder starting a new trip
+   *
+   * @param card The card which this CardHolder taps
+   * @param station The station which this CardHolder taps at
+   * @param timeTapped The time this CardHolder taps their Card
+   * @throws InsufficientFundsException Thrown if the final trip made by the user is invalid
+   */
   private void tapIn(Card card, Station station, LocalDateTime timeTapped)
       throws InsufficientFundsException {
     if (card.getBalance() <= 0) throw new InsufficientFundsException();
 
-    boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
+    // Check if this CardHolder is continuing a Trip
+    boolean foundContinuousTrip = false;
     Trip lastTrip = card.getLastTrip();
-    if (lastTrip != null) { // check this to avoid index errors
-      // check that tapping into this station would be a continuous trip from last trip
+    if (lastTrip != null) { // if there is no lastTrip for this card
       if (lastTrip.isContinuousTrip(station, timeTapped)) {
         card.setCurrentTrip(lastTrip); // continue the last trip
         lastTrip.continueTrip(station);
@@ -151,13 +174,24 @@ public class CardHolder {
     }
   }
 
+  /**
+   * Helper method which simulates this CardHolder end a trip
+   *
+   * @param card The card which this CardHolder taps
+   * @param station The station which this CardHolder taps at
+   * @param timeTapped The time this CardHolder taps their Card
+   * @throws InvalidTripException Thrown if the final trip made by the user is invalid
+   */
   private void tapOut(Card card, Station station, LocalDateTime timeTapped)
       throws InvalidTripException {
     Trip trip = card.getCurrentTrip();
-    trip.endTrip(station, timeTapped);
-    card.subtractBalance(trip.getFee());
-    card.getAllTrips().add(trip);
+    trip.endTrip(station, timeTapped); // ends the trip
+    card.subtractBalance(trip.getFee()); // deducts the balance
+    card.setLastTrip(trip);
     card.setCurrentTrip(null);
+    updateSpendingHistory(card); // Update's this CardHolder's spending history
+    CostCalculator.updateSystemRevenue(
+        card.getLastTrip().getFee()); // Update System's spending history
     if (!lastThreeTrips.contains(trip)) {
       lastThreeTrips.add(trip);
     }
@@ -170,19 +204,23 @@ public class CardHolder {
   }
 
   /**
-   * Adds the fee of the card's last Trip to the user's spending history
+   * Updates the spending history for this User
    *
-   * @param card The card whose trip fee to add
+   * @param card The card most recently used by the CardHolder
    */
   private void updateSpendingHistory(Card card) {
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
     Trip lastTrip = card.getLastTrip();
+
+    // Update Monthly Expenditure History
     if (ExpenditureMonthly.containsKey(month)) {
       ExpenditureMonthly.put(month, ExpenditureMonthly.get(month) + lastTrip.getFee());
     } else {
       ExpenditureMonthly.put(month, lastTrip.getFee());
     }
+
+    // Update Daily Expenditure History
     if (ExpenditureDaily.containsKey(date)) {
       ExpenditureDaily.put(date, ExpenditureDaily.get(date) + lastTrip.getFee());
     } else {

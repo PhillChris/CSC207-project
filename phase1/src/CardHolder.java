@@ -1,7 +1,10 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 // TODO: Figure out how to calculate average monthly cost. Get clarification on "last three trips".
 
@@ -9,11 +12,11 @@ import java.util.*;
 public class CardHolder {
   private static HashMap<String, CardHolder> allUsers = new HashMap<>();
   private final String email;
+  HashMap<YearMonth, Integer> ExpenditureMonthly;
+  HashMap<LocalDate, Integer> ExpenditureDaily;
   private List<Card> cards;
   private String name;
   private int cardCounter;
-  HashMap<YearMonth, Integer > ExpenditureMonthly;
-  HashMap<LocalDate, Integer > ExpenditureDaily;
 
   /**
    * Construct a new instance of CardHolder
@@ -21,7 +24,7 @@ public class CardHolder {
    * @param name the name of this CardHolder
    * @param email the email of this CardHolder
    */
-  public CardHolder(String name, String email) throws EmailInUseException{
+  public CardHolder(String name, String email) throws EmailInUseException {
     if (allUsers.keySet().contains(email)) {
       throw new EmailInUseException();
     }
@@ -36,6 +39,18 @@ public class CardHolder {
 
   public static CardHolder getCardholder(String email) {
     return allUsers.get(email);
+  }
+
+  public static CardHolder findUser(String email) throws UserNotFoundException {
+    if (allUsers.containsKey(email)) {
+      return allUsers.get(email);
+    } else {
+      throw new UserNotFoundException();
+    }
+  }
+
+  public static HashMap<String, CardHolder> getAllUsers() {
+    return allUsers;
   }
 
   public String getEmail() {
@@ -59,63 +74,6 @@ public class CardHolder {
   }
 
   /**
-   * Add a card to this CardHolder's list of cards.
-   *
-   */
-  public void addCard() {
-    Card card = new Card(cardCounter);
-    cardCounter++;
-    if (!this.cards.contains(card)) {
-      this.cards.add(card);
-    }
-  }
-
-  public void changeName(String newName) {
-    this.name = newName;
-  }
-
-  /**
-   * Remove a card from this CardHolder's list of cards.
-   *
-   * @param card
-   */
-  public void removeCard(Card card) {
-    if (this.cards.contains(card)) {
-      this.cards.remove(card);
-    }
-  }
-
-  public void tap(Card card, Station station, LocalDateTime timeTapped)
-          throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
-
-    LocalDate date = TransitTime.getCurrentDate();
-    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
-
-    if (!card.isActive) {
-      throw new CardSuspendedException();
-    }
-    if (card.currentTrip == null) {
-      card.tapIn(station, timeTapped);
-    } else {
-      card.tapOut(station, timeTapped);
-      Trip lastTrip = card.getLastTrip();
-      CostCalculator.updateSystemRevenue(lastTrip.getFee());
-      if (ExpenditureMonthly.containsKey(month)) {
-        ExpenditureMonthly.put(month, ExpenditureMonthly.get(month) + lastTrip.getFee());
-      }
-      else{
-        ExpenditureMonthly.put(month, lastTrip.getFee());
-      }
-      if (ExpenditureDaily.containsKey(date)) {
-        ExpenditureDaily.put(date, ExpenditureDaily.get(date) + lastTrip.getFee());
-      }
-      else {
-        ExpenditureDaily.put(date, lastTrip.getFee());
-      }
-    }
-  }
-
-  /**
    * Return the last three trips taken on any of this CardHolder's cards.
    *
    * @return up to the last three trips taken by this CardHolder.
@@ -136,32 +94,68 @@ public class CardHolder {
     return allTrips.subList(allTrips.size() - 3, allTrips.size());
   }
 
-  public List<Card> getCards() {
-    return this.cards;
+  public void changeName(String newName) {
+    this.name = newName;
   }
 
-  public static CardHolder findUser(String email) throws UserNotFoundException{
-    if (allUsers.containsKey(email)) {
-      return allUsers.get(email);
+  /** Add a card to this CardHolder's list of cards. */
+  public void addCard() {
+    Card card = new Card(cardCounter);
+    cardCounter++;
+    if (!this.cards.contains(card)) {
+      this.cards.add(card);
     }
-    else{
-      throw new UserNotFoundException();
+  }
+
+  /**
+   * Remove a card from this CardHolder's list of cards.
+   *
+   * @param card
+   */
+  public void removeCard(Card card) {
+    if (this.cards.contains(card)) {
+      this.cards.remove(card);
     }
   }
 
-  public static HashMap<String, CardHolder> getAllUsers() {
-    return allUsers;
+  public void tap(Card card, Station station, LocalDateTime timeTapped)
+      throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
+
+    LocalDate date = TransitTime.getCurrentDate();
+    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
+
+    if (!card.isActive) {
+      throw new CardSuspendedException();
+    }
+    if (card.currentTrip == null) {
+      card.tapIn(station, timeTapped);
+    } else {
+      card.tapOut(station, timeTapped);
+      Trip lastTrip = card.getLastTrip();
+      updateSpendingHistory(card);
+      CostCalculator.updateSystemRevenue(lastTrip.getFee());
+    }
   }
 
-  public void addMonthlyFee(int monthlyFee){
+  /**
+   * Adds the fee of the card's last Trip to the user's spending history
+   *
+   * @param card The card whose trip fee to add
+   */
+  public void updateSpendingHistory(Card card) {
     LocalDate date = TransitTime.getCurrentDate();
-    ExpenditureMonthly.put(YearMonth.of(date.getYear(), date.getMonth()), monthlyFee);
-
-  }
-
-  public void addDailyFee(int dailyFee){
-    LocalDate date = TransitTime.getCurrentDate();
-    ExpenditureDaily.put(date, dailyFee);
+    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
+    Trip lastTrip = card.getLastTrip();
+    if (ExpenditureMonthly.containsKey(month)) {
+      ExpenditureMonthly.put(month, ExpenditureMonthly.get(month) + lastTrip.getFee());
+    } else {
+      ExpenditureMonthly.put(month, lastTrip.getFee());
+    }
+    if (ExpenditureDaily.containsKey(date)) {
+      ExpenditureDaily.put(date, ExpenditureDaily.get(date) + lastTrip.getFee());
+    } else {
+      ExpenditureDaily.put(date, lastTrip.getFee());
+    }
   }
 
   public int getAvgMonthly() {
@@ -173,5 +167,4 @@ public class CardHolder {
     int numMonths = this.ExpenditureMonthly.keySet().size();
     return total / numMonths;
   }
-
 }

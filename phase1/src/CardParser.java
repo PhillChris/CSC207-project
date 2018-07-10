@@ -33,7 +33,7 @@ public class CardParser {
       }
       try {
         user.tap(card, station, time);
-        if (card.tripStarted()) {
+        if (card.getTripStarted()) {
           TransitReadWrite.write("User " + user.getEmail() + " tapped on at " + stationName);
         } else {
           TransitReadWrite.write("User " + user.getEmail() + " tapped off at " + stationName);

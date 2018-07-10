@@ -20,8 +20,8 @@ public class Trip {
   private int maxFee = 600;
   /** The fee this trip charges itself per station travelled */
   private int perStationFee;
-  /** Whether this trip is valid */
-  private boolean isValidTrip = true;
+  /** The length of the most recent leg of this trip */
+  private int tripLegLength;
 
   /**
    * Construct a new instance of Trip
@@ -34,6 +34,19 @@ public class Trip {
     tripFee = station.getInitialFee();
     perStationFee = station.getPerStationFee();
     priorStops.add(station);
+    tripLegLength = 0;
+  }
+
+  /** @return A string representation of a trip */
+  public String toString() {
+    return "Trip started at " + priorStops.get(0) + " and ended at " + endStation;
+  }
+
+  /**
+   * @return The length of the current leg of this trip
+   */
+  public int getTripLegLength(){
+    return tripLegLength;
   }
 
   /**
@@ -45,7 +58,8 @@ public class Trip {
   void endTrip(Station station, LocalDateTime endTime) {
     endStation = station;
     timeEnded = endTime;
-    tripFee += getFinalFee();
+    updateTripLegLength();
+    tripFee += updateFinalFee();
   }
 
   /** @return The current fee of this trip */
@@ -59,7 +73,7 @@ public class Trip {
 
   /** @return Whether this is a valid trip */
   public boolean isValidTrip() {
-    return isValidTrip;
+    return (timeEnded!=null && endStation!=null &&tripLegLength == -1);
   }
   /**
    * Checks if a trip continues another trip
@@ -105,10 +119,20 @@ public class Trip {
    *
    * @return the per-station fare for this ride
    */
-  public int getFinalFee() {
+  public int updateFinalFee() {
+    // If no route contains both stations
+    if (tripLegLength == -1) {
+      tripFee = this.maxFee;
+      return this.maxFee;
+    } else {
+      return perStationFee*tripLegLength;
+    }
+  }
+
+  /** Updates the trip leg length */
+  private void updateTripLegLength() {
     Integer firstStation = null;
     Integer secondStation = null;
-
     // Loop through all the routes to find the start and end station
     for (Route<Station> route : Route.getRoutes()) {
       if (firstStation == null && secondStation == null) {
@@ -128,17 +152,12 @@ public class Trip {
         secondStation = null;
       }
     }
+
     // If no route contains both stations
     if (firstStation == null && secondStation == null) {
-      isValidTrip = false;
-      return this.maxFee;
+      tripLegLength = -1;
     } else {
-      return perStationFee * (Math.abs(secondStation - firstStation));
+      tripLegLength = Math.abs(secondStation - firstStation);
     }
-  }
-
-  /** @return A string representation of a trip */
-  public String toString() {
-    return "Trip started at " + priorStops.get(0) +  " and ended at " + endStation;
   }
 }

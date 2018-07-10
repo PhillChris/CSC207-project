@@ -97,7 +97,7 @@ public class Trip {
   public int getFinalFee() {
     Integer firstStation = null;
     Integer secondStation = null;
-    for (Route route : Route.getRoutes()) {
+    for (Route<Station> route : Route.getRoutes()) {
       if (firstStation == null && secondStation == null) {
         for (int i = 0; i < route.getRouteStations().size(); i++) {
           Station station = route.getRouteStations().get(i);

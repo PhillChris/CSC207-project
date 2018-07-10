@@ -1,10 +1,9 @@
 import java.util.HashMap;
 
 public class BusStation extends Station {
+  public static HashMap<String, Station> busStations = new HashMap<>();
   private int BUS_INITIAL_FEE = 200;
   private int BUS_PERSTATION_FEE = 0;
-
-  public static HashMap<String, BusStation> busStations = new HashMap<>();
 
   /**
    * Constructs a new instance of BusStation.
@@ -17,11 +16,15 @@ public class BusStation extends Station {
     this.perStationFee = BUS_PERSTATION_FEE;
   }
 
-  public static HashMap<String, BusStation> getStations() {
+  public static void newBusStation(Station station) {
+    busStations.put(station.getName(), station);
+  }
+
+  public static HashMap<String, Station> getBusStations() {
     return busStations;
   }
 
-  public static void addStation(BusStation station) {
-    busStations.put(station.getName(), station);
+  public HashMap<String, Station> getStations() {
+    return busStations;
   }
 }

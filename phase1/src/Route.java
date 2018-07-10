@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Represents an object of Route */
-public abstract class Route {
+public class Route<T extends Station> {
 
   /** A list of all of the Routes */
   protected static ArrayList<Route> Routes = new ArrayList<Route>();
@@ -13,9 +13,21 @@ public abstract class Route {
 
   private List<Station> routeStations = new ArrayList<>();
 
-  public Route() {
+  public Route(List<String> stationNames, StationFactory fact) {
     routeNumber = totalRoutes;
     totalRoutes++;
+
+    for (String s : stationNames) {
+      Station station;
+      station = fact.newStation(s);
+      if (!station.getStations().containsKey(s)) { // there are no stations with the same name.
+        Station.addStation(station); // associate stations
+      } else {
+        station = station.getStations().get(s);
+      }
+      Routes.add(this);
+      getRouteStations().add(station);
+    }
   }
 
   /** @return An arrayList of all RouteNames */

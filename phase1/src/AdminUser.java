@@ -52,6 +52,7 @@ public class AdminUser extends CardHolder {
         String revenue = String.format("%.2f", total);
         writer.write(String.format("%s", date + " $" + revenue));
       }
+      writer.close();
 
       writer.close();
     } catch (IOException e) {

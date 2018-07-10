@@ -100,5 +100,7 @@ public class Card {
     this.balance -= toSubtract;
   }
 
-  public String toString() { return "Card #" + this.id + " " + this.balance / 100.0; }
+  public String toString() {
+    return "Card #" + this.id + " " + String.format("%.2f", this.balance / 100.0);
+  }
 }

@@ -68,6 +68,13 @@ ADDUSER | HH:MM | Admin? | userName | cardholderemail@fakemail.io
 
 --
 
+REMOVEUSER: Removes a given user from the system.
+
+Usage:
+REMOVEUSER | cardholderemail@fakemail.io
+
+--
+
 ADDCARD: Adds a new card to the transit system.
 
 Usage:

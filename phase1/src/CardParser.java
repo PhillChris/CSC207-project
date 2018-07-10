@@ -2,14 +2,14 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class CardParser {
+public class CardParser implements Parser {
   /**
    * Processes a card's tap request
    *
    * @param cardInfo Info given from the user
    * @throws IOException
    */
-  void tap(List<String> cardInfo) {
+  public void tap(List<String> cardInfo) {
     // Get the time of the tap
     try {
       // Find the user, card and station from the given information
@@ -52,7 +52,7 @@ public class CardParser {
    *
    * @param cardInfo The info given from the user
    */
-  void addCard(List<String> cardInfo) {
+  public void add(List<String> cardInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
       User user = User.findUser(cardInfo.get(1));
@@ -67,7 +67,7 @@ public class CardParser {
    *
    * @param cardInfo Information given from the user
    */
-  void removeCard(List<String> cardInfo) {
+  public void removeCard(List<String> cardInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
       User user = User.findUser(cardInfo.get(1));
@@ -83,7 +83,7 @@ public class CardParser {
    *
    * @param userInfo Information given from the user
    */
-  void reportTheft(List<String> userInfo) {
+  public void reportTheft(List<String> userInfo) {
     try {
       User user = User.findUser(userInfo.get(0));
       Card card = user.getCard(Integer.parseInt(userInfo.get(1)));
@@ -100,7 +100,7 @@ public class CardParser {
    *
    * @param userInfo Information given from the user
    */
-  void addFunds(List<String> userInfo) {
+  public void addFunds(List<String> userInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(userInfo.get(0));
       User user = User.findUser(userInfo.get(1));
@@ -111,7 +111,7 @@ public class CardParser {
     }
   }
 
-  void checkBalance(List<String> cardInfo) {
+  public void report(List<String> cardInfo) {
     try {
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
@@ -121,7 +121,7 @@ public class CardParser {
     }
   }
 
-  void activate(List<String> cardInfo) {
+  public void activate(List<String> cardInfo) {
     try {
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));

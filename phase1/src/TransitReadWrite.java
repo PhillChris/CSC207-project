@@ -128,13 +128,13 @@ public class TransitReadWrite {
     TransitReadWrite.keyWords.put(
         "ADDUSER",
         (userInfo) -> {
-          userParser.addUser(userInfo);
+          userParser.add(userInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
         "ADDCARD",
         (cardInfo) -> {
-          cardParser.addCard(cardInfo);
+          cardParser.add(cardInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
@@ -170,7 +170,7 @@ public class TransitReadWrite {
     TransitReadWrite.keyWords.put(
         "CHECKBALANCE",
         (cardInfo) -> {
-          cardParser.checkBalance(cardInfo);
+          cardParser.report(cardInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
@@ -189,6 +189,18 @@ public class TransitReadWrite {
         "DAILYREPORTS",
         (userInfo) -> {
           userParser.dailyReports(userInfo);
+          return null;
+        });
+    TransitReadWrite.keyWords.put(
+        "GETLASTTHREE",
+        (userInfo) -> {
+          userParser.getLastThree(userInfo);
+          return null;
+        });
+    TransitReadWrite.keyWords.put(
+        "USERREPORT",
+        (userInfo) -> {
+          userParser.report(userInfo);
           return null;
         });
   }

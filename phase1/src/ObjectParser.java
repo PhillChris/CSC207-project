@@ -1,7 +1,7 @@
 import java.util.List;
 
 /** A common interface for all parsers*/
-public interface Parser {
+public interface ObjectParser {
   /** A method which adds some given object to the transit system */
   void add(List<String> info);
   /** A method which removes some given object from the transit system */

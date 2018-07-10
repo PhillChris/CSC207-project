@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /** Parses all methods pertaining to cards in the transit system */
-public class CardParser implements Parser {
+public class CardParser implements ObjectParser {
   /**
    * Processes a card's tap request
    *

@@ -2,7 +2,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /** Parses all methods pertaining to users in the transit system */
-public class UserParser implements Parser {
+public class UserParser implements ObjectParser {
   /**
    * Generates a user's monthly expenditure profile
    *

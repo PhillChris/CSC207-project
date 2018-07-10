@@ -103,7 +103,7 @@ public class CardHolder {
       else{
         ExpenditureMonthly.put(month, lastTrip.getFee());
       }
-      if (ExpenditureDaily.containsKey(month)) {
+      if (ExpenditureDaily.containsKey(date)) {
         ExpenditureDaily.put(date, ExpenditureDaily.get(date) + lastTrip.getFee());
       }
       else {

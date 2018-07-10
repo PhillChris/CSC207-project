@@ -71,11 +71,11 @@ public class TransitReadWrite {
       if (tempLineWords.get(0).equals("SUBWAY")) {
         Route newRoute = new Route(stationNames, subFact);
         TransitReadWrite.write(
-            "Created new subway route: " + newRoute.getRouteNumber() + System.lineSeparator());
+            "Created new subway route: " + newRoute.getRouteId() + System.lineSeparator());
       } else if (tempLineWords.get(0).equals("BUS")) {
         Route newRoute = new Route(stationNames, busFact);
         TransitReadWrite.write(
-            "Created new bus route: " + newRoute.getRouteNumber() + System.lineSeparator());
+            "Created new bus route: " + newRoute.getRouteId() + System.lineSeparator());
       }
     }
 

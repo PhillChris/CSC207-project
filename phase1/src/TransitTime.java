@@ -58,6 +58,9 @@ public class TransitTime {
    */
   static void endDay(List<String> emptyList) {
     currentTime = currentTime.plusDays(1);
+    currentTime =
+        LocalDateTime.of(
+            currentTime.getYear(), currentTime.getMonth(), currentTime.getDayOfMonth(), 0, 0);
     TransitReadWrite.write(
         "Day ended successfully: current day is "
             + currentTime.getMonth().toString()
@@ -67,9 +70,7 @@ public class TransitTime {
             + currentTime.getYear());
   }
 
-  /**
-   * @return The current date in the transit system
-   */
+  /** @return The current date in the transit system */
   public static LocalDate getCurrentDate() {
     return currentTime.toLocalDate();
   }

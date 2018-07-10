@@ -9,6 +9,7 @@ public class UserParser implements ObjectParser {
    */
   public void monthlyExpenditure(List<String> userInfo) {
     try {
+      ObjectParser.checkInput(userInfo, 1);
       User user = User.findUser(userInfo.get(0));
       TransitReadWrite.write(user.getAvgMonthly());
     } catch (TransitException a) {
@@ -23,6 +24,7 @@ public class UserParser implements ObjectParser {
    */
   public void add(List<String> userInfo) {
     try {
+      ObjectParser.checkInput(userInfo, 3);
       if (userInfo.get(0).equals("yes")) {
         AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(2));
         TransitReadWrite.write("Added admin user " + admin);
@@ -42,6 +44,7 @@ public class UserParser implements ObjectParser {
    */
   public void remove(List<String> userInfo) {
     try {
+      ObjectParser.checkInput(userInfo, 1);
       try {
         // if the given user is an AdminUser
         AdminUser admin = AdminUser.findAdminUser(userInfo.get(0));
@@ -65,6 +68,7 @@ public class UserParser implements ObjectParser {
    */
   public void changeName(List<String> userInfo) {
     try {
+      ObjectParser.checkInput(userInfo, 2);
       User user = User.findUser(userInfo.get(0));
       String newName = userInfo.get(1);
       user.changeName(newName);
@@ -80,6 +84,7 @@ public class UserParser implements ObjectParser {
    */
   public void dailyReports(List<String> userInfo) {
     try {
+      ObjectParser.checkInput(userInfo, 1);
       AdminUser user = AdminUser.findAdminUser(userInfo.get(0));
       user.dailyReports();
       TransitReadWrite.write("Published daily reports to dailyReports.txt");
@@ -95,6 +100,7 @@ public class UserParser implements ObjectParser {
    */
   public void report(List<String> userInfo) {
     try {
+      ObjectParser.checkInput(userInfo, 1);
       User user = User.findUser(userInfo.get(0));
       String message = "Username: " + user + System.lineSeparator();
       for (int i = 0; i < user.getCards().size(); i++) {

@@ -8,4 +8,9 @@ public interface ObjectParser {
   void remove(List<String> info);
   /** A methods which prints some kind of status report to outputs.txt */
   void report(List<String> info);
+  static void checkInput (List<String> input, int expected) throws InvalidInputException{
+    if (input.size() != expected) {
+      throw new InvalidInputException();
+    }
+  }
 }

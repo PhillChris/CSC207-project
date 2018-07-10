@@ -12,6 +12,7 @@ public class CardParser implements ObjectParser {
    */
   public void tap(List<String> cardInfo) {
     try {
+      ObjectParser.checkInput(cardInfo, 5);
       // Find the time, user, card and station from the given information
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
       User user = User.findUser(cardInfo.get(1));
@@ -57,6 +58,7 @@ public class CardParser implements ObjectParser {
    */
   public void add(List<String> cardInfo) {
     try {
+      ObjectParser.checkInput(cardInfo, 1);
       User user = User.findUser(cardInfo.get(0));
       user.addCard();
     } catch (TransitException a) {
@@ -71,6 +73,7 @@ public class CardParser implements ObjectParser {
    */
   public void remove(List<String> cardInfo) {
     try {
+      ObjectParser.checkInput(cardInfo, 2);
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       user.removeCard(card);
@@ -86,6 +89,7 @@ public class CardParser implements ObjectParser {
    */
   public void reportTheft(List<String> cardInfo) {
     try {
+      ObjectParser.checkInput(cardInfo, 2);
       User user = User.findUser(cardInfo.get(0)); // passing user email
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1))); // passing cardID.
       card.suspendCard();
@@ -103,6 +107,7 @@ public class CardParser implements ObjectParser {
    */
   public void addFunds(List<String> cardInfo) {
     try {
+      ObjectParser.checkInput(cardInfo, 3);
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       card.addBalance(Integer.parseInt(cardInfo.get(2)) * 100);
@@ -118,6 +123,7 @@ public class CardParser implements ObjectParser {
    */
   public void report(List<String> cardInfo) {
     try {
+      ObjectParser.checkInput(cardInfo, 2);
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       TransitReadWrite.write(user.getEmail() + "'s " + card.toString());
@@ -133,6 +139,7 @@ public class CardParser implements ObjectParser {
    */
   public void activate(List<String> cardInfo) {
     try {
+      ObjectParser.checkInput(cardInfo, 2);
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       card.activateCard(card);

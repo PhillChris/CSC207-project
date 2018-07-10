@@ -81,27 +81,25 @@ public class TransitReadWrite {
       List<String> stationNames = tempLineWords.subList(1, tempLineWords.size());
       if (tempLineWords.get(0).equals("SUBWAY")) {
         Route newRoute = new Route(stationNames, subFact);
-        TransitReadWrite.write(
-            "Created new subway route: " + newRoute.getRouteId() + System.lineSeparator());
+        TransitReadWrite.write("Created new subway route: " + System.lineSeparator());
       } else if (tempLineWords.get(0).equals("BUS")) {
         Route newRoute = new Route(stationNames, busFact);
-        TransitReadWrite.write(
-            "Created new bus route: " + newRoute.getRouteId() + System.lineSeparator());
+        TransitReadWrite.write("Created new bus route: " + System.lineSeparator());
       }
     }
 
-    /* Iterate through remaining action lines and execute the corresponding
-     * commands in events.txt, after initializing routes */
+    // Iterate through remaining action lines and execute the corresponding
+    // commands in events.txt, after initializing routes
     String actionLine = reader.readLine().trim();
-    /* While there are still non-empty lines in events.txt*/
+    // While there are still non-empty lines in events.txt
     while (actionLine != System.lineSeparator() && actionLine != null) {
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
       if (TransitReadWrite.keyWords.get(tempLineWords.get(0)) == null) {
         TransitReadWrite.write("Invalid command: This command does not exist");
       } else if (tempLineWords.size() > 1) {
-        /* executes the command which the given keyword
-         * maps to by passing the appropriate parameters */
+        // executes the command which the given keyword
+        // maps to by passing the appropriate parameters
         TransitReadWrite.keyWords
             .get(tempLineWords.get(0))
             .apply(tempLineWords.subList(1, tempLineWords.size()));

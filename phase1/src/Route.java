@@ -6,10 +6,6 @@ public class Route<T extends Station> {
 
   /** A list of all routes in the transit system */
   protected static ArrayList<Route> routes = new ArrayList<Route>();
-  /** A static counter for the number of totalRoutes in the simulation, used to assign route ids */
-  private static int totalRoutes = 0;
-  /** The numerical id of this route */
-  protected int routeID;
   /** List containing all the stations of this route in travel order */
   private List<Station> routeStations = new ArrayList<>();
 
@@ -20,8 +16,6 @@ public class Route<T extends Station> {
    * @param fact The factory used to construct the stations
    */
   public Route(List<String> stationNames, StationFactory fact) {
-    routeID = totalRoutes;
-    totalRoutes++;
 
     for (String s : stationNames) {
       Station station;
@@ -64,8 +58,4 @@ public class Route<T extends Station> {
     return null;
   }
 
-  /** @return This route's routeID */
-  public int getRouteId() {
-    return routeID;
-  }
 }

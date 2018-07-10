@@ -49,7 +49,7 @@ public class AdminUser extends CardHolder {
       for (LocalDate day : dates) {
         writer.write(System.lineSeparator());
         String date = day.toString();
-        double total = dailyTotals.get(day) / 100;
+        double total = dailyTotals.get(day) / 100.0;
         String revenue = String.format("%.2f", total);
         writer.write(String.format("%s", date + " $" + revenue));
       }

@@ -5,13 +5,14 @@ public abstract class Station {
   private static int totalStations;
   /** The unique ID of this station */
   final int stationID;
-  /** The initial fee charged by this station at the start of a trip */
-  protected int initialFee;
   /** The fee charged per station travelled by this station */
-  protected int perStationFee;
+  private int perStationFee;
+  /**
+   * The initial fee charged by this station at the start of a trip
+   */
+  private int initialFee;
   /** The name of this station */
   private String name;
-
   /**
    * Create a new instance of Station
    *
@@ -36,6 +37,14 @@ public abstract class Station {
     }
   }
 
+  public int getPerStationFee() {
+    return perStationFee;
+  }
+
+  public void setPerStationFee(int perStationFee) {
+    this.perStationFee = perStationFee;
+  }
+
   /** @return the name of this station */
   public String getName() {
     return this.name;
@@ -46,7 +55,11 @@ public abstract class Station {
     return this.initialFee;
   }
 
-  /** @return whether the two interstations intersect (have common name) */
+  public void setInitialFee(int initialFee) {
+    this.initialFee = initialFee;
+  }
+
+  /** @return whether the two intersect (have common name) */
   public boolean isAssociatedStation(Station otherStation) {
     return this.name.equals(otherStation.getName());
   }
@@ -55,5 +68,7 @@ public abstract class Station {
   public abstract HashMap<String, Station> getStations();
 
   /** @return A string representation of a station */
-  public String toString() { return this.name; }
+  public String toString() {
+    return this.name;
+  }
 }

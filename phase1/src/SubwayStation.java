@@ -15,8 +15,8 @@ public class SubwayStation extends Station {
    */
   public SubwayStation(String name) {
     super(name);
-    this.initialFee = SUBWAY_INITIAL_FEE;
-    this.perStationFee = SUBWAY_PERSTATION_FEE;
+    this.setInitialFee(SUBWAY_INITIAL_FEE);
+    this.setPerStationFee(SUBWAY_PERSTATION_FEE);
   }
 
   /**

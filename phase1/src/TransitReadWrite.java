@@ -12,13 +12,13 @@ public class TransitReadWrite {
   /** The token which separates parameters in the events.txt file */
   private static final String SPLIT_SYMBOL = "\\s\\|\\s";
   /** Stores the commands which can be execute from events.txt */
-  static HashMap<String, Function<List<String>, Void>> keyWords = new HashMap<>();
+  private static HashMap<String, Function<List<String>, Void>> keyWords = new HashMap<>();
   /** The writer which writes to output.txt */
-  static BufferedWriter writer;
+  private static BufferedWriter writer;
   /** Handles operations to be executed on users */
-  static UserParser userParser;
+  private static UserParser userParser;
   /** Handles operations to be executed on cards */
-  static CardParser cardParser;
+  private static CardParser cardParser;
 
   /**
    * Writes a given message to output.txt

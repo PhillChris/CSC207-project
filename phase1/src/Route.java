@@ -5,7 +5,7 @@ import java.util.List;
 public class Route<T extends Station> {
 
   /** A list of all routes in the transit system */
-  protected static ArrayList<Route> routes = new ArrayList<Route>();
+  private static ArrayList<Route> routes = new ArrayList<>();
   /** List containing all the stations of this route in travel order */
   private List<Station> routeStations = new ArrayList<>();
 

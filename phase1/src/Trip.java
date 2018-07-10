@@ -32,7 +32,7 @@ public class Trip {
   public Trip(LocalDateTime startTime, Station station) {
     timeStarted = startTime;
     tripFee = station.getInitialFee();
-    perStationFee = station.perStationFee;
+    perStationFee = station.getPerStationFee();
     priorStops.add(station);
   }
 
@@ -87,7 +87,7 @@ public class Trip {
     timeEnded = null;
     maxFee -= tripFee;
     tripFee = station.getInitialFee();
-    perStationFee = station.perStationFee;
+    perStationFee = station.getPerStationFee();
   }
 
   /** @return The StartStation for this Trip */

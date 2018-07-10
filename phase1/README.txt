@@ -16,23 +16,22 @@ EXECUTION FUNCTION LIST).
 INITIALIZATION
 
 This should always be the first few lines in any events.txt file to be executed by the program.
-More specifically, the first line of any events.txt should be of the form, where a and b are the
-numbers of subway routes and bus routes respectively, and YYYY-MM-DD is the current date, in
+More specifically, the first line of any events.txt should be of the following form, where a is the
+number of routes in the transit system, and YYYY-MM-DD is the current date, in
 integer form (being sure to preserve the whitespace in this file):
 
-INIT | a | b | YYYY-MM-DD
+INIT | a | YYYY-MM-DD
 
-If this format is not followed, the program will not run and print an error message to output.txt.
+If this format is not followed, the program will not run and an error message
+will be printed to output.txt.
 
-The next a lines should be initializing each subway route. IT MUST BE SUBWAY ROUTES. The following
-a lines should be of the following form, where StationName# are the station names in order of their
-appearance in the subway route.
+The next a lines should be initializing each of the routes. The following a lines should be of the
+following form, where STATIONTYPE is the type of stations in the given route IN ALL CAPS
+(BUS or SUBWAY), and StationName# are the station names in order of their appearance in the given route.
 
-StationName1 | StationName2 | StationName3 | ... | StationNameN |
+STATIONTYPE | StationName1 | StationName2 | StationName3 | ... | StationNameN |
 
-Note that self-intersecting, or circular, routes are not permitted in this system. Similarly, the b
-lines after these a lines construct the bus routes, and are of a similar form to the subway route
-construction lines.
+Note that self-intersecting, or circular, routes are not supported in this system.
 
 The remaining lines of the program are action lines, contributing to program execution.
 
@@ -40,17 +39,18 @@ The remaining lines of the program are action lines, contributing to program exe
 PROGRAM EXECUTION FUNCTION LIST
 
 The following is a list of valid commands that a user can execute in the program execution
-section of events.txt. These MUST be in chronological order, or else the command is not executed.
+section of events.txt. These MUST be in chronological order, or else the command is not executed and
+an error message is printed to events.txt.
 
 Each function is given a description, and a usage. All parameters to functions are outlined at the
-bottom of the file. Please follow the given strings for lines exactly, including
+bottom of this section. Please follow the given strings for lines exactly, including
 capitalization and whitespace.
 
 ---
 
 TAP: Taps a given card at the station, either entering and exiting a given station.
 Tap covers both entrance and exit for the user, the system keeps track of entrance and exit and
-handles these cases appropriately. N.B.: for continuous trips, YOU MUST TAP AT EACH CROSSOVER STOP.
+handles these cases appropriately. N.B.: for continuous trips, YOU MUST TAP TWICE AT EACH CROSSOVER STOP.
 So for example, if you have two routes, one with Station A and Station B and one with Station B and
 Station C, if you want a continuous trip from A to C, you must call tap twice at Station B, once to
 leave the first route, and once to enter the second route.
@@ -99,7 +99,8 @@ ACTIVATECARD | cardholderemail@fakemail.io | card#
 
 --
 
-DAILYREPORTS: todo implement this
+DAILYREPORTS: Retrieves a daily report of the transit system, taking in a valid admin user's email
+as a verification, as only AdminUsers can generate daily reports.
 
 DAILYREPORTS | adminuseremail@fakemail.io |
 
@@ -115,17 +116,16 @@ ADDFUNDS | HH:MM | cardholderemail@fakemail.io | card# | dollarsAdded
 CHANGENAME: Changes the userName of the given user.
 
 Usage:
-CHANGENAME | userName | newName
+CHANGENAME | cardholderemail@fakemail.io | newName
 
 --
 
 ENDDAY: Ends the given day, and sets the time to the following day. Does NOT
-print a dailyReport, but only handles the dateTime adjustment. Note that leap years
-are not supported in this program.
+print a dailyReport, but only handles the dateTime adjustment (for daily reports, see DAILYREPORTS)
+Note that leap years are not supported in this program.
 
 Usage:
 ENDDAY
-
 
 --
 

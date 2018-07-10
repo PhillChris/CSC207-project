@@ -40,7 +40,7 @@ public class AdminUser extends User {
     Collections.sort(dates);
 
     try {
-      CostCalculator.generateReport(dates, dailyTotals);
+      CostCalculator.generateReport(dates);
     } catch (IOException e) {
       System.out.println("File could not be constructed, daily reports will not be generated");
     }

@@ -28,13 +28,7 @@ public class CostCalculator {
     }
   }
 
-  /** @return A HashMap containing the expenditure per each day */
-  public static HashMap<LocalDate, Integer> getDailyRevenue() {
-    return dailyRevenue;
-  }
-
-  public static void generateReport()
-      throws IOException {
+  public static void generateReport() throws IOException {
     // Writes to dailyReports.txt
     Writer writer =
         new BufferedWriter(
@@ -43,8 +37,8 @@ public class CostCalculator {
     writer.write(System.lineSeparator());
 
     // Loop through all days and write each day's revenue
-// The revenue collected for each day
-    HashMap<LocalDate, Integer> dailyTotals = CostCalculator.getDailyRevenue();
+    // The revenue collected for each day
+    HashMap<LocalDate, Integer> dailyTotals = dailyRevenue;
     // List of all the dates collected
     List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
     dates.sort(Collections.reverseOrder());
@@ -52,8 +46,8 @@ public class CostCalculator {
     for (LocalDate day : dates) {
       writer.write(System.lineSeparator());
       String date = day.toString();
-      double  revenue = dailyRevenue.get(day) / 100.0;
-      int travelled=dailyLog.get(day);
+      double revenue = dailyRevenue.get(day) / 100.0;
+      int travelled = dailyLog.get(day);
       String message = String.format("%.2f", revenue) + "    " + travelled;
       writer.write(String.format("%s", date + " $" + message));
     }

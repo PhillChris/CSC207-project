@@ -1,25 +1,30 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public abstract class Station {
-  private static int totalStations; // to ensure no station has the same ID.
-  private static HashMap<String, List<Station>> allStations = new HashMap<>();
+  /** Total number of stations in the transit system */
+  private static int totalStations;
+  /** The unique ID of this station */
   final int stationID;
+  /** The initial fee charged by this station at the start of a trip */
   protected int initialFee;
+  /** The fee charged per station travelled by this station */
   protected int perStationFee;
+  /** The name of this station */
   private String name;
 
+  /**
+   * Create a new instance of Station
+   *
+   * @param name The name of this station
+   */
   public Station(String name) {
     this.name = name;
     stationID = totalStations;
     totalStations++;
   }
 
-
   /**
-   * Adds the newStation to allStations. Then associates all stations of the same name with
-   * newStation.
+   * Adds the newStation to either the list of BusStations or SubwayStations
    *
    * @param newStation the station to be added to allStations.
    */
@@ -36,22 +41,16 @@ public abstract class Station {
     return this.name;
   }
 
-  /**
-   * Called at the beginning of a ride between stations
-   *
-   * @return the constant fare for this type of station
-   */
+  /** @return the fare charged by this station at the start of a new trip */
   public int getInitialFee() {
     return this.initialFee;
   }
 
-  /**
-   * @return the associated station to this station (i.e. the bus station in this subway station or
-   *     the subway station connected to this bus station)
-   */
+  /** @return whether the two interstations intersect (have common name) */
   public boolean isAssociatedStation(Station otherStation) {
     return this.name.equals(otherStation.getName());
   }
 
+  /** @return HashMap of all stations of similar type */
   public abstract HashMap<String, Station> getStations();
 }

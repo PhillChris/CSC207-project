@@ -85,7 +85,7 @@ public class TransitTime {
             + currentYear);
   }
 
-  public static LocalDate getCurrentDate(){
+  public static LocalDate getCurrentDate() {
     return currentTime.toLocalDate();
   }
 }

@@ -20,6 +20,12 @@ public class AdminUser extends User {
     allAdminUsers.put(email, this);
   }
 
+  /** Removes this admin user from the system*/
+  public void removeAdminUser() {
+    allAdminUsers.remove(this.getEmail());
+    this.removeUser();
+  }
+
   /**
    * @param email The email belong to a particular AdminUser
    * @return the AdminUser with the given email

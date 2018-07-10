@@ -18,7 +18,7 @@ public class UserParser implements Parser {
   }
 
   /**
-   * Processes an add user request from events.txt
+   * Processes an add user request
    *
    * @param userInfo Information given for the user from TransitReadWrite.read
    */
@@ -27,8 +27,10 @@ public class UserParser implements Parser {
       LocalDateTime time = TransitTime.getTime(userInfo.get(0));
       if (userInfo.get(1).equals("yes")) {
         AdminUser admin = new AdminUser(userInfo.get(2), userInfo.get(3));
+        TransitReadWrite.write("Added admin user " + admin);
       } else {
         User user = new User(userInfo.get(2), userInfo.get(3));
+        TransitReadWrite.write("Added user " + user);
       }
     } catch (TransitException a) {
       a.getMessage();
@@ -36,7 +38,30 @@ public class UserParser implements Parser {
   }
 
   /**
-   * Processes a change name request for a given user from events.txt
+   * Processes a remove user request
+   *
+   * @param userInfo Information given for the user from TransitReadWrite.read
+   */
+  public void remove(List<String> userInfo) {
+    try {
+      try {
+        // if the given user is an AdminUser
+        AdminUser admin = AdminUser.findAdminUser(userInfo.get(0));
+        admin.removeAdminUser();
+        TransitReadWrite.write("Removed admin user " + admin);
+      } catch (UserNotFoundException a) {
+        // if the given user is not an AdminUser but is a User
+        User user = User.findUser(userInfo.get(0));
+        user.removeUser();
+        TransitReadWrite.write("Removed user " + user);
+      }
+    } catch (TransitException a) {
+      a.getMessage();
+    }
+  }
+
+  /**
+   * Processes a change name request for a given user
    *
    * @param userInfo Information given for the user from TransitReadWrite.read
    */
@@ -51,7 +76,7 @@ public class UserParser implements Parser {
   }
 
   /**
-   * Processes a daily report request from events.txt
+   * Processes a daily report request
    *
    * @param userInfo Information given for the admin user from TransitReadWrite.read
    */
@@ -85,7 +110,6 @@ public class UserParser implements Parser {
 
   /**
    * Processes a request for the last three trips traveled by a given user
-   * from events.txt
    *
    * @param userInfo Information given for the user from TransitReadWrite.read
    */

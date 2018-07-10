@@ -43,6 +43,11 @@ public class User {
     ExpenditureDaily = new HashMap<>();
   }
 
+  /** Removes this user from the system */
+  public void removeUser() {
+    allUsers.remove(this.email);
+  }
+
   /**
    * @param email The email of a User
    * @return The User with given email

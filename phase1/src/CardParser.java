@@ -70,7 +70,7 @@ public class CardParser implements Parser {
    *
    * @param cardInfo Information given for the card from TransitReadWrite.read
    */
-  public void removeCard(List<String> cardInfo) {
+  public void remove(List<String> cardInfo) {
     try {
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
       User user = User.findUser(cardInfo.get(1));

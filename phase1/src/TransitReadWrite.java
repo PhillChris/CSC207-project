@@ -140,7 +140,7 @@ public class TransitReadWrite {
     TransitReadWrite.keyWords.put(
         "REMOVECARD",
         (cardInfo) -> {
-          cardParser.removeCard(cardInfo);
+          cardParser.remove(cardInfo);
           return null;
         });
     TransitReadWrite.keyWords.put(
@@ -201,6 +201,12 @@ public class TransitReadWrite {
         "USERREPORT",
         (userInfo) -> {
           userParser.report(userInfo);
+          return null;
+        });
+    TransitReadWrite.keyWords.put(
+        "REMOVEUSER",
+        (userInfo) -> {
+          userParser.remove(userInfo);
           return null;
         });
   }

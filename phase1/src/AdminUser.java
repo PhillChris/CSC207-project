@@ -50,23 +50,7 @@ public class AdminUser extends User {
     Collections.sort(dates);
 
     try {
-      // Writes to dailyReports.txt
-      Writer writer =
-          new BufferedWriter(
-              new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"));
-      writer.write("Date       Revenue");
-      writer.write(System.lineSeparator());
-
-      // Loop through all days and write each day's revenue
-      for (LocalDate day : dates) {
-        writer.write(System.lineSeparator());
-        String date = day.toString();
-        double total = dailyTotals.get(day) / 100.0;
-        String revenue = String.format("%.2f", total);
-        writer.write(String.format("%s", date + " $" + revenue));
-      }
-      writer.close();
-
+      CostCalculator.generateReport(dates, dailyTotals);
     } catch (IOException e) {
       System.out.println("File could not be constructed. Daily reports will not be generated.");
     }

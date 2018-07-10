@@ -29,6 +29,10 @@ public class Card {
     return this.balance;
   }
 
+  public Trip getCurrentTrip(){
+    return currentTrip;
+  }
+
   public List<Trip> getAllTrips() {
     return allTrips;
   }
@@ -62,6 +66,10 @@ public class Card {
    */
   public void suspendCard(Card card) {
     isActive = false;
+  }
+
+  public void setCurrentTrip(Trip trip){
+    currentTrip = trip;
   }
 
   /**

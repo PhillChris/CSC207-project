@@ -73,6 +73,16 @@ public class CardHolder {
     throw new CardNotFoundException();
   }
 
+  public int getAvgMonthly() {
+    List<Integer> monthlyCosts = new ArrayList<>(this.ExpenditureMonthly.values());
+    int total = 0;
+    for (Integer month : monthlyCosts) {
+      total += month;
+    }
+    int numMonths = this.ExpenditureMonthly.keySet().size();
+    return total / numMonths;
+  }
+
   /**
    * Return the last three trips taken on any of this CardHolder's cards.
    *
@@ -158,13 +168,35 @@ public class CardHolder {
     }
   }
 
-  public int getAvgMonthly() {
-    List<Integer> monthlyCosts = new ArrayList<>(this.ExpenditureMonthly.values());
-    int total = 0;
-    for (Integer month : monthlyCosts) {
-      total += month;
+  private void tapIn(Card card, Station station, LocalDateTime timeTapped)
+      throws InsufficientFundsException {
+    if (card.getBalance() <= 0) throw new InsufficientFundsException();
+
+    boolean foundContinuousTrip = false; // a flag, just to avoid repetitive code
+    Trip lastTrip = card.getLastTrip();
+    if (lastTrip != null) { // check this to avoid index errors
+      // check that tapping into this station would be a continuous trip from last trip
+      if (lastTrip.isContinuousTrip(station, timeTapped)) {
+        card.setCurrentTrip(lastTrip); // continue the last trip
+        lastTrip.continueTrip(station);
+        foundContinuousTrip = true;
+      }
     }
-    int numMonths = this.ExpenditureMonthly.keySet().size();
-    return total / numMonths;
+    if (!foundContinuousTrip) {
+      card.setCurrentTrip(new Trip(timeTapped, station));
+    }
+  }
+
+  private void tapOut(Card card, Station station, LocalDateTime timeTapped)
+      throws InvalidTripException {
+    Trip trip = card.getCurrentTrip();
+    trip.endTrip(station, timeTapped);
+    card.subtractBalance(trip.getFee());
+    boolean validTrip = trip.isValidTrip();
+    card.getAllTrips().add(trip);
+    card.setCurrentTrip(null);
+    if (!validTrip) {
+      throw new InvalidTripException();
+    }
   }
 }

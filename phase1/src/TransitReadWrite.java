@@ -36,7 +36,7 @@ public class TransitReadWrite {
     TransitReadWrite.writer = writer;
 
     // Reads the opening init line determining how many routes to make
-    String initLine = reader.readLine();
+    String initLine = reader.readLine().trim();
     ArrayList<String> initLineWords =
         new ArrayList<String>(Arrays.asList(initLine.split(SPLIT_SYMBOL)));
 
@@ -59,28 +59,27 @@ public class TransitReadWrite {
 
     // Iterate through subway routes, constructing from events.txt
     for (int i = 0; i < numSubwayRoutes; i++) {
-      String tempLine = reader.readLine();
+      String tempLine = reader.readLine().trim();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
       Route newRoute = new SubwayRoute(tempLineWords.subList(1, tempLineWords.size()));
 //      Route newRoute = new SubwayRoute(tempLineWords);
-      writer.write("Created new subway route: " + newRoute.getRouteNumber() + "\n");
+      writer.write("Created new subway route: " + newRoute.getRouteNumber() + System.lineSeparator());
     }
 
     // Iterate through bus routes, constructing from events.txt
     for (int i = 0; i < numBusRoutes; i++) {
-      String tempLine = reader.readLine();
+      String tempLine = reader.readLine().trim();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
       Route newRoute = new BusRoute(tempLineWords.subList(1, tempLineWords.size()));
 //      Route newRoute = new BusRoute(tempLineWords);
-      writer.write("Created new bus route: " + newRoute.getRouteNumber() + "\n");
+      writer.write("Created new bus route: " + newRoute.getRouteNumber() + System.lineSeparator());
     }
 
     // Execute remaining commands in events.txt
-    String actionLine = reader.readLine();
+    String actionLine = reader.readLine().trim();
     while (actionLine != "\n" && actionLine != null) {
-      actionLine = actionLine.trim();
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
       if (TransitReadWrite.keyWords.get(tempLineWords.get(0)) == null) {

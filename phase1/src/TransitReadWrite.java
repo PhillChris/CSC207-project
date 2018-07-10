@@ -81,15 +81,15 @@ public class TransitReadWrite {
       List<String> stationNames = tempLineWords.subList(1, tempLineWords.size());
       if (tempLineWords.get(0).equals("SUBWAY")) {
         Route newRoute = new Route(stationNames, subFact);
-        TransitReadWrite.write("Created new subway route" + System.lineSeparator());
+        TransitReadWrite.write("Created new subway route");
       } else if (tempLineWords.get(0).equals("BUS")) {
         Route newRoute = new Route(stationNames, busFact);
-        TransitReadWrite.write("Created new bus route" + System.lineSeparator());
+        TransitReadWrite.write("Created new bus route");
       }
     }
 
-    // Iterate through remaining action lines and execute the corresponding
-    // commands in events.txt, after initializing routes
+    /* Iterate through remaining action lines and execute the corresponding
+     * commands in events.txt, after initializing routes */
     String actionLine = reader.readLine().trim();
     // While there are still non-empty lines in events.txt
     while (actionLine != System.lineSeparator() && actionLine != null) {
@@ -104,7 +104,7 @@ public class TransitReadWrite {
             .get(tempLineWords.get(0))
             .apply(tempLineWords.subList(1, tempLineWords.size()));
       } else {
-        // executes a parameterless function with an empty ArrayList for type consistency
+        // executes a parameterless function with an empty ArrayList for hash map type consistency
         TransitReadWrite.keyWords.get(tempLineWords.get(0)).apply(new ArrayList<>());
       }
       actionLine = reader.readLine();

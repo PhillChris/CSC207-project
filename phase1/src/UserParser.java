@@ -97,8 +97,11 @@ public class UserParser implements ObjectParser {
     try {
       User user = User.findUser(userInfo.get(0));
       String message = "Username: " + user + System.lineSeparator();
-      for (Card card : user.getCards()) {
-        message += card + System.lineSeparator();
+      for (int i = 0; i < user.getCards().size(); i++) {
+        message += user.getCards().get(i) + System.lineSeparator();
+        if (i < user.getCards().size() - 1) {
+          message += System.lineSeparator();
+        }
       }
       TransitReadWrite.write(message);
     } catch (TransitException a) {
@@ -116,8 +119,11 @@ public class UserParser implements ObjectParser {
       User user = User.findUser(userInfo.get(0));
       String message =
           "These are the last three trips for user " + user + ": " + System.lineSeparator();
-      for (Trip t : user.getLastThree()) {
-        message += t.toString() + System.lineSeparator();
+      for (int i = 0; i < user.getLastThree().size(); i++) {
+        message += user.getLastThree().get(i).toString();
+        if (i < user.getLastThree().size() - 1) {
+          message += System.lineSeparator();
+        }
       }
       TransitReadWrite.write(message);
     } catch (TransitException a) {

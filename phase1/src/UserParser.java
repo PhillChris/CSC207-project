@@ -48,7 +48,7 @@ public class UserParser implements ObjectParser {
       try {
         // if the given user is an AdminUser
         AdminUser admin = AdminUser.findAdminUser(userInfo.get(0));
-        admin.removeAdminUser();
+        admin.removeUser();
         TransitReadWrite.write("Removed admin user " + admin);
       } catch (UserNotFoundException a) {
         // if the given user is not an AdminUser but is a User

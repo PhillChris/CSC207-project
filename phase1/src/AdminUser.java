@@ -7,7 +7,6 @@ import java.util.List;
 /** Represents an AdminUser in a transit system. */
 public class AdminUser extends CardHolder {
 
-  private static List<Trip> allTrips;
   private static HashMap<String, AdminUser> allAdminUsers = new HashMap<>();
 
   /**
@@ -16,20 +15,27 @@ public class AdminUser extends CardHolder {
    * @param name the name of this AdminUser
    * @param email the email of this AdminUser
    */
-  public AdminUser(String name, String email) throws EmailInUseException{
+  public AdminUser(String name, String email) throws EmailInUseException {
     super(name, email);
     allAdminUsers.put(email, this);
   }
 
-  public static AdminUser findAdminUser(String email) throws UserNotFoundException{
+  /**
+   * @param email The email belong to a particular AdminUser
+   * @return the AdminUser with the given email
+   * @throws UserNotFoundException Thrown if no AdminUser has given email
+   */
+  public static AdminUser findAdminUser(String email) throws UserNotFoundException {
     if (allAdminUsers.containsKey(email)) {
       return allAdminUsers.get(email);
-    }
-    else{
+    } else {
       throw new UserNotFoundException();
     }
   }
 
+  /**
+   * Writes the dailyReports to dailyReports.txt
+   */
   public void dailyReports() {
     // The revenue collected for each day
     HashMap<LocalDate, Integer> dailyTotals = CostCalculator.getDailyRevenue();
@@ -54,7 +60,7 @@ public class AdminUser extends CardHolder {
         writer.write(String.format("%s", date + " $" + revenue));
       }
       writer.close();
-      
+
     } catch (IOException e) {
       System.out.println("File could not be constructed. Daily reports will not be generated.");
     }

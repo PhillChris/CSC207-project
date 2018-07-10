@@ -88,6 +88,10 @@ public class TransitReadWrite {
       }
     }
 
+    run(reader);
+  }
+
+  public static void run(BufferedReader reader) throws IOException {
     /* Iterate through remaining action lines and execute the corresponding
      * commands in events.txt, after initializing routes */
     String actionLine = reader.readLine().trim();

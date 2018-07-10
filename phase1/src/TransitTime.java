@@ -85,6 +85,9 @@ public class TransitTime {
             + currentYear);
   }
 
+  /**
+   * @return The current date in the transit system
+   */
   public static LocalDate getCurrentDate() {
     return currentTime.toLocalDate();
   }

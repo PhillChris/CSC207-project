@@ -116,7 +116,7 @@ public class UserParser implements ObjectParser {
       User user = User.findUser(userInfo.get(0));
       String message =
           "These are the last three trips for user " + user + ": " + System.lineSeparator();
-      for (Trip t : user.lastThreeTrips) {
+      for (Trip t : user.getLastThree()) {
         message += t.toString() + System.lineSeparator();
       }
       TransitReadWrite.write(message);

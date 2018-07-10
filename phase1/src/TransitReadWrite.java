@@ -81,10 +81,10 @@ public class TransitReadWrite {
       List<String> stationNames = tempLineWords.subList(1, tempLineWords.size());
       if (tempLineWords.get(0).equals("SUBWAY")) {
         Route newRoute = new Route(stationNames, subFact);
-        TransitReadWrite.write("Created new subway route: " + System.lineSeparator());
+        TransitReadWrite.write("Created new subway route" + System.lineSeparator());
       } else if (tempLineWords.get(0).equals("BUS")) {
         Route newRoute = new Route(stationNames, busFact);
-        TransitReadWrite.write("Created new bus route: " + System.lineSeparator());
+        TransitReadWrite.write("Created new bus route" + System.lineSeparator());
       }
     }
 

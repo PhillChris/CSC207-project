@@ -40,7 +40,7 @@ public class TransitReadWrite {
     ArrayList<String> initLineWords =
         new ArrayList<String>(Arrays.asList(initLine.split(SPLIT_SYMBOL)));
 
-    if (initLineWords.size() != 4) {
+    if (initLineWords.size() != 3) {
       throw new InitLineException();
     }
 

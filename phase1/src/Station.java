@@ -16,9 +16,6 @@ public abstract class Station {
     totalStations++;
   }
 
-  public static HashMap<String, List<Station>> getAllStations() {
-    return allStations;
-  }
 
   /**
    * Adds the newStation to allStations. Then associates all stations of the same name with
@@ -27,8 +24,6 @@ public abstract class Station {
    * @param newStation the station to be added to allStations.
    */
   public static void addStation(Station newStation) {
-    String stationName = newStation.name;
-    // if no station of this name, add it to allStations
     if (newStation instanceof BusStation) {
       BusStation.newBusStation(newStation);
     } else if (newStation instanceof SubwayStation) {

@@ -52,7 +52,7 @@ public class AdminUser extends User {
     try {
       CostCalculator.generateReport(dates, dailyTotals);
     } catch (IOException e) {
-      System.out.println("File could not be constructed. Daily reports will not be generated.");
+      System.out.println("File could not be constructed, daily reports will not be generated");
     }
   }
 }

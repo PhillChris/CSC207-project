@@ -1,9 +1,9 @@
 import java.util.HashMap;
 
 public class BusStation extends Station {
-  /** A HashMap linking BusStation names to BusStations */
+  /** Maps the names of all BusStation to their corresponding BusStation object */
   public static HashMap<String, Station> busStations = new HashMap<>();
-  /** The initial fee charged by starting a trip at a BusStation */
+  /** The fee charged by starting a leg of a trip at a BusStation */
   private int BUS_INITIAL_FEE = 200;
   /** The fee charged per BusStation travelled */
   private int BUS_PERSTATION_FEE = 0;
@@ -20,7 +20,7 @@ public class BusStation extends Station {
   }
 
   /**
-   * Adds this station to the HashMap busStations
+   * Helper method to Station.addStation which adds a created BusStation to BusStation records
    *
    * @param station The station to be added
    */

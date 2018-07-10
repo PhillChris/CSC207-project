@@ -31,7 +31,7 @@ public class AdminUser extends User {
     }
   }
 
-  /** Writes the dailyReports to dailyReports.txt */
+  /** Requests the production of a daily report to dailyReports.txt */
   public void dailyReports() {
     // The revenue collected for each day
     HashMap<LocalDate, Integer> dailyTotals = CostCalculator.getDailyRevenue();

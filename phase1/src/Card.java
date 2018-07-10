@@ -1,19 +1,19 @@
 /** Represents a travel card in a transit system */
 public class Card {
-  /** The starting balance for all cards */
+  /** The starting balance for all cards, in cents */
   public static final int CARD_INITIAL_BALANCE = 1900;
-  /** The activity of this card */
+  /** Stores whether or not this card can be used (i.e. reported stolen) */
   private boolean isActive;
-  /** The current trip this card is on. null when no active trip */
+  /** The current trip this card is on, being null when no active trip */
   private Trip currentTrip;
-  /** The last trip completed by this card */
+  /** The last trip that this card has completed */
   private Trip lastTrip;
-  /** The balance of this card */
+  /** The balance of this card, in cents */
   private int balance;
-  /** The cardID of this card */
+  /** The id of this card (i.e. which # card it is in some User's account) */
   private int id;
   /**
-   * Contruct a new card
+   * Constructs a new card
    *
    * @param cardID The ID for this card
    */
@@ -24,9 +24,7 @@ public class Card {
     lastTrip = null;
   }
 
-  /**
-   * @return true if this card is not active
-   */
+  /** @return true if this card is not active */
   public boolean isSuspended() {
     return !isActive;
   }
@@ -36,12 +34,12 @@ public class Card {
     return this.id;
   }
 
-  /** @return The balance of this card */
+  /** @return The balance of this card, in cents */
   public int getBalance() {
     return this.balance;
   }
 
-  /** @return The current Trip of this card */
+  /** @return The current Trip this card is on, or null if it is not on a trip */
   public Trip getCurrentTrip() {
     return currentTrip;
   }
@@ -55,7 +53,7 @@ public class Card {
     currentTrip = trip;
   }
 
-  /** @return The last Trip completed by this Card */
+  /** @return The last Trip that this Card has completed */
   Trip getLastTrip() {
     return lastTrip;
   }
@@ -75,30 +73,30 @@ public class Card {
   }
 
   /**
-   * Activate this card
+   * Activates this card, after having been found
    *
-   * @param card this User's card being suspended
+   * @param card the suspended Card to be reactivated
    */
   public void activateCard(Card card) {
     isActive = true;
   }
 
-  /** Suspend this card */
+  /** Suspends this card, after having been reported stolen */
   public void suspendCard() {
     isActive = false;
   }
 
   /**
-   * Add given int to this Card's balance.
+   * Adds the given number of cents to this Card's balance.
    *
-   * @param toAdd the amount of money to add to this Card's balance
+   * @param toAdd the amount of money to add to this Card's balance, in cents
    */
   public void addBalance(int toAdd) {
     this.balance += toAdd;
   }
 
   /**
-   * Subtract given int from this Card's balance.
+   * Subtracts given number of cents from this Card's balance.
    *
    * @param toSubtract the amount of money to subtract to this Card's balance
    */
@@ -109,9 +107,9 @@ public class Card {
   /** Returns a string representation of this card */
   public String toString() {
     return "Card #"
-            + this.id
-            + " has "
-            + String.format("$%.2f", this.balance / 100.0)
-            + " remaining";
+        + this.id
+        + " has "
+        + String.format("$%.2f", this.balance / 100.0)
+        + " remaining";
   }
 }

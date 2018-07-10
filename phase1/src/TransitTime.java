@@ -20,6 +20,7 @@ public class TransitTime {
     Month currentMonth = Month.of(Integer.parseInt(formatted[1]));
     int currentDay = Integer.parseInt(formatted[2]);
     currentTime = LocalDateTime.of(currentYear, currentMonth, currentDay, 0, 0);
+    CostCalculator.getDailyRevenue().put(currentTime.toLocalDate(), 0);
   }
 
   /**
@@ -68,6 +69,7 @@ public class TransitTime {
             + +currentTime.getDayOfMonth()
             + ", "
             + currentTime.getYear());
+    CostCalculator.getDailyRevenue().put(currentTime.toLocalDate(), 0);
   }
 
   /** @return The current date in the transit system */

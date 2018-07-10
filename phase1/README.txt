@@ -64,7 +64,7 @@ ADDUSER: Adds a given user to the system, with the given name and email. Also ad
 the transit system.
 
 Usage:
-ADDUSER | HH:MM | Admin? | userName | cardholderemail@fakemail.io
+ADDUSER | Admin? | userName | cardholderemail@fakemail.io
 
 --
 
@@ -78,7 +78,7 @@ REMOVEUSER | cardholderemail@fakemail.io
 ADDCARD: Adds a new card to the transit system.
 
 Usage:
-ADDCARD | HH:MM | cardholderemail@fakemail.io
+ADDCARD | cardholderemail@fakemail.io
 
 --
 
@@ -86,7 +86,7 @@ REMOVECARD: Removes a given card from the transit system. This is different from
 only deactivates a given card.
 
 Usage:
-REMOVECARD | HH:MM | cardholderemail@fakemail.io | card#
+REMOVECARD | cardholderemail@fakemail.io | card#
 
 --
 
@@ -116,7 +116,7 @@ DAILYREPORTS | adminuseremail@fakemail.io |
 ADDFUNDS: Adds the given amount of funds to a card.
 
 Usage:
-ADDFUNDS | HH:MM | cardholderemail@fakemail.io | card# | dollarsAdded
+ADDFUNDS | cardholderemail@fakemail.io | card# | dollarsAdded
 
 --
 

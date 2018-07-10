@@ -57,8 +57,7 @@ public class CardParser implements ObjectParser {
    */
   public void add(List<String> cardInfo) {
     try {
-      LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
-      User user = User.findUser(cardInfo.get(1));
+      User user = User.findUser(cardInfo.get(0));
       user.addCard();
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
@@ -72,9 +71,8 @@ public class CardParser implements ObjectParser {
    */
   public void remove(List<String> cardInfo) {
     try {
-      LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
-      User user = User.findUser(cardInfo.get(1));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
+      User user = User.findUser(cardInfo.get(0));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       user.removeCard(card);
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
@@ -105,10 +103,9 @@ public class CardParser implements ObjectParser {
    */
   public void addFunds(List<String> cardInfo) {
     try {
-      LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
-      User user = User.findUser(cardInfo.get(1));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
-      card.addBalance(Integer.parseInt(cardInfo.get(3)) * 100);
+      User user = User.findUser(cardInfo.get(0));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
+      card.addBalance(Integer.parseInt(cardInfo.get(2)) * 100);
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }

@@ -1,4 +1,3 @@
-import java.time.LocalDateTime;
 import java.util.List;
 
 /** Parses all methods pertaining to users in the transit system */
@@ -24,12 +23,11 @@ public class UserParser implements ObjectParser {
    */
   public void add(List<String> userInfo) {
     try {
-      LocalDateTime time = TransitTime.getTime(userInfo.get(0));
-      if (userInfo.get(1).equals("yes")) {
-        AdminUser admin = new AdminUser(userInfo.get(2), userInfo.get(3));
+      if (userInfo.get(0).equals("yes")) {
+        AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(2));
         TransitReadWrite.write("Added admin user " + admin);
       } else {
-        User user = new User(userInfo.get(2), userInfo.get(3));
+        User user = new User(userInfo.get(1), userInfo.get(2));
         TransitReadWrite.write("Added user " + user);
       }
     } catch (TransitException a) {

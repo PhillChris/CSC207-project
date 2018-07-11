@@ -133,7 +133,7 @@ public abstract class ObjectParser {
    * @throws CardNotFoundException Thrown if this User contains no card with given ID
    */
   Card findCard(User user, int cardID) throws CardNotFoundException {
-    for (Card tempCard : user.getCards()) {
+    for (Card tempCard : user.getCardsCopy()) {
       if (tempCard.getId() == cardID) {
         return tempCard;
       }

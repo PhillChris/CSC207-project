@@ -23,7 +23,7 @@ public class AdminUser extends User {
       Writer writer =
               new BufferedWriter(
                       new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"));
-      writer.write("Date       Revenue   Stations Travelled");
+      writer.write("Date         Revenue   Stations Travelled");
       writer.write(System.lineSeparator());
       writer.write(message);
       writer.close();

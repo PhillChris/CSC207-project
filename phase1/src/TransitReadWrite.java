@@ -11,24 +11,25 @@ import java.util.function.Function;
 public class TransitReadWrite {
   /** The token which separates parameters in the events.txt file */
   private static final String SPLIT_SYMBOL = "\\s\\|\\s";
+  /** The reader which reads from events.txt */
+  private BufferedReader reader;
   /** The writer which writes to output.txt */
-  private static BufferedWriter writer;
+  private BufferedWriter writer;
   /** Handles operations to be executed on users */
-  private static UserParser userParser;
+  private UserParser userParser;
   /** Handles operations to be executed on cards */
-  private static CardParser cardParser;
+  private CardParser cardParser;
 
+  public TransitReadWrite(BufferedReader reader, BufferedWriter writer) {
+    this.reader = reader;
+    this.writer = writer;
+  }
   /**
    * Writes a given message to output.txt
    *
    * @param message The message to be written
    */
-  public static void write(String message) {
-    try {
-      writer.write(message + System.lineSeparator());
-    } catch (IOException e) {
-      System.out.println("File not found, create an events.txt and rerun the program");
-    }
+  public void write(String message) {
   }
 
   /**
@@ -37,10 +38,8 @@ public class TransitReadWrite {
    * @throws IOException
    * @throws InitLineException
    */
-  public static void init(BufferedReader reader, BufferedWriter writer)
+  public void init()
       throws IOException, InitLineException {
-    TransitReadWrite.writer = writer;
-
     userParser = new UserParser(writer);
     cardParser = new CardParser(writer);
 
@@ -48,7 +47,7 @@ public class TransitReadWrite {
      * the current system date */
     String initLine = reader.readLine().trim(); // removes initial and trailing whitespace
     ArrayList<String> initLineWords =
-        new ArrayList<String>(Arrays.asList(initLine.split(SPLIT_SYMBOL)));
+        new ArrayList<>(Arrays.asList(initLine.split(SPLIT_SYMBOL)));
 
     if (initLineWords.size() != 3) { // if the formatting is incorrect for the initial line
       throw new InitLineException();
@@ -76,10 +75,10 @@ public class TransitReadWrite {
       List<String> stationNames = tempLineWords.subList(1, tempLineWords.size());
       if (tempLineWords.get(0).equals("SUBWAY")) {
         Route newRoute = new Route(stationNames, subFact);
-        TransitReadWrite.write("Created new subway route");
+        writer.write("Created new subway route");
       } else if (tempLineWords.get(0).equals("BUS")) {
         Route newRoute = new Route(stationNames, busFact);
-        TransitReadWrite.write("Created new bus route");
+        writer.write("Created new bus route");
       }
     }
   }
@@ -87,10 +86,9 @@ public class TransitReadWrite {
   /**
    * Runs the program (i.e. executes user commands) through commands provided in events.txt
    *
-   * @param reader
    * @throws IOException
    */
-  public static void run(BufferedReader reader) throws IOException {
+  public void run() throws IOException {
     /* Iterate through remaining action lines and execute the corresponding
      * commands in events.txt, after initializing routes */
     String actionLine = reader.readLine().trim();

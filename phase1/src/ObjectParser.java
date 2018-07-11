@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,14 @@ public abstract class ObjectParser {
     });
   }
 
+  void write(String message) {
+    try {
+      writer.write(message + System.lineSeparator());
+    } catch (IOException e) {
+      System.out.println("File not found, create an events.txt and rerun the program");
+    }
+  }
+
   static void checkInput(List<String> input, int expected) throws InvalidInputException {
     if (input.size() != expected) {
       throw new InvalidInputException();
@@ -35,7 +44,7 @@ public abstract class ObjectParser {
 
   public void parse(List<String> tempLineWords) {
     if (keyWords.get(tempLineWords.get(0)) == null) {
-      TransitReadWrite.write("Invalid command: This command does not exist");
+      this.write("Invalid command: This command does not exist");
     } else if (tempLineWords.size() > 1) {
       // executes the command which the given keyword
       // maps to by passing the appropriate parameters

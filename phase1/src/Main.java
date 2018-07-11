@@ -10,9 +10,10 @@ public class Main {
   public static void main(String[] args) throws IOException {
     BufferedReader reader = new BufferedReader(new FileReader("events.txt"));
     BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
+    TransitReadWrite fileInterpreter = new TransitReadWrite(reader, writer);
     try {
-      TransitReadWrite.init(reader, writer);
-      TransitReadWrite.run(reader);
+      fileInterpreter.init();
+      fileInterpreter.run();
     } catch (InitLineException init) {
       writer.write(init.getMessage());
     }

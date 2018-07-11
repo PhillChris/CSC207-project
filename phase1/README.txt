@@ -166,7 +166,7 @@ USERREPORT | cardholderemail@fakemail.io
 
 Parameters:
 - HH:MM is the time at which this card is tapped, in that format (the date is kept independently
-  by the system, and is only modified by the ENDDAY command)
+  by the system, and is only modified by the ENDDAY command) This simulation uses the 24hr clock.
 - cardholderemail@fakemail.io is the email of the owner of this card
 - card# is the unique card number of this user, which are generated as you call ADDCARD (they are
   numbered in order of initialization for a given user). So if you give a user two cards, the first

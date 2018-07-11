@@ -39,7 +39,8 @@ public class Trip {
 
   /** @return A string representation of a trip */
   public String toString() {
-    return "Trip started at " + priorStops.get(0) + " and ended at " + endStation;
+    return String.format("Trip started at %s (%s) and ended at %s (%s)",
+      priorStops.get(0), timeStarted.toLocalTime(), endStation, timeEnded.toLocalTime());
   }
 
   /**

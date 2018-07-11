@@ -40,6 +40,7 @@ public class Route<T extends Station> {
 
   /** @return A list of the stations in this route */
   public List<Station> getRouteStations() {
-    return routeStations;
+    List<Station> stationCopy = new ArrayList<>(routeStations);
+    return stationCopy;
   }
 }

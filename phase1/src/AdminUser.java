@@ -32,7 +32,7 @@ public class AdminUser extends User {
   }
 
   /** Requests the production of a daily report to dailyReports.txt */
-  public void dailyReports() throws IOException {
+  void dailyReports() throws IOException {
       String message = calculator.generateReportMessage();
       Writer writer =
               new BufferedWriter(

@@ -22,7 +22,7 @@ public class Route<T extends Station> {
       station = fact.newStation(s);
       // Create a new station if a station of the same name and type does not exist
       if (!station.getStations().containsKey(s)) {
-        Station.addStation(station);
+        station.addStation(station);
       }
       // station of the same type and same name already exists
       else {
@@ -42,20 +42,4 @@ public class Route<T extends Station> {
   public List<Station> getRouteStations() {
     return routeStations;
   }
-
-  /**
-   * Find a station in this route with given ID
-   *
-   * @param stationID the station ID to be searched for
-   * @return The station with the given stationID
-   */
-  public Station findStation(int stationID) {
-    for (Station station : getRouteStations()) {
-      if (station.stationID == stationID) {
-        return station;
-      }
-    }
-    return null;
-  }
-
 }

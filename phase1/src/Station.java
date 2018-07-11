@@ -1,10 +1,8 @@
 import java.util.HashMap;
+import java.util.Objects;
 
 public abstract class Station {
-  /** Total number of stations in the transit system */
-  private static int totalStations;
-  /** The unique ID of this station */
-  final int stationID;
+  private HashMap<String, Station> stations = new HashMap<>();
   /** The fee charged per station travelled by this station */
   private int perStationFee;
   /**
@@ -20,8 +18,14 @@ public abstract class Station {
    */
   public Station(String name) {
     this.name = name;
-    stationID = totalStations;
-    totalStations++;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Station station = (Station) o;
+    return Objects.equals(name, station.name);
   }
 
   /**
@@ -29,12 +33,8 @@ public abstract class Station {
    *
    * @param newStation the station to be added to allStations.
    */
-  public static void addStation(Station newStation) {
-    if (newStation instanceof BusStation) {
-      BusStation.newBusStation(newStation);
-    } else if (newStation instanceof SubwayStation) {
-      SubwayStation.newSubwayStation(newStation);
-    }
+  public void addStation(Station newStation) {
+    stations.put(newStation.name, newStation);
   }
 
   public int getPerStationFee() {
@@ -65,7 +65,13 @@ public abstract class Station {
   }
 
   /** @return HashMap of all stations of similar type */
-  public abstract HashMap<String, Station> getStations();
+  public HashMap<String, Station> getStations() {
+    return stations;
+  }
+
+  public void setStations(HashMap<String, Station> stations) {
+    this.stations = stations;
+  }
 
   /** @return A string representation of a station */
   public String toString() {

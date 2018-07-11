@@ -5,8 +5,11 @@ import java.util.List;
 
 public class TransitTime {
 
-  /** The current time of the simulation */
+  /** The current time of the transit system */
   static LocalDateTime currentTime;
+
+  /** The parser currently in use for this transit system */
+  static ObjectParser currentParser;
 
   /**
    * Initializes the date in the transit system. Sets system time to midnight of the first date by
@@ -14,7 +17,7 @@ public class TransitTime {
    *
    * @param initialDate the initial date of the transit system simulation
    */
-  static void initDate(String initialDate) {
+  static void initDate(String initialDate, ObjectParser parser) {
     String[] formatted = initialDate.split("-");
     int currentYear = Integer.parseInt(formatted[0]);
     Month currentMonth = Month.of(Integer.parseInt(formatted[1]));
@@ -22,6 +25,7 @@ public class TransitTime {
     currentTime = LocalDateTime.of(currentYear, currentMonth, currentDay, 0, 0);
     CostCalculator calculator = new CostCalculator();
     calculator.updateSystemRevenue(0, 0);
+    currentParser = parser;
   }
 
   /**
@@ -63,7 +67,7 @@ public class TransitTime {
     currentTime =
         LocalDateTime.of(
             currentTime.getYear(), currentTime.getMonth(), currentTime.getDayOfMonth(), 0, 0);
-    TransitReadWrite.write(
+    currentParser.write(
         "Day ended successfully: current day is "
             + currentTime.getMonth()
             + " "

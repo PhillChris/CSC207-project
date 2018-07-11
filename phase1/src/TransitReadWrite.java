@@ -62,7 +62,7 @@ public class TransitReadWrite {
     }
 
     // Sets the initial date for the system
-    TransitTime.initDate(initLineWords.get(2));
+    TransitTime.initDate(initLineWords.get(2), this.userParser);
 
     /* Iterate through routes and names of stations given in the first lines of events.txt,
      *  and constructs route objects containing station objects*/
@@ -75,10 +75,10 @@ public class TransitReadWrite {
       List<String> stationNames = tempLineWords.subList(1, tempLineWords.size());
       if (tempLineWords.get(0).equals("SUBWAY")) {
         Route newRoute = new Route(stationNames, subFact);
-        writer.write("Created new subway route");
+        writer.write("Created new subway route" + System.lineSeparator());
       } else if (tempLineWords.get(0).equals("BUS")) {
         Route newRoute = new Route(stationNames, busFact);
-        writer.write("Created new bus route");
+        writer.write("Created new bus route" + System.lineSeparator());
       }
     }
   }
@@ -89,6 +89,7 @@ public class TransitReadWrite {
    * @throws IOException
    */
   public void run() throws IOException {
+
     /* Iterate through remaining action lines and execute the corresponding
      * commands in events.txt, after initializing routes */
     String actionLine = reader.readLine().trim();

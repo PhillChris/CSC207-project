@@ -45,12 +45,12 @@ public class CardParser extends ObjectParser {
       user.tap(card, station, time);
       // if this user has just started a trip
       if (card.getTripStarted()) {
-        super.write("User " + user.getEmail() + " tapped on at " + stationName);
+        write("User " + user.getEmail() + " tapped on at " + stationName);
       } else {
-        super.write("User " + user.getEmail() + " tapped off at " + stationName);
+        write("User " + user.getEmail() + " tapped off at " + stationName);
       }
     } catch (TransitException b) {
-      super.write(b.getMessage());
+      write(b.getMessage());
     }
   }
 
@@ -65,7 +65,7 @@ public class CardParser extends ObjectParser {
       User user = User.findUser(cardInfo.get(0));
       user.addCard();
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     }
   }
 
@@ -81,7 +81,7 @@ public class CardParser extends ObjectParser {
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       user.removeCard(card);
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     }
   }
 
@@ -96,10 +96,10 @@ public class CardParser extends ObjectParser {
       User user = User.findUser(cardInfo.get(0)); // passing user email
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1))); // passing cardID.
       card.suspendCard();
-      super.write(
+      write(
           "Theft reported for user " + cardInfo.get(0) + " card " + cardInfo.get(1));
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     }
   }
 
@@ -115,7 +115,7 @@ public class CardParser extends ObjectParser {
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       card.addBalance(Integer.parseInt(cardInfo.get(2)) * 100);
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     }
   }
 
@@ -129,9 +129,9 @@ public class CardParser extends ObjectParser {
       ObjectParser.checkInput(cardInfo, 2);
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
-      super.write(user.getEmail() + "'s " + card.toString());
+      write(user.getEmail() + "'s " + card.toString());
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     }
   }
 
@@ -146,11 +146,11 @@ public class CardParser extends ObjectParser {
       User user = User.findUser(cardInfo.get(0));
       Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
       card.activateCard(card);
-      super.write(
+      write(
           "Card reactivated for user " + cardInfo.get(0) + " card " + cardInfo.get(1));
 
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     }
   }
 

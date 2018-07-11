@@ -13,10 +13,7 @@ public abstract class ObjectParser {
   private BufferedWriter writer;
   public ObjectParser(BufferedWriter writer) {
     this.writer = writer;
-    this.keyWords.put("ENDDAY", (emptyArray) -> {
-      TransitTime.endDay(emptyArray);
-      return null;
-    });
+    makeCommonHashMap();
   }
 
   void write(String message) {
@@ -57,5 +54,12 @@ public abstract class ObjectParser {
 
   public HashMap<String, Function<List<String>, Void>> getKeyWords() {
     return this.keyWords;
+  }
+
+  private void makeCommonHashMap() {
+    this.keyWords.put("ENDDAY", (emptyArray) -> {
+      TransitTime.endDay(emptyArray);
+      return null;
+    });
   }
 }

@@ -17,9 +17,9 @@ public class UserParser extends ObjectParser {
     try {
       ObjectParser.checkInput(userInfo, 1);
       User user = User.findUser(userInfo.get(0));
-      super.write(user.getAvgMonthly());
+      write(user.getAvgMonthly());
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     }
   }
 
@@ -33,10 +33,10 @@ public class UserParser extends ObjectParser {
       ObjectParser.checkInput(userInfo, 3);
       if (userInfo.get(0).equals("yes")) {
         AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(2));
-        super.write("Added admin user " + admin);
+        write("Added admin user " + admin);
       } else {
         User user = new User(userInfo.get(1), userInfo.get(2));
-        super.write("Added user " + user);
+        write("Added user " + user);
       }
     } catch (TransitException a) {
       a.getMessage();
@@ -54,7 +54,7 @@ public class UserParser extends ObjectParser {
       // if the given user is not an AdminUser but is a User
       User user = User.findUser(userInfo.get(0));
       user.removeUser();
-      super.write("Removed user " + user);
+      write("Removed user " + user);
 
     } catch (TransitException a) {
       a.getMessage();
@@ -73,7 +73,7 @@ public class UserParser extends ObjectParser {
       String newName = userInfo.get(1);
       user.changeName(newName);
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     }
   }
 
@@ -87,11 +87,11 @@ public class UserParser extends ObjectParser {
       ObjectParser.checkInput(userInfo, 1);
       AdminUser user = AdminUser.findAdminUser(userInfo.get(0));
       user.dailyReports();
-      super.write("Published daily reports to dailyReports.txt");
+      write("Published daily reports to dailyReports.txt");
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     } catch (IOException b) {
-      super.write("File not found: This file was not located");
+      write("File not found: This file was not located");
     }
   }
 
@@ -111,9 +111,9 @@ public class UserParser extends ObjectParser {
           message += System.lineSeparator();
         }
       }
-      super.write(message);
+      write(message);
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     }
   }
 
@@ -133,9 +133,9 @@ public class UserParser extends ObjectParser {
           message += System.lineSeparator();
         }
       }
-      super.write(message);
+      write(message);
     } catch (TransitException a) {
-      super.write(a.getMessage());
+      write(a.getMessage());
     }
   }
 

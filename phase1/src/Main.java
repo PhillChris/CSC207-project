@@ -10,7 +10,7 @@ public class Main {
   public static void main(String[] args) throws IOException {
     BufferedReader reader = new BufferedReader(new FileReader("events.txt"));
     BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
-    TransitReadWrite fileInterpreter = new TransitReadWrite(reader, writer);
+    TransitReader fileInterpreter = new TransitReader(reader, writer);
     try {
       fileInterpreter.init();
       fileInterpreter.run();

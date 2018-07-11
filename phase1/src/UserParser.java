@@ -11,7 +11,7 @@ public class UserParser extends ObjectParser {
   /**
    * Generates a user's monthly expenditure profile
    *
-   * @param userInfo Information given for the user from TransitReadWrite.read
+   * @param userInfo Information given for the user from TransitReader.read
    */
   public void monthlyExpenditure(List<String> userInfo) {
     try {
@@ -26,7 +26,7 @@ public class UserParser extends ObjectParser {
   /**
    * Processes an add user request
    *
-   * @param userInfo Information given for the user from TransitReadWrite.read
+   * @param userInfo Information given for the user from TransitReader.read
    */
   public void add(List<String> userInfo) {
     try {
@@ -46,7 +46,7 @@ public class UserParser extends ObjectParser {
   /**
    * Processes a remove user request
    *
-   * @param userInfo Information given for the user from TransitReadWrite.read
+   * @param userInfo Information given for the user from TransitReader.read
    */
   public void remove(List<String> userInfo) {
     try {
@@ -64,7 +64,7 @@ public class UserParser extends ObjectParser {
   /**
    * Processes a change name request for a given user
    *
-   * @param userInfo Information given for the user from TransitReadWrite.read
+   * @param userInfo Information given for the user from TransitReader.read
    */
   public void changeName(List<String> userInfo) {
     try {
@@ -80,7 +80,7 @@ public class UserParser extends ObjectParser {
   /**
    * Processes a daily report request
    *
-   * @param userInfo Information given for the admin user from TransitReadWrite.read
+   * @param userInfo Information given for the admin user from TransitReader.read
    */
   public void dailyReports(List<String> userInfo) {
     try {
@@ -98,7 +98,7 @@ public class UserParser extends ObjectParser {
   /**
    * Generates a report containing all of a given user's cards and balances
    *
-   * @param userInfo Information given for the user from TransitReadWrite.read
+   * @param userInfo Information given for the user from TransitReader.read
    */
   public void report(List<String> userInfo) {
     try {
@@ -120,7 +120,7 @@ public class UserParser extends ObjectParser {
   /**
    * Processes a request for the last three trips traveled by a given user
    *
-   * @param userInfo Information given for the user from TransitReadWrite.read
+   * @param userInfo Information given for the user from TransitReader.read
    */
   public void getLastThree(List<String> userInfo) {
     try {

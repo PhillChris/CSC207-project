@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /** A class to handle all text file handling in the transit system simulation */
-public class TransitReadWrite {
+public class TransitReader {
   /** The token which separates parameters in the events.txt file */
   private static final String SPLIT_SYMBOL = "\\s\\|\\s";
   /** The reader which reads from events.txt */
@@ -20,7 +20,7 @@ public class TransitReadWrite {
   /** Handles operations to be executed on cards */
   private CardParser cardParser;
 
-  public TransitReadWrite(BufferedReader reader, BufferedWriter writer) {
+  public TransitReader(BufferedReader reader, BufferedWriter writer) {
     this.reader = reader;
     this.writer = writer;
   }

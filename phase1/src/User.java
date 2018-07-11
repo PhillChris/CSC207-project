@@ -43,6 +43,11 @@ public class User {
     calculator = new CostCalculator();
   }
 
+  /** @return HashMap of all Users */
+  static HashMap<String, User> getAllUsers() {
+    return allUsers;
+  }
+
   /**
    * @param email The email of a User
    * @return The User with given email

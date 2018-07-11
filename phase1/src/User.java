@@ -43,9 +43,13 @@ public class User {
     calculator = new CostCalculator();
   }
 
-  /** @return HashMap of all Users */
-  static HashMap<String, User> getAllUsers() {
-    return allUsers;
+  /** @return a copy of the HashMap of all Users */
+  static HashMap<String, User> getAllUsersCopy() {
+    HashMap<String, User> copy = new HashMap<>();
+    for (String name : allUsers.keySet()){
+      copy.put(name, allUsers.get(name));
+    }
+    return copy;
   }
 
   /**

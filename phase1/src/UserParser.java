@@ -106,7 +106,7 @@ public class UserParser extends ObjectParser {
       User user = User.findUser(userInfo.get(0));
       String message = "Username: " + user + System.lineSeparator();
       for (int i = 0; i < user.getCards().size(); i++) {
-        message += user.getCards().get(i) + System.lineSeparator();
+        message += user.getCards().get(i);
         if (i < user.getCards().size() - 1) {
           message += System.lineSeparator();
         }

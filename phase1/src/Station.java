@@ -37,10 +37,16 @@ public abstract class Station {
     stations.put(newStation.name, newStation);
   }
 
+  /** @return the perStationFee of this subway station */
   public int getPerStationFee() {
     return perStationFee;
   }
 
+  /**
+   * Set the perStationFee of this station.
+   *
+   * @param perStationFee the new perStationFee.
+   */
   public void setPerStationFee(int perStationFee) {
     this.perStationFee = perStationFee;
   }
@@ -55,6 +61,11 @@ public abstract class Station {
     return this.initialFee;
   }
 
+  /**
+   * Set the initialFee of this station.
+   *
+   * @param initialFee the new initialFee.
+   */
   public void setInitialFee(int initialFee) {
     this.initialFee = initialFee;
   }
@@ -69,6 +80,11 @@ public abstract class Station {
     return stations;
   }
 
+  /**
+   * Set the stations attribute to the given HashMap.
+   *
+   * @param stations the HashMap of stations to assign to the stations variable of this Station.
+   */
   public void setStations(HashMap<String, Station> stations) {
     this.stations = stations;
   }

@@ -54,7 +54,9 @@ Tap covers both entrance and exit for the user, the system keeps track of entran
 handles these cases appropriately. N.B.: for continuous trips, YOU MUST TAP TWICE AT EACH CROSSOVER STOP.
 So for example, if you have two routes, one with Station A and Station B and one with Station B and
 Station C, if you want a continuous trip from A to C, you must call tap twice at Station B, once to
-leave the first route, and once to enter the second route.
+leave the first route, and once to enter the second route. Users are charged appropriately, which currently
+charges $0.50 per subway station travelled and $2.00 for each bus trip started (i.e. buses do not have
+a per-station fee).
 
 Usage:
 TAP | HH:MM | cardholderemail@fakemail.io | card# | STATIONTYPE | stationName

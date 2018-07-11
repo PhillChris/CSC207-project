@@ -45,8 +45,8 @@ public class TransitReadWrite {
     TransitReadWrite.buildHashMap();
     TransitReadWrite.writer = writer;
 
-    userParser = new UserParser();
-    cardParser = new CardParser();
+    userParser = new UserParser(writer);
+    cardParser = new CardParser(writer);
 
     /* Reads the opening init line determining how many routes to make and
      * the current system date */
@@ -102,17 +102,12 @@ public class TransitReadWrite {
     while (actionLine != System.lineSeparator() && actionLine != null) {
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
-      if (TransitReadWrite.keyWords.get(tempLineWords.get(0)) == null) {
-        TransitReadWrite.write("Invalid command: This command does not exist");
-      } else if (tempLineWords.size() > 1) {
-        // executes the command which the given keyword
-        // maps to by passing the appropriate parameters
-        TransitReadWrite.keyWords
-            .get(tempLineWords.get(0))
-            .apply(tempLineWords.subList(1, tempLineWords.size()));
+      if (userParser.getKeyWords().get(tempLineWords.get(0)) != null) {
+        userParser.parse(tempLineWords.subList(1, tempLineWords.size()));
+      } else if (userParser.getKeyWords().get(tempLineWords.get(0)) != null) {
+        cardParser.parse(tempLineWords.subList(1, tempLineWords.size()));
       } else {
-        // executes a parameterless function with an empty ArrayList for hash map type consistency
-        TransitReadWrite.keyWords.get(tempLineWords.get(0)).apply(new ArrayList<>());
+        writer.write("Invalid command: This command is not recognized by the transit system");
       }
       actionLine = reader.readLine();
     }

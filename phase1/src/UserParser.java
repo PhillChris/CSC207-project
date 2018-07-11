@@ -85,7 +85,7 @@ public class UserParser extends ObjectParser {
     try {
       ObjectParser.checkInput(userInfo, 1);
       AdminUser user = AdminUser.findAdminUser(userInfo.get(0));
-      // user.dailyReports();
+      user.dailyReports();
       TransitReadWrite.write("Published daily reports to dailyReports.txt");
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());

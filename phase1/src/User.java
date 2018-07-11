@@ -11,6 +11,8 @@ public class User {
   private static HashMap<String, User> allUsers = new HashMap<>();
   /** The User's email */
   private final String email;
+  /** Calculates and sends the daily revenue recieved from this user to the system */
+  protected CostCalculator calculator;
   /** An ArrayList of this User's last three trips */
   private ArrayList<Trip> lastThreeTrips = new ArrayList<>();
   /** HashMap linking each month to the total expenditure for that month */
@@ -38,6 +40,7 @@ public class User {
     allUsers.put(email, this);
     cardCounter = 1;
     ExpenditureMonthly = new HashMap<>();
+    calculator = new CostCalculator();
   }
 
   /**
@@ -53,9 +56,7 @@ public class User {
     }
   }
 
-  /**
-   * Removes this user from the system.
-   */
+  /** Removes this user from the system. */
   public void removeUser() {
     allUsers.remove(this.email);
   }
@@ -209,7 +210,7 @@ public class User {
     card.setCurrentTrip(null);
     updateSpendingHistory(card); // Update's this User's spending history
     // Update System's spending history
-    CostCalculator.updateSystemRevenue(trip.getFee(), Math.max(trip.getTripLegLength(), 0));
+    calculator.updateSystemRevenue(trip.getFee(), Math.max(trip.getTripLegLength(), 0));
     if (!lastThreeTrips.contains(trip)) {
       lastThreeTrips.add(trip);
     }

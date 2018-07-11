@@ -54,7 +54,7 @@ public class TransitReadWrite {
       throw new InitLineException();
     }
 
-    // Sets the initial date for the system
+    // Sets the initial date for the system, and passes parser for output purposes
     TransitTime.initDate(initLineWords.get(2), this.userParser);
 
     /* Iterate through routes and names of stations given in the first lines of events.txt,
@@ -77,23 +77,25 @@ public class TransitReadWrite {
   }
 
   /**
+   * Iterate through remaining action lines and execute the corresponding
+   * commands in events.txt, after initializing routes
    * Runs the program (i.e. executes user commands) through commands provided in events.txt
    *
    * @throws IOException
    */
   public void run() throws IOException {
-
-    /* Iterate through remaining action lines and execute the corresponding
-     * commands in events.txt, after initializing routes */
     String actionLine = reader.readLine().trim();
     // While there are still non-empty lines in events.txt
     while (actionLine != System.lineSeparator() && actionLine != null) {
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
+      // if the given command is a command in the user hashmap
       if (userParser.getKeyWords().get(tempLineWords.get(0)) != null) {
         userParser.parse(tempLineWords);
+        // if the the given command is a command in the card hashmap
       } else if (cardParser.getKeyWords().get(tempLineWords.get(0)) != null) {
         cardParser.parse(tempLineWords);
+        // if the given command is not a recognized command in either hashmap
       } else {
         writer.write(
             "Invalid command: This command is not recognized by the transit system"

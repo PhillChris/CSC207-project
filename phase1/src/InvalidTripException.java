@@ -14,9 +14,6 @@ public class InvalidTripException extends TransitException {
   }
   /** @return the error message that this exception returns. */
   public String getMessage() {
-    return "Invalid Trip found, max fee charged, "
-        + this.userName
-        + " tapped out at "
-        + this.stationName;
+    return String.format("Invalid Trip found, max fee charged, %s tapped out at %s", this.userName, this.stationName);
   }
 }

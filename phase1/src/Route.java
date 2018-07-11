@@ -43,7 +43,6 @@ public class Route<T extends Station> {
    *     the routes directly)
    */
   List<Station> getRouteStationsCopy() {
-    List<Station> stationCopy = new ArrayList<>(routeStations);
-    return stationCopy;
+    return new ArrayList<>(routeStations);
   }
 }

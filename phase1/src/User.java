@@ -75,11 +75,12 @@ public class User {
       message +=
           month.toString()
               + " : "
+              + "$"
               + String.format(
                   "%.2f", ExpenditureMonthly.get(month) / (month.lengthOfMonth() * 100.0));
       message += System.lineSeparator();
     }
-    return message;
+    return message.trim();
   }
 
   /**

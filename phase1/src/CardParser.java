@@ -24,7 +24,7 @@ public class CardParser extends ObjectParser {
   public void add(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 1);
-      User user = User.findUser(cardInfo.get(0));
+      User user = findUser(cardInfo.get(0));
       user.addCard();
     } catch (TransitException a) {
       write(a.getMessage());
@@ -39,8 +39,8 @@ public class CardParser extends ObjectParser {
   public void remove(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 2);
-      User user = User.findUser(cardInfo.get(0));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
+      User user = findUser(cardInfo.get(0));
+      Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
       user.removeCard(card);
     } catch (TransitException a) {
       write(a.getMessage());
@@ -55,8 +55,8 @@ public class CardParser extends ObjectParser {
   public void report(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 2);
-      User user = User.findUser(cardInfo.get(0));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
+      User user = findUser(cardInfo.get(0));
+      Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
       write(user.getEmail() + "'s " + card.toString());
     } catch (TransitException a) {
       write(a.getMessage());
@@ -74,23 +74,9 @@ public class CardParser extends ObjectParser {
       this.checkInput(cardInfo, 5);
       // Find the time, user, card and station from the given information
       LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
-      User user = User.findUser(cardInfo.get(1));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(2)));
-      String stationType = cardInfo.get(3);
-      String stationName = cardInfo.get(4);
-      Station station;
-      StationFactory fact;
-      // Check if the station is a Bus or Subway
-      if (stationType.equals("BUS")) {
-        fact = new BusFactory();
-        fact.newStation("");
-        station = fact.newStation("").getStations().get(stationName);
-      } else if (stationType.equals("SUBWAY")) {
-        fact = new SubwayFactory();
-        station = fact.newStation("").getStations().get(stationName);
-      } else {
-        throw new InvalidStationTypeException();
-      }
+      User user = findUser(cardInfo.get(1));
+      Card card = findCard(user, Integer.parseInt(cardInfo.get(2)));
+      Station station = findStation(cardInfo.get(3), cardInfo.get(4));
 
       // If no such station is found
       if (station == null) {
@@ -99,9 +85,9 @@ public class CardParser extends ObjectParser {
       user.tap(card, station, time);
       // if this user has just started a trip
       if (card.getTripStarted()) {
-        write("User " + user.getEmail() + " tapped on at " + stationName);
+        write("User " + user.getEmail() + " tapped on at " + station);
       } else {
-        write("User " + user.getEmail() + " tapped off at " + stationName);
+        write("User " + user.getEmail() + " tapped off at " + station);
       }
     } catch (TransitException b) {
       write(b.getMessage());
@@ -116,8 +102,8 @@ public class CardParser extends ObjectParser {
   public void reportTheft(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 2);
-      User user = User.findUser(cardInfo.get(0)); // passing user email
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(1))); // passing cardID.
+      User user = findUser(cardInfo.get(0)); // passing user email
+      Card card = findCard(user, Integer.parseInt(cardInfo.get(1))); // passing cardID.
       card.suspendCard();
       write(
           "Theft reported for user " + cardInfo.get(0) + " card " + cardInfo.get(1));
@@ -134,8 +120,8 @@ public class CardParser extends ObjectParser {
   public void activate(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 2);
-      User user = User.findUser(cardInfo.get(0));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
+      User user = findUser(cardInfo.get(0));
+      Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
       card.activateCard(card);
       write(
           "Card reactivated for user " + cardInfo.get(0) + " card " + cardInfo.get(1));
@@ -153,8 +139,8 @@ public class CardParser extends ObjectParser {
   public void addFunds(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 3);
-      User user = User.findUser(cardInfo.get(0));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
+      User user = findUser(cardInfo.get(0));
+      Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
       card.addBalance(Integer.parseInt(cardInfo.get(2)) * 100);
     } catch (TransitException a) {
       write(a.getMessage());

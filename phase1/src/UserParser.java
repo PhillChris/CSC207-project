@@ -43,11 +43,9 @@ public class UserParser extends ObjectParser {
   void remove(List<String> userInfo) {
     try {
       this.checkInput(userInfo, 1);
-      // if the given user is not an AdminUser but is a User
-      User user = User.findUser(userInfo.get(0));
+      User user = findUser(userInfo.get(0));
       user.removeUser();
       write("Removed user " + user);
-
     } catch (TransitException a) {
       a.getMessage();
     }
@@ -61,7 +59,7 @@ public class UserParser extends ObjectParser {
   void report(List<String> userInfo) {
     try {
       this.checkInput(userInfo, 1);
-      User user = User.findUser(userInfo.get(0));
+      User user = findUser(userInfo.get(0));
       String message = "Username: " + user + System.lineSeparator();
       for (int i = 0; i < user.getCards().size(); i++) {
         message += user.getCards().get(i);
@@ -83,7 +81,7 @@ public class UserParser extends ObjectParser {
   void changeName(List<String> userInfo) {
     try {
       this.checkInput(userInfo, 2);
-      User user = User.findUser(userInfo.get(0));
+      User user = findUser(userInfo.get(0));
       String newName = userInfo.get(1);
       user.changeName(newName);
     } catch (TransitException a) {
@@ -99,7 +97,7 @@ public class UserParser extends ObjectParser {
   void dailyReports(List<String> userInfo) {
     try {
       this.checkInput(userInfo, 1);
-      AdminUser user = AdminUser.findAdminUser(userInfo.get(0));
+      AdminUser user = findAdminUser(userInfo.get(0));
       user.dailyReports();
       write("Published daily reports to dailyReports.txt");
     } catch (TransitException a) {
@@ -117,7 +115,7 @@ public class UserParser extends ObjectParser {
   void monthlyExpenditure(List<String> userInfo) {
     try {
       this.checkInput(userInfo, 1);
-      User user = User.findUser(userInfo.get(0));
+      User user = findUser(userInfo.get(0));
       write(user.getAvgMonthly());
     } catch (TransitException a) {
       write(a.getMessage());
@@ -131,7 +129,7 @@ public class UserParser extends ObjectParser {
    */
   void getLastThree(List<String> userInfo) {
     try {
-      User user = User.findUser(userInfo.get(0));
+      User user = findUser(userInfo.get(0));
       String message =
           "These are the last three trips for user " + user + ": " + System.lineSeparator();
       for (int i = 0; i < user.getLastThree().size(); i++) {

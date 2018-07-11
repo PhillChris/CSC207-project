@@ -52,19 +52,6 @@ public class User {
     return copy;
   }
 
-  /**
-   * @param email The email of a User
-   * @return The User with given email
-   * @throws UserNotFoundException Thrown if no such User has given email
-   */
-  public static User findUser(String email) throws UserNotFoundException {
-    if (allUsers.containsKey(email)) {
-      return allUsers.get(email);
-    } else {
-      throw new UserNotFoundException();
-    }
-  }
-
   /** Removes this user from the system. */
   public void removeUser() {
     allUsers.remove(this.email);
@@ -73,22 +60,6 @@ public class User {
   /** @return This User's email */
   public String getEmail() {
     return this.email;
-  }
-
-  /**
-   * Retrieves this User's card with the given ID
-   *
-   * @param cardId The user-specific id of this card
-   * @return The Card with the given ID
-   * @throws CardNotFoundException Thrown if this User contains no card with given ID
-   */
-  public Card getCard(int cardId) throws CardNotFoundException {
-    for (Card tempCard : this.cards) {
-      if (tempCard.getId() == cardId) {
-        return tempCard;
-      }
-    }
-    throw new CardNotFoundException();
   }
 
   public List<Card> getCards() {

@@ -93,8 +93,72 @@ public abstract class ObjectParser {
   }
 
   /** @return this parser's hashmap sending command words to their given functions */
-  public HashMap<String, Function<List<String>, Void>> getKeyWords() {
+  HashMap<String, Function<List<String>, Void>> getKeyWords() {
     return this.keyWords;
+  }
+
+  /**
+   * @param email The email of a User
+   * @return The User with given email
+   * @throws UserNotFoundException Thrown if no such User has given email
+   */
+  User findUser(String email) throws UserNotFoundException {
+    if (User.getAllUsersCopy().containsKey(email)) {
+      return User.getAllUsersCopy().get(email);
+    } else {
+      throw new UserNotFoundException();
+    }
+  }
+
+  /**
+   * @param email The email belong to a particular AdminUser
+   * @return the AdminUser with the given email
+   * @throws UserNotFoundException Thrown if no AdminUser has given email
+   */
+  AdminUser findAdminUser(String email) throws UserNotFoundException {
+    User user = findUser(email);
+    if (user instanceof AdminUser) {
+      return (AdminUser) user;
+    } else {
+      throw new UserNotFoundException();
+    }
+  }
+
+  /**
+   * Retrieves this User's card with the given ID
+   *
+   * @param user The user whose card we are looking for
+   * @param cardID The user-specific id of this card
+   * @return The Card with the given ID
+   * @throws CardNotFoundException Thrown if this User contains no card with given ID
+   */
+  Card findCard(User user, int cardID) throws CardNotFoundException {
+    for (Card tempCard : user.getCards()) {
+      if (tempCard.getId() == cardID) {
+        return tempCard;
+      }
+    }
+    throw new CardNotFoundException();
+  }
+
+  Station findStation(String stationType, String stationName) throws InvalidStationTypeException {
+    if (stationType.equals("BUS")) {
+      return findBusStation(stationName);
+    } else if (stationType.equals("SUBWAY")) {
+      return findSubwayStation(stationName);
+    } else {
+      throw new InvalidStationTypeException();
+    }
+  }
+
+  private Station findBusStation(String stationName) {
+    BusFactory fact = new BusFactory();
+    return fact.newStation("").getStations().get(stationName);
+  }
+
+  private Station findSubwayStation(String stationName) {
+    SubwayFactory fact = new SubwayFactory();
+    return fact.newStation("").getStations().get(stationName);
   }
 
   /**

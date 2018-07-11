@@ -17,20 +17,6 @@ public class AdminUser extends User {
     super(name, email);
   }
 
-  /**
-   * @param email The email belong to a particular AdminUser
-   * @return the AdminUser with the given email
-   * @throws UserNotFoundException Thrown if no AdminUser has given email
-   */
-  public static AdminUser findAdminUser(String email) throws UserNotFoundException {
-    User user = findUser(email);
-    if (user instanceof AdminUser) {
-      return (AdminUser) user;
-    } else {
-      throw new UserNotFoundException();
-    }
-  }
-
   /** Requests the production of a daily report to dailyReports.txt */
   void dailyReports() throws IOException {
       String message = calculator.generateReportMessage();

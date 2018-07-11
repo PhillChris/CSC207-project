@@ -7,6 +7,7 @@ import java.util.List;
 public class CardParser extends ObjectParser {
   public CardParser(BufferedWriter writer) {
     super(writer);
+    buildHashMap();
   }
   /**
    * Processes a card's tap request

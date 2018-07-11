@@ -6,6 +6,7 @@ import java.util.List;
 public class UserParser extends ObjectParser {
   public UserParser(BufferedWriter writer) {
     super(writer);
+    buildHashMap();
   }
   /**
    * Generates a user's monthly expenditure profile

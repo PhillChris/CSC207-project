@@ -103,11 +103,13 @@ public class TransitReadWrite {
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
       if (userParser.getKeyWords().get(tempLineWords.get(0)) != null) {
-        userParser.parse(tempLineWords.subList(1, tempLineWords.size()));
-      } else if (userParser.getKeyWords().get(tempLineWords.get(0)) != null) {
-        cardParser.parse(tempLineWords.subList(1, tempLineWords.size()));
+        userParser.parse(tempLineWords);
+      } else if (cardParser.getKeyWords().get(tempLineWords.get(0)) != null) {
+        cardParser.parse(tempLineWords);
       } else {
-        writer.write("Invalid command: This command is not recognized by the transit system");
+        writer.write(
+            "Invalid command: This command is not recognized by the transit system"
+                + System.lineSeparator());
       }
       actionLine = reader.readLine();
     }

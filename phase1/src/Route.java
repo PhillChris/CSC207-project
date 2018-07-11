@@ -34,8 +34,8 @@ public class Route<T extends Station> {
   }
 
   /** @return An arrayList of all RouteNames */
-  public static ArrayList<Route> getRoutes() {
-    return routes;
+  public static ArrayList<Route> getRoutesCopy() {
+    return new ArrayList<>(routes);
   }
 
   /** @return A list of the stations in this route */

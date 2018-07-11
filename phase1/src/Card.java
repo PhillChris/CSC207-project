@@ -40,7 +40,7 @@ public class Card {
   }
 
   /** @return The current Trip this card is on, or null if it is not on a trip */
-  public Trip getCurrentTrip() {
+  Trip getCurrentTrip() {
     return currentTrip;
   }
 
@@ -49,7 +49,7 @@ public class Card {
    *
    * @param trip The new current trip of this card
    */
-  public void setCurrentTrip(Trip trip) {
+  void setCurrentTrip(Trip trip) {
     currentTrip = trip;
   }
 
@@ -77,12 +77,12 @@ public class Card {
    *
    * @param card the suspended Card to be reactivated
    */
-  public void activateCard(Card card) {
+  void activateCard(Card card) {
     isActive = true;
   }
 
   /** Suspends this card, after having been reported stolen */
-  public void suspendCard() {
+  void suspendCard() {
     isActive = false;
   }
 
@@ -91,7 +91,7 @@ public class Card {
    *
    * @param toAdd the amount of money to add to this Card's balance, in cents
    */
-  public void addBalance(int toAdd) {
+  void addBalance(int toAdd) {
     this.balance += toAdd;
   }
 
@@ -100,7 +100,7 @@ public class Card {
    *
    * @param toSubtract the amount of money to subtract to this Card's balance
    */
-  public void subtractBalance(int toSubtract) {
+  void subtractBalance(int toSubtract) {
     this.balance -= toSubtract;
   }
 

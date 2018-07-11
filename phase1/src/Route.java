@@ -33,13 +33,16 @@ public class Route<T extends Station> {
     routes.add(this);
   }
 
-  /** @return An arrayList of all RouteNames */
+  /** @return A copy of the arrayList of all RouteNames */
   public static ArrayList<Route> getRoutesCopy() {
     return new ArrayList<>(routes);
   }
 
-  /** @return A list of the stations in this route */
-  public List<Station> getRouteStations() {
+  /**
+   * @return A copy of the list of the stations in this route (an external class shouldn't access
+   *     the routes directly)
+   */
+  public List<Station> getRouteStationsCopy() {
     List<Station> stationCopy = new ArrayList<>(routeStations);
     return stationCopy;
   }

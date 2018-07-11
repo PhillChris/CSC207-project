@@ -126,33 +126,33 @@ public class Trip {
 
   /** Updates the trip leg length */
   private void updateTripLegLength() {
-    Integer firstStation = null;
-    Integer secondStation = null;
+    Integer firstStationIndex = null;
+    Integer secondStationIndex = null;
     // Loop through all the routes to find the start and end station
     for (Route<Station> route : Route.getRoutesCopy()) {
-      if (firstStation == null && secondStation == null) {
-        for (int i = 0; i < route.getRouteStations().size(); i++) {
-          Station station = route.getRouteStations().get(i);
+      if (firstStationIndex == null && secondStationIndex == null) {
+        for (int i = 0; i < route.getRouteStationsCopy().size(); i++) {
+          Station station = route.getRouteStationsCopy().get(i);
           if (station.equals(priorStops.get(priorStops.size() - 1))) {
-            firstStation = i;
+            firstStationIndex = i;
           }
           if (station.equals(endStation)) {
-            secondStation = i;
+            secondStationIndex = i;
           }
         }
       }
       // If one of the two stations was not found in this route
-      if (firstStation == null || secondStation == null) {
-        firstStation = null;
-        secondStation = null;
+      if (firstStationIndex == null || secondStationIndex == null) {
+        firstStationIndex = null;
+        secondStationIndex = null;
       }
     }
 
     // If no route contains both stations
-    if (firstStation == null && secondStation == null) {
+    if (firstStationIndex == null && secondStationIndex == null) {
       tripLegLength = -1;
     } else {
-      tripLegLength = Math.abs(secondStation - firstStation);
+      tripLegLength = Math.abs(secondStationIndex - firstStationIndex);
     }
   }
 }

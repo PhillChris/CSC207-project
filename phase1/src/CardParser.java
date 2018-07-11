@@ -26,6 +26,7 @@ public class CardParser extends ObjectParser {
       this.checkInput(cardInfo, 1);
       User user = findUser(cardInfo.get(0));
       user.addCard();
+      write("Added card to user " + user);
     } catch (TransitException a) {
       write(a.getMessage());
     }
@@ -42,6 +43,7 @@ public class CardParser extends ObjectParser {
       User user = findUser(cardInfo.get(0));
       Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
       user.removeCard(card);
+      write("Removed card from user " + user);
     } catch (TransitException a) {
       write(a.getMessage());
     }
@@ -57,7 +59,7 @@ public class CardParser extends ObjectParser {
       this.checkInput(cardInfo, 2);
       User user = findUser(cardInfo.get(0));
       Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
-      write(user.getEmail() + "'s " + card.toString());
+      write(user + "'s " + card.toString());
     } catch (TransitException a) {
       write(a.getMessage());
     }
@@ -84,9 +86,9 @@ public class CardParser extends ObjectParser {
       user.tap(card, station, time);
       // if this user has just started a trip
       if (card.getTripStarted()) {
-        write("User " + user.getEmail() + " tapped on at " + station);
+        write("User " + user + " tapped on at " + station);
       } else {
-        write("User " + user.getEmail() + " tapped off at " + station);
+        write("User " + user + " tapped off at " + station);
       }
     } catch (TransitException b) {
       write(b.getMessage());

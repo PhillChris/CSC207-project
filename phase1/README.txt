@@ -240,24 +240,26 @@ Created new subway route
 Created new bus route
 Added user jack
 Added admin user john
-jack@jack.com's Card #1 has $19.00 remaining
+Added card to user jack
+jack's Card #1 has $19.00 remaining
 Theft reported for user jack@jack.com card 1
 This card is suspended, get an admin user to reactivate this card to resume use
 Card reactivated for user jack@jack.com card 1
-User jack@jack.com tapped on at Station A
-User jack@jack.com tapped off at Station B
-jack@jack.com's Card #1 has $18.50 remaining
+User jack tapped on at Station A
+User jack tapped off at Station B
+jack's Card #1 has $18.50 remaining
 Day ended successfully: current day is FEBRUARY 29, 2016
 Added user jill
+Added card to user jill
+Added card to user jill
 Added: $10.00 to jill, Card #2 has $29.00 remaining
-User jill@jill.com tapped on at Station B
-User jill@jill.com tapped off at Station C
-User jill@jill.com tapped on at Station C
-User jill@jill.com tapped off at Station D
-jill@jill.com's Card #2 has $28.00 remaining
-User jill@jill.com tapped on at Station D
+User jill tapped on at Station B
+User jill tapped off at Station C
+User jill tapped on at Station C
+User jill tapped off at Station D
+User jill tapped on at Station D
 Invalid Trip found, max fee charged, jill tapped out at Station B
-jill@jill.com's Card #2 has $23.00 remaining
+jill's Card #2 has $23.00 remaining
 Published daily reports to dailyReports.txt
 Day ended successfully: current day is MARCH 1, 2016
 

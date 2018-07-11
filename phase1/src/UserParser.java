@@ -84,6 +84,7 @@ public class UserParser extends ObjectParser {
       User user = findUser(userInfo.get(0));
       String newName = userInfo.get(1);
       user.changeName(newName);
+      write("Changed user name to " + user);
     } catch (TransitException a) {
       write(a.getMessage());
     }

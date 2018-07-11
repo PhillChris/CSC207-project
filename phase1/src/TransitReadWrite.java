@@ -11,8 +11,6 @@ import java.util.function.Function;
 public class TransitReadWrite {
   /** The token which separates parameters in the events.txt file */
   private static final String SPLIT_SYMBOL = "\\s\\|\\s";
-  /** Stores the commands which can be execute from events.txt */
-  private static HashMap<String, Function<List<String>, Void>> keyWords = new HashMap<>();
   /** The writer which writes to output.txt */
   private static BufferedWriter writer;
   /** Handles operations to be executed on users */
@@ -41,8 +39,6 @@ public class TransitReadWrite {
    */
   public static void init(BufferedReader reader, BufferedWriter writer)
       throws IOException, InitLineException {
-
-    TransitReadWrite.buildHashMap();
     TransitReadWrite.writer = writer;
 
     userParser = new UserParser(writer);
@@ -114,102 +110,5 @@ public class TransitReadWrite {
       actionLine = reader.readLine();
     }
     writer.close();
-  }
-
-  /**
-   * A helper method which constructs the keyWords hash map, mapping to the executable functions in
-   * the transit system simulation
-   */
-  private static void buildHashMap() {
-    TransitReadWrite.keyWords.put(
-        "TAP",
-        (cardInfo) -> {
-          cardParser.tap(cardInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "ADDUSER",
-        (userInfo) -> {
-          userParser.add(userInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "ADDCARD",
-        (cardInfo) -> {
-          cardParser.add(cardInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "REMOVECARD",
-        (cardInfo) -> {
-          cardParser.remove(cardInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "REPORTTHEFT",
-        (userInfo) -> {
-          cardParser.reportTheft(userInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "ADDFUNDS",
-        (userInfo) -> {
-          cardParser.addFunds(userInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "ENDDAY",
-        (emptyList) -> {
-          TransitTime.endDay(emptyList);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "MONTHLYEXPENDITURE",
-        (userInfo) -> {
-          userParser.monthlyExpenditure(userInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "CHECKBALANCE",
-        (cardInfo) -> {
-          cardParser.report(cardInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "CHANGENAME",
-        (userInfo) -> {
-          userParser.changeName(userInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "ACTIVATECARD",
-        (cardInfo) -> {
-          cardParser.activate(cardInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "DAILYREPORTS",
-        (userInfo) -> {
-          userParser.dailyReports(userInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "GETLASTTHREE",
-        (userInfo) -> {
-          userParser.getLastThree(userInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "USERREPORT",
-        (userInfo) -> {
-          userParser.report(userInfo);
-          return null;
-        });
-    TransitReadWrite.keyWords.put(
-        "REMOVEUSER",
-        (userInfo) -> {
-          userParser.remove(userInfo);
-          return null;
-        });
   }
 }

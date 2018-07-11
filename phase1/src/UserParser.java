@@ -6,7 +6,7 @@ import java.util.List;
 public class UserParser extends ObjectParser {
   public UserParser(BufferedWriter writer) {
     super(writer);
-    buildHashMap();
+    buildUserHashMap();
   }
   /**
    * Generates a user's monthly expenditure profile
@@ -139,7 +139,7 @@ public class UserParser extends ObjectParser {
     }
   }
 
-  private void buildHashMap() {
+  private void buildUserHashMap() {
     keyWords.put(
         "ADDUSER",
         (userInfo) -> {

@@ -7,7 +7,7 @@ import java.util.List;
 public class CardParser extends ObjectParser {
   public CardParser(BufferedWriter writer) {
     super(writer);
-    buildHashMap();
+    buildCardHashMap();
   }
   /**
    * Processes a card's tap request
@@ -154,7 +154,7 @@ public class CardParser extends ObjectParser {
     }
   }
 
-  private void buildHashMap() {
+  private void buildCardHashMap() {
     keyWords.put(
         "TAP",
         (cardInfo) -> {

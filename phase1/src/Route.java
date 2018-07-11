@@ -28,7 +28,7 @@ public class Route<T extends Station> {
       else {
         station = station.getStations().get(s);
       }
-      getRouteStations().add(station);
+      routeStations.add(station);
     }
     routes.add(this);
   }

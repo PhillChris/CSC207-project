@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class SubwayStation extends Station {
+class SubwayStation extends Station {
   /** HashMap linking SubwayStation names to SubwayStations */
   private static HashMap<String, Station> subwayStations = new HashMap<>();
   /** The fee charged at the start of a trip by this station */
@@ -13,7 +13,7 @@ public class SubwayStation extends Station {
    *
    * @param name the name of this SubwayStation
    */
-  public SubwayStation(String name) {
+  SubwayStation(String name) {
     super(name);
     this.setInitialFee(SUBWAY_INITIAL_FEE);
     this.setPerStationFee(SUBWAY_PERSTATION_FEE);

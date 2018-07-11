@@ -10,7 +10,7 @@ public class UserParser extends ObjectParser {
    *
    * @param writer The file writer being used to write the results of this program to output.txt
    */
-  public UserParser(BufferedWriter writer) {
+  UserParser(BufferedWriter writer) {
     super(writer);
     buildUserHashMap();
   }

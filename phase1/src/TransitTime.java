@@ -3,13 +3,14 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
+/** A class keeping track of universal time in the transit system */
 public class TransitTime {
 
   /** The current time of the transit system */
-  static LocalDateTime currentTime;
+  private static LocalDateTime currentTime;
 
   /** The parser currently in use for this transit system */
-  static ObjectParser currentParser;
+  private static ObjectParser currentParser;
 
   /**
    * Initializes the date in the transit system. Sets system time to midnight of the first date by
@@ -80,7 +81,7 @@ public class TransitTime {
   }
 
   /** @return The current date in the transit system */
-  public static LocalDate getCurrentDate() {
+  static LocalDate getCurrentDate() {
     return currentTime.toLocalDate();
   }
 }

@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Objects;
 
+/** A parent class for stations in this simulation */
 public abstract class Station {
   private HashMap<String, Station> stations = new HashMap<>();
   /** The fee charged per station travelled by this station */

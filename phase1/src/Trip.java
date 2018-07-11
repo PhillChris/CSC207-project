@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /** Represents an object of Trip */
 public class Trip {
   /** The maximum duration between the start of two continuous trips */
-  static final Duration MAXTRIPLENGTH = Duration.ofMinutes(120);
+  private static final Duration MAX_TRIP_LENGTH = Duration.ofMinutes(120);
   /** The time started by this trip */
   private LocalDateTime timeStarted;
   /** The time ended by this trip */
@@ -45,7 +45,7 @@ public class Trip {
   /**
    * @return The length of the current leg of this trip
    */
-  public int getTripLegLength() {
+  int getTripLegLength() {
     return tripLegLength;
   }
 
@@ -77,7 +77,7 @@ public class Trip {
    *
    * @return true if this is a valid trip
    */
-  public boolean isValidTrip() {
+  boolean isValidTrip() {
     return (timeEnded != null && endStation != null && tripLegLength != -1);
   }
   /**
@@ -87,9 +87,9 @@ public class Trip {
    * @param time time for the start of the continuation
    * @return true if continuous trip, false otherwise
    */
-  public boolean isContinuousTrip(Station newStation, LocalDateTime time) {
+  boolean isContinuousTrip(Station newStation, LocalDateTime time) {
     boolean withinTimeLimit =
-        Duration.between(timeStarted, time).toMinutes() <= (MAXTRIPLENGTH.toMinutes());
+        Duration.between(timeStarted, time).toMinutes() <= (MAX_TRIP_LENGTH.toMinutes());
     return (this.endStation.isAssociatedStation(newStation) && withinTimeLimit);
   }
 
@@ -114,7 +114,7 @@ public class Trip {
    *
    * @return the per-station fare for this ride
    */
-  public int updateFinalFee() {
+  private int updateFinalFee() {
     // If no route contains both stations
     if (tripLegLength == -1) {
       tripFee = this.maxFee;
@@ -124,7 +124,7 @@ public class Trip {
     }
   }
 
-  /** Updates the trip leg length */
+  /** A helper which updates the trip leg length */
   private void updateTripLegLength() {
     Integer firstStationIndex = null;
     Integer secondStationIndex = null;

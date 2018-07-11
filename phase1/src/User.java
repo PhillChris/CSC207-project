@@ -26,7 +26,6 @@ public class User {
 
   /**
    * Construct a new instance of User
-   *
    * @param name the name of this User
    * @param email the email of this User
    */
@@ -53,23 +52,23 @@ public class User {
   }
 
   /** Removes this user from the system. */
-  public void removeUser() {
+  void removeUser() {
     allUsers.remove(this.email);
   }
 
   /** @return This User's email */
-  public String getEmail() {
+  String getEmail() {
     return this.email;
   }
 
   /** @return A copy of the cards this user holds*/
-  public List<Card> getCardsCopy() {
+  List<Card> getCardsCopy() {
     List<Card> copy = new ArrayList<>(this.cards);
     return copy;
   }
 
   /** @return A String detailing average expenditure per month of this User. */
-  public String getAvgMonthly() {
+  String getAvgMonthly() {
     String message = "Cost per month for user: " + this.name + System.lineSeparator();
     List<YearMonth> months = new ArrayList<>(this.ExpenditureMonthly.keySet());
     int total = 0;
@@ -89,7 +88,7 @@ public class User {
    *
    * @return up to the last three trips taken by this User.
    */
-  public List<Trip> getLastThreeCopy() {
+  List<Trip> getLastThreeCopy() {
     List<Trip> copy = new ArrayList<>(lastThreeTrips);
     return copy;
   }
@@ -99,12 +98,12 @@ public class User {
    *
    * @param newName the new name of this User.
    */
-  public void changeName(String newName) {
+  void changeName(String newName) {
     this.name = newName;
   }
 
   /** Add a card to this User's list of cards. */
-  public void addCard() {
+  void addCard() {
     this.cards.add(new Card(cardCounter++));
   }
 
@@ -113,7 +112,7 @@ public class User {
    *
    * @param card the card to be removed from this Users collection of cards.
    */
-  public void removeCard(Card card) {
+  void removeCard(Card card) {
     if (this.cards.contains(card)) {
       this.cards.remove(card);
     }
@@ -134,7 +133,7 @@ public class User {
    * @throws CardSuspendedException Thrown if the given card is suspended
    * @throws InvalidTripException Thrown if the final trip made by the user is invalid
    */
-  public void tap(Card card, Station station, LocalDateTime timeTapped)
+  void tap(Card card, Station station, LocalDateTime timeTapped)
       throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
 
     if (card.isSuspended()) {

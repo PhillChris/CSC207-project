@@ -23,10 +23,10 @@ public class TransitReader {
   /**
    * Constructs a new instance of a TransitReader
    *
-   * @param reader
-   * @param writer
+   * @param reader The file reader to be used throughout the simulation (from events.txt)
+   * @param writer The file writer to be used throughout the simulation (to output.txt)
    */
-  public TransitReader(BufferedReader reader, BufferedWriter writer) {
+  TransitReader(BufferedReader reader, BufferedWriter writer) {
     this.reader = reader;
     this.writer = writer;
   }
@@ -34,10 +34,10 @@ public class TransitReader {
   /**
    * Initializes the program (i.e. constructs routes) with initialization data from events.txt
    *
-   * @throws IOException
-   * @throws InitLineException
+   * @throws IOException if either events.txt or output.txt can't be found
+   * @throws InitLineException if the formatting of the initial line of events.txt is incorrect
    */
-  public void init()
+  void init()
       throws IOException, InitLineException {
     userParser = new UserParser(writer);
     cardParser = new CardParser(writer);
@@ -86,9 +86,9 @@ public class TransitReader {
   /**
    * Runs the program (i.e. executes user commands) through commands provided in events.txt
    *
-   * @throws IOException
+   * @throws IOException if either events.txt or output.txt can't be found
    */
-  public void run() throws IOException {
+  void run() throws IOException {
     String actionLine = reader.readLine().trim();
     // While there are still non-empty lines in events.txt
     while (actionLine != System.lineSeparator() && actionLine != null) {

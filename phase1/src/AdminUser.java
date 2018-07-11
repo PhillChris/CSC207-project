@@ -1,9 +1,8 @@
-import java.io.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 /** Represents an AdminUser in a transit system. */
 public class AdminUser extends User {
 
@@ -19,14 +18,13 @@ public class AdminUser extends User {
 
   /** Requests the production of a daily report to dailyReports.txt */
   void dailyReports() throws IOException {
-      String message = calculator.generateReportMessage();
-      Writer writer =
-              new BufferedWriter(
-                      new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"));
-      writer.write("Date         Revenue   Stations Travelled");
-      writer.write(System.lineSeparator());
-      writer.write(message);
-      writer.close();
-
+    String message = calculator.generateReportMessage();
+    Writer writer =
+        new BufferedWriter(
+            new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"));
+    writer.write("Date         Revenue   Stations Travelled");
+    writer.write(System.lineSeparator());
+    writer.write(message);
+    writer.close();
   }
 }

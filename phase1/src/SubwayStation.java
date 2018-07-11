@@ -17,7 +17,6 @@ public class SubwayStation extends Station {
     super(name);
     this.setInitialFee(SUBWAY_INITIAL_FEE);
     this.setPerStationFee(SUBWAY_PERSTATION_FEE);
-    subwayStations.put(name, this);
     setStations(subwayStations);
   }
 }

@@ -30,7 +30,7 @@ public abstract class ObjectParser {
    * @param expected the expected number of inputs to a given function
    * @throws InvalidInputException
    */
-  static void checkInput(List<String> input, int expected) throws InvalidInputException {
+  void checkInput(List<String> input, int expected) throws InvalidInputException {
     if (input.size() != expected) {
       throw new InvalidInputException();
     }

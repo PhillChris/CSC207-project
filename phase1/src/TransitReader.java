@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
-/** A class to handle all text file handling in the transit system simulation */
+/** A reader for the transit system, making parse requests using events.txt commands */
 public class TransitReader {
   /** The token which separates parameters in the events.txt file */
   private static final String SPLIT_SYMBOL = "\\s\\|\\s";
@@ -20,6 +20,12 @@ public class TransitReader {
   /** Handles operations to be executed on cards */
   private CardParser cardParser;
 
+  /**
+   * Constructs a new instance of a TransitReader
+   *
+   * @param reader
+   * @param writer
+   */
   public TransitReader(BufferedReader reader, BufferedWriter writer) {
     this.reader = reader;
     this.writer = writer;
@@ -63,8 +69,9 @@ public class TransitReader {
     StationFactory busFact = new BusFactory(); // used to construct bus stations
     for (int i = 0; i < numRoutes; i++) {
       String tempLine = reader.readLine().trim();
+      // separates a given line into route type and station names
       ArrayList<String> tempLineWords =
-          new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL)));
+          new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL))); //
       List<String> stationNames = tempLineWords.subList(1, tempLineWords.size());
       if (tempLineWords.get(0).equals("SUBWAY")) {
         Route newRoute = new Route(stationNames, subFact);
@@ -77,8 +84,6 @@ public class TransitReader {
   }
 
   /**
-   * Iterate through remaining action lines and execute the corresponding
-   * commands in events.txt, after initializing routes
    * Runs the program (i.e. executes user commands) through commands provided in events.txt
    *
    * @throws IOException
@@ -87,16 +92,17 @@ public class TransitReader {
     String actionLine = reader.readLine().trim();
     // While there are still non-empty lines in events.txt
     while (actionLine != System.lineSeparator() && actionLine != null) {
+      // separates a given line into command name and parameters
       ArrayList<String> tempLineWords =
           new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
-      // if the given command is a command in the user hashmap
       if (userParser.getKeyWords().get(tempLineWords.get(0)) != null) {
+        // if the given command is a command in the user hashmap
         userParser.parse(tempLineWords);
-        // if the the given command is a command in the card hashmap
       } else if (cardParser.getKeyWords().get(tempLineWords.get(0)) != null) {
+        // if the the given command is a command in the card hashmap
         cardParser.parse(tempLineWords);
-        // if the given command is not a recognized command in either hashmap
       } else {
+        // if the given command is not a recognized command in either hashmap
         writer.write(
             "Invalid command: This command is not recognized by the transit system"
                 + System.lineSeparator());

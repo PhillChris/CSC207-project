@@ -19,7 +19,6 @@ public class BusStation extends Station {
     super(name);
     this.setInitialFee(BUS_INITIAL_FEE);
     this.setPerStationFee(BUS_PERSTATION_FEE);
-    busStations.put(name, this);
     setStations(busStations);
   }
 }

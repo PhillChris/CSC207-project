@@ -21,11 +21,53 @@ public abstract class Station {
   }
 
   @Override
+  /**
+   * @return whether or not these two stations are logically equivalent
+   */
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Station station = (Station) o;
     return Objects.equals(name, station.name);
+  }
+
+  /** @return the name of this station */
+  public String getName() {
+    return this.name;
+  }
+
+  /** @return the fare charged by this station at the start of a new trip portion */
+  public int getInitialFee() {
+    return this.initialFee;
+  }
+
+  /** @param initialFee the fare charged by this station at the start of a new trip portion */
+  public void setInitialFee(int initialFee) {
+    this.initialFee = initialFee;
+  }
+
+  /** @return the fare charged by this station when a user travels by it */
+  public int getPerStationFee() {
+    return perStationFee;
+  }
+
+  /** @param perStationFee the fare charged by this station when a user travels by it */
+  public void setPerStationFee(int perStationFee) {
+    this.perStationFee = perStationFee;
+  }
+
+  /** @return HashMap of all stations of similar type */
+  public HashMap<String, Station> getStationsCopy() {
+    HashMap<String, Station> copy = new HashMap<>();
+    for (String key: stations.keySet()) {
+      copy.put(key, stations.get(key));
+    }
+    return copy;
+  }
+
+  /** @param stations the hashmap to set the stations of station to */
+  public void setStations(HashMap<String, Station> stations) {
+    this.stations = stations;
   }
 
   /**
@@ -37,40 +79,9 @@ public abstract class Station {
     stations.put(newStation.name, newStation);
   }
 
-  public int getPerStationFee() {
-    return perStationFee;
-  }
-
-  public void setPerStationFee(int perStationFee) {
-    this.perStationFee = perStationFee;
-  }
-
-  /** @return the name of this station */
-  public String getName() {
-    return this.name;
-  }
-
-  /** @return the fare charged by this station at the start of a new trip */
-  public int getInitialFee() {
-    return this.initialFee;
-  }
-
-  public void setInitialFee(int initialFee) {
-    this.initialFee = initialFee;
-  }
-
   /** @return whether the two intersect (have common name) */
   public boolean isAssociatedStation(Station otherStation) {
     return this.name.equals(otherStation.getName());
-  }
-
-  /** @return HashMap of all stations of similar type */
-  public HashMap<String, Station> getStations() {
-    return stations;
-  }
-
-  public void setStations(HashMap<String, Station> stations) {
-    this.stations = stations;
   }
 
   /** @return A string representation of a station */

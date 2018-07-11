@@ -200,3 +200,63 @@ Date       Revenue
 ----
 SAMPLE PROGRAM EXECUTION
 
+Here is a sample events.txt file and its resulting output.txt and dailyReports.txt
+
+events.txt:
+SUBWAY | Station B | Station C | D | E | F | G | N | K | L
+SUBWAY | Station C | Station D
+BUS | Station B | Bus E | Bus F | Bus G | Bus N | L
+ADDUSER | no | jack | jack@jack.com
+ADDUSER | yes | john | john@john.com
+ADDCARD | jack@jack.com
+CHECKBALANCE | jack@jack.com | 1
+REPORTTHEFT | jack@jack.com | 1
+TAP | 3:58 | jack@jack.com | 1 | SUBWAY | Station A
+ACTIVATECARD | jack@jack.com | 1
+TAP | 3:58 | jack@jack.com | 1 | SUBWAY | Station A
+TAP | 4:00 | jack@jack.com | 1 | SUBWAY | Station B
+CHECKBALANCE | jack@jack.com | 1
+ENDDAY
+ADDUSER | no | jill | jill@jill.com
+ADDCARD | jill@jill.com
+ADDCARD | jill@jill.com
+ADDFUNDS | jill@jill.com | 2 | 10
+TAP | 2:00 | jill@jill.com | 2 | SUBWAY | Station B
+TAP | 3:00 | jill@jill.com | 2 | SUBWAY | Station C
+TAP | 3:01 | jill@jill.com | 2 | SUBWAY | Station C
+TAP | 3:30 | jill@jill.com | 2 | SUBWAY | Station D
+CHECKBALANCE | jill@jill.com | 2
+DAILYREPORTS | john@john.com
+ENDDAY
+
+output.txt:
+Created new subway route
+Created new subway route
+Created new bus route
+Added user jack
+Added admin user john
+jack@jack.com's Card #1 has $19.00 remaining
+Theft reported for user jack@jack.com card 1
+This card is suspended, get an admin user to reactivate this card to resume use
+Card reactivated for user jack@jack.com card 1
+User jack@jack.com tapped on at Station A
+User jack@jack.com tapped off at Station B
+jack@jack.com's Card #1 has $18.50 remaining
+Day ended successfully: current day is FEBRUARY 29, 2016
+Added user jill
+Added: $10.00 to jill, Card #2 has $29.00 remaining
+User jill@jill.com tapped on at Station B
+User jill@jill.com tapped off at Station C
+User jill@jill.com tapped on at Station C
+User jill@jill.com tapped off at Station D
+jill@jill.com's Card #2 has $28.00 remaining
+Published daily reports to dailyReports.txt
+Day ended successfully: current day is MARCH 1, 2016
+
+dailyReports.txt:
+Date         Revenue   Stations Travelled
+
+2016-02-29   $1.00      2
+2016-02-28   $0.50      1
+
+

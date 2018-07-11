@@ -1,7 +1,7 @@
 /** Represents a travel card in a transit system */
 public class Card {
   /** The starting balance for all cards, in cents */
-  public static final int CARD_INITIAL_BALANCE = 1900;
+  private static final int CARD_INITIAL_BALANCE = 1900;
   /** Stores whether or not this card can be used (i.e. reported stolen) */
   private boolean isActive;
   /** The current trip this card is on, being null when no active trip */

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/** A class for making money calculations and generating daily reports. */
 public class CostCalculator {
 
   /** Contains the expenditure per each day */
@@ -27,6 +28,7 @@ public class CostCalculator {
     }
   }
 
+  /** @return The daily report table for all days passed during this simulation. */
   String generateReportMessage() {
     // Loop through all days and write each day's revenue
     // The revenue collected for each day

@@ -67,7 +67,6 @@ public class CardParser extends ObjectParser {
    * Processes a card's tap request.
    *
    * @param cardInfo Information given for the card from TransitReader.run
-   * @throws IOException
    */
   public void tap(List<String> cardInfo) {
     try {

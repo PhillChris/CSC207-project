@@ -28,7 +28,7 @@ public abstract class ObjectParser {
    *
    * @param input the list of parameters to be passed to a given function
    * @param expected the expected number of inputs to a given function
-   * @throws InvalidInputException
+   * @throws InvalidInputException Thrown if invalid number of parameters in system command
    */
   void checkInput(List<String> input, int expected) throws InvalidInputException {
     if (input.size() != expected) {
@@ -141,21 +141,39 @@ public abstract class ObjectParser {
     throw new CardNotFoundException();
   }
 
+  /**
+   * Finds a specific station in this transit system
+   * @param stationType the type of the station to be found
+   * @param stationName the name of the station to be found
+   * @return the station to be found
+   * @throws InvalidStationTypeException Thrown if station type does not exist
+   */
   Station findStation(String stationType, String stationName) throws InvalidStationTypeException {
-    if (stationType.equals("BUS")) {
-      return findBusStation(stationName);
-    } else if (stationType.equals("SUBWAY")) {
-      return findSubwayStation(stationName);
-    } else {
-      throw new InvalidStationTypeException();
+    switch (stationType) {
+      case "BUS":
+        return findBusStation(stationName);
+      case "SUBWAY":
+        return findSubwayStation(stationName);
+      default:
+        throw new InvalidStationTypeException();
     }
   }
 
+  /**
+   * Finds a specific bus station in this transit system.
+   * @param stationName the name of the bus station to be found
+   * @return the bus station to be found
+   */
   private Station findBusStation(String stationName) {
     BusFactory fact = new BusFactory();
     return fact.newStation("").getStationsCopy().get(stationName);
   }
 
+  /**
+   * Finds a specific subway station in this transit system.
+   * @param stationName the name of this subway station to be found
+   * @return the subway station to be found
+   */
   private Station findSubwayStation(String stationName) {
     SubwayFactory fact = new SubwayFactory();
     return fact.newStation("").getStationsCopy().get(stationName);
@@ -166,7 +184,7 @@ public abstract class ObjectParser {
    * of parser in the transit system.
    */
   private void makeCommonHashMap() {
-    this.keyWords.put(
+    keyWords.put(
         "ENDDAY",
         (emptyArray) -> {
           TransitTime.endDay(emptyArray);

@@ -5,12 +5,66 @@ import java.util.List;
 
 /** Parses all methods pertaining to cards in the transit system */
 public class CardParser extends ObjectParser {
+
+  /**
+   * Constructs a new instance of CardParser.
+   *
+   * @param writer The file writer being used to write the results of this program to output.txt
+   */
   public CardParser(BufferedWriter writer) {
     super(writer);
     buildCardHashMap();
   }
+
   /**
-   * Processes a card's tap request
+   * Processes an add card request.
+   *
+   * @param cardInfo Information given for the card from TransitReader.read
+   */
+  public void add(List<String> cardInfo) {
+    try {
+      this.checkInput(cardInfo, 1);
+      User user = User.findUser(cardInfo.get(0));
+      user.addCard();
+    } catch (TransitException a) {
+      write(a.getMessage());
+    }
+  }
+
+  /**
+   * Processes a remove card request.
+   *
+   * @param cardInfo Information given for the card from TransitReader.read
+   */
+  public void remove(List<String> cardInfo) {
+    try {
+      this.checkInput(cardInfo, 2);
+      User user = User.findUser(cardInfo.get(0));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
+      user.removeCard(card);
+    } catch (TransitException a) {
+      write(a.getMessage());
+    }
+  }
+
+  /**
+   * Creates a balance report for a given card.
+   *
+   * @param cardInfo Information given for the card from TransitReader.read
+   */
+  public void report(List<String> cardInfo) {
+    try {
+      this.checkInput(cardInfo, 2);
+      User user = User.findUser(cardInfo.get(0));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
+      write(user.getEmail() + "'s " + card.toString());
+    } catch (TransitException a) {
+      write(a.getMessage());
+    }
+  }
+
+  /**
+   * Processes a card's tap request.
    *
    * @param cardInfo Information given for the card from TransitReader.read
    * @throws IOException
@@ -55,38 +109,7 @@ public class CardParser extends ObjectParser {
   }
 
   /**
-   * Processes an add card request
-   *
-   * @param cardInfo Information given for the card from TransitReader.read
-   */
-  public void add(List<String> cardInfo) {
-    try {
-      this.checkInput(cardInfo, 1);
-      User user = User.findUser(cardInfo.get(0));
-      user.addCard();
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
-  }
-
-  /**
-   * Processes a remove card request
-   *
-   * @param cardInfo Information given for the card from TransitReader.read
-   */
-  public void remove(List<String> cardInfo) {
-    try {
-      this.checkInput(cardInfo, 2);
-      User user = User.findUser(cardInfo.get(0));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
-      user.removeCard(card);
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
-  }
-
-  /**
-   * Process a theft report for a given card
+   * Process a theft report for a given card.
    *
    * @param cardInfo Information given for the card from TransitReader.read
    */
@@ -104,39 +127,7 @@ public class CardParser extends ObjectParser {
   }
 
   /**
-   * Processes an add funds request for a given card
-   *
-   * @param cardInfo Information given for the card from TransitReader.read
-   */
-  public void addFunds(List<String> cardInfo) {
-    try {
-      this.checkInput(cardInfo, 3);
-      User user = User.findUser(cardInfo.get(0));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
-      card.addBalance(Integer.parseInt(cardInfo.get(2)) * 100);
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
-  }
-
-  /**
-   * Creates a balance report for a given card
-   *
-   * @param cardInfo Information given for the card from TransitReader.read
-   */
-  public void report(List<String> cardInfo) {
-    try {
-      this.checkInput(cardInfo, 2);
-      User user = User.findUser(cardInfo.get(0));
-      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
-      write(user.getEmail() + "'s " + card.toString());
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
-  }
-
-  /**
-   * Processes a card activation request
+   * Processes a card activation request.
    *
    * @param cardInfo Information given for the card from TransitReader.read
    */
@@ -154,13 +145,24 @@ public class CardParser extends ObjectParser {
     }
   }
 
+  /**
+   * Processes an add funds request for a given card.
+   *
+   * @param cardInfo Information given for the card from TransitReader.read
+   */
+  public void addFunds(List<String> cardInfo) {
+    try {
+      this.checkInput(cardInfo, 3);
+      User user = User.findUser(cardInfo.get(0));
+      Card card = user.getCard(Integer.parseInt(cardInfo.get(1)));
+      card.addBalance(Integer.parseInt(cardInfo.get(2)) * 100);
+    } catch (TransitException a) {
+      write(a.getMessage());
+    }
+  }
+
+  /** A helper methods to add card-specific methods to the user command hash map */
   private void buildCardHashMap() {
-    keyWords.put(
-        "TAP",
-        (cardInfo) -> {
-          this.tap(cardInfo);
-          return null;
-        });
     keyWords.put(
         "ADDCARD",
         (cardInfo) -> {
@@ -174,27 +176,33 @@ public class CardParser extends ObjectParser {
           return null;
         });
     keyWords.put(
-        "REPORTTHEFT",
-        (userInfo) -> {
-          this.reportTheft(userInfo);
-          return null;
-        });
-    keyWords.put(
-        "ADDFUNDS",
-        (userInfo) -> {
-          this.addFunds(userInfo);
-          return null;
-        });
-    keyWords.put(
         "CHECKBALANCE",
         (cardInfo) -> {
           this.report(cardInfo);
           return null;
         });
     keyWords.put(
+        "TAP",
+        (cardInfo) -> {
+          this.tap(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "REPORTTHEFT",
+        (userInfo) -> {
+          this.reportTheft(userInfo);
+          return null;
+        });
+    keyWords.put(
         "ACTIVATECARD",
         (cardInfo) -> {
           this.activate(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "ADDFUNDS",
+        (userInfo) -> {
+          this.addFunds(userInfo);
           return null;
         });
   }

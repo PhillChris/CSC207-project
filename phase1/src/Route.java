@@ -22,7 +22,7 @@ public class Route<T extends Station> {
       station = fact.newStation(s);
       // Create a new station if a station of the same name and type does not exist
       if (!station.getStations().containsKey(s)) {
-        Station.addStation(station);
+        station.addStation(station);
       }
       // station of the same type and same name already exists
       else {

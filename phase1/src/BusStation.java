@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Objects;
 
 public class BusStation extends Station {
   /** Maps the names of all BusStation to their corresponding BusStation object */
@@ -17,32 +18,7 @@ public class BusStation extends Station {
     super(name);
     this.setInitialFee(BUS_INITIAL_FEE);
     this.setPerStationFee(BUS_PERSTATION_FEE);
-  }
-
-  /**
-   * Helper method to Station.addStation which adds a created BusStation to BusStation records
-   *
-   * @param station The station to be added
-   */
-  public static void newBusStation(Station station) {
-    busStations.put(station.getName(), station);
-  }
-
-  /**
-   * Get all the BusStations from a static context
-   *
-   * @return The HashMap of BusStations
-   */
-  public static HashMap<String, Station> getBusStations() {
-    return busStations;
-  }
-
-  /**
-   * Get all the BusStations from a non static context
-   *
-   * @return The HashMap of BusStations
-   */
-  public HashMap<String, Station> getStations() {
-    return busStations;
+    busStations.put(name, this);
+    setStations(busStations);
   }
 }

@@ -17,32 +17,7 @@ public class SubwayStation extends Station {
     super(name);
     this.setInitialFee(SUBWAY_INITIAL_FEE);
     this.setPerStationFee(SUBWAY_PERSTATION_FEE);
-  }
-
-  /**
-   * Adds a new station to the HashMap of subwayStations
-   *
-   * @param station The station to be added
-   */
-  public static void newSubwayStation(Station station) {
-    subwayStations.put(station.getName(), station);
-  }
-
-  /**
-   * Gets HashMap of all SubwayStations from a static context
-   *
-   * @return HashMap linking SubwayStation names to SubwayStations
-   */
-  public static HashMap<String, Station> getSubwayStations() {
-    return subwayStations;
-  }
-
-  /**
-   * Gets HashMap of all SubwayStations from a static context
-   *
-   * @return HashMap linking SubwayStation names to SubwayStations
-   */
-  public HashMap<String, Station> getStations() {
-    return subwayStations;
+    subwayStations.put(name, this);
+    setStations(subwayStations);
   }
 }

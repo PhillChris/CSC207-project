@@ -1,5 +1,6 @@
 import java.util.HashMap;
 
+/** Represents a bus station in this transit system */
 public class BusStation extends Station {
   /** Maps the names of all BusStation to their corresponding BusStation object */
   public static HashMap<String, Station> busStations = new HashMap<>();

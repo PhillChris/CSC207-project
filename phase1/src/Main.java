@@ -1,7 +1,6 @@
 import java.io.*;
 
 public class Main {
-
   /**
    * Runs the transit system simulation, with event input from events.txt
    *

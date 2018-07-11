@@ -25,17 +25,17 @@ public class Card {
   }
 
   /** @return true if this card is not active */
-  public boolean isSuspended() {
+  boolean isSuspended() {
     return !isActive;
   }
 
   /** @return The ID of this card */
-  public int getId() {
+  int getId() {
     return this.id;
   }
 
   /** @return The balance of this card, in cents */
-  public int getBalance() {
+  int getBalance() {
     return this.balance;
   }
 
@@ -68,7 +68,7 @@ public class Card {
   }
 
   /** @return whether this card is currently on a trip */
-  public boolean getTripStarted() {
+  boolean getTripStarted() {
     return currentTrip != null;
   }
 

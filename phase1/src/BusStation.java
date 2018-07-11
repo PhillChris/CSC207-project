@@ -15,7 +15,7 @@ public class BusStation extends Station {
    *
    * @param name the name of this BusStation
    */
-  public BusStation(String name) {
+  BusStation(String name) {
     super(name);
     this.setInitialFee(BUS_INITIAL_FEE);
     this.setPerStationFee(BUS_PERSTATION_FEE);

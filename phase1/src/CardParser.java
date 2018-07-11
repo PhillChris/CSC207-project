@@ -21,7 +21,7 @@ public class CardParser extends ObjectParser {
    *
    * @param cardInfo Information given for the card from TransitReader.run
    */
-  public void add(List<String> cardInfo) {
+  void add(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 1);
       User user = findUser(cardInfo.get(0));
@@ -37,7 +37,7 @@ public class CardParser extends ObjectParser {
    *
    * @param cardInfo Information given for the card from TransitReader.run
    */
-  public void remove(List<String> cardInfo) {
+  void remove(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 2);
       User user = findUser(cardInfo.get(0));
@@ -54,7 +54,7 @@ public class CardParser extends ObjectParser {
    *
    * @param cardInfo Information given for the card from TransitReader.run
    */
-  public void report(List<String> cardInfo) {
+  void report(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 2);
       User user = findUser(cardInfo.get(0));
@@ -70,7 +70,7 @@ public class CardParser extends ObjectParser {
    *
    * @param cardInfo Information given for the card from TransitReader.run
    */
-  public void tap(List<String> cardInfo) {
+  void tap(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 5);
       // Find the time, user, card and station from the given information
@@ -100,7 +100,7 @@ public class CardParser extends ObjectParser {
    *
    * @param cardInfo Information given for the card from TransitReader.run
    */
-  public void reportTheft(List<String> cardInfo) {
+  void reportTheft(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 2);
       User user = findUser(cardInfo.get(0)); // passing user email
@@ -118,7 +118,7 @@ public class CardParser extends ObjectParser {
    *
    * @param cardInfo Information given for the card from TransitReader.run
    */
-  public void activate(List<String> cardInfo) {
+  void activate(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 2);
       User user = findUser(cardInfo.get(0));
@@ -137,7 +137,7 @@ public class CardParser extends ObjectParser {
    *
    * @param cardInfo Information given for the card from TransitReader.run
    */
-  public void addFunds(List<String> cardInfo) {
+  void addFunds(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 3);
       Integer amountAdd = Integer.parseInt(cardInfo.get(2)) * 100;

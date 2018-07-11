@@ -18,7 +18,7 @@ public abstract class Station {
    *
    * @param name The name of this station
    */
-  public Station(String name) {
+  Station(String name) {
     this.name = name;
   }
 

@@ -42,20 +42,4 @@ public class Route<T extends Station> {
   public List<Station> getRouteStations() {
     return routeStations;
   }
-
-  /**
-   * Find a station in this route with given ID
-   *
-   * @param stationID the station ID to be searched for
-   * @return The station with the given stationID
-   */
-  public Station findStation(int stationID) {
-    for (Station station : getRouteStations()) {
-      if (station.stationID == stationID) {
-        return station;
-      }
-    }
-    return null;
-  }
-
 }

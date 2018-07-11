@@ -2,12 +2,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public abstract class Station {
-  /** Total number of stations in the transit system */
-  private static int totalStations;
-
   private HashMap<String, Station> stations = new HashMap<>();
-  /** The unique ID of this station */
-  final int stationID;
   /** The fee charged per station travelled by this station */
   private int perStationFee;
   /**
@@ -23,8 +18,6 @@ public abstract class Station {
    */
   public Station(String name) {
     this.name = name;
-    stationID = totalStations;
-    totalStations++;
   }
 
   @Override

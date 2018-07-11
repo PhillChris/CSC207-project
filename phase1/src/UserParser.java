@@ -60,12 +60,10 @@ public class UserParser extends ObjectParser {
     try {
       this.checkInput(userInfo, 1);
       User user = findUser(userInfo.get(0));
-      String message = "Username: " + user + System.lineSeparator();
+      String message = "Username: " + user;
       for (int i = 0; i < user.getCardsCopy().size(); i++) {
+        message += System.lineSeparator();
         message += user.getCardsCopy().get(i);
-        if (i < user.getCardsCopy().size() - 1) {
-          message += System.lineSeparator();
-        }
       }
       write(message);
     } catch (TransitException a) {

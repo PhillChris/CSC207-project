@@ -24,13 +24,6 @@ public class TransitReadWrite {
     this.reader = reader;
     this.writer = writer;
   }
-  /**
-   * Writes a given message to output.txt
-   *
-   * @param message The message to be written
-   */
-  public void write(String message) {
-  }
 
   /**
    * Initializes the program (i.e. constructs routes) with initialization data from events.txt

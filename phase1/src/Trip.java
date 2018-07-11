@@ -130,7 +130,7 @@ public class Trip {
     Integer firstStationIndex = null;
     Integer secondStationIndex = null;
     // Loop through all the routes to find the start and end station
-    for (Route<Station> route : Route.getRoutesCopy()) {
+    for (Route route : Route.getRoutesCopy()) {
       if (firstStationIndex == null && secondStationIndex == null) {
         for (int i = 0; i < route.getRouteStationsCopy().size(); i++) {
           Station station = route.getRouteStationsCopy().get(i);

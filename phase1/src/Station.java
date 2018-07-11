@@ -21,9 +21,7 @@ public abstract class Station {
   }
 
   @Override
-  /**
-   * @return whether or not these two stations are logically equivalent
-   */
+  /** @return whether or not these two stations are logically equivalent */
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -36,22 +34,35 @@ public abstract class Station {
     return this.name;
   }
 
-  /** @return the fare charged by this station at the start of a new trip portion */
+  /**
+   * @return the fare charged by this station at the start of a new trip portion
+   */
   public int getInitialFee() {
     return this.initialFee;
   }
 
-  /** @param initialFee the fare charged by this station at the start of a new trip portion */
+  /**
+   * Set the initialFee of this station, the fare charged by this station at the start of a new trip
+   * portion.
+   *
+   * @param initialFee the new initialFee.
+   */
   public void setInitialFee(int initialFee) {
     this.initialFee = initialFee;
   }
 
-  /** @return the fare charged by this station when a user travels by it */
+  /**
+   * @return the fare charged by this station when a user travels by it
+   */
   public int getPerStationFee() {
     return perStationFee;
   }
 
-  /** @param perStationFee the fare charged by this station when a user travels by it */
+  /**
+   * Set the perStationFee of this station.
+   *
+   * @param perStationFee the new perStationFee.
+   */
   public void setPerStationFee(int perStationFee) {
     this.perStationFee = perStationFee;
   }
@@ -59,13 +70,17 @@ public abstract class Station {
   /** @return HashMap of all stations of similar type */
   public HashMap<String, Station> getStationsCopy() {
     HashMap<String, Station> copy = new HashMap<>();
-    for (String key: stations.keySet()) {
+    for (String key : stations.keySet()) {
       copy.put(key, stations.get(key));
     }
     return copy;
   }
 
-  /** @param stations the hashmap to set the stations of station to */
+  /**
+   * Set the stations attribute to the given HashMap.
+   *
+   * @param stations the HashMap of stations to assign to the stations variable of this Station.
+   */
   public void setStations(HashMap<String, Station> stations) {
     this.stations = stations;
   }
@@ -79,7 +94,10 @@ public abstract class Station {
     stations.put(newStation.name, newStation);
   }
 
-  /** @return whether the two intersect (have common name) */
+  /**
+   * @param otherStation the station we checking for association with.
+   * @return whether this Station intersects otherStation (have common name)
+   */
   public boolean isAssociatedStation(Station otherStation) {
     return this.name.equals(otherStation.getName());
   }

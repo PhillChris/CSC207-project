@@ -61,9 +61,9 @@ public class UserParser extends ObjectParser {
       this.checkInput(userInfo, 1);
       User user = findUser(userInfo.get(0));
       String message = "Username: " + user + System.lineSeparator();
-      for (int i = 0; i < user.getCards().size(); i++) {
-        message += user.getCards().get(i);
-        if (i < user.getCards().size() - 1) {
+      for (int i = 0; i < user.getCardsCopy().size(); i++) {
+        message += user.getCardsCopy().get(i);
+        if (i < user.getCardsCopy().size() - 1) {
           message += System.lineSeparator();
         }
       }
@@ -132,9 +132,9 @@ public class UserParser extends ObjectParser {
       User user = findUser(userInfo.get(0));
       String message =
           "These are the last three trips for user " + user + ": " + System.lineSeparator();
-      for (int i = 0; i < user.getLastThree().size(); i++) {
-        message += user.getLastThree().get(i).toString();
-        if (i < user.getLastThree().size() - 1) {
+      for (int i = 0; i < user.getLastThreeCopy().size(); i++) {
+        message += user.getLastThreeCopy().get(i).toString();
+        if (i < user.getLastThreeCopy().size() - 1) {
           message += System.lineSeparator();
         }
       }

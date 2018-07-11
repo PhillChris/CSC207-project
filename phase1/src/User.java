@@ -62,8 +62,10 @@ public class User {
     return this.email;
   }
 
-  public List<Card> getCards() {
-    return this.cards;
+  /** @return A copy of the cards this user holds*/
+  public List<Card> getCardsCopy() {
+    List<Card> copy = new ArrayList<>(this.cards);
+    return copy;
   }
 
   /** @return A String detailing average expenditure per month of this User. */
@@ -87,8 +89,9 @@ public class User {
    *
    * @return up to the last three trips taken by this User.
    */
-  public List<Trip> getLastThree() {
-    return lastThreeTrips;
+  public List<Trip> getLastThreeCopy() {
+    List<Trip> copy = new ArrayList<>(lastThreeTrips);
+    return copy;
   }
 
   /**

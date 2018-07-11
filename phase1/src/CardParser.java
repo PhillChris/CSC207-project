@@ -1,9 +1,13 @@
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /** Parses all methods pertaining to cards in the transit system */
 public class CardParser extends ObjectParser {
+  public CardParser(BufferedWriter writer) {
+    super(writer);
+  }
   /**
    * Processes a card's tap request
    *
@@ -147,5 +151,50 @@ public class CardParser extends ObjectParser {
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }
+  }
+
+  private void buildHashMap() {
+    keyWords.put(
+        "TAP",
+        (cardInfo) -> {
+          this.tap(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "ADDCARD",
+        (cardInfo) -> {
+          this.add(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "REMOVECARD",
+        (cardInfo) -> {
+          this.remove(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "REPORTTHEFT",
+        (userInfo) -> {
+          this.reportTheft(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "ADDFUNDS",
+        (userInfo) -> {
+          this.addFunds(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "CHECKBALANCE",
+        (cardInfo) -> {
+          this.report(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "ACTIVATECARD",
+        (cardInfo) -> {
+          this.activate(cardInfo);
+          return null;
+        });
   }
 }

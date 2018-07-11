@@ -15,7 +15,7 @@ public abstract class ObjectParser {
   /** The writer for this ObjectParser */
   private BufferedWriter writer;
   /** The hashmap of commands for this ObjectParser*/
-  private static HashMap<String, Function<List<String>, Void>> keyWords = new HashMap<>();
+  static HashMap<String, Function<List<String>, Void>> keyWords = new HashMap<>();
 
   public ObjectParser(BufferedWriter writer) {
     this.writer = writer;

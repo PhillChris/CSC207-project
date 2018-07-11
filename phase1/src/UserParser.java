@@ -1,8 +1,12 @@
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
 
 /** Parses all methods pertaining to users in the transit system */
 public class UserParser extends ObjectParser {
+  public UserParser(BufferedWriter writer) {
+    super(writer);
+  }
   /**
    * Generates a user's monthly expenditure profile
    *
@@ -85,6 +89,8 @@ public class UserParser extends ObjectParser {
       TransitReadWrite.write("Published daily reports to dailyReports.txt");
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
+    } catch (IOException b) {
+      TransitReadWrite.write("File not found: This file was not located");
     }
   }
 
@@ -130,5 +136,50 @@ public class UserParser extends ObjectParser {
     } catch (TransitException a) {
       TransitReadWrite.write(a.getMessage());
     }
+  }
+
+  private void buildHashMap() {
+    keyWords.put(
+        "ADDUSER",
+        (userInfo) -> {
+          this.add(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "MONTHLYEXPENDITURE",
+        (userInfo) -> {
+          this.monthlyExpenditure(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "CHANGENAME",
+        (userInfo) -> {
+          this.changeName(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "DAILYREPORTS",
+        (userInfo) -> {
+          this.dailyReports(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "GETLASTTHREE",
+        (userInfo) -> {
+          this.getLastThree(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "USERREPORT",
+        (userInfo) -> {
+          this.report(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "REMOVEUSER",
+        (userInfo) -> {
+          this.remove(userInfo);
+          return null;
+        });
   }
 }

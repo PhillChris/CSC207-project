@@ -19,7 +19,7 @@ public class CardParser extends ObjectParser {
   /**
    * Processes an add card request.
    *
-   * @param cardInfo Information given for the card from TransitReader.read
+   * @param cardInfo Information given for the card from TransitReader.run
    */
   public void add(List<String> cardInfo) {
     try {
@@ -34,7 +34,7 @@ public class CardParser extends ObjectParser {
   /**
    * Processes a remove card request.
    *
-   * @param cardInfo Information given for the card from TransitReader.read
+   * @param cardInfo Information given for the card from TransitReader.run
    */
   public void remove(List<String> cardInfo) {
     try {
@@ -50,7 +50,7 @@ public class CardParser extends ObjectParser {
   /**
    * Creates a balance report for a given card.
    *
-   * @param cardInfo Information given for the card from TransitReader.read
+   * @param cardInfo Information given for the card from TransitReader.run
    */
   public void report(List<String> cardInfo) {
     try {
@@ -66,7 +66,7 @@ public class CardParser extends ObjectParser {
   /**
    * Processes a card's tap request.
    *
-   * @param cardInfo Information given for the card from TransitReader.read
+   * @param cardInfo Information given for the card from TransitReader.run
    * @throws IOException
    */
   public void tap(List<String> cardInfo) {
@@ -111,7 +111,7 @@ public class CardParser extends ObjectParser {
   /**
    * Process a theft report for a given card.
    *
-   * @param cardInfo Information given for the card from TransitReader.read
+   * @param cardInfo Information given for the card from TransitReader.run
    */
   public void reportTheft(List<String> cardInfo) {
     try {
@@ -129,7 +129,7 @@ public class CardParser extends ObjectParser {
   /**
    * Processes a card activation request.
    *
-   * @param cardInfo Information given for the card from TransitReader.read
+   * @param cardInfo Information given for the card from TransitReader.run
    */
   public void activate(List<String> cardInfo) {
     try {
@@ -148,7 +148,7 @@ public class CardParser extends ObjectParser {
   /**
    * Processes an add funds request for a given card.
    *
-   * @param cardInfo Information given for the card from TransitReader.read
+   * @param cardInfo Information given for the card from TransitReader.run
    */
   public void addFunds(List<String> cardInfo) {
     try {
@@ -161,7 +161,7 @@ public class CardParser extends ObjectParser {
     }
   }
 
-  /** A helper methods to add card-specific methods to the user command hash map */
+  /** A helper method to add card-specific methods to the command hash map */
   private void buildCardHashMap() {
     keyWords.put(
         "ADDCARD",

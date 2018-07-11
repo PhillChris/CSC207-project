@@ -4,31 +4,23 @@ import java.util.List;
 
 /** Parses all methods pertaining to users in the transit system */
 public class UserParser extends ObjectParser {
+
+  /**
+   * Constructs a new instance of UserParser.
+   *
+   * @param writer The file writer being used to write the results of this program to output.txt
+   */
   public UserParser(BufferedWriter writer) {
     super(writer);
     buildUserHashMap();
   }
-  /**
-   * Generates a user's monthly expenditure profile
-   *
-   * @param userInfo Information given for the user from TransitReader.read
-   */
-  public void monthlyExpenditure(List<String> userInfo) {
-    try {
-      this.checkInput(userInfo, 1);
-      User user = User.findUser(userInfo.get(0));
-      write(user.getAvgMonthly());
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
-  }
 
   /**
-   * Processes an add user request
+   * Processes an add user request.
    *
-   * @param userInfo Information given for the user from TransitReader.read
+   * @param userInfo Information given for the user from TransitReader.run
    */
-  public void add(List<String> userInfo) {
+  void add(List<String> userInfo) {
     try {
       this.checkInput(userInfo, 3);
       if (userInfo.get(0).equals("yes")) {
@@ -44,11 +36,11 @@ public class UserParser extends ObjectParser {
   }
 
   /**
-   * Processes a remove user request
+   * Processes a remove user request.
    *
-   * @param userInfo Information given for the user from TransitReader.read
+   * @param userInfo Information given for the user from TransitReader.run
    */
-  public void remove(List<String> userInfo) {
+  void remove(List<String> userInfo) {
     try {
       this.checkInput(userInfo, 1);
       // if the given user is not an AdminUser but is a User
@@ -62,45 +54,11 @@ public class UserParser extends ObjectParser {
   }
 
   /**
-   * Processes a change name request for a given user
+   * Generates a report containing all of a given user's cards and balances.
    *
-   * @param userInfo Information given for the user from TransitReader.read
+   * @param userInfo Information given for the user from TransitReader.run
    */
-  public void changeName(List<String> userInfo) {
-    try {
-      this.checkInput(userInfo, 2);
-      User user = User.findUser(userInfo.get(0));
-      String newName = userInfo.get(1);
-      user.changeName(newName);
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
-  }
-
-  /**
-   * Processes a daily report request
-   *
-   * @param userInfo Information given for the admin user from TransitReader.read
-   */
-  public void dailyReports(List<String> userInfo) {
-    try {
-      this.checkInput(userInfo, 1);
-      AdminUser user = AdminUser.findAdminUser(userInfo.get(0));
-      user.dailyReports();
-      write("Published daily reports to dailyReports.txt");
-    } catch (TransitException a) {
-      write(a.getMessage());
-    } catch (IOException b) {
-      write("File not found: This file was not located");
-    }
-  }
-
-  /**
-   * Generates a report containing all of a given user's cards and balances
-   *
-   * @param userInfo Information given for the user from TransitReader.read
-   */
-  public void report(List<String> userInfo) {
+  void report(List<String> userInfo) {
     try {
       this.checkInput(userInfo, 1);
       User user = User.findUser(userInfo.get(0));
@@ -118,11 +76,60 @@ public class UserParser extends ObjectParser {
   }
 
   /**
+   * Processes a change name request for a given user.
+   *
+   * @param userInfo Information given for the user from TransitReader.run
+   */
+  void changeName(List<String> userInfo) {
+    try {
+      this.checkInput(userInfo, 2);
+      User user = User.findUser(userInfo.get(0));
+      String newName = userInfo.get(1);
+      user.changeName(newName);
+    } catch (TransitException a) {
+      write(a.getMessage());
+    }
+  }
+
+  /**
+   * Processes a daily report request.
+   *
+   * @param userInfo Information given for the admin user from TransitReader.run
+   */
+  void dailyReports(List<String> userInfo) {
+    try {
+      this.checkInput(userInfo, 1);
+      AdminUser user = AdminUser.findAdminUser(userInfo.get(0));
+      user.dailyReports();
+      write("Published daily reports to dailyReports.txt");
+    } catch (TransitException a) {
+      write(a.getMessage());
+    } catch (IOException b) {
+      write("File not found: This file was not located");
+    }
+  }
+
+  /**
+   * Generates a user's monthly expenditure profile
+   *
+   * @param userInfo Information given for the user from TransitReader.run
+   */
+  void monthlyExpenditure(List<String> userInfo) {
+    try {
+      this.checkInput(userInfo, 1);
+      User user = User.findUser(userInfo.get(0));
+      write(user.getAvgMonthly());
+    } catch (TransitException a) {
+      write(a.getMessage());
+    }
+  }
+
+  /**
    * Processes a request for the last three trips traveled by a given user
    *
-   * @param userInfo Information given for the user from TransitReader.read
+   * @param userInfo Information given for the user from TransitReader.run
    */
-  public void getLastThree(List<String> userInfo) {
+  void getLastThree(List<String> userInfo) {
     try {
       User user = User.findUser(userInfo.get(0));
       String message =
@@ -139,6 +146,7 @@ public class UserParser extends ObjectParser {
     }
   }
 
+  /** A helper method to add user-specific methods to the command hash map */
   private void buildUserHashMap() {
     keyWords.put(
         "ADDUSER",
@@ -147,9 +155,15 @@ public class UserParser extends ObjectParser {
           return null;
         });
     keyWords.put(
-        "MONTHLYEXPENDITURE",
+        "REMOVEUSER",
         (userInfo) -> {
-          this.monthlyExpenditure(userInfo);
+          this.remove(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "USERREPORT",
+        (userInfo) -> {
+          this.report(userInfo);
           return null;
         });
     keyWords.put(
@@ -165,21 +179,15 @@ public class UserParser extends ObjectParser {
           return null;
         });
     keyWords.put(
+        "MONTHLYEXPENDITURE",
+        (userInfo) -> {
+          this.monthlyExpenditure(userInfo);
+          return null;
+        });
+    keyWords.put(
         "GETLASTTHREE",
         (userInfo) -> {
           this.getLastThree(userInfo);
-          return null;
-        });
-    keyWords.put(
-        "USERREPORT",
-        (userInfo) -> {
-          this.report(userInfo);
-          return null;
-        });
-    keyWords.put(
-        "REMOVEUSER",
-        (userInfo) -> {
-          this.remove(userInfo);
           return null;
         });
   }

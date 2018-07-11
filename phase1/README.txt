@@ -56,7 +56,8 @@ So for example, if you have two routes, one with Station A and Station B and one
 Station C, if you want a continuous trip from A to C, you must call tap twice at Station B, once to
 leave the first route, and once to enter the second route. Users are charged appropriately, which currently
 charges $0.50 per subway station travelled and $2.00 for each bus trip started (i.e. buses do not have
-a per-station fee).
+a per-station fee). Invalid legs of trips (rides whose start and end stations are not on the same route)
+are charged the maximum fee for any ongoing continuous trip, and this trip is ended.
 
 Usage:
 TAP | HH:MM | cardholderemail@fakemail.io | card# | STATIONTYPE | stationName

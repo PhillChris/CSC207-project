@@ -139,9 +139,12 @@ public class CardParser extends ObjectParser {
   public void addFunds(List<String> cardInfo) {
     try {
       this.checkInput(cardInfo, 3);
+      Integer amountAdd = Integer.parseInt(cardInfo.get(2)) * 100;
       User user = findUser(cardInfo.get(0));
       Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
-      card.addBalance(Integer.parseInt(cardInfo.get(2)) * 100);
+      card.addBalance(amountAdd);
+      write(String.format("Added: $%s to %s, %s", String.format("%.2f", amountAdd.doubleValue() / 100),  user, card)
+      );
     } catch (TransitException a) {
       write(a.getMessage());
     }

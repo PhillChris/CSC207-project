@@ -40,7 +40,7 @@ public class CostCalculator {
       message += date + "   ";
       double revenue = dailyRevenue.get(day) / 100.0;
       int travelled = dailyLog.get(day);
-      message += String.format("%.2f", revenue) + "      " + travelled + System.lineSeparator();
+      message += "$" + String.format("%.2f", revenue) + "      " + travelled + System.lineSeparator();
     }
     return message;
   }

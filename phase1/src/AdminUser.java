@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,11 +32,15 @@ public class AdminUser extends User {
   }
 
   /** Requests the production of a daily report to dailyReports.txt */
-  public void dailyReports() {
-    try {
-      CostCalculator.generateReport();
-    } catch (IOException e) {
-      System.out.println("File could not be constructed, daily reports will not be generated");
-    }
+  public void dailyReports() throws IOException {
+      String message = calculator.generateReportMessage();
+      Writer writer =
+              new BufferedWriter(
+                      new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"));
+      writer.write("Date       Revenue   Stations Travelled");
+      writer.write(System.lineSeparator());
+      writer.write(message);
+      writer.close();
+
   }
 }

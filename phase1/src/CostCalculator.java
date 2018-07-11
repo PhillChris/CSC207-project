@@ -1,4 +1,3 @@
-import java.io.*;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ public class CostCalculator {
   private static HashMap<LocalDate, Integer> dailyLog = new HashMap<>();
 
   /** Updates the expenditure and revenue in the entire system */
-  public static void updateSystemRevenue(int fee, int tripLength) {
+  void updateSystemRevenue(int fee, int tripLength) {
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
 
@@ -28,29 +27,20 @@ public class CostCalculator {
     }
   }
 
-  public static void generateReport() throws IOException {
-    // Writes to dailyReports.txt
-    Writer writer =
-        new BufferedWriter(
-            new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"));
-    writer.write("Date       Revenue   Stations Travelled");
-    writer.write(System.lineSeparator());
-
+  String generateReportMessage() {
     // Loop through all days and write each day's revenue
     // The revenue collected for each day
     HashMap<LocalDate, Integer> dailyTotals = dailyRevenue;
     // List of all the dates collected
     List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
     dates.sort(Collections.reverseOrder());
-
+    String message = System.lineSeparator(); // The message to be outputted to Daily Reports
     for (LocalDate day : dates) {
-      writer.write(System.lineSeparator());
       String date = day.toString();
       double revenue = dailyRevenue.get(day) / 100.0;
       int travelled = dailyLog.get(day);
-      String message = String.format("%.2f", revenue) + "    " + travelled;
-      writer.write(String.format("%s", date + " $" + message));
+      message += String.format("%.2f", revenue) + "    " + travelled + System.lineSeparator();
     }
-    writer.close();
+    return message;
   }
 }

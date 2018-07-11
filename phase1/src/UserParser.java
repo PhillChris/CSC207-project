@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.List;
 
 /** Parses all methods pertaining to users in the transit system */

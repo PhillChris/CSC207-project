@@ -20,11 +20,15 @@ public class CardParser extends ObjectParser {
       String stationType = cardInfo.get(3);
       String stationName = cardInfo.get(4);
       Station station;
+      StationFactory fact;
       // Check if the station is a Bus or Subway
       if (stationType.equals("BUS")) {
-        station = BusStation.getBusStations().get(stationName);
+        fact = new BusFactory();
+        fact.newStation("");
+        station = fact.newStation("").getStations().get(stationName);
       } else if (stationType.equals("SUBWAY")) {
-        station = SubwayStation.getSubwayStations().get(stationName);
+        fact = new SubwayFactory();
+        station = fact.newStation("").getStations().get(stationName);
       } else {
         throw new InvalidStationTypeException();
       }

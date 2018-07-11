@@ -7,9 +7,7 @@ public abstract class Station {
   private HashMap<String, Station> stations = new HashMap<>();
   /** The fee charged per station travelled by this station */
   private int perStationFee;
-  /**
-   * The initial fee charged by this station at the start of a trip
-   */
+  /** The initial fee charged by this station at the start of a trip */
   private int initialFee;
   /** The name of this station */
   private String name;
@@ -36,9 +34,7 @@ public abstract class Station {
     return this.name;
   }
 
-  /**
-   * @return the fare charged by this station at the start of a new trip portion
-   */
+  /** @return the fare charged by this station at the start of a new trip portion */
   public int getInitialFee() {
     return this.initialFee;
   }
@@ -53,9 +49,7 @@ public abstract class Station {
     this.initialFee = initialFee;
   }
 
-  /**
-   * @return the fare charged by this station when a user travels by it
-   */
+  /** @return the fare charged by this station when a user travels by it */
   public int getPerStationFee() {
     return perStationFee;
   }

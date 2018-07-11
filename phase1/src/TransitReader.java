@@ -3,9 +3,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
 
 /** A reader for the transit system, making parse requests using events.txt commands */
 public class TransitReader {
@@ -37,16 +35,14 @@ public class TransitReader {
    * @throws IOException if either events.txt or output.txt can't be found
    * @throws InitLineException if the formatting of the initial line of events.txt is incorrect
    */
-  void init()
-      throws IOException, InitLineException {
+  void init() throws IOException, InitLineException {
     userParser = new UserParser(writer);
     cardParser = new CardParser(writer);
 
     /* Reads the opening init line determining how many routes to make and
      * the current system date */
     String initLine = reader.readLine().trim(); // removes initial and trailing whitespace
-    ArrayList<String> initLineWords =
-        new ArrayList<>(Arrays.asList(initLine.split(SPLIT_SYMBOL)));
+    ArrayList<String> initLineWords = new ArrayList<>(Arrays.asList(initLine.split(SPLIT_SYMBOL)));
 
     if (initLineWords.size() != 3) { // if the formatting is incorrect for the initial line
       throw new InitLineException();

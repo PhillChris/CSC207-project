@@ -68,8 +68,10 @@ public class TransitTime {
     currentTime =
         LocalDateTime.of(
             currentTime.getYear(), currentTime.getMonth(), currentTime.getDayOfMonth(), 0, 0);
-    currentParser.write(String.format("Day ended successfully: current day is %s %s, %s",
-      currentTime.getMonth(), currentTime.getDayOfMonth(), currentTime.getYear()));
+    currentParser.write(
+        String.format(
+            "Day ended successfully: current day is %s %s, %s",
+            currentTime.getMonth(), currentTime.getDayOfMonth(), currentTime.getYear()));
 
     CostCalculator calculator = new CostCalculator();
     calculator.updateSystemRevenue(0, 0);

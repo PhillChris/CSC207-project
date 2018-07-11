@@ -26,6 +26,7 @@ public class User {
 
   /**
    * Construct a new instance of User
+   *
    * @param name the name of this User
    * @param email the email of this User
    */
@@ -45,7 +46,7 @@ public class User {
   /** @return a copy of the HashMap of all Users */
   static HashMap<String, User> getAllUsersCopy() {
     HashMap<String, User> copy = new HashMap<>();
-    for (String name : allUsers.keySet()){
+    for (String name : allUsers.keySet()) {
       copy.put(name, allUsers.get(name));
     }
     return copy;
@@ -61,7 +62,7 @@ public class User {
     return this.email;
   }
 
-  /** @return A copy of the cards this user holds*/
+  /** @return A copy of the cards this user holds */
   List<Card> getCardsCopy() {
     List<Card> copy = new ArrayList<>(this.cards);
     return copy;

@@ -1,5 +1,4 @@
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -106,8 +105,7 @@ public class CardParser extends ObjectParser {
       User user = findUser(cardInfo.get(0)); // passing user email
       Card card = findCard(user, Integer.parseInt(cardInfo.get(1))); // passing cardID.
       card.suspendCard();
-      write(
-          String.format("Theft reported for user %s card %s", cardInfo.get(0), cardInfo.get(1)));
+      write(String.format("Theft reported for user %s card %s", cardInfo.get(0), cardInfo.get(1)));
     } catch (TransitException a) {
       write(a.getMessage());
     }
@@ -144,8 +142,10 @@ public class CardParser extends ObjectParser {
       User user = findUser(cardInfo.get(0));
       Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
       card.addBalance(amountAdd);
-      write(String.format("Added: $%s to %s, %s", String.format("%.2f", amountAdd.doubleValue() / 100),  user, card)
-      );
+      write(
+          String.format(
+              "Added: $%s to %s, %s",
+              String.format("%.2f", amountAdd.doubleValue() / 100), user, card));
     } catch (TransitException a) {
       write(a.getMessage());
     }

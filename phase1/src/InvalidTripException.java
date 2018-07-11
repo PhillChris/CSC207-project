@@ -5,6 +5,7 @@ public class InvalidTripException extends TransitException {
 
   /**
    * Create a new instance of this InvalidTripException
+   *
    * @param userName the username of the user taking this trip
    * @param stationName the station that the user taking this trip taps out at
    */
@@ -14,6 +15,8 @@ public class InvalidTripException extends TransitException {
   }
   /** @return the error message that this exception returns. */
   public String getMessage() {
-    return String.format("Invalid Trip found, max fee charged, %s tapped out at %s", this.userName, this.stationName);
+    return String.format(
+        "Invalid Trip found, max fee charged, %s tapped out at %s",
+        this.userName, this.stationName);
   }
 }

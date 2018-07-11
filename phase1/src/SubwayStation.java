@@ -1,5 +1,6 @@
 import java.util.HashMap;
 
+/** Represents a subway station in this transit system */
 class SubwayStation extends Station {
   /** HashMap linking SubwayStation names to SubwayStations */
   private static HashMap<String, Station> subwayStations = new HashMap<>();

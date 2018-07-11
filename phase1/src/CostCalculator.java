@@ -39,10 +39,9 @@ public class CostCalculator {
     String message = System.lineSeparator(); // The message to be outputted to Daily Reports
     for (LocalDate day : dates) {
       String date = day.toString();
-      message += date + "   ";
       double revenue = dailyRevenue.get(day) / 100.0;
       int travelled = dailyLog.get(day);
-      message += "$" + String.format("%.2f", revenue) + "      " + travelled + System.lineSeparator();
+      message += String.format("%s   $%.2f     %s%s", date, revenue, travelled, System.lineSeparator());
     }
     return message;
   }

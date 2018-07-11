@@ -106,10 +106,6 @@ public class Card {
 
   /** Returns a string representation of this card */
   public String toString() {
-    return "Card #"
-        + this.id
-        + " has "
-        + String.format("$%.2f", this.balance / 100.0)
-        + " remaining";
+    return String.format("Card #%s has $%.2f remaining", this.id, this.balance / 100.0);
   }
 }

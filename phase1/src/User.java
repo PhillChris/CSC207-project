@@ -71,7 +71,6 @@ public class User {
   String getAvgMonthly() {
     String message = "Cost per month for user: " + this.name + System.lineSeparator();
     List<YearMonth> months = new ArrayList<>(this.ExpenditureMonthly.keySet());
-    int total = 0;
     for (YearMonth month : months) {
       message +=
           month.toString()

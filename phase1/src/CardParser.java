@@ -86,9 +86,9 @@ public class CardParser extends ObjectParser {
       user.tap(card, station, time);
       // if this user has just started a trip
       if (card.getTripStarted()) {
-        write("User " + user + " tapped on at " + station);
+        write(String.format("User %s tapped on at %s", user, station));
       } else {
-        write("User " + user + " tapped off at " + station);
+        write(String.format("User %s tapped off at %s", user, station));
       }
     } catch (TransitException b) {
       write(b.getMessage());
@@ -107,7 +107,7 @@ public class CardParser extends ObjectParser {
       Card card = findCard(user, Integer.parseInt(cardInfo.get(1))); // passing cardID.
       card.suspendCard();
       write(
-          "Theft reported for user " + cardInfo.get(0) + " card " + cardInfo.get(1));
+          String.format("Theft reported for user %s card %s", cardInfo.get(0), cardInfo.get(1)));
     } catch (TransitException a) {
       write(a.getMessage());
     }
@@ -125,7 +125,7 @@ public class CardParser extends ObjectParser {
       Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
       card.activateCard(card);
       write(
-          "Card reactivated for user " + cardInfo.get(0) + " card " + cardInfo.get(1));
+          String.format("Card reactivated for user %s card %s", cardInfo.get(0), cardInfo.get(1)));
 
     } catch (TransitException a) {
       write(a.getMessage());

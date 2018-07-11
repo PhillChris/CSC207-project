@@ -203,6 +203,8 @@ SAMPLE PROGRAM EXECUTION
 Here is a sample events.txt file and its resulting output.txt and dailyReports.txt
 
 events.txt:
+INIT | 4 | 2016-02-28
+SUBWAY | Station A | Station B
 SUBWAY | Station B | Station C | D | E | F | G | N | K | L
 SUBWAY | Station C | Station D
 BUS | Station B | Bus E | Bus F | Bus G | Bus N | L
@@ -230,6 +232,7 @@ DAILYREPORTS | john@john.com
 ENDDAY
 
 output.txt:
+Created new subway route
 Created new subway route
 Created new subway route
 Created new bus route

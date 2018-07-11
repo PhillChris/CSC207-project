@@ -153,12 +153,12 @@ public abstract class ObjectParser {
 
   private Station findBusStation(String stationName) {
     BusFactory fact = new BusFactory();
-    return fact.newStation("").getStations().get(stationName);
+    return fact.newStation("").getStationsCopy().get(stationName);
   }
 
   private Station findSubwayStation(String stationName) {
     SubwayFactory fact = new SubwayFactory();
-    return fact.newStation("").getStations().get(stationName);
+    return fact.newStation("").getStationsCopy().get(stationName);
   }
 
   /**

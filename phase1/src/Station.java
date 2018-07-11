@@ -21,6 +21,7 @@ public abstract class Station {
   }
 
   @Override
+  /** @return whether or not these two stations are logically equivalent */
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -28,16 +29,31 @@ public abstract class Station {
     return Objects.equals(name, station.name);
   }
 
-  /**
-   * Adds the newStation to either the list of BusStations or SubwayStations
-   *
-   * @param newStation the station to be added to allStations.
-   */
-  public void addStation(Station newStation) {
-    stations.put(newStation.name, newStation);
+  /** @return the name of this station */
+  public String getName() {
+    return this.name;
   }
 
-  /** @return the perStationFee of this subway station */
+  /**
+   * @return the fare charged by this station at the start of a new trip portion
+   */
+  public int getInitialFee() {
+    return this.initialFee;
+  }
+
+  /**
+   * Set the initialFee of this station, the fare charged by this station at the start of a new trip
+   * portion.
+   *
+   * @param initialFee the new initialFee.
+   */
+  public void setInitialFee(int initialFee) {
+    this.initialFee = initialFee;
+  }
+
+  /**
+   * @return the fare charged by this station when a user travels by it
+   */
   public int getPerStationFee() {
     return perStationFee;
   }
@@ -51,33 +67,13 @@ public abstract class Station {
     this.perStationFee = perStationFee;
   }
 
-  /** @return the name of this station */
-  public String getName() {
-    return this.name;
-  }
-
-  /** @return the fare charged by this station at the start of a new trip */
-  public int getInitialFee() {
-    return this.initialFee;
-  }
-
-  /**
-   * Set the initialFee of this station.
-   *
-   * @param initialFee the new initialFee.
-   */
-  public void setInitialFee(int initialFee) {
-    this.initialFee = initialFee;
-  }
-
-  /** @return whether the two intersect (have common name) */
-  public boolean isAssociatedStation(Station otherStation) {
-    return this.name.equals(otherStation.getName());
-  }
-
   /** @return HashMap of all stations of similar type */
-  public HashMap<String, Station> getStations() {
-    return stations;
+  public HashMap<String, Station> getStationsCopy() {
+    HashMap<String, Station> copy = new HashMap<>();
+    for (String key : stations.keySet()) {
+      copy.put(key, stations.get(key));
+    }
+    return copy;
   }
 
   /**
@@ -87,6 +83,23 @@ public abstract class Station {
    */
   public void setStations(HashMap<String, Station> stations) {
     this.stations = stations;
+  }
+
+  /**
+   * Adds the newStation to either the list of BusStations or SubwayStations
+   *
+   * @param newStation the station to be added to allStations.
+   */
+  public void addStation(Station newStation) {
+    stations.put(newStation.name, newStation);
+  }
+
+  /**
+   * @param otherStation the station we checking for association with.
+   * @return whether this Station intersects otherStation (have common name)
+   */
+  public boolean isAssociatedStation(Station otherStation) {
+    return this.name.equals(otherStation.getName());
   }
 
   /** @return A string representation of a station */

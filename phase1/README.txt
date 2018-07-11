@@ -227,8 +227,8 @@ TAP | 2:00 | jill@jill.com | 2 | SUBWAY | Station B
 TAP | 3:00 | jill@jill.com | 2 | SUBWAY | Station C
 TAP | 3:01 | jill@jill.com | 2 | SUBWAY | Station C
 TAP | 3:30 | jill@jill.com | 2 | SUBWAY | Station D
-TAP | 3:30 | jill@jill.com | 2 | SUBWAY | Station D
-TAP | 3:30 | jill@jill.com | 2 | SUBWAY | Station B
+TAP | 3:32 | jill@jill.com | 2 | SUBWAY | Station D
+TAP | 3:34 | jill@jill.com | 2 | SUBWAY | Station B
 CHECKBALANCE | jill@jill.com | 2
 DAILYREPORTS | john@john.com
 ENDDAY
@@ -254,12 +254,12 @@ User jill@jill.com tapped on at Station B
 User jill@jill.com tapped off at Station C
 User jill@jill.com tapped on at Station C
 User jill@jill.com tapped off at Station D
+jill@jill.com's Card #2 has $28.00 remaining
 User jill@jill.com tapped on at Station D
 Invalid Trip found, max fee charged, jill tapped out at Station B
 jill@jill.com's Card #2 has $23.00 remaining
 Published daily reports to dailyReports.txt
 Day ended successfully: current day is MARCH 1, 2016
-
 
 dailyReports.txt:
 Date         Revenue   Stations Travelled

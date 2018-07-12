@@ -1,0 +1,29 @@
+INIT | 4 | 2016-02-28
+SUBWAY | Station A | Station B
+SUBWAY | Station B | Station C | D | E | F | G | N | K | L
+SUBWAY | Station C | Station D
+BUS | Station B | Bus E | Bus F | Bus G | Bus N | L
+ADDUSER | no | jack | jack@jack.com
+ADDUSER | yes | john | john@john.com
+ADDCARD | jack@jack.com
+CHECKBALANCE | jack@jack.com | 1
+REPORTTHEFT | jack@jack.com | 1
+TAP | 3:58 | jack@jack.com | 1 | SUBWAY | Station A
+ACTIVATECARD | jack@jack.com | 1
+TAP | 3:58 | jack@jack.com | 1 | SUBWAY | Station A
+TAP | 4:00 | jack@jack.com | 1 | SUBWAY | Station B
+CHECKBALANCE | jack@jack.com | 1
+ENDDAY
+ADDUSER | no | jill | jill@jill.com
+ADDCARD | jill@jill.com
+ADDCARD | jill@jill.com
+ADDFUNDS | jill@jill.com | 2 | 10
+TAP | 2:00 | jill@jill.com | 2 | SUBWAY | Station B
+TAP | 3:00 | jill@jill.com | 2 | SUBWAY | Station C
+TAP | 3:01 | jill@jill.com | 2 | SUBWAY | Station C
+TAP | 3:30 | jill@jill.com | 2 | SUBWAY | Station D
+TAP | 3:32 | jill@jill.com | 2 | SUBWAY | Station D
+TAP | 3:34 | jill@jill.com | 2 | SUBWAY | Station B
+CHECKBALANCE | jill@jill.com | 2
+DAILYREPORTS | john@john.com
+ENDDAY

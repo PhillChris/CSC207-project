@@ -208,6 +208,9 @@ SAMPLE PROGRAM EXECUTION
 
 Here is a sample events.txt file and its resulting output.txt and dailyReports.txt
 
+This program can be found in events.txt, and can be executed by running Main.main,
+which runs the entire program and takes in the events.txt file.
+
 events.txt:
 INIT | 4 | 2016-02-28
 SUBWAY | Station A | Station B

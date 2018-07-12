@@ -12,6 +12,9 @@ and program execution governs all other actions in the program, including but no
 user and card creation, card taps, and report retrieval (these are outlined below under PROGRAM
 EXECUTION FUNCTION LIST).
 
+This program's design can be found in the file named design.pdf
+A legend to interpret the various symbols/icons can be found at https://www.jetbrains.com/help/idea/symbols.html
+
 ----
 INITIALIZATION
 

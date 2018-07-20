@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class LoginPage extends AuthenticationPage implements Page {
+public class LoginPage extends Page {
   private Scene scene;
   private UserParser parser;
 
@@ -21,13 +21,13 @@ public class LoginPage extends AuthenticationPage implements Page {
   }
 
   private Scene makeScene(Stage primaryStage) {
-    GridPane grid = new GridPane();
+    GridPane grid = getGrid();
 
-    placeLabel(grid, "Email: ", 1);
-    placeLabel(grid, "Password: ", 2);
+    placeLabel(grid, "Email: ", 0, 1);
+    placeLabel(grid, "Password: ", 0, 2);
 
-    TextField email = placeTextField(grid, 1);
-    PasswordField password = placePasswordField(grid, 2);
+    TextField email = placeTextField(grid, 1, 1);
+    PasswordField password = placePasswordField(grid, 1, 2);
 
     placeButton(
         "Log In",
@@ -35,24 +35,22 @@ public class LoginPage extends AuthenticationPage implements Page {
           if (checkAuthorization(email, password)) {
             try {
               User user = parser.findUser(email.getText());
-              UserPage userPage = new UserPage(primaryStage, user);
+              UserPage userPage = new UserPage(primaryStage, this, user);
               primaryStage.setScene(userPage.getScene());
             } catch (TransitException a) {}
           } else {
             System.out.println("This login credential is not valid!");
           }
         },
-        grid,
-        1);
+        grid, 2, 1);
 
     placeButton(
         "Sign Up",
         () -> {
-          SignUpPage signupPage = new SignUpPage(primaryStage, this);
+          SignUpPage signupPage = new SignUpPage(primaryStage, this, this.parser);
           primaryStage.setScene(signupPage.getScene());
         },
-        grid,
-        2);
+        grid, 2, 2);
 
     return new Scene(grid, 300, 250);
   }

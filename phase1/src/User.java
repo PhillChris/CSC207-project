@@ -16,7 +16,7 @@ public class User {
   /** An ArrayList of this User's last three trips */
   private ArrayList<Trip> lastThreeTrips = new ArrayList<>();
   /** HashMap linking each month to the total expenditure for that month */
-  private HashMap<YearMonth, Integer> ExpenditureMonthly;
+  private HashMap<YearMonth, Integer> expenditureMonthly;
   /** The log mapping all users to their given password in the system */
   private static HashMap<String, String> authLog = new HashMap<>();
   /** An ArrayList of this User's cards */
@@ -46,7 +46,7 @@ public class User {
     allUsers.put(email, this);
     authLog.put(email, password);
     cardCounter = 1;
-    ExpenditureMonthly = new HashMap<>();
+    expenditureMonthly = new HashMap<>();
     calculator = new CostCalculator();
   }
 
@@ -86,14 +86,14 @@ public class User {
   /** @return A String detailing average expenditure per month of this User. */
   String getAvgMonthly() {
     String message = "Cost per month for user: " + this.name + System.lineSeparator();
-    List<YearMonth> months = new ArrayList<>(this.ExpenditureMonthly.keySet());
+    List<YearMonth> months = new ArrayList<>(this.expenditureMonthly.keySet());
     for (YearMonth month : months) {
       message +=
           month.toString()
               + " : "
               + "$"
               + String.format(
-                  "%.2f", ExpenditureMonthly.get(month) / (month.lengthOfMonth() * 100.0));
+                  "%.2f", expenditureMonthly.get(month) / (month.lengthOfMonth() * 100.0));
       message += System.lineSeparator();
     }
     return message.trim();
@@ -231,10 +231,10 @@ public class User {
     Trip lastTrip = card.getLastTrip();
 
     // Update Monthly Expenditure History
-    if (ExpenditureMonthly.containsKey(month)) {
-      ExpenditureMonthly.put(month, ExpenditureMonthly.get(month) + lastTrip.getFee());
+    if (expenditureMonthly.containsKey(month)) {
+      expenditureMonthly.put(month, expenditureMonthly.get(month) + lastTrip.getFee());
     } else {
-      ExpenditureMonthly.put(month, lastTrip.getFee());
+      expenditureMonthly.put(month, lastTrip.getFee());
     }
   }
 }

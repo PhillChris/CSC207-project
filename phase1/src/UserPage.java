@@ -1,13 +1,14 @@
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.layout.StackPane;
-import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 
-public class UserPage implements Page {
+public class UserPage extends Page {
   private Scene scene;
+  private LoginPage parentPage;
   private User user;
-  public UserPage(Stage primaryStage, User user) {
+  public UserPage(Stage primaryStage, LoginPage parentPage, User user) {
     this.scene = makeScene(primaryStage);
+    this.parentPage = parentPage;
     this.user = user;
   }
 
@@ -16,9 +17,15 @@ public class UserPage implements Page {
   }
 
   private Scene makeScene(Stage primaryStage) {
-    StackPane stack = new StackPane();
-    Button btn = new Button();
-    stack.getChildren().add(btn);
-    return new Scene(stack);
+    GridPane grid = getGrid();
+    placeButton("Cards",
+        () -> System.out.println("Here is a list of my cards!"),
+        grid,
+        0, 0);
+    placeButton("Logout",
+        () -> primaryStage.setScene(parentPage.getScene()),
+        grid,
+        0, 1);
+    return new Scene(grid, 300, 250);
   }
 }

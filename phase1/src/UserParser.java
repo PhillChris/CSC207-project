@@ -18,7 +18,7 @@ public class UserParser extends ObjectParser {
   /**
    * Processes an add user request.
    *
-   * @param userInfo Information given for the user from TransitReader.run
+   *
    */
   void add(List<String> userInfo) {
     try {

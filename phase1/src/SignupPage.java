@@ -1,28 +1,25 @@
 import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
-import javafx.stage.Stage;
-import javafx.scene.control.TextField;
-import javafx.scene.control.CheckBox;
-import javafx.scene.layout.GridPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class SignUpPage extends Page{
-  private Scene scene;
   private LoginPage parentPage;
-  private UserParser parser;
 
-  public SignUpPage(Stage primaryStage, LoginPage parentPage, UserParser parser) {
-    this.scene = makeScene(primaryStage);
+  public SignUpPage(Stage primaryStage, LoginPage parentPage, UserParser userParser, CardParser cardParser) {
+    super(primaryStage, userParser, cardParser);
     this.parentPage = parentPage;
-    this.parser = parser;
   }
 
   public Scene getScene() {
     return this.scene;
   }
 
-  private Scene makeScene(Stage primaryStage) {
+  protected Scene makeScene(Stage primaryStage) {
     GridPane grid = getGrid();
 
     placeLabel(grid, "New User: ", 0, 1);
@@ -40,7 +37,7 @@ public class SignUpPage extends Page{
 
     placeButton("Make Account!", () -> {
       try {
-        parser.add(username.getText(), email.getText(), password.getText(), adminBox.isSelected());
+        userParser.add(username.getText(), email.getText(), password.getText(), adminBox.isSelected());
         primaryStage.setScene(parentPage.getScene());
       } catch (EmailInUseException a) {
         Alert alert = makeAlert("Email in use!",

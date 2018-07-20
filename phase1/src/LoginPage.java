@@ -8,19 +8,16 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class LoginPage extends Page {
-  private Scene scene;
-  private UserParser parser;
-
-  public LoginPage(Stage primaryStage) throws IOException {
-    this.scene = makeScene(primaryStage);
-    this.parser = new UserParser(new BufferedWriter(new FileWriter("output.txt")));
+  public LoginPage(Stage primaryStage, BufferedWriter writer) throws IOException {
+    super(primaryStage,
+        new UserParser(writer), new CardParser(writer));
   }
 
   public Scene getScene() {
     return this.scene;
   }
 
-  private Scene makeScene(Stage primaryStage) {
+  protected Scene makeScene(Stage primaryStage) {
     GridPane grid = getGrid();
 
     placeLabel(grid, "Email: ", 0, 1);
@@ -33,12 +30,11 @@ public class LoginPage extends Page {
         "Log In",
         () -> {
           try {
-            User user = parser.findUser(email.getText());
+            User user = userParser.findUser(email.getText());
             if (checkAuthorization(email, password)) {
-              UserPage userPage = new UserPage(primaryStage, this, user, this.parser);
+              UserPage userPage = new UserPage(primaryStage, this, user, this.userParser, this.cardParser);
               primaryStage.setScene(userPage.getScene());
-            }
-            else {
+            } else {
               throw new InvalidCredentialsException();
             }
           } catch (TransitException a) {
@@ -52,7 +48,7 @@ public class LoginPage extends Page {
     placeButton(
         "Sign Up",
         () -> {
-          SignUpPage signupPage = new SignUpPage(primaryStage, this, this.parser);
+          SignUpPage signupPage = new SignUpPage(primaryStage, this, this.userParser, this.cardParser);
           primaryStage.setScene(signupPage.getScene());
         },
         grid,

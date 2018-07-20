@@ -7,9 +7,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public abstract class Page {
+  protected UserParser userParser;
+  protected CardParser cardParser;
+  protected Scene scene;
+
+  public Page(Stage primaryStage, UserParser userParser, CardParser cardParser) {
+    this.userParser = userParser;
+    this.cardParser = cardParser;
+    this.scene = makeScene(primaryStage);
+  }
   public abstract Scene getScene();
+
+  abstract Scene makeScene(Stage primaryStage);
 
   protected GridPane getGrid() {
     return new GridPane();

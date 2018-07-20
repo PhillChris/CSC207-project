@@ -73,6 +73,10 @@ public class User {
     authLog.remove(this.email);
   }
 
+  String getUserName() {
+    return this.name;
+  }
+
   /** @return This User's email */
   String getEmail() {
     return this.email;

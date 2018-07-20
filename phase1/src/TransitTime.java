@@ -9,7 +9,7 @@ public class TransitTime {
   /** The current time of the transit system */
   private static LocalDateTime currentTime;
 
-  /** The parser currently in use for this transit system */
+  /** The userParser currently in use for this transit system */
   private static ObjectParser currentParser;
 
   /**

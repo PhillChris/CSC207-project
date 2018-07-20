@@ -14,13 +14,14 @@ public class Main extends Application {
    * @param args standard Java argument
    * @throws IOException
    */
-  public static void main(String[] args) throws IOException  {
+  public static void main(String[] args) {
     launch(args);
   }
 
   public void start(Stage primaryStage) throws IOException {
     primaryStage.setTitle("Transit System Simulator");
-    LoginPage loginPage = new LoginPage(primaryStage);
+    BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
+    LoginPage loginPage = new LoginPage(primaryStage, writer);
     primaryStage.setScene(loginPage.getScene());
     primaryStage.show();
   }

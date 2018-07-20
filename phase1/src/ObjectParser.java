@@ -93,7 +93,7 @@ public abstract class ObjectParser {
     }
   }
 
-  /** @return this parser's hashmap sending command words to their given functions */
+  /** @return this userParser's hashmap sending command words to their given functions */
   HashMap<String, Function<List<String>, Void>> getKeyWords() {
     return this.keyWords;
   }

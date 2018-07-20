@@ -13,13 +13,19 @@ public abstract class AuthenticationPage {
     grid.add(tempLabel, 0, row);
   }
 
-  protected void placeAuthenticationFields(GridPane grid) {
-    TextField usernameField = new TextField();
-    grid.add(usernameField, 1, 1);
-
-    PasswordField passwordField = new PasswordField();
-    grid.add(passwordField, 1, 2);
+  protected TextField placeTextField(GridPane grid, int row) {
+    TextField textField = new TextField(
+    );
+    grid.add(textField, 1, row);
+    return textField;
   }
+
+  protected PasswordField placePasswordField(GridPane grid, int row) {
+    PasswordField passwordField = new PasswordField();
+    grid.add(passwordField, 1, row);
+    return passwordField;
+  }
+
 
   protected void placeButton(String text, Runnable function, GridPane grid, int row) {
     Button loginBtn = new Button(text);

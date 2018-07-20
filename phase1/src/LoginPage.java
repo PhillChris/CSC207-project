@@ -1,4 +1,6 @@
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -19,15 +21,23 @@ public class LoginPage extends AuthenticationPage {
     placeLabel(grid, "Username: ",1);
     placeLabel(grid, "Password: ", 2);
 
-    placeAuthenticationFields(grid);
+    TextField username = placeTextField(grid, 1);
+    PasswordField password =placePasswordField(grid, 2);
 
     placeButton("Log In",
-        () -> System.out.println("You've logged in!"),
+        () -> {
+          if (User.getAuthLogCopy().get(username.getText()) != null) {
+            System.out.println("This is a valid user!");
+          } else {
+            System.out.println("This is not a valid user!");
+          }
+
+        },
         grid, 1);
 
     placeButton("Sign Up",
         () -> {
-          SignupPage signupPage = new SignupPage(primaryStage, this);
+          SignUpPage signupPage = new SignUpPage(primaryStage, this);
           primaryStage.setScene(signupPage.getScene());
         },
         grid, 2);

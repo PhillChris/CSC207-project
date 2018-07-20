@@ -17,10 +17,14 @@ public class User {
   private ArrayList<Trip> lastThreeTrips = new ArrayList<>();
   /** HashMap linking each month to the total expenditure for that month */
   private HashMap<YearMonth, Integer> ExpenditureMonthly;
+  /** The log mapping all users to their given password in the system */
+  private static HashMap<String, String> authLog = new HashMap<>();
   /** An ArrayList of this User's cards */
   private List<Card> cards;
   /** This User's name */
   private String name;
+  /** This User's password */
+  private String password;
   /** The id given to the next card added by the user */
   private int cardCounter;
 
@@ -29,15 +33,18 @@ public class User {
    *
    * @param name the name of this User
    * @param email the email of this User
+   * @param password the password of ths User
    */
-  public User(String name, String email) throws EmailInUseException {
+  public User(String name, String email, String password) throws EmailInUseException {
     if (allUsers.keySet().contains(email)) { // If this User already exists
       throw new EmailInUseException();
     }
     this.name = name;
     this.email = email;
+    this.password = password;
     this.cards = new ArrayList<>();
     allUsers.put(email, this);
+    authLog.put(name, password);
     cardCounter = 1;
     ExpenditureMonthly = new HashMap<>();
     calculator = new CostCalculator();
@@ -48,6 +55,14 @@ public class User {
     HashMap<String, User> copy = new HashMap<>();
     for (String name : allUsers.keySet()) {
       copy.put(name, allUsers.get(name));
+    }
+    return copy;
+  }
+
+  static HashMap<String, String> getAuthLogCopy() {
+    HashMap<String, String> copy = new HashMap<>();
+    for (String name : authLog.keySet()) {
+      copy.put(name, authLog.get(name));
     }
     return copy;
   }

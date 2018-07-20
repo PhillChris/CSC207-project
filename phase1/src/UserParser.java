@@ -24,10 +24,10 @@ public class UserParser extends ObjectParser {
     try {
       this.checkInput(userInfo, 3);
       if (userInfo.get(0).equals("yes")) {
-        AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(2));
+        AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(2), "");
         write("Added admin user " + admin);
       } else {
-        User user = new User(userInfo.get(1), userInfo.get(2));
+        User user = new User(userInfo.get(1), userInfo.get(2), "");
         write("Added user " + user);
       }
     } catch (TransitException a) {

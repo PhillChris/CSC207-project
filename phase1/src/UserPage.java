@@ -22,13 +22,20 @@ public class UserPage extends Page {
   protected Scene makeScene(Stage primaryStage) {
     GridPane grid = getGrid();
     placeButton("Cards", () -> System.out.println("Here is a list of my cards!"), grid, 0, 1);
-    placeButton("Info", () -> {
-      Alert alert = makeAlert("User Information",
-          "Your user information:",
-          this.userParser.report(user),
-          AlertType.INFORMATION);
-      alert.showAndWait();
-    }, grid, 0, 2);
+    placeButton(
+        "Info",
+        () -> {
+          Alert alert =
+              makeAlert(
+                  "User Information",
+                  "Your user information:",
+                  this.userParser.report(user),
+                  AlertType.INFORMATION);
+          alert.showAndWait();
+        },
+        grid,
+        0,
+        2);
     placeButton(
         "Change username",
         () -> {
@@ -37,7 +44,8 @@ public class UserPage extends Page {
           primaryStage.setScene(namePage.getScene());
         },
         grid,
-        0, 3);
+        0,
+        3);
 
     placeButton("Logout", () -> primaryStage.setScene(parentPage.getScene()), grid, 0, 4);
     placeButton(
@@ -55,7 +63,8 @@ public class UserPage extends Page {
                   });
         },
         grid,
-        0, 5);
+        0,
+        5);
     return new Scene(grid, 300, 250);
   }
 }

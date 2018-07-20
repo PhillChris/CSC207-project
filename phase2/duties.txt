@@ -1,6 +1,11 @@
+NOTE: For Phase 1 functionality, duties were not divided by class and person-specific updates
+& responsibilities were never dictated, and so no reports of duties here are possbile.
+
 PHILLIP: 
 - Main: refactored to launch window
 - Page: implemented core functionality (i.e. no styling) inherited by all other pages
 - LoginPage: implemented core functionality (i.e. no styling)
 - SignupPage: implemented core functionality (i.e. no styling)
 - UserPage: implemented core functionality (i.e. no styling)
+- ChangeNamePage: implemented functinality (i.e. no styling)
+- 

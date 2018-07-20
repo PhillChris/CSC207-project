@@ -63,18 +63,12 @@ public class UserParser extends ObjectParser {
   /**
    * Processes a change name request for a given user.
    *
-   * @param userInfo Information given for the user from TransitReader.run
+   * @param user Information given for the user from TransitReader.run
+   * @param newName The new name for this given user
    */
-  void changeName(List<String> userInfo) {
-    try {
-      this.checkInput(userInfo, 2);
-      User user = findUser(userInfo.get(0));
-      String newName = userInfo.get(1);
-      user.changeName(newName);
-      write("Changed user name to " + user);
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
+  void changeName(User user, String newName) {
+    user.changeName(newName);
+    write("Changed user name to " + user);
   }
 
   /**

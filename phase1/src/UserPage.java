@@ -21,15 +21,20 @@ public class UserPage extends Page {
     this.user = user;
   }
 
-  public Scene getScene() {
-    return this.scene;
-  }
-
   protected Scene makeScene(Stage primaryStage) {
     GridPane grid = getGrid();
     placeButton("Cards", () -> System.out.println("Here is a list of my cards!"), grid, 0, 1);
 
-    placeButton("Change username", () -> {}, grid, 0, 2);
+    placeButton(
+        "Change username",
+        () -> {
+          ChangeNamePage namePage =
+              new ChangeNamePage(primaryStage, this.userParser, this.cardParser, this.user, this);
+          primaryStage.setScene(namePage.getScene());
+        },
+        grid,
+        0,
+        2);
 
     placeButton("Logout", () -> primaryStage.setScene(parentPage.getScene()), grid, 0, 3);
     placeButton(

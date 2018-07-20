@@ -13,10 +13,6 @@ public class LoginPage extends Page {
         new UserParser(writer), new CardParser(writer));
   }
 
-  public Scene getScene() {
-    return this.scene;
-  }
-
   protected Scene makeScene(Stage primaryStage) {
     GridPane grid = getGrid();
 

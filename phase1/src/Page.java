@@ -19,7 +19,10 @@ public abstract class Page {
     this.cardParser = cardParser;
     this.scene = makeScene(primaryStage);
   }
-  public abstract Scene getScene();
+
+  public Scene getScene() {
+    return this.scene;
+  }
 
   abstract Scene makeScene(Stage primaryStage);
 

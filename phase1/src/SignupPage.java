@@ -15,10 +15,6 @@ public class SignUpPage extends Page{
     this.parentPage = parentPage;
   }
 
-  public Scene getScene() {
-    return this.scene;
-  }
-
   protected Scene makeScene(Stage primaryStage) {
     GridPane grid = getGrid();
 

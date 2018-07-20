@@ -32,17 +32,22 @@ public class LoginPage extends Page {
     placeButton(
         "Log In",
         () -> {
-          if (checkAuthorization(email, password)) {
-            try {
-              User user = parser.findUser(email.getText());
-              UserPage userPage = new UserPage(primaryStage, this, user);
+          try {
+            User user = parser.findUser(email.getText());
+            if (checkAuthorization(email, password)) {
+              UserPage userPage = new UserPage(primaryStage, this, user, this.parser);
               primaryStage.setScene(userPage.getScene());
-            } catch (TransitException a) {}
-          } else {
-            System.out.println("This login credential is not valid!");
+            }
+            else {
+              throw new InvalidCredentialsException();
+            }
+          } catch (TransitException a) {
+            System.out.println(a.getMessage());
           }
         },
-        grid, 2, 1);
+        grid,
+        2,
+        1);
 
     placeButton(
         "Sign Up",
@@ -50,7 +55,9 @@ public class LoginPage extends Page {
           SignUpPage signupPage = new SignUpPage(primaryStage, this, this.parser);
           primaryStage.setScene(signupPage.getScene());
         },
-        grid, 2, 2);
+        grid,
+        2,
+        2);
 
     return new Scene(grid, 300, 250);
   }

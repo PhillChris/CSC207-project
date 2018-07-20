@@ -63,7 +63,8 @@ public abstract class ObjectParser {
    *
    * @param info The parameters needed to locate this object for removal
    */
-  abstract void remove(List<String> info);
+  //abstract void remove(List<String> info);
+  // TODO: reinstate common interface for removing stuff?
 
   /**
    * Generates some kind of status report and writes it to outputs.txt. To be implemented by all

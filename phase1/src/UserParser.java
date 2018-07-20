@@ -33,17 +33,11 @@ public class UserParser extends ObjectParser {
   /**
    * Processes a remove user request.
    *
-   * @param userInfo Information given for the user from TransitReader.run
+   * @param user The user to be removed
    */
-  void remove(List<String> userInfo) {
-    try {
-      this.checkInput(userInfo, 1);
-      User user = findUser(userInfo.get(0));
-      user.removeUser();
-      write("Removed user " + user);
-    } catch (TransitException a) {
-      a.getMessage();
-    }
+  void remove(User user) {
+    user.removeUser();
+    write("Removed user " + user);
   }
 
   /**

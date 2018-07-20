@@ -70,6 +70,7 @@ public class User {
   /** Removes this user from the system. */
   void removeUser() {
     allUsers.remove(this.email);
+    authLog.remove(this.email);
   }
 
   /** @return This User's email */

@@ -40,9 +40,9 @@ public class SignUpPage extends Page{
 
     placeButton("Make Account!", () -> {
       try {
-        User newUser = new User(username.getText(), email.getText(), password.getText());
+        parser.add(username.getText(), email.getText(), password.getText(), adminBox.isSelected());
         primaryStage.setScene(parentPage.getScene());
-      } catch (TransitException a) {
+      } catch (EmailInUseException a) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Email in use!");
         alert.setHeaderText("Email in use:");

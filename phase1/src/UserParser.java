@@ -14,12 +14,9 @@ public class UserParser extends ObjectParser {
     super(writer);
   }
 
-  /**
-   * Processes an add user request.
-   *
-   *
-   */
-  void add(String username, String email, String password, boolean isAdmin) {
+  /** Processes an add user request. */
+  void add(String username, String email, String password, boolean isAdmin)
+      throws EmailInUseException {
     try {
       if (isAdmin) {
         AdminUser admin = new AdminUser(username, email, password);
@@ -28,8 +25,8 @@ public class UserParser extends ObjectParser {
         User user = new User(username, email, password);
         write("Added user " + user);
       }
-    } catch (TransitException a) {
-      a.getMessage();
+    } catch (EmailInUseException a) {
+      throw new EmailInUseException();
     }
   }
 

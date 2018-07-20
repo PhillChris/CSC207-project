@@ -1,4 +1,6 @@
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -42,5 +44,13 @@ public abstract class Page {
     CheckBox checkBox = new CheckBox(text);
     grid.add(checkBox, col, row);
     return checkBox;
+  }
+
+  protected Alert makeAlert(String title, String header, String content, AlertType type) {
+    Alert alert = new Alert(type);
+    alert.setTitle(title);
+    alert.setHeaderText(header);
+    alert.setContentText(content);
+    return alert;
   }
 }

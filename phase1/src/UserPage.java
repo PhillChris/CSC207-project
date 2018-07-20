@@ -35,10 +35,10 @@ public class UserPage extends Page {
         0, 1);
     placeButton("Remove this account!",
         () -> {
-          Alert alert = new Alert(AlertType.CONFIRMATION);
-          alert.setTitle("Delete account confirmation");
-          alert.setHeaderText("Confirm:");
-          alert.setContentText("Are you sure you want this account to be removed?");
+          Alert alert = makeAlert("Delete account confirmation",
+              "Confirm:",
+              "Are you sure you want this account to be removed?",
+              AlertType.CONFIRMATION);
 
           ButtonType confirm = new ButtonType("Proceed");
           ButtonType reject = new ButtonType("Cancel");

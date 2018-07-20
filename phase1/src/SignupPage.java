@@ -43,10 +43,10 @@ public class SignUpPage extends Page{
         parser.add(username.getText(), email.getText(), password.getText(), adminBox.isSelected());
         primaryStage.setScene(parentPage.getScene());
       } catch (EmailInUseException a) {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle("Email in use!");
-        alert.setHeaderText("Email in use:");
-        alert.setContentText("The email you provided is currently in use by another user.");
+        Alert alert = makeAlert("Email in use!",
+            "Email in use:",
+            "The email you provided is currently in use by another user.",
+            AlertType.WARNING);
         alert.showAndWait();
       }
     }, grid, 1, 6);

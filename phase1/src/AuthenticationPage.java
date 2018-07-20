@@ -6,8 +6,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public abstract class AuthenticationPage {
-  public abstract Scene getScene();
-
   protected void placeLabel(GridPane grid, String text, int row) {
     Label tempLabel = new Label(text);
     grid.add(tempLabel, 0, row);

@@ -6,7 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class SignUpPage extends AuthenticationPage {
+public class SignUpPage extends AuthenticationPage implements Page {
   private Scene scene;
   private LoginPage parentPage;
 

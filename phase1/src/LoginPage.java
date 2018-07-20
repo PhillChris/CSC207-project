@@ -18,20 +18,19 @@ public class LoginPage extends AuthenticationPage {
   private Scene makeScene(Stage primaryStage) {
     GridPane grid = new GridPane();
 
-    placeLabel(grid, "Username: ",1);
+    placeLabel(grid, "Email: ",1);
     placeLabel(grid, "Password: ", 2);
 
-    TextField username = placeTextField(grid, 1);
+    TextField email = placeTextField(grid, 1);
     PasswordField password =placePasswordField(grid, 2);
 
     placeButton("Log In",
         () -> {
-          if (User.getAuthLogCopy().get(username.getText()) != null) {
-            System.out.println("This is a valid user!");
+        if (checkAuthorization(email, password)) {
+            System.out.println("This login credential is valid");
           } else {
-            System.out.println("This is not a valid user!");
+            System.out.println("This login credential is not valid!");
           }
-
         },
         grid, 1);
 
@@ -44,4 +43,10 @@ public class LoginPage extends AuthenticationPage {
 
     return new Scene(grid, 300, 250);
   }
+
+  private boolean checkAuthorization(TextField email, TextField password) {
+    return User.getAuthLogCopy().get(email.getText()) != null
+        && User.getAuthLogCopy().get(email.getText()).equals(password.getText());
+  }
+
 }

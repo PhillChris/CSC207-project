@@ -44,7 +44,7 @@ public class User {
     this.password = password;
     this.cards = new ArrayList<>();
     allUsers.put(email, this);
-    authLog.put(name, password);
+    authLog.put(email, password);
     cardCounter = 1;
     ExpenditureMonthly = new HashMap<>();
     calculator = new CostCalculator();

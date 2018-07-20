@@ -1,6 +1,6 @@
 PHILLIP: 
 - Main: refactored to launch window
-- AuthenticationPage: implemented core functionality (i.e. no styling)
+- Page: implemented core functionality (i.e. no styling)
 - LoginPage: implemented core functionality (i.e. no styling)
 - SignupPage: implemented core functionality (i.e. no styling)
 - UserPage: implemented core functionality (i.e. no styling)

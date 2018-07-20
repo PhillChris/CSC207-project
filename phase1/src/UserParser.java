@@ -12,7 +12,6 @@ public class UserParser extends ObjectParser {
    */
   UserParser(BufferedWriter writer) {
     super(writer);
-    buildUserHashMap();
   }
 
   /**
@@ -20,14 +19,13 @@ public class UserParser extends ObjectParser {
    *
    *
    */
-  void add(List<String> userInfo) {
+  void add(String username, String email, String password, boolean isAdmin) {
     try {
-      this.checkInput(userInfo, 3);
-      if (userInfo.get(0).equals("yes")) {
-        AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(2), "");
+      if (isAdmin) {
+        AdminUser admin = new AdminUser(username, email, password);
         write("Added admin user " + admin);
       } else {
-        User user = new User(userInfo.get(1), userInfo.get(2), "");
+        User user = new User(username, email, password);
         write("Added user " + user);
       }
     } catch (TransitException a) {
@@ -141,51 +139,5 @@ public class UserParser extends ObjectParser {
     } catch (TransitException a) {
       write(a.getMessage());
     }
-  }
-
-  /** A helper method to add user-specific methods to the command hash map */
-  private void buildUserHashMap() {
-    keyWords.put(
-        "ADDUSER",
-        (userInfo) -> {
-          this.add(userInfo);
-          return null;
-        });
-    keyWords.put(
-        "REMOVEUSER",
-        (userInfo) -> {
-          this.remove(userInfo);
-          return null;
-        });
-    keyWords.put(
-        "USERREPORT",
-        (userInfo) -> {
-          this.report(userInfo);
-          return null;
-        });
-    keyWords.put(
-        "CHANGENAME",
-        (userInfo) -> {
-          this.changeName(userInfo);
-          return null;
-        });
-    keyWords.put(
-        "DAILYREPORTS",
-        (userInfo) -> {
-          this.dailyReports(userInfo);
-          return null;
-        });
-    keyWords.put(
-        "MONTHLYEXPENDITURE",
-        (userInfo) -> {
-          this.monthlyExpenditure(userInfo);
-          return null;
-        });
-    keyWords.put(
-        "GETLASTTHREE",
-        (userInfo) -> {
-          this.getLastThree(userInfo);
-          return null;
-        });
   }
 }

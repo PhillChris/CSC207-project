@@ -19,7 +19,6 @@ public abstract class ObjectParser {
    */
   public ObjectParser(BufferedWriter writer) {
     this.writer = writer;
-    makeCommonHashMap();
   }
 
   /**
@@ -55,7 +54,8 @@ public abstract class ObjectParser {
    *
    * @param info The parameters needed to generate this object
    */
-  abstract void add(List<String> info);
+  // abstract void add(List<String> info);
+  // TODO: reinstate common interface for adding stuff?
 
   /**
    * Removes some given object from the transit system. To be implemented by all parsers in this
@@ -180,18 +180,5 @@ public abstract class ObjectParser {
   private Station findSubwayStation(String stationName) {
     SubwayFactory fact = new SubwayFactory();
     return fact.newStation("").getStationsCopy().get(stationName);
-  }
-
-  /**
-   * A helper method adding the common elements across all parser types to the hash maps of any type
-   * of parser in the transit system.
-   */
-  private void makeCommonHashMap() {
-    keyWords.put(
-        "ENDDAY",
-        (emptyArray) -> {
-          TransitTime.endDay(emptyArray);
-          return null;
-        });
   }
 }

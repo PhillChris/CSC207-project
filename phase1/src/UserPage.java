@@ -6,6 +6,7 @@ public class UserPage extends Page {
   private Scene scene;
   private LoginPage parentPage;
   private User user;
+
   public UserPage(Stage primaryStage, LoginPage parentPage, User user) {
     this.scene = makeScene(primaryStage);
     this.parentPage = parentPage;

@@ -2,8 +2,18 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class LoginPage extends AuthenticationPages {
-  public Scene getScene(Stage primaryStage) {
+public class LoginPage extends AuthenticationPage {
+  private Scene scene;
+
+  public LoginPage(Stage primaryStage) {
+    this.scene = makeScene(primaryStage);
+  }
+
+  public Scene getScene() {
+    return this.scene;
+  }
+
+  private Scene makeScene(Stage primaryStage) {
     GridPane grid = new GridPane();
 
     placeLabel(grid, "Username: ",1);
@@ -17,8 +27,8 @@ public class LoginPage extends AuthenticationPages {
 
     placeButton("Sign Up",
         () -> {
-          SignupPage signupPage = new SignupPage();
-          primaryStage.setScene(signupPage.getScene(primaryStage));
+          SignupPage signupPage = new SignupPage(primaryStage, this);
+          primaryStage.setScene(signupPage.getScene());
         },
         grid, 2);
 

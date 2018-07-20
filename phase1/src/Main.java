@@ -20,8 +20,8 @@ public class Main extends Application {
 
   public void start(Stage primaryStage) {
     primaryStage.setTitle("Transit System Simulator");
-    LoginPage loginPage = new LoginPage();
-    primaryStage.setScene(loginPage.getScene(primaryStage));
+    LoginPage loginPage = new LoginPage(primaryStage);
+    primaryStage.setScene(loginPage.getScene());
     primaryStage.show();
   }
 }

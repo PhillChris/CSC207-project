@@ -43,21 +43,15 @@ public class UserParser extends ObjectParser {
   /**
    * Generates a report containing all of a given user's cards and balances.
    *
-   * @param userInfo Information given for the user from TransitReader.run
+   * @param user The user whose report is being fetched
    */
-  void report(List<String> userInfo) {
-    try {
-      this.checkInput(userInfo, 1);
-      User user = findUser(userInfo.get(0));
-      String message = "Username: " + user;
-      for (int i = 0; i < user.getCardsCopy().size(); i++) {
-        message += System.lineSeparator();
-        message += user.getCardsCopy().get(i);
-      }
-      write(message);
-    } catch (TransitException a) {
-      write(a.getMessage());
+  String report(User user) {
+    String message = "Username: " + user;
+    for (int i = 0; i < user.getCardsCopy().size(); i++) {
+      message += System.lineSeparator();
+      message += user.getCardsCopy().get(i);
     }
+    return message;
   }
 
   /**

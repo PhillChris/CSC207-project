@@ -72,7 +72,8 @@ public abstract class ObjectParser {
    *
    * @param info The parameters needed to locate this object for reporting
    */
-  abstract void report(List<String> info);
+  //abstract void report(List<String> info);
+  // TODO: reimplement common interface for generating a report
 
   /**
    * Parses a list containing a command and its parameters, and calls the appropriate function in

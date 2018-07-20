@@ -3,3 +3,4 @@ PHILLIP:
 - AuthenticationPage: implemented core functionality (i.e. no styling)
 - LoginPage: implemented core functionality (i.e. no styling)
 - SignupPage: implemented core functionality (i.e. no styling)
+- UserPage: implemented core functionality (i.e. no styling)

@@ -26,7 +26,7 @@ public class ChangeNamePage extends Page {
     placeButton(
         "Change name!",
         () -> {
-          this.userParser.changeName(newName.getText());
+          this.userParser.changeName(this.user, newName.getText());
           primaryStage.setScene(this.parentPage.getScene());
         },
         grid,

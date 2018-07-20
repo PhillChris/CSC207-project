@@ -33,35 +33,25 @@ public class UserPage extends Page {
           primaryStage.setScene(namePage.getScene());
         },
         grid,
-        0,
-        2);
+        0, 2);
 
     placeButton("Logout", () -> primaryStage.setScene(parentPage.getScene()), grid, 0, 3);
     placeButton(
         "Remove this account!",
         () -> {
           Alert alert =
-              makeAlert(
+              makeConfirmationAlert(
                   "Delete account confirmation",
                   "Confirm:",
                   "Are you sure you want this account to be removed?",
-                  AlertType.CONFIRMATION);
-
-          ButtonType confirm = new ButtonType("Proceed");
-          ButtonType reject = new ButtonType("Cancel");
-          alert.getButtonTypes().setAll(confirm, reject);
-
-          Optional<ButtonType> result = alert.showAndWait();
-
-          // If the user chose to destroy the given account
-          if (result.get() == confirm) {
-            userParser.remove(user);
-            primaryStage.setScene(parentPage.getScene());
-          }
+                  AlertType.CONFIRMATION,
+                  () -> {
+                    userParser.remove(user);
+                    primaryStage.setScene(parentPage.getScene());
+                  });
         },
         grid,
-        0,
-        4);
+        0, 4);
     return new Scene(grid, 300, 250);
   }
 }

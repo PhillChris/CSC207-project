@@ -1,7 +1,9 @@
+import java.util.Optional;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -36,8 +38,7 @@ public abstract class Page {
   }
 
   protected TextField placeTextField(GridPane grid, int col, int row) {
-    TextField textField = new TextField(
-    );
+    TextField textField = new TextField();
     grid.add(textField, col, row);
     return textField;
   }
@@ -47,7 +48,6 @@ public abstract class Page {
     grid.add(passwordField, col, row);
     return passwordField;
   }
-
 
   protected void placeButton(String text, Runnable function, GridPane grid, int col, int row) {
     Button button = new Button(text);
@@ -66,6 +66,25 @@ public abstract class Page {
     alert.setTitle(title);
     alert.setHeaderText(header);
     alert.setContentText(content);
+    return alert;
+  }
+
+  protected Alert makeConfirmationAlert(
+    String title, String header, String content, AlertType type, Runnable function) {
+
+    Alert alert = makeAlert(title, header, content, type);
+
+    ButtonType confirm = new ButtonType("Proceed");
+    ButtonType reject = new ButtonType("Cancel");
+    alert.getButtonTypes().setAll(confirm, reject);
+
+    Optional<ButtonType> result = alert.showAndWait();
+
+    // If the user chose to destroy the given account
+    if (result.get() == confirm) {
+      function.run();
+    }
+
     return alert;
   }
 }

@@ -1,0 +1,5 @@
+PHILLIP: 
+- Main: refactored to launch window
+- AuthenticationPage: added core functionality (i.e. no styling)
+- LoginPage: added core functionality (i.e. no styling)
+- SignupPage: added core functionality (i.e. no styling)

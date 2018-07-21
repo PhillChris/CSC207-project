@@ -12,10 +12,9 @@ public class AdminUser extends User {
    *
    * @param name the name of this AdminUser
    * @param email the email of this AdminUser
-   * @param password the password of ths AdminUser
    */
-  public AdminUser(String name, String email, String password) throws EmailInUseException {
-    super(name, email, password);
+  public AdminUser(String name, String email) throws EmailInUseException {
+    super(name, email);
   }
 
   /** Requests the production of a daily report to dailyReports.txt */

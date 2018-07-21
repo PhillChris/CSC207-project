@@ -16,11 +16,15 @@ public class User {
   /** An ArrayList of this User's last three trips */
   private ArrayList<Trip> lastThreeTrips = new ArrayList<>();
   /** HashMap linking each month to the total expenditure for that month */
-  private HashMap<YearMonth, Integer> ExpenditureMonthly;
+  private HashMap<YearMonth, Integer> expenditureMonthly;
+  /** The log mapping all users to their given password in the system */
+  private static HashMap<String, String> authLog = new HashMap<>();
   /** An ArrayList of this User's cards */
   private List<Card> cards;
   /** This User's name */
   private String name;
+  /** This User's password */
+  private String password;
   /** The id given to the next card added by the user */
   private int cardCounter;
 
@@ -29,17 +33,20 @@ public class User {
    *
    * @param name the name of this User
    * @param email the email of this User
+   * @param password the password of ths User
    */
-  public User(String name, String email) throws EmailInUseException {
+  public User(String name, String email, String password) throws EmailInUseException {
     if (allUsers.keySet().contains(email)) { // If this User already exists
       throw new EmailInUseException();
     }
     this.name = name;
     this.email = email;
+    this.password = password;
     this.cards = new ArrayList<>();
     allUsers.put(email, this);
+    authLog.put(email, password);
     cardCounter = 1;
-    ExpenditureMonthly = new HashMap<>();
+    expenditureMonthly = new HashMap<>();
     calculator = new CostCalculator();
   }
 
@@ -52,9 +59,22 @@ public class User {
     return copy;
   }
 
+  static HashMap<String, String> getAuthLogCopy() {
+    HashMap<String, String> copy = new HashMap<>();
+    for (String name : authLog.keySet()) {
+      copy.put(name, authLog.get(name));
+    }
+    return copy;
+  }
+
   /** Removes this user from the system. */
   void removeUser() {
     allUsers.remove(this.email);
+    authLog.remove(this.email);
+  }
+
+  String getUserName() {
+    return this.name;
   }
 
   /** @return This User's email */
@@ -71,14 +91,14 @@ public class User {
   /** @return A String detailing average expenditure per month of this User. */
   String getAvgMonthly() {
     String message = "Cost per month for user: " + this.name + System.lineSeparator();
-    List<YearMonth> months = new ArrayList<>(this.ExpenditureMonthly.keySet());
+    List<YearMonth> months = new ArrayList<>(this.expenditureMonthly.keySet());
     for (YearMonth month : months) {
       message +=
           month.toString()
               + " : "
               + "$"
               + String.format(
-                  "%.2f", ExpenditureMonthly.get(month) / (month.lengthOfMonth() * 100.0));
+                  "%.2f", expenditureMonthly.get(month) / (month.lengthOfMonth() * 100.0));
       message += System.lineSeparator();
     }
     return message.trim();
@@ -216,10 +236,10 @@ public class User {
     Trip lastTrip = card.getLastTrip();
 
     // Update Monthly Expenditure History
-    if (ExpenditureMonthly.containsKey(month)) {
-      ExpenditureMonthly.put(month, ExpenditureMonthly.get(month) + lastTrip.getFee());
+    if (expenditureMonthly.containsKey(month)) {
+      expenditureMonthly.put(month, expenditureMonthly.get(month) + lastTrip.getFee());
     } else {
-      ExpenditureMonthly.put(month, lastTrip.getFee());
+      expenditureMonthly.put(month, lastTrip.getFee());
     }
   }
 }

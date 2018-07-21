@@ -12,6 +12,7 @@ public class CardParser extends ObjectParser {
    */
   public CardParser(BufferedWriter writer) {
     super(writer);
+    buildCardHashMap();
   }
 
   /**
@@ -148,5 +149,51 @@ public class CardParser extends ObjectParser {
     } catch (TransitException a) {
       write(a.getMessage());
     }
+  }
+
+  /** A helper method to add card-specific methods to the command hash map */
+  private void buildCardHashMap() {
+    keyWords.put(
+        "ADDCARD",
+        (cardInfo) -> {
+          this.add(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "REMOVECARD",
+        (cardInfo) -> {
+          this.remove(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "CHECKBALANCE",
+        (cardInfo) -> {
+          this.report(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "TAP",
+        (cardInfo) -> {
+          this.tap(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "REPORTTHEFT",
+        (userInfo) -> {
+          this.reportTheft(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "ACTIVATECARD",
+        (cardInfo) -> {
+          this.activate(cardInfo);
+          return null;
+        });
+    keyWords.put(
+        "ADDFUNDS",
+        (userInfo) -> {
+          this.addFunds(userInfo);
+          return null;
+        });
   }
 }

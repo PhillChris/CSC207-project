@@ -3,25 +3,26 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 /** A transit system simulation. */
-public class Main {
+public class Main extends Application {
   /**
    * Runs the transit system simulation, with event input from events.txt
    *
    * @param args standard Java argument
    * @throws IOException
    */
-  public static void main(String[] args) throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader("events.txt"));
+  public static void main(String[] args) {
+    launch(args);
+  }
+
+  public void start(Stage primaryStage) throws IOException {
+    primaryStage.setTitle("Transit System Simulator");
     BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
-    TransitReader fileInterpreter = new TransitReader(reader, writer);
-    try {
-      fileInterpreter.init();
-      fileInterpreter.run();
-    } catch (InitLineException init) {
-      writer.write(init.getMessage());
-    }
-    writer.close();
+    LoginPage loginPage = new LoginPage(primaryStage, writer);
+    primaryStage.setScene(loginPage.getScene());
+    primaryStage.show();
   }
 }

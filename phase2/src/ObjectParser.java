@@ -19,7 +19,6 @@ public abstract class ObjectParser {
    */
   public ObjectParser(BufferedWriter writer) {
     this.writer = writer;
-    makeCommonHashMap();
   }
 
   /**
@@ -55,7 +54,8 @@ public abstract class ObjectParser {
    *
    * @param info The parameters needed to generate this object
    */
-  abstract void add(List<String> info);
+  // abstract void add(List<String> info);
+  // TODO: reinstate common interface for adding stuff?
 
   /**
    * Removes some given object from the transit system. To be implemented by all parsers in this
@@ -63,7 +63,8 @@ public abstract class ObjectParser {
    *
    * @param info The parameters needed to locate this object for removal
    */
-  abstract void remove(List<String> info);
+  //abstract void remove(List<String> info);
+  // TODO: reinstate common interface for removing stuff?
 
   /**
    * Generates some kind of status report and writes it to outputs.txt. To be implemented by all
@@ -71,7 +72,8 @@ public abstract class ObjectParser {
    *
    * @param info The parameters needed to locate this object for reporting
    */
-  abstract void report(List<String> info);
+  //abstract void report(List<String> info);
+  // TODO: reimplement common interface for generating a report
 
   /**
    * Parses a list containing a command and its parameters, and calls the appropriate function in
@@ -92,7 +94,7 @@ public abstract class ObjectParser {
     }
   }
 
-  /** @return this parser's hashmap sending command words to their given functions */
+  /** @return this userParser's hashmap sending command words to their given functions */
   HashMap<String, Function<List<String>, Void>> getKeyWords() {
     return this.keyWords;
   }
@@ -180,18 +182,5 @@ public abstract class ObjectParser {
   private Station findSubwayStation(String stationName) {
     SubwayFactory fact = new SubwayFactory();
     return fact.newStation("").getStationsCopy().get(stationName);
-  }
-
-  /**
-   * A helper method adding the common elements across all parser types to the hash maps of any type
-   * of parser in the transit system.
-   */
-  private void makeCommonHashMap() {
-    keyWords.put(
-        "ENDDAY",
-        (emptyArray) -> {
-          TransitTime.endDay(emptyArray);
-          return null;
-        });
   }
 }

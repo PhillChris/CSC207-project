@@ -12,57 +12,80 @@ public class UserParser extends ObjectParser {
    */
   UserParser(BufferedWriter writer) {
     super(writer);
+    buildUserHashMap();
   }
 
-  /** Processes an add user request. */
-  void add(String username, String email, String password, boolean isAdmin)
-      throws EmailInUseException {
+  /**
+   * Processes an add user request.
+   *
+   * @param userInfo Information given for the user from TransitReader.run
+   */
+  void add(List<String> userInfo) {
     try {
-      if (isAdmin) {
-        AdminUser admin = new AdminUser(username, email, password);
+      this.checkInput(userInfo, 3);
+      if (userInfo.get(0).equals("yes")) {
+        AdminUser admin = new AdminUser(userInfo.get(1), userInfo.get(2));
         write("Added admin user " + admin);
       } else {
-        User user = new User(username, email, password);
+        User user = new User(userInfo.get(1), userInfo.get(2));
         write("Added user " + user);
       }
-    } catch (EmailInUseException a) {
-      throw new EmailInUseException();
+    } catch (TransitException a) {
+      a.getMessage();
     }
   }
 
   /**
    * Processes a remove user request.
    *
-   * @param user The user to be removed
+   * @param userInfo Information given for the user from TransitReader.run
    */
-  void remove(User user) {
-    user.removeUser();
-    write("Removed user " + user);
+  void remove(List<String> userInfo) {
+    try {
+      this.checkInput(userInfo, 1);
+      User user = findUser(userInfo.get(0));
+      user.removeUser();
+      write("Removed user " + user);
+    } catch (TransitException a) {
+      a.getMessage();
+    }
   }
 
   /**
    * Generates a report containing all of a given user's cards and balances.
    *
-   * @param user The user whose report is being fetched
+   * @param userInfo Information given for the user from TransitReader.run
    */
-  String report(User user) {
-    String message = "Username: " + user;
-    for (int i = 0; i < user.getCardsCopy().size(); i++) {
-      message += System.lineSeparator();
-      message += user.getCardsCopy().get(i);
+  void report(List<String> userInfo) {
+    try {
+      this.checkInput(userInfo, 1);
+      User user = findUser(userInfo.get(0));
+      String message = "Username: " + user;
+      for (int i = 0; i < user.getCardsCopy().size(); i++) {
+        message += System.lineSeparator();
+        message += user.getCardsCopy().get(i);
+      }
+      write(message);
+    } catch (TransitException a) {
+      write(a.getMessage());
     }
-    return message;
   }
 
   /**
    * Processes a change name request for a given user.
    *
-   * @param user Information given for the user from TransitReader.run
-   * @param newName The new name for this given user
+   * @param userInfo Information given for the user from TransitReader.run
    */
-  void changeName(User user, String newName) {
-    user.changeName(newName);
-    write("Changed user name to " + user);
+  void changeName(List<String> userInfo) {
+    try {
+      this.checkInput(userInfo, 2);
+      User user = findUser(userInfo.get(0));
+      String newName = userInfo.get(1);
+      user.changeName(newName);
+      write("Changed user name to " + user);
+    } catch (TransitException a) {
+      write(a.getMessage());
+    }
   }
 
   /**
@@ -118,5 +141,51 @@ public class UserParser extends ObjectParser {
     } catch (TransitException a) {
       write(a.getMessage());
     }
+  }
+
+  /** A helper method to add user-specific methods to the command hash map */
+  private void buildUserHashMap() {
+    keyWords.put(
+        "ADDUSER",
+        (userInfo) -> {
+          this.add(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "REMOVEUSER",
+        (userInfo) -> {
+          this.remove(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "USERREPORT",
+        (userInfo) -> {
+          this.report(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "CHANGENAME",
+        (userInfo) -> {
+          this.changeName(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "DAILYREPORTS",
+        (userInfo) -> {
+          this.dailyReports(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "MONTHLYEXPENDITURE",
+        (userInfo) -> {
+          this.monthlyExpenditure(userInfo);
+          return null;
+        });
+    keyWords.put(
+        "GETLASTTHREE",
+        (userInfo) -> {
+          this.getLastThree(userInfo);
+          return null;
+        });
   }
 }

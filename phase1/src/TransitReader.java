@@ -56,7 +56,7 @@ public class TransitReader {
       throw new InitLineException();
     }
 
-    // Sets the initial date for the system, and passes userParser for output purposes
+    // Sets the initial date for the system, and passes parser for output purposes
     TransitTime.initDate(initLineWords.get(2), this.userParser);
 
     /* Iterate through routes and names of stations given in the first lines of events.txt,

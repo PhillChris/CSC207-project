@@ -17,17 +17,11 @@ public class CardParser extends ObjectParser {
   /**
    * Processes an add card request.
    *
-   * @param cardInfo Information given for the card from TransitReader.run
+   * @param user The user whose card we are adding to
    */
-  void add(List<String> cardInfo) {
-    try {
-      this.checkInput(cardInfo, 1);
-      User user = findUser(cardInfo.get(0));
-      user.addCard();
-      write("Added card to user " + user);
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
+  void add(User user) {
+    user.addCard();
+    write("Added card to user " + user);
   }
 
   /**

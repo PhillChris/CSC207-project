@@ -48,10 +48,11 @@ public abstract class Page {
     return passwordField;
   }
 
-  protected void placeButton(String text, Runnable function, int col, int row) {
+  protected Button placeButton(String text, Runnable function, int col, int row) {
     Button button = new Button(text);
     button.setOnAction(data -> function.run());
     grid.add(button, col, row);
+    return button;
   }
 
   protected CheckBox placeCheckBox(String text, int col, int row) {

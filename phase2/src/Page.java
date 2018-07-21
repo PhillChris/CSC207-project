@@ -30,9 +30,10 @@ public abstract class Page {
 
   abstract Scene makeScene(Stage primaryStage);
 
-  protected void placeLabel(String text, int col, int row) {
+  protected Label placeLabel(String text, int col, int row) {
     Label tempLabel = new Label(text);
     grid.add(tempLabel, col, row);
+    return tempLabel;
   }
 
   protected TextField placeTextField(int col, int row) {

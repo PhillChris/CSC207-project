@@ -8,8 +8,9 @@ public class ChangeNamePage extends AuthenticatedPage {
       UserParser userParser,
       CardParser cardParser,
       User user,
-      UserPage parentPage) {
-    super(primaryStage, userParser, cardParser, user, parentPage); }
+      UserPage parentPage,
+      LoginPage loginPage) {
+    super(primaryStage, userParser, cardParser, user, parentPage, loginPage); }
 
   public Scene makeScene(Stage primaryStage) {
     placeLabel("New Username: ", 0, 0);
@@ -18,6 +19,7 @@ public class ChangeNamePage extends AuthenticatedPage {
         "Change name!",
         () -> {
           this.userParser.changeName(this.user, newName.getText());
+          this.parentPage.updateUserData(primaryStage);
           primaryStage.setScene(this.parentPage.getScene());
         },
         1,
@@ -26,7 +28,11 @@ public class ChangeNamePage extends AuthenticatedPage {
     return new Scene(grid, 300, 250);
   }
 
-  protected Scene makeUserScene(Stage primaryStage) {
-    return this.scene; //todo: add user data here
+  protected void addUserData(Stage primaryStage) {
+    // return this.scene; //todo: add user data here
+  }
+
+  void updateUserData(Stage primaryStage) {
+
   }
 }

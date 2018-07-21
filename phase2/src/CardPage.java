@@ -7,8 +7,9 @@ public class CardPage extends AuthenticatedPage {
       UserParser userParser,
       CardParser cardParser,
       User user,
-      UserPage parentPage) {
-    super(primaryStage, userParser, cardParser, user, parentPage);
+      UserPage parentPage,
+      LoginPage loginPage) {
+    super(primaryStage, userParser, cardParser, user, parentPage, loginPage);
   }
 
   protected Scene makeScene(Stage primaryStage) {
@@ -18,7 +19,11 @@ public class CardPage extends AuthenticatedPage {
     return new Scene(grid, 300, 250);
   }
 
-  protected Scene makeUserScene(Stage primaryStage) {
-    return this.scene; //todo: add user data here
+  protected void addUserData(Stage primaryStage) {
+    // return this.scene; //todo: add user data here
+  }
+
+  protected void updateUserData(Stage primaryStage) {
+
   }
 }

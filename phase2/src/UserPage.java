@@ -1,16 +1,19 @@
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class UserPage extends AuthenticatedPage {
+  private Label userLabel;
+
   public UserPage(
       Stage primaryStage,
       UserParser userParser,
       CardParser cardParser,
       User user,
       LoginPage parentPage) {
-    super(primaryStage, userParser, cardParser, user, parentPage);
+    super(primaryStage, userParser, cardParser, user, null, parentPage);
   }
 
   protected Scene makeScene(Stage primaryStage) {
@@ -18,11 +21,12 @@ public class UserPage extends AuthenticatedPage {
         "Cards",
         () -> {
           CardPage cardPage =
-              new CardPage(primaryStage, this.userParser, this.cardParser, this.user, this);
+              new CardPage(
+                  primaryStage, this.userParser, this.cardParser, this.user, this, this.loginPage);
           primaryStage.setScene(cardPage.getScene());
         },
         0,
-        1);
+        2);
     placeButton(
         "Info",
         () -> {
@@ -35,18 +39,19 @@ public class UserPage extends AuthenticatedPage {
           alert.showAndWait();
         },
         0,
-        2);
+        3);
     placeButton(
         "Change username",
         () -> {
           ChangeNamePage namePage =
-              new ChangeNamePage(primaryStage, this.userParser, this.cardParser, this.user, this);
+              new ChangeNamePage(
+                  primaryStage, this.userParser, this.cardParser, this.user, this, this.loginPage);
           primaryStage.setScene(namePage.getScene());
         },
         0,
-        3);
+        4);
 
-    placeButton("Logout", () -> primaryStage.setScene(parentPage.getScene()), 0, 4);
+    placeButton("Logout", () -> primaryStage.setScene(parentPage.getScene()), 0, 5);
     placeButton(
         "Remove this account!",
         () -> {
@@ -58,15 +63,19 @@ public class UserPage extends AuthenticatedPage {
                   AlertType.CONFIRMATION,
                   () -> {
                     userParser.remove(user);
-                    primaryStage.setScene(parentPage.getScene());
+                    primaryStage.setScene(this.loginPage.getScene());
                   });
         },
         0,
-        5);
+        6);
     return new Scene(grid, 300, 250);
   }
 
-  protected Scene makeUserScene(Stage primaryStage) {
-    return this.scene;
+  protected void addUserData(Stage primaryStage) {
+    this.userLabel = placeLabel("Hello " + user.getUserName(), 0, 1);
+  }
+
+  void updateUserData(Stage primaryStage) {
+    updateLabel(this.userLabel, "Hello " + user.getUserName());
   }
 }

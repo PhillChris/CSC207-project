@@ -20,7 +20,7 @@ public class User {
   /** The log mapping all users to their given password in the system */
   private static HashMap<String, String> authLog = new HashMap<>();
   /** An ArrayList of this User's cards */
-  private List<Card> cards;
+  private HashMap<Integer, Card> cards;
   /** This User's name */
   private String name;
   /** This User's password */
@@ -42,7 +42,7 @@ public class User {
     this.name = name;
     this.email = email;
     this.password = password;
-    this.cards = new ArrayList<>();
+    this.cards = new HashMap<>();
     allUsers.put(email, this);
     authLog.put(email, password);
     cardCounter = 1;
@@ -83,9 +83,12 @@ public class User {
   }
 
   /** @return A copy of the cards this user holds */
-  List<Card> getCardsCopy() {
-    List<Card> copy = new ArrayList<>(this.cards);
-    return copy;
+  HashMap<Integer, Card> getCardsCopy() {
+    HashMap<Integer, Card> tempMap = new HashMap<>();
+    for (Integer i: this.cards.keySet()) {
+      tempMap.put(i, this.cards.get(i));
+    }
+    return tempMap;
   }
 
   /** @return A String detailing average expenditure per month of this User. */
@@ -125,7 +128,8 @@ public class User {
 
   /** Add a card to this User's list of cards. */
   void addCard() {
-    this.cards.add(new Card(cardCounter++));
+    this.cards.put(cardCounter, new Card(cardCounter));
+    cardCounter++;
   }
 
   /**
@@ -134,8 +138,10 @@ public class User {
    * @param card the card to be removed from this Users collection of cards.
    */
   void removeCard(Card card) {
-    if (this.cards.contains(card)) {
-      this.cards.remove(card);
+    if (card != null) {
+      if (this.cards.get(card.getId()) == card) {
+        this.cards.remove(card.getId(), card);
+      }
     }
   }
 

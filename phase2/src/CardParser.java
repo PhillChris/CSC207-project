@@ -27,49 +27,32 @@ public class CardParser extends ObjectParser {
   /**
    * Processes a remove card request.
    *
-   * @param cardInfo Information given for the card from TransitReader.run
+   * @param user The user who's card we are removing
+   * @param card The card which is being removed
    */
-  void remove(List<String> cardInfo) {
-    try {
-      this.checkInput(cardInfo, 2);
-      User user = findUser(cardInfo.get(0));
-      Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
-      user.removeCard(card);
-      write("Removed card from user " + user);
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
+  void remove(User user, Card card) {
+    user.removeCard(card);
+    write("Removed card from user " + user);
   }
 
   /**
    * Creates a balance report for a given card.
    *
-   * @param cardInfo Information given for the card from TransitReader.run
+   * @param user Information given for the card from TransitReader.run
    */
-  void report(List<String> cardInfo) {
-    try {
-      this.checkInput(cardInfo, 2);
-      User user = findUser(cardInfo.get(0));
-      Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
-      write(user + "'s " + card.toString());
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
+  void report(User user, Card card) {
+    write(user + "'s " + card.toString());
   }
 
   /**
    * Processes a card's tap request.
    *
-   * @param cardInfo Information given for the card from TransitReader.run
    */
-  void tap(List<String> cardInfo) {
+  void tap(User user, Card card, String timeString, String stationName, String routeName) {
     try {
-      this.checkInput(cardInfo, 5);
       // Find the time, user, card and station from the given information
-      LocalDateTime time = TransitTime.getTime(cardInfo.get(0));
-      User user = findUser(cardInfo.get(1));
-      Card card = findCard(user, Integer.parseInt(cardInfo.get(2)));
-      Station station = findStation(cardInfo.get(3), cardInfo.get(4));
+      LocalDateTime time = TransitTime.getTime(timeString);
+      Station station = findStation(stationName, routeName);
 
       // If no such station is found
       if (station == null) {
@@ -90,57 +73,32 @@ public class CardParser extends ObjectParser {
   /**
    * Process a theft report for a given card.
    *
-   * @param cardInfo Information given for the card from TransitReader.run
+   * @param card Information given for the card from TransitReader.run
    */
-  void reportTheft(List<String> cardInfo) {
-    try {
-      this.checkInput(cardInfo, 2);
-      User user = findUser(cardInfo.get(0)); // passing user email
-      Card card = findCard(user, Integer.parseInt(cardInfo.get(1))); // passing cardID.
-      card.suspendCard();
-      write(String.format("Theft reported for user %s card %s", cardInfo.get(0), cardInfo.get(1)));
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
+  void reportTheft(Card card) {
+    card.suspendCard();
   }
 
   /**
    * Processes a card activation request.
    *
-   * @param cardInfo Information given for the card from TransitReader.run
+   * @param card Information given for the card from TransitReader.run
    */
-  void activate(List<String> cardInfo) {
-    try {
-      this.checkInput(cardInfo, 2);
-      User user = findUser(cardInfo.get(0));
-      Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
-      card.activateCard(card);
-      write(
-          String.format("Card reactivated for user %s card %s", cardInfo.get(0), cardInfo.get(1)));
-
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
+  void activate(Card card) {
+    card.activateCard(card);
   }
 
   /**
    * Processes an add funds request for a given card.
    *
-   * @param cardInfo Information given for the card from TransitReader.run
+   * @param card Information given for the card from TransitReader.run
    */
-  void addFunds(List<String> cardInfo) {
-    try {
-      this.checkInput(cardInfo, 3);
-      Integer amountAdd = Integer.parseInt(cardInfo.get(2)) * 100;
-      User user = findUser(cardInfo.get(0));
-      Card card = findCard(user, Integer.parseInt(cardInfo.get(1)));
+  void addFunds(User user, Card card, int centAdd) {
+      Integer amountAdd = centAdd * 100;
       card.addBalance(amountAdd);
       write(
           String.format(
               "Added: $%s to %s, %s",
               String.format("%.2f", amountAdd.doubleValue() / 100), user, card));
-    } catch (TransitException a) {
-      write(a.getMessage());
-    }
   }
 }

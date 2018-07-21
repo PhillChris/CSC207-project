@@ -60,7 +60,6 @@ public class UserPage extends AuthenticatedPage {
                   "Delete account confirmation",
                   "Confirm:",
                   "Are you sure you want this account to be removed?",
-                  AlertType.CONFIRMATION,
                   () -> {
                     userParser.remove(user);
                     primaryStage.setScene(this.loginPage.getScene());
@@ -75,7 +74,7 @@ public class UserPage extends AuthenticatedPage {
     this.userLabel = placeLabel("Hello " + user.getUserName(), 0, 1);
   }
 
-  void updateUserData(Stage primaryStage) {
+  void updatePage(Stage primaryStage) {
     updateLabel(this.userLabel, "Hello " + user.getUserName());
   }
 }

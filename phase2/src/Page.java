@@ -70,9 +70,9 @@ public abstract class Page {
   }
 
   protected Alert makeConfirmationAlert(
-    String title, String header, String content, AlertType type, Runnable function) {
+    String title, String header, String content, Runnable function) {
 
-    Alert alert = makeAlert(title, header, content, type);
+    Alert alert = makeAlert(title, header, content, AlertType.CONFIRMATION);
 
     ButtonType confirm = new ButtonType("Proceed");
     ButtonType reject = new ButtonType("Cancel");

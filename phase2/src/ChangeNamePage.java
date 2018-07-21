@@ -19,7 +19,7 @@ public class ChangeNamePage extends AuthenticatedPage {
         "Change name!",
         () -> {
           this.userParser.changeName(this.user, newName.getText());
-          this.parentPage.updateUserData(primaryStage);
+          this.parentPage.updatePage(primaryStage);
           primaryStage.setScene(this.parentPage.getScene());
         },
         1,
@@ -32,7 +32,7 @@ public class ChangeNamePage extends AuthenticatedPage {
     // return this.scene; //todo: add user data here
   }
 
-  void updateUserData(Stage primaryStage) {
+  void updatePage(Stage primaryStage) {
 
   }
 }

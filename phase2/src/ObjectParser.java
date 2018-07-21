@@ -127,23 +127,6 @@ public abstract class ObjectParser {
   }
 
   /**
-   * Retrieves this User's card with the given ID
-   *
-   * @param user The user whose card we are looking for
-   * @param cardID The user-specific id of this card
-   * @return The Card with the given ID
-   * @throws CardNotFoundException Thrown if this User contains no card with given ID
-   */
-  Card findCard(User user, int cardID) throws CardNotFoundException {
-    for (Card tempCard : user.getCardsCopy()) {
-      if (tempCard.getId() == cardID) {
-        return tempCard;
-      }
-    }
-    throw new CardNotFoundException();
-  }
-
-  /**
    * Finds a specific station in this transit system
    *
    * @param stationType the type of the station to be found

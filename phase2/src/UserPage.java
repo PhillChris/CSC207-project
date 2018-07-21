@@ -1,29 +1,28 @@
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class UserPage extends Page {
-  private LoginPage parentPage;
-  private User user;
-
+public class UserPage extends AuthenticatedPage {
   public UserPage(
       Stage primaryStage,
-      LoginPage parentPage,
-      User user,
       UserParser userParser,
-      CardParser cardParser) {
-    super(primaryStage, userParser, cardParser);
-    this.parentPage = parentPage;
-    this.user = user;
+      CardParser cardParser,
+      User user,
+      LoginPage parentPage) {
+    super(primaryStage, userParser, cardParser, user, parentPage);
   }
 
   protected Scene makeScene(Stage primaryStage) {
-    placeButton("Cards", () -> {
-      CardPage cardPage = new CardPage(primaryStage, this.userParser, this.cardParser, this.user, this);
-      primaryStage.setScene(cardPage.getScene());
-    },  0, 1);
+    placeButton(
+        "Cards",
+        () -> {
+          CardPage cardPage =
+              new CardPage(primaryStage, this.userParser, this.cardParser, this.user, this);
+          primaryStage.setScene(cardPage.getScene());
+        },
+        0,
+        1);
     placeButton(
         "Info",
         () -> {
@@ -35,7 +34,6 @@ public class UserPage extends Page {
                   AlertType.INFORMATION);
           alert.showAndWait();
         },
-
         0,
         2);
     placeButton(
@@ -45,11 +43,10 @@ public class UserPage extends Page {
               new ChangeNamePage(primaryStage, this.userParser, this.cardParser, this.user, this);
           primaryStage.setScene(namePage.getScene());
         },
-
         0,
         3);
 
-    placeButton("Logout", () -> primaryStage.setScene(parentPage.getScene()),  0, 4);
+    placeButton("Logout", () -> primaryStage.setScene(parentPage.getScene()), 0, 4);
     placeButton(
         "Remove this account!",
         () -> {
@@ -64,9 +61,12 @@ public class UserPage extends Page {
                     primaryStage.setScene(parentPage.getScene());
                   });
         },
-
         0,
         5);
     return new Scene(grid, 300, 250);
+  }
+
+  protected Scene makeUserScene(Stage primaryStage) {
+    return this.scene;
   }
 }

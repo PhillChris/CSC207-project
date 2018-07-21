@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -30,9 +32,14 @@ public class CardPage extends AuthenticatedPage {
     TextField removeCardNumber = placeTextField(1, 1);
     placeButton("Remove card", () -> {
       makeConfirmationAlert("Removal confirmation", "Confirm removal:", "Are you sure that you want to remove this card?", () -> {
+        try {
         cardParser.remove(user, user.getCardsCopy().get(Integer.parseInt(removeCardNumber.getText())));
         this.updatePage(primaryStage);
         primaryStage.setScene(this.getScene());
+        } catch (NumberFormatException a) {
+          Alert alert = makeAlert("Invalid number", "", "The provided argument is not a valid number", AlertType.ERROR);
+          alert.showAndWait();
+        }
       });
     }, 0, 1);
     placeButton("Go Back", () -> primaryStage.setScene(parentPage.getScene()), 0, 2);

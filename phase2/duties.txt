@@ -8,4 +8,3 @@ PHILLIP:
 - SignupPage: implemented core functionality (i.e. no styling)
 - UserPage: implemented core functionality (i.e. no styling)
 - ChangeNamePage: implemented functinality (i.e. no styling)
-- 

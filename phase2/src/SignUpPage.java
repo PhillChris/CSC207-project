@@ -16,20 +16,18 @@ public class SignUpPage extends Page{
   }
 
   protected Scene makeScene(Stage primaryStage) {
-    GridPane grid = getGrid();
+    placeLabel( "New User: ", 0, 1);
+    placeLabel( "New Email: ", 0, 2);
+    placeLabel( "New Password: ", 0,3);
 
-    placeLabel(grid, "New User: ", 0, 1);
-    placeLabel(grid, "New Email: ", 0, 2);
-    placeLabel(grid, "New Password: ", 0,3);
+    TextField username = placeTextField( 1, 1);
+    TextField email = placeTextField( 1, 2);
+    PasswordField password = placePasswordField( 1, 3);
 
-    TextField username = placeTextField(grid, 1, 1);
-    TextField email = placeTextField(grid, 1, 2);
-    PasswordField password = placePasswordField(grid, 1, 3);
-
-    CheckBox adminBox = placeCheckBox("Is Admin?", grid, 1, 4);
+    CheckBox adminBox = placeCheckBox("Is Admin?",  1, 4);
 
     placeButton("Go back", () -> primaryStage.setScene(parentPage.getScene()),
-        grid, 1, 5);
+         1, 5);
 
     placeButton("Make Account!", () -> {
       try {
@@ -42,7 +40,7 @@ public class SignUpPage extends Page{
             AlertType.WARNING);
         alert.showAndWait();
       }
-    }, grid, 1, 6);
+    },  1, 6);
 
     return new Scene(grid, 300, 250);
   }

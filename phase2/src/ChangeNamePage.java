@@ -19,17 +19,15 @@ public class ChangeNamePage extends Page {
   }
 
   public Scene makeScene(Stage primaryStage) {
-    GridPane grid = getGrid();
-
-    placeLabel(grid, "New Username: ", 0, 0);
-    TextField newName = placeTextField(grid, 1, 0);
+    placeLabel( "New Username: ", 0, 0);
+    TextField newName = placeTextField( 1, 0);
     placeButton(
         "Change name!",
         () -> {
           this.userParser.changeName(this.user, newName.getText());
           primaryStage.setScene(this.parentPage.getScene());
         },
-        grid,
+
         1,
         1);
 

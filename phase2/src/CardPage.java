@@ -18,10 +18,9 @@ public class CardPage extends Page {
   }
 
   protected Scene makeScene(Stage primaryStage) {
-    GridPane grid = getGrid();
-    placeButton("Add card", () -> System.out.println("Cards will be added here!"), grid, 0, 0);
-    placeButton("Remove card", () -> System.out.println("Cards will be removed here!"), grid, 0, 1);
-    placeButton("Go Back", () -> primaryStage.setScene(parentPage.getScene()), grid, 0, 2);
+    placeButton("Add card", () -> System.out.println("Cards will be added here!"),  0, 0);
+    placeButton("Remove card", () -> System.out.println("Cards will be removed here!"),  0, 1);
+    placeButton("Go Back", () -> primaryStage.setScene(parentPage.getScene()),  0, 2);
     return new Scene(grid, 300, 250);
   }
 }

@@ -15,10 +15,12 @@ public abstract class Page {
   protected UserParser userParser;
   protected CardParser cardParser;
   protected Scene scene;
+  protected GridPane grid;
 
   public Page(Stage primaryStage, UserParser userParser, CardParser cardParser) {
     this.userParser = userParser;
     this.cardParser = cardParser;
+    this.grid = new GridPane();
     this.scene = makeScene(primaryStage);
   }
 
@@ -28,34 +30,30 @@ public abstract class Page {
 
   abstract Scene makeScene(Stage primaryStage);
 
-  protected GridPane getGrid() {
-    return new GridPane();
-  }
-
-  protected void placeLabel(GridPane grid, String text, int col, int row) {
+  protected void placeLabel(String text, int col, int row) {
     Label tempLabel = new Label(text);
     grid.add(tempLabel, col, row);
   }
 
-  protected TextField placeTextField(GridPane grid, int col, int row) {
+  protected TextField placeTextField(int col, int row) {
     TextField textField = new TextField();
     grid.add(textField, col, row);
     return textField;
   }
 
-  protected PasswordField placePasswordField(GridPane grid, int col, int row) {
+  protected PasswordField placePasswordField(int col, int row) {
     PasswordField passwordField = new PasswordField();
     grid.add(passwordField, col, row);
     return passwordField;
   }
 
-  protected void placeButton(String text, Runnable function, GridPane grid, int col, int row) {
+  protected void placeButton(String text, Runnable function, int col, int row) {
     Button button = new Button(text);
     button.setOnAction(data -> function.run());
     grid.add(button, col, row);
   }
 
-  protected CheckBox placeCheckBox(String text, GridPane grid, int col, int row) {
+  protected CheckBox placeCheckBox(String text, int col, int row) {
     CheckBox checkBox = new CheckBox(text);
     grid.add(checkBox, col, row);
     return checkBox;
@@ -80,7 +78,6 @@ public abstract class Page {
 
     Optional<ButtonType> result = alert.showAndWait();
 
-    // If the user chose to destroy the given account
     if (result.get() == confirm) {
       function.run();
     }

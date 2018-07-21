@@ -14,13 +14,11 @@ public class LoginPage extends Page {
   }
 
   protected Scene makeScene(Stage primaryStage) {
-    GridPane grid = getGrid();
+    placeLabel("Email: ", 0, 1);
+    placeLabel("Password: ", 0, 2);
 
-    placeLabel(grid, "Email: ", 0, 1);
-    placeLabel(grid, "Password: ", 0, 2);
-
-    TextField email = placeTextField(grid, 1, 1);
-    PasswordField password = placePasswordField(grid, 1, 2);
+    TextField email = placeTextField(1, 1);
+    PasswordField password = placePasswordField(1, 2);
 
     placeButton(
         "Log In",
@@ -37,7 +35,6 @@ public class LoginPage extends Page {
             System.out.println(a.getMessage());
           }
         },
-        grid,
         2,
         1);
 
@@ -47,7 +44,6 @@ public class LoginPage extends Page {
           SignUpPage signupPage = new SignUpPage(primaryStage, this, this.userParser, this.cardParser);
           primaryStage.setScene(signupPage.getScene());
         },
-        grid,
         2,
         2);
 

@@ -20,11 +20,10 @@ public class UserPage extends Page {
   }
 
   protected Scene makeScene(Stage primaryStage) {
-    GridPane grid = getGrid();
     placeButton("Cards", () -> {
       CardPage cardPage = new CardPage(primaryStage, this.userParser, this.cardParser, this.user, this);
       primaryStage.setScene(cardPage.getScene());
-    }, grid, 0, 1);
+    },  0, 1);
     placeButton(
         "Info",
         () -> {
@@ -36,7 +35,7 @@ public class UserPage extends Page {
                   AlertType.INFORMATION);
           alert.showAndWait();
         },
-        grid,
+
         0,
         2);
     placeButton(
@@ -46,11 +45,11 @@ public class UserPage extends Page {
               new ChangeNamePage(primaryStage, this.userParser, this.cardParser, this.user, this);
           primaryStage.setScene(namePage.getScene());
         },
-        grid,
+
         0,
         3);
 
-    placeButton("Logout", () -> primaryStage.setScene(parentPage.getScene()), grid, 0, 4);
+    placeButton("Logout", () -> primaryStage.setScene(parentPage.getScene()),  0, 4);
     placeButton(
         "Remove this account!",
         () -> {
@@ -65,7 +64,7 @@ public class UserPage extends Page {
                     primaryStage.setScene(parentPage.getScene());
                   });
         },
-        grid,
+
         0,
         5);
     return new Scene(grid, 300, 250);

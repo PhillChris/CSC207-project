@@ -21,7 +21,10 @@ public class UserPage extends Page {
 
   protected Scene makeScene(Stage primaryStage) {
     GridPane grid = getGrid();
-    placeButton("Cards", () -> System.out.println("Here is a list of my cards!"), grid, 0, 1);
+    placeButton("Cards", () -> {
+      CardPage cardPage = new CardPage(primaryStage, this.userParser, this.cardParser, this.user, this);
+      primaryStage.setScene(cardPage.getScene());
+    }, grid, 0, 1);
     placeButton(
         "Info",
         () -> {

@@ -4,7 +4,16 @@ NOTE: For Phase 1 functionality, duties were not divided by class and person-spe
 PHILLIP: 
 - Main: refactored to launch window
 - Page: implemented core functionality (i.e. no styling) inherited by all other pages
+- AuthenticatedPage: implemented core functionality (i.e. no styling) inherited by all other pages
+  with a user attached to it
 - LoginPage: implemented core functionality (i.e. no styling)
 - SignupPage: implemented core functionality (i.e. no styling)
 - UserPage: implemented core functionality (i.e. no styling)
-- ChangeNamePage: implemented functinality (i.e. no styling)
+- ChangeNamePage: implemented functionality (i.e. no styling)
+- CardPage: implemented core functionality (i.e. no styling)
+
+FARDIN:
+- Implemented live time update and added display
+
+ANDRE:
+- AdminUserPage: implemented core functionality (i.e. no styling)

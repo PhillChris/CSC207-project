@@ -116,7 +116,5 @@ public abstract class Page {
     );
     timeline.getKeyFrames().add(frame);
     timeline.playFromStart();
-
-
   }
 }

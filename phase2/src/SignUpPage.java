@@ -10,8 +10,8 @@ public class SignUpPage extends Page {
   private LoginPage parentPage;
 
   public SignUpPage(
-      Stage primaryStage, LoginPage parentPage, UserParser userParser, CardParser cardParser) {
-    super(primaryStage, userParser, cardParser);
+      Stage primaryStage, LoginPage parentPage) {
+    super(primaryStage);
     this.parentPage = parentPage;
   }
 
@@ -32,8 +32,8 @@ public class SignUpPage extends Page {
         "Make Account!",
         () -> {
           try {
-            userParser.add(
-                username.getText(), email.getText(), password.getText(), adminBox.isSelected());
+
+            add(username.getText(), email.getText(), password.getText(), adminBox.isSelected());
             primaryStage.setScene(parentPage.getScene());
           } catch (EmailInUseException a) {
             Alert alert =
@@ -49,5 +49,18 @@ public class SignUpPage extends Page {
         6);
 
     return new Scene(grid, 300, 250);
+  }
+
+  void add(String username, String email, String password, boolean isAdmin)
+      throws EmailInUseException {
+    try {
+      if (isAdmin) {
+        AdminUser admin = new AdminUser(username, email, password);
+      } else {
+        User user = new User(username, email, password);
+      }
+    } catch (EmailInUseException a) {
+      throw new EmailInUseException();
+    }
   }
 }

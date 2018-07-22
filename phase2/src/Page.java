@@ -26,7 +26,7 @@ public abstract class Page {
   protected GridPane grid;
   protected Label time;
 
-  public Page(Stage primaryStage, ObjectParser p, ObjectParser p2) {
+  public Page(Stage primaryStage) {
     this.grid = new GridPane();
     this.scene = makeScene(primaryStage);
     AddClock();

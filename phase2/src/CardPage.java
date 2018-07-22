@@ -12,12 +12,10 @@ public class CardPage extends AuthenticatedPage {
 
   public CardPage(
       Stage primaryStage,
-      UserParser userParser,
-      CardParser cardParser,
       User user,
       AuthenticatedPage parentPage,
       LoginPage loginPage) {
-    super(primaryStage, userParser, cardParser, user, parentPage, loginPage);
+    super(primaryStage, user, parentPage, loginPage);
   }
 
   protected Scene makeScene(Stage primaryStage) {

@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class LoginPage extends Page {
   public LoginPage(Stage primaryStage, BufferedWriter writer) throws IOException {
-    super(primaryStage, new UserParser(writer), new CardParser(writer));
+    super(primaryStage);
   }
 
   protected Scene makeScene(Stage primaryStage) {
@@ -34,9 +34,9 @@ public class LoginPage extends Page {
               // might want to come up with a better way of doing this
               if (user instanceof AdminUser) {
                 userPage =
-                    new AdminUserPage(primaryStage, this.userParser, this.cardParser, user, this);
+                    new AdminUserPage(primaryStage, user, this);
               } else {
-                userPage = new UserPage(primaryStage, this.userParser, this.cardParser, user, this);
+                userPage = new UserPage(primaryStage, user, this);
               }
               primaryStage.setScene(userPage.getScene());
             } else {
@@ -53,7 +53,7 @@ public class LoginPage extends Page {
         "Sign Up",
         () -> {
           SignUpPage signupPage =
-              new SignUpPage(primaryStage, this, this.userParser, this.cardParser);
+              new SignUpPage(primaryStage, this);
           primaryStage.setScene(signupPage.getScene());
         },
         2,

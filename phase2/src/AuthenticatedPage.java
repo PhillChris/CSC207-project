@@ -10,12 +10,10 @@ public abstract class AuthenticatedPage extends Page {
 
   public AuthenticatedPage(
       Stage primaryStage,
-      UserParser userParser,
-      CardParser cardParser,
       User user,
       AuthenticatedPage parentPage,
       LoginPage loginPage) {
-    super(primaryStage, userParser, cardParser);
+    super(primaryStage);
     this.user = user;
     this.parentPage = parentPage;
     this.loginPage = loginPage;
@@ -40,7 +38,7 @@ public abstract class AuthenticatedPage extends Page {
         () -> {
           ChangeNamePage namePage =
               new ChangeNamePage(
-                  primaryStage, this.userParser, this.cardParser, this.user, this, this.loginPage);
+                  primaryStage, this.user, this, this.loginPage);
           primaryStage.setScene(namePage.getScene());
         },
         0,

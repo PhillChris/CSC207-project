@@ -14,9 +14,6 @@ public class TransitReader {
   /** The writer which writes to output.txt */
   private BufferedWriter writer;
   /** Handles operations to be executed on users */
-  private UserParser userParser;
-  /** Handles operations to be executed on cards */
-  private CardParser cardParser;
 
   /**
    * Constructs a new instance of a TransitReader
@@ -36,8 +33,6 @@ public class TransitReader {
    * @throws InitLineException if the formatting of the initial line of events.txt is incorrect
    */
   void init() throws IOException, InitLineException {
-    userParser = new UserParser(writer);
-    cardParser = new CardParser(writer);
 
     /* Reads the opening init line determining how many routes to make and
      * the current system date */
@@ -81,27 +76,5 @@ public class TransitReader {
    *
    * @throws IOException if either events.txt or output.txt can't be found
    */
-  void run() throws IOException {
-    String actionLine = reader.readLine().trim();
-    // While there are still non-empty lines in events.txt
-    while (actionLine != System.lineSeparator() && actionLine != null) {
-      // separates a given line into command name and parameters
-      ArrayList<String> tempLineWords =
-          new ArrayList<>(Arrays.asList(actionLine.split(SPLIT_SYMBOL)));
-      if (userParser.getKeyWords().get(tempLineWords.get(0)) != null) {
-        // if the given command is a command in the user hashmap
-        userParser.parse(tempLineWords);
-      } else if (cardParser.getKeyWords().get(tempLineWords.get(0)) != null) {
-        // if the the given command is a command in the card hashmap
-        cardParser.parse(tempLineWords);
-      } else {
-        // if the given command is not a recognized command in either hashmap
-        writer.write(
-            "Invalid command: This command is not recognized by the transit system"
-                + System.lineSeparator());
-      }
-      actionLine = reader.readLine();
-    }
-    writer.close();
-  }
+  void run() throws IOException {}
 }

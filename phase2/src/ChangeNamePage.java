@@ -4,13 +4,9 @@ import javafx.stage.Stage;
 
 public class ChangeNamePage extends AuthenticatedPage {
   public ChangeNamePage(
-      Stage primaryStage,
-      UserParser userParser,
-      CardParser cardParser,
-      User user,
-      AuthenticatedPage parentPage,
-      LoginPage loginPage) {
-    super(primaryStage, userParser, cardParser, user, parentPage, loginPage); }
+      Stage primaryStage, User user, AuthenticatedPage parentPage, LoginPage loginPage) {
+    super(primaryStage, user, parentPage, loginPage);
+  }
 
   public Scene makeScene(Stage primaryStage) {
     placeLabel("New Username: ", 0, 0);
@@ -18,7 +14,7 @@ public class ChangeNamePage extends AuthenticatedPage {
     placeButton(
         "Change name!",
         () -> {
-          this.userParser.changeName(this.user, newName.getText());
+          user.changeName(newName.getText());
           this.parentPage.updatePage(primaryStage);
           primaryStage.setScene(this.parentPage.getScene());
         },
@@ -32,7 +28,5 @@ public class ChangeNamePage extends AuthenticatedPage {
     // return this.scene; //todo: add user data here
   }
 
-  void updatePage(Stage primaryStage) {
-
-  }
+  void updatePage(Stage primaryStage) {}
 }

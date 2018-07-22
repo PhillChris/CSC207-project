@@ -10,12 +10,10 @@ public abstract class AuthenticatedPage extends Page {
 
   public AuthenticatedPage(
       Stage primaryStage,
-      UserParser userParser,
-      CardParser cardParser,
       User user,
       AuthenticatedPage parentPage,
       LoginPage loginPage) {
-    super(primaryStage, userParser, cardParser);
+    super(primaryStage);
     this.user = user;
     this.parentPage = parentPage;
     this.loginPage = loginPage;
@@ -29,48 +27,55 @@ public abstract class AuthenticatedPage extends Page {
   protected void updateLabel(Label label, String newMessage) {
     label.setText(newMessage);
   }
+
   protected Scene makeScene(Stage primaryStage) {
     newUserInfoButton(10, 10);
 
     placeButton("Logout", () -> primaryStage.setScene(loginPage.getScene()), 10, 0);
 
     placeButton(
-            "Change username",
-            () -> {
-              ChangeNamePage namePage =
-                      new ChangeNamePage(
-                              primaryStage, this.userParser, this.cardParser, this.user, this, this.loginPage);
-              primaryStage.setScene(namePage.getScene());
-            },
-            0,
-            4);
+        "Change username",
+        () -> {
+          ChangeNamePage namePage =
+              new ChangeNamePage(
+                  primaryStage, this.user, this, this.loginPage);
+          primaryStage.setScene(namePage.getScene());
+        },
+        0,
+        4);
     placeButton(
-            "Remove this account!",
-            () -> {
-              Alert alert =
-                      makeConfirmationAlert(
-                              "Delete account confirmation",
-                              "Confirm:",
-                              "Are you sure you want this account to be removed?",
-                              () -> {
-                                userParser.remove(user);
-                                primaryStage.setScene(this.loginPage.getScene());
-                              });
-            },
-            0,
-            6);
+        "Remove this account!",
+        () -> {
+          Alert alert =
+              makeConfirmationAlert(
+                  "Delete account confirmation",
+                  "Confirm:",
+                  "Are you sure you want this account to be removed?",
+                  () -> {
+                    user.removeUser();
+                    primaryStage.setScene(this.loginPage.getScene());
+                  });
+        },
+        0,
+        6);
     return new Scene(grid, 300, 250);
   }
 
   protected void newUserInfoButton(int col, int row) {
-    placeButton(
+    String message = "Username: " + user;
+    for (int i = 0; i < user.getCardsCopy().size(); i++) {
+      message += System.lineSeparator();
+      message += user.getCardsCopy().get(i);
+    }
+      String finalMessage = message;
+      placeButton(
         "Info",
         () -> {
           Alert alert =
               makeAlert(
                   "User Information",
                   "Your user information:",
-                  this.userParser.report(user),
+                      finalMessage,
                   Alert.AlertType.INFORMATION);
           alert.showAndWait();
         },

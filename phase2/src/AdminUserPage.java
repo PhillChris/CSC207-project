@@ -8,11 +8,9 @@ public class AdminUserPage extends AuthenticatedPage {
 
   public AdminUserPage(
       Stage primaryStage,
-      UserParser userParser,
-      CardParser cardParser,
       User user,
       LoginPage loginPage) {
-    super(primaryStage, userParser, cardParser, user, null, loginPage);
+    super(primaryStage, user, null, loginPage);
   }
 
   @Override

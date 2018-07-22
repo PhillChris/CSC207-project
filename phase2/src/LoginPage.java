@@ -1,13 +1,14 @@
-import java.io.BufferedWriter;
-import java.io.IOException;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class LoginPage extends Page {
   public LoginPage(Stage primaryStage, BufferedWriter writer) throws IOException {
-    super(primaryStage, new UserParser(writer), new CardParser(writer));
+    super(primaryStage);
   }
 
   protected Scene makeScene(Stage primaryStage) {
@@ -21,17 +22,21 @@ public class LoginPage extends Page {
         "Log In",
         () -> {
           try {
-            User user = userParser.findUser(email.getText());
+            User user;
+            if (User.getAllUsersCopy().containsKey(email.getText())) {
+              user = User.getAllUsersCopy().get(email.getText());
+            } else {
+              throw new UserNotFoundException();
+            }
             if (checkAuthorization(email, password)) {
               AuthenticatedPage userPage;
               // need to check if we enter admin or normal user
               // might want to come up with a better way of doing this
               if (user instanceof AdminUser) {
                 userPage =
-                    new AdminUserPage(primaryStage, this.userParser, this.cardParser, user, this);
+                    new AdminUserPage(primaryStage, user, this);
               } else {
-                userPage =
-                    new UserPage(primaryStage, this.userParser, this.cardParser, user, this);
+                userPage = new UserPage(primaryStage, user, this);
               }
               primaryStage.setScene(userPage.getScene());
             } else {
@@ -48,7 +53,7 @@ public class LoginPage extends Page {
         "Sign Up",
         () -> {
           SignUpPage signupPage =
-              new SignUpPage(primaryStage, this, this.userParser, this.cardParser);
+              new SignUpPage(primaryStage, this);
           primaryStage.setScene(signupPage.getScene());
         },
         2,

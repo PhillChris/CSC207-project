@@ -1,4 +1,10 @@
 import java.util.Optional;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -10,18 +16,24 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import static javafx.scene.paint.Color.BLACK;
+import static javafx.scene.paint.Color.PINK;
 
 public abstract class Page {
   protected UserParser userParser;
   protected CardParser cardParser;
   protected Scene scene;
   protected GridPane grid;
+  protected Label time;
 
   public Page(Stage primaryStage, UserParser userParser, CardParser cardParser) {
     this.userParser = userParser;
     this.cardParser = cardParser;
     this.grid = new GridPane();
     this.scene = makeScene(primaryStage);
+    AddClock();
   }
 
   public Scene getScene() {
@@ -85,5 +97,26 @@ public abstract class Page {
     }
 
     return alert;
+  }
+
+  protected void AddClock(){
+    time = new Label();
+    grid.add(time, 0, 0);
+    Timeline timeline = new Timeline();
+    timeline.setCycleCount(Timeline.INDEFINITE);
+
+    KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
+      @Override
+      public void handle(ActionEvent event) {
+        TransitTime.updateTime();
+        time.setTextFill(BLACK);
+        time.setText(TransitTime.getCurrentTime());
+      }
+    }
+    );
+    timeline.getKeyFrames().add(frame);
+    timeline.playFromStart();
+
+
   }
 }

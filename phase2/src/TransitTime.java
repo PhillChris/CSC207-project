@@ -20,7 +20,7 @@ public class TransitTime {
   public static String getCurrentTime(){
     String time = "Current Day: " + currentTime.getMonth().toString() + " " + currentTime.getDayOfMonth() + ", ";
     time += currentTime.getYear() + System.lineSeparator();
-    time += "Time: " + currentTime.getHour() + " ," + currentTime.getMinute();
+    time += "Time: " + currentTime.getHour() + ":" + currentTime.getMinute();
     return time;
   }
 

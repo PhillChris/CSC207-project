@@ -48,27 +48,6 @@ public class CardParser extends ObjectParser {
    * Processes a card's tap request.
    *
    */
-  void tap(User user, Card card, String timeString, String stationName, String routeName) {
-    try {
-      // Find the time, user, card and station from the given information
-      LocalDateTime time = TransitTime.getTime(timeString);
-      Station station = findStation(stationName, routeName);
-
-      // If no such station is found
-      if (station == null) {
-        throw new StationNotFoundException();
-      }
-      user.tap(card, station, time);
-      // if this user has just started a trip
-      if (card.getTripStarted()) {
-        write(String.format("User %s tapped on at %s", user, station));
-      } else {
-        write(String.format("User %s tapped off at %s", user, station));
-      }
-    } catch (TransitException b) {
-      write(b.getMessage());
-    }
-  }
 
   /**
    * Process a theft report for a given card.

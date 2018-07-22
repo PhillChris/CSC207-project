@@ -22,15 +22,11 @@ import static javafx.scene.paint.Color.BLACK;
 import static javafx.scene.paint.Color.PINK;
 
 public abstract class Page {
-  protected UserParser userParser;
-  protected CardParser cardParser;
   protected Scene scene;
   protected GridPane grid;
   protected Label time;
 
-  public Page(Stage primaryStage, UserParser userParser, CardParser cardParser) {
-    this.userParser = userParser;
-    this.cardParser = cardParser;
+  public Page(Stage primaryStage, ObjectParser p, ObjectParser p2) {
     this.grid = new GridPane();
     this.scene = makeScene(primaryStage);
     AddClock();

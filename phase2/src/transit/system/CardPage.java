@@ -1,3 +1,5 @@
+package transit.system;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -49,7 +51,7 @@ public class CardPage extends AuthenticatedPage {
     int i = 0;
     for (Integer id: this.user.getCardsCopy().keySet()) {
       placeButton(
-          "Card #" + user.getCardsCopy().get(id).getId(),
+          "transit.system.Card #" + user.getCardsCopy().get(id).getId(),
           () -> System.out.println("This is a card!"),
           0,
           3 + i);
@@ -69,7 +71,7 @@ public class CardPage extends AuthenticatedPage {
     for (Integer id: this.user.getCardsCopy().keySet()) {
       this.cardButtons.add(
           placeButton(
-              "Card #" + user.getCardsCopy().get(id).getId(),
+              "transit.system.Card #" + user.getCardsCopy().get(id).getId(),
               () -> System.out.println("This is a card!"),
               0,
               3 + i));

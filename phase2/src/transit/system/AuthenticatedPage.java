@@ -1,3 +1,5 @@
+package transit.system;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -73,7 +75,7 @@ public abstract class AuthenticatedPage extends Page {
         () -> {
           Alert alert =
               makeAlert(
-                  "User Information",
+                  "transit.system.User Information",
                   "Your user information:",
                       finalMessage,
                   Alert.AlertType.INFORMATION);

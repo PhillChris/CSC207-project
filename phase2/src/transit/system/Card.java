@@ -1,3 +1,5 @@
+package transit.system;
+
 /** Represents a travel card in a transit system */
 public class Card {
   /** The starting balance for all cards, in cents */
@@ -10,7 +12,7 @@ public class Card {
   private Trip lastTrip;
   /** The balance of this card, in cents */
   private int balance;
-  /** The id of this card (i.e. which # card it is in some User's account) */
+  /** The id of this card (i.e. which # card it is in some transit.system.User's account) */
   private int id;
   /**
    * Constructs a new card
@@ -39,7 +41,7 @@ public class Card {
     return this.balance;
   }
 
-  /** @return The current Trip this card is on, or null if it is not on a trip */
+  /** @return The current transit.system.Trip this card is on, or null if it is not on a trip */
   Trip getCurrentTrip() {
     return currentTrip;
   }
@@ -53,7 +55,7 @@ public class Card {
     currentTrip = trip;
   }
 
-  /** @return The last Trip that this Card has completed */
+  /** @return The last transit.system.Trip that this transit.system.Card has completed */
   Trip getLastTrip() {
     return lastTrip;
   }
@@ -75,7 +77,7 @@ public class Card {
   /**
    * Activates this card, after having been found
    *
-   * @param card the suspended Card to be reactivated
+   * @param card the suspended transit.system.Card to be reactivated
    */
   void activateCard(Card card) {
     isActive = true;
@@ -87,18 +89,18 @@ public class Card {
   }
 
   /**
-   * Adds the given number of cents to this Card's balance.
+   * Adds the given number of cents to this transit.system.Card's balance.
    *
-   * @param toAdd the amount of money to add to this Card's balance, in cents
+   * @param toAdd the amount of money to add to this transit.system.Card's balance, in cents
    */
   void addBalance(int toAdd) {
     this.balance += toAdd;
   }
 
   /**
-   * Subtracts given number of cents from this Card's balance.
+   * Subtracts given number of cents from this transit.system.Card's balance.
    *
-   * @param toSubtract the amount of money to subtract to this Card's balance
+   * @param toSubtract the amount of money to subtract to this transit.system.Card's balance
    */
   void subtractBalance(int toSubtract) {
     this.balance -= toSubtract;
@@ -106,6 +108,6 @@ public class Card {
 
   /** Returns a string representation of this card */
   public String toString() {
-    return String.format("Card #%s has $%.2f remaining", this.id, this.balance / 100.0);
+    return String.format("transit.system.Card #%s has $%.2f remaining", this.id, this.balance / 100.0);
   }
 }

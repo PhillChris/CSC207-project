@@ -1,3 +1,5 @@
+package transit.system;
+
 /** Exception thrown when someone attempts to use a suspended card */
 public class CardSuspendedException extends TransitException {
   @Override

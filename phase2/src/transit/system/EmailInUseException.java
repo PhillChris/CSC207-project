@@ -1,3 +1,5 @@
+package transit.system;
+
 /**
  * Exception thrown when an attempt to create a user with an email already present in the system is
  * made

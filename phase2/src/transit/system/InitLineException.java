@@ -1,3 +1,5 @@
+package transit.system;
+
 /** Exception thrown when the initial line of events.txt is incorrect */
 public class InitLineException extends TransitException {
   /** @return the error message that this exception returns. */

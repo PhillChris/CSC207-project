@@ -1,18 +1,20 @@
+package transit.system;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-/** Represents an AdminUser in a transit system. */
+/** Represents an transit.system.AdminUser in a transit system. */
 public class AdminUser extends User {
 
   /**
-   * Construct a new instance of AdminUser
+   * Construct a new instance of transit.system.AdminUser
    *
-   * @param name the name of this AdminUser
-   * @param email the email of this AdminUser
-   * @param password the password of ths AdminUser
+   * @param name the name of this transit.system.AdminUser
+   * @param email the email of this transit.system.AdminUser
+   * @param password the password of ths transit.system.AdminUser
    */
   public AdminUser(String name, String email, String password) throws EmailInUseException {
     super(name, email, password);

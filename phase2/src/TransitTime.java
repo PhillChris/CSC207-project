@@ -1,61 +1,27 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 
 /** A class keeping track of universal time in the transit system */
 public class TransitTime {
 
   /** The current time of the transit system */
-  private static LocalDateTime currentTime;
+  private static LocalDateTime currentTime = LocalDateTime.now();
 
-  /** The userParser currently in use for this transit system */
-  private static ObjectParser currentParser;
+  /** Whether the time is currently moving forward */
+  private static boolean running = true;
 
-  /**
-   * Initializes the date in the transit system. Sets system time to midnight of the first date by
-   * default.
-   *
-   * @param initialDate the initial date of the transit system simulation
-   */
-  static void initDate(String initialDate, ObjectParser parser) {
-    String[] formatted = initialDate.split("-");
-    int currentYear = Integer.parseInt(formatted[0]);
-    Month currentMonth = Month.of(Integer.parseInt(formatted[1]));
-    int currentDay = Integer.parseInt(formatted[2]);
-    currentTime = LocalDateTime.of(currentYear, currentMonth, currentDay, 0, 0);
-    CostCalculator calculator = new CostCalculator();
-    calculator.updateSystemRevenue(0, 0);
-    currentParser = parser;
+  public static void updateTime() {
+    if (running) {
+      currentTime = currentTime.plusMinutes(5);
+    }
   }
 
-  /**
-   * Reads, check and updates the time of the simulation
-   *
-   * @param time The time inputted by the user
-   * @return The updated time or null if invalid input was given
-   */
-  static LocalDateTime getTime(String time) throws TimeException {
-    String[] formatted = time.split(":");
-    LocalDateTime newTime =
-        LocalDateTime.of(
-            currentTime.getYear(),
-            currentTime.getMonth(),
-            currentTime.getDayOfMonth(),
-            Integer.parseInt(formatted[0]),
-            Integer.parseInt(formatted[1]));
-
-    if (currentTime == null) {
-      currentTime = newTime;
-      return currentTime;
-    } else {
-      if (currentTime.isAfter(newTime)) {
-        throw new TimeException();
-      } else {
-        currentTime = newTime;
-        return currentTime;
-      }
-    }
+  public static String getCurrentTime(){
+    String time = "Current Day: " + currentTime.getMonth().toString() + " " + currentTime.getDayOfMonth() + ", ";
+    time += currentTime.getYear() + System.lineSeparator();
+    time += "Time: " + currentTime.getHour() + " ," + currentTime.getMinute();
+    return time;
   }
 
   /**
@@ -63,19 +29,7 @@ public class TransitTime {
    *
    * @param emptyList Information given by the user
    */
-  static void endDay(List<String> emptyList) {
-    currentTime = currentTime.plusDays(1);
-    currentTime =
-        LocalDateTime.of(
-            currentTime.getYear(), currentTime.getMonth(), currentTime.getDayOfMonth(), 0, 0);
-    currentParser.write(
-        String.format(
-            "Day ended successfully: current day is %s %s, %s",
-            currentTime.getMonth(), currentTime.getDayOfMonth(), currentTime.getYear()));
-
-    CostCalculator calculator = new CostCalculator();
-    calculator.updateSystemRevenue(0, 0);
-  }
+  static void endDay(List<String> emptyList) {}
 
   /** @return The current date in the transit system */
   static LocalDate getCurrentDate() {

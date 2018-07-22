@@ -1,10 +1,11 @@
-import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class CardPage extends AuthenticatedPage {
   private ArrayList<Button> cardButtons = new ArrayList<>();
@@ -23,7 +24,7 @@ public class CardPage extends AuthenticatedPage {
     placeButton(
         "Add card",
         () -> {
-          cardParser.add(user);
+          user.addCard();
           this.updatePage(primaryStage);
           primaryStage.setScene(this.getScene());
         },
@@ -33,7 +34,7 @@ public class CardPage extends AuthenticatedPage {
     placeButton("Remove card", () -> {
       makeConfirmationAlert("Removal confirmation", "Confirm removal:", "Are you sure that you want to remove this card?", () -> {
         try {
-        cardParser.remove(user, user.getCardsCopy().get(Integer.parseInt(removeCardNumber.getText())));
+          user.removeCard(user.getCardsCopy().get(Integer.parseInt(removeCardNumber.getText())));
         this.updatePage(primaryStage);
         primaryStage.setScene(this.getScene());
         } catch (NumberFormatException a) {

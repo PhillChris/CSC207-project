@@ -8,7 +8,7 @@ public class ChangeNamePage extends AuthenticatedPage {
       UserParser userParser,
       CardParser cardParser,
       User user,
-      UserPage parentPage,
+      AuthenticatedPage parentPage,
       LoginPage loginPage) {
     super(primaryStage, userParser, cardParser, user, parentPage, loginPage); }
 

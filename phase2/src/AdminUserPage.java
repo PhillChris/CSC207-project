@@ -15,7 +15,7 @@ public class AdminUserPage extends AuthenticatedPage {
   }
 
   @Override
-  Scene makeScene(Stage primaryStage) {
+  protected Scene makeScene(Stage primaryStage) {
     placeLabel("Station name: ", 0, 1);
     TextField stationName = placeTextField(1, 1);
 

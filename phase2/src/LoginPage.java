@@ -23,8 +23,16 @@ public class LoginPage extends Page {
           try {
             User user = userParser.findUser(email.getText());
             if (checkAuthorization(email, password)) {
-              UserPage userPage =
-                  new UserPage(primaryStage, this.userParser, this.cardParser, user, this);
+              AuthenticatedPage userPage;
+              // need to check if we enter admin or normal user
+              // might want to come up with a better way of doing this
+              if (user instanceof AdminUser) {
+                userPage =
+                    new AdminUserPage(primaryStage, this.userParser, this.cardParser, user, this);
+              } else {
+                userPage =
+                    new UserPage(primaryStage, this.userParser, this.cardParser, user, this);
+              }
               primaryStage.setScene(userPage.getScene());
             } else {
               throw new InvalidCredentialsException();

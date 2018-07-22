@@ -1,10 +1,12 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 /** A parent class for stations in this simulation */
-public abstract class Station {
+public class Station {
   /** Maps the name of a station to the appropriate station object */
-  private HashMap<String, Station> stations = new HashMap<>();
+  private static HashMap<String, HashMap<String, Station>> stations = new HashMap<>();
   /** The fee charged per station travelled by this station */
   private int perStationFee;
   /** The initial fee charged by this station at the start of a trip */
@@ -16,8 +18,26 @@ public abstract class Station {
    *
    * @param name The name of this station
    */
-  Station(String name) {
+  Station(String name, String stationType) throws InvalidInputException {
     this.name = name;
+    if (!stations.containsKey(stationType)) {
+      stations.put(stationType, new HashMap<>());
+    }
+    if (!stations.get(stationType).containsKey(name)) {
+      stations.get(stationType).put(name, this);
+      this.setFees(stationType);
+    } else {
+      throw new InvalidInputException(); // temporary exception
+    }
+  }
+
+  /** @return HashMap of all stations of similar type */
+  public static HashMap<String, Station> getStationsCopy(String type) {
+    return new HashMap<>(stations.get(type));
+  }
+
+  public List<Station> getStations(String stationType) {
+    return new ArrayList<>(stations.get(stationType).values());
   }
 
   @Override
@@ -63,32 +83,14 @@ public abstract class Station {
     this.perStationFee = perStationFee;
   }
 
-  /** @return HashMap of all stations of similar type */
-  public HashMap<String, Station> getStationsCopy() {
-    HashMap<String, Station> copy = new HashMap<>();
-    for (String key : stations.keySet()) {
-      copy.put(key, stations.get(key));
-    }
-    return copy;
-  }
-
-  /**
-   * Set the stations attribute to the given HashMap.
-   *
-   * @param stations the HashMap of stations to assign to the stations variable of this Station.
-   */
-  public void setStations(HashMap<String, Station> stations) {
-    this.stations = stations;
-  }
-
   /**
    * Adds the newStation to either the list of BusStations or SubwayStations
    *
    * @param newStation the station to be added to allStations.
    */
-  public void addStation(Station newStation) {
-    stations.put(newStation.name, newStation);
-  }
+  //  public void addStation(Station newStation) {
+  //    stations.put(newStation.name, newStation);
+  //  }
 
   /**
    * @param otherStation the station we checking for association with.
@@ -101,5 +103,15 @@ public abstract class Station {
   /** @return A string representation of a station */
   public String toString() {
     return this.name;
+  }
+
+  private void setFees(String stationType) {
+    if (stationType.equals("Bus")) {
+      this.perStationFee = 0;
+      this.initialFee = 200;
+    } else {
+      this.perStationFee = 50;
+      this.initialFee = 0;
+    }
   }
 }

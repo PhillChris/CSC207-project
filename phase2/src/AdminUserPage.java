@@ -1,4 +1,5 @@
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -26,7 +27,7 @@ public class AdminUserPage extends AuthenticatedPage {
 
     grid.add(stationTypes, 1, 2);
     placeButton(
-            "Make Station", () -> makeNewStation(stationName.getText(), stationTypes.getValue()), 1, 3);
+        "Make Station", () -> makeNewStation(stationName.getText(), stationTypes.getValue()), 1, 3);
 
     return new Scene(grid, 300, 250);
   }
@@ -36,12 +37,16 @@ public class AdminUserPage extends AuthenticatedPage {
   public void addUserData(Stage primaryStage) {}
 
   private void makeNewStation(String name, String type) {
-    if (type.equals("Bus")) {
-      new BusStation(name);
-      System.out.println("New bus");
-    } else {
-      new SubwayStation(name);
-      System.out.println("New subway");
+    try {
+      new Station(name, type);
+    } catch (InvalidInputException e) {
+      System.out.println("found");
+      makeAlert(
+              "Station Construction",
+              "Invalid Station name",
+              "A station of the same type and name already exists.",
+              Alert.AlertType.WARNING)
+          .showAndWait();
     }
   }
 }

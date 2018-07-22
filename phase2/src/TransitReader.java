@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /** A reader for the transit system, making parse requests using events.txt commands */
 public class TransitReader {
@@ -58,22 +57,22 @@ public class TransitReader {
 
     /* Iterate through routes and names of stations given in the first lines of events.txt,
      *  and constructs route objects containing station objects*/
-    StationFactory subFact = new SubwayFactory(); // used to construct subway stations
-    StationFactory busFact = new BusFactory(); // used to construct bus stations
-    for (int i = 0; i < numRoutes; i++) {
-      String tempLine = reader.readLine().trim();
-      // separates a given line into route type and station names
-      ArrayList<String> tempLineWords =
-          new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL))); //
-      List<String> stationNames = tempLineWords.subList(1, tempLineWords.size());
-      if (tempLineWords.get(0).equals("SUBWAY")) {
-        Route newRoute = new Route(stationNames, subFact);
-        writer.write("Created new subway route" + System.lineSeparator());
-      } else if (tempLineWords.get(0).equals("BUS")) {
-        Route newRoute = new Route(stationNames, busFact);
-        writer.write("Created new bus route" + System.lineSeparator());
-      }
-    }
+    //    StationFactory subFact = new SubwayFactory(); // used to construct subway stations
+    //    StationFactory busFact = new BusFactory(); // used to construct bus stations
+    //    for (int i = 0; i < numRoutes; i++) {
+    //      String tempLine = reader.readLine().trim();
+    //      // separates a given line into route type and station names
+    //      ArrayList<String> tempLineWords =
+    //          new ArrayList<>(Arrays.asList(tempLine.split(SPLIT_SYMBOL))); //
+    //      List<String> stationNames = tempLineWords.subList(1, tempLineWords.size());
+    //      if (tempLineWords.get(0).equals("SUBWAY")) {
+    //        Route newRoute = new Route(stationNames, subFact);
+    //        writer.write("Created new subway route" + System.lineSeparator());
+    //      } else if (tempLineWords.get(0).equals("BUS")) {
+    //        Route newRoute = new Route(stationNames, busFact);
+    //        writer.write("Created new bus route" + System.lineSeparator());
+    //      }
+    //    }
   }
 
   /**

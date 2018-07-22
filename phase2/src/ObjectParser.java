@@ -63,7 +63,7 @@ public abstract class ObjectParser {
    *
    * @param info The parameters needed to locate this object for removal
    */
-  //abstract void remove(List<String> info);
+  // abstract void remove(List<String> info);
   // TODO: reinstate common interface for removing stuff?
 
   /**
@@ -72,7 +72,7 @@ public abstract class ObjectParser {
    *
    * @param info The parameters needed to locate this object for reporting
    */
-  //abstract void report(List<String> info);
+  // abstract void report(List<String> info);
   // TODO: reimplement common interface for generating a report
 
   /**
@@ -134,36 +134,37 @@ public abstract class ObjectParser {
    * @return the station to be found
    * @throws InvalidStationTypeException Thrown if station type does not exist
    */
-  Station findStation(String stationType, String stationName) throws InvalidStationTypeException {
-    switch (stationType) {
-      case "BUS":
-        return findBusStation(stationName);
-      case "SUBWAY":
-        return findSubwayStation(stationName);
-      default:
-        throw new InvalidStationTypeException();
-    }
-  }
-
-  /**
-   * Finds a specific bus station in this transit system.
-   *
-   * @param stationName the name of the bus station to be found
-   * @return the bus station to be found
-   */
-  private Station findBusStation(String stationName) {
-    BusFactory fact = new BusFactory();
-    return fact.newStation("").getStationsCopy().get(stationName);
-  }
-
-  /**
-   * Finds a specific subway station in this transit system.
-   *
-   * @param stationName the name of this subway station to be found
-   * @return the subway station to be found
-   */
-  private Station findSubwayStation(String stationName) {
-    SubwayFactory fact = new SubwayFactory();
-    return fact.newStation("").getStationsCopy().get(stationName);
-  }
+  //  Station findStation(String stationType, String stationName) throws InvalidStationTypeException
+  // {
+  //    switch (stationType) {
+  //      case "BUS":
+  //        return findBusStation(stationName);
+  //      case "SUBWAY":
+  //        return findSubwayStation(stationName);
+  //      default:
+  //        throw new InvalidStationTypeException();
+  //    }
+  //  }
+  //
+  //  /**
+  //   * Finds a specific bus station in this transit system.
+  //   *
+  //   * @param stationName the name of the bus station to be found
+  //   * @return the bus station to be found
+  //   */
+  //  private Station findBusStation(String stationName) {
+  //    BusFactory fact = new BusFactory();
+  //    return fact.newStation("").getStationsCopy().get(stationName);
+  //  }
+  //
+  //  /**
+  //   * Finds a specific subway station in this transit system.
+  //   *
+  //   * @param stationName the name of this subway station to be found
+  //   * @return the subway station to be found
+  //   */
+  //  private Station findSubwayStation(String stationName) {
+  //    SubwayFactory fact = new SubwayFactory();
+  //    return fact.newStation("").getStationsCopy().get(stationName);
+  //  }
 }

@@ -13,21 +13,13 @@ public class Route {
    * Constructs a new route
    *
    * @param stationNames List of all station names in this route in order
-   * @param fact The factory used to construct the stations
+   * @param type The type of the station that you are constructing routes over
    */
-  public Route(List<String> stationNames, StationFactory fact) {
+  public Route(List<String> stationNames, String type) {
 
     for (String s : stationNames) {
       Station station;
-      station = fact.newStation(s);
-      // Create a new station if a station of the same name and type does not exist
-      if (!station.getStationsCopy().containsKey(s)) {
-        station.addStation(station);
-      }
-      // station of the same type and same name already exists
-      else {
-        station = station.getStationsCopy().get(s);
-      }
+      station = Station.getStationsCopy(type).get(s);
       routeStations.add(station);
     }
     routes.add(this);

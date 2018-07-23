@@ -57,9 +57,8 @@ public class LoginPage extends Page {
         },
         2,
         2);
-
     AddClock();
-    return new Scene(grid, 300, 250);
+    return new Scene(grid, 500, 250);
   }
 
   private boolean checkAuthorization(TextField email, TextField password) {

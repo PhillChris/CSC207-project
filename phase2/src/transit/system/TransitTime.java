@@ -1,17 +1,25 @@
 package transit.system;
 
-import java.time.LocalTime;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import static javafx.scene.paint.Color.BLACK;
 
 /** A class keeping track of universal time in the transit system */
 public class TransitTime {
 
+  protected static Label time = new Label();
   /** The current time of the transit system */
   private static LocalDateTime currentTime = LocalDateTime.now();
-
   /** Whether the time is currently moving forward */
   private static boolean running = true;
 
@@ -21,11 +29,36 @@ public class TransitTime {
     }
   }
 
-  public static String getCurrentTime(){
+  public static Label getTimeLabel(){
+    return time;
+  }
+
+  protected static void updateTimeLabel() {
+    Timeline timeline = new Timeline();
+    timeline.setCycleCount(Timeline.INDEFINITE);
+
+    KeyFrame frame =
+        new KeyFrame(
+            Duration.seconds(1),
+            new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent event) {
+                TransitTime.updateTime();
+                time.setTextFill(BLACK);
+                time.setText(TransitTime.getCurrentTime());
+              }
+            });
+    timeline.getKeyFrames().add(frame);
+    timeline.playFromStart();
+  }
+
+  public static String getCurrentTime() {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     String time = formatter.format(currentTime.toLocalTime());
     LocalDate date = currentTime.toLocalDate();
-    String currentTime = String.format("Current Day: %s %s, %s", date.getMonth(), date.getDayOfMonth(), date.getYear());
+    String currentTime =
+        String.format(
+            "Current Day: %s %s, %s", date.getMonth(), date.getDayOfMonth(), date.getYear());
     currentTime += System.lineSeparator();
     currentTime += String.format("Time: %s", time);
     return currentTime;

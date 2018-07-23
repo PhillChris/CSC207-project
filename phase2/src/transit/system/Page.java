@@ -18,7 +18,6 @@ import static javafx.scene.paint.Color.BLACK;
 public abstract class Page {
   protected Scene scene;
   protected GridPane grid = new GridPane();
-  protected Label time;
 
   public Scene getScene() {
     return this.scene;
@@ -84,21 +83,7 @@ public abstract class Page {
   }
 
   protected void AddClock(){
-    time = new Label();
-    grid.add(time, 0, 0);
-    Timeline timeline = new Timeline();
-    timeline.setCycleCount(Timeline.INDEFINITE);
+    grid.add(TransitTime.getTimeLabel(), 0, 0);
 
-    KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
-      @Override
-      public void handle(ActionEvent event) {
-        TransitTime.updateTime();
-        time.setTextFill(BLACK);
-        time.setText(TransitTime.getCurrentTime());
-      }
-    }
-    );
-    timeline.getKeyFrames().add(frame);
-    timeline.playFromStart();
   }
 }

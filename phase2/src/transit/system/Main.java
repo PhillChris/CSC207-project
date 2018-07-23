@@ -24,6 +24,7 @@ public class Main extends Application {
     BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
     LoginPage loginPage = new LoginPage(primaryStage);
     primaryStage.setScene(loginPage.getScene());
+    TransitTime.updateTimeLabel();
     primaryStage.show();
   }
 }

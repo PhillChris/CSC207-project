@@ -21,7 +21,6 @@ public class UserGraphPage extends Page{
     stage.setTitle("Transit System Simulator");
     LineChart chart = makeChart(user);
     Scene scene  = new Scene(chart,800,600);
-
     return scene;
   }
 

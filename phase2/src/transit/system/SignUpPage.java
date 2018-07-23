@@ -9,11 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class SignUpPage extends Page {
-  private LoginPage parentPage;
-
   public SignUpPage(
-      Stage primaryStage, LoginPage parentPage) {
-    this.parentPage = parentPage;
+      Stage primaryStage) {
     this.scene = makeScene(primaryStage);
   }
 
@@ -28,7 +25,7 @@ public class SignUpPage extends Page {
 
     CheckBox adminBox = placeCheckBox("Is Admin?", 1, 4);
 
-    placeButton("Go back", () -> primaryStage.setScene(parentPage.getScene()), 1, 5);
+    placeButton("Go back", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 1, 5);
 
     placeButton(
         "Make Account!",
@@ -36,7 +33,7 @@ public class SignUpPage extends Page {
           try {
 
             add(username.getText(), email.getText(), password.getText(), adminBox.isSelected());
-            primaryStage.setScene(parentPage.getScene());
+            primaryStage.setScene(new LoginPage(primaryStage).getScene());
           } catch (EmailInUseException a) {
             Alert alert =
                 makeAlert(

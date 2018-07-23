@@ -33,9 +33,9 @@ public class LoginPage extends Page {
               // might want to come up with a better way of doing this
               if (user instanceof AdminUser) {
                 userPage =
-                    new AdminUserPage(primaryStage, user, this);
+                    new AdminUserPage(primaryStage, user);
               } else {
-                userPage = new UserPage(primaryStage, user, this);
+                userPage = new UserPage(primaryStage, user);
               }
               primaryStage.setScene(userPage.getScene());
             } else {
@@ -52,7 +52,7 @@ public class LoginPage extends Page {
         "Sign Up",
         () -> {
           SignUpPage signupPage =
-              new SignUpPage(primaryStage, this);
+              new SignUpPage(primaryStage);
           primaryStage.setScene(signupPage.getScene());
         },
         2,

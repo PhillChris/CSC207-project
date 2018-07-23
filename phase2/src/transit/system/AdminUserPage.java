@@ -12,7 +12,7 @@ public class AdminUserPage extends AuthenticatedPage {
       Stage primaryStage,
       User user,
       LoginPage loginPage) {
-    super(primaryStage, user, null, loginPage);
+    super(primaryStage, user);
     this.scene = makeScene(primaryStage);
   }
 

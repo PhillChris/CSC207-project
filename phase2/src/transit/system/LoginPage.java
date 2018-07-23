@@ -35,7 +35,7 @@ public class LoginPage extends Page {
                 userPage =
                     new AdminUserPage(primaryStage, user, this);
               } else {
-                userPage = new UserPage(primaryStage, user, this);
+                userPage = new UserPage(primaryStage, user);
               }
               primaryStage.setScene(userPage.getScene());
             } else {
@@ -52,7 +52,7 @@ public class LoginPage extends Page {
         "Sign Up",
         () -> {
           SignUpPage signupPage =
-              new SignUpPage(primaryStage, this);
+              new SignUpPage(primaryStage);
           primaryStage.setScene(signupPage.getScene());
         },
         2,

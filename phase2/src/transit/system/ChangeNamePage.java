@@ -6,8 +6,8 @@ import javafx.stage.Stage;
 
 public class ChangeNamePage extends AuthenticatedPage {
   public ChangeNamePage(
-      Stage primaryStage, User user, AuthenticatedPage parentPage, LoginPage loginPage) {
-    super(primaryStage, user, parentPage, loginPage);
+      Stage primaryStage, User user) {
+    super(primaryStage, user);
     this.scene = makeScene(primaryStage);
   }
 
@@ -18,8 +18,8 @@ public class ChangeNamePage extends AuthenticatedPage {
         "Change name!",
         () -> {
           user.changeName(newName.getText());
-          this.parentPage.updatePage(primaryStage);
-          primaryStage.setScene(this.parentPage.getScene());
+          new UserPage(primaryStage, user).updatePage(primaryStage);
+          primaryStage.setScene(new UserPage(primaryStage, user).getScene());
         },
         1,
         1);

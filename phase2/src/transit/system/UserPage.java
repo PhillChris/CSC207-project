@@ -9,9 +9,8 @@ public class UserPage extends AuthenticatedPage {
 
   public UserPage(
       Stage primaryStage,
-      User user,
-      LoginPage parentPage) {
-    super(primaryStage, user, null, parentPage);
+      User user) {
+    super(primaryStage, user);
     this.scene = makeScene(primaryStage);
   }
 
@@ -21,7 +20,7 @@ public class UserPage extends AuthenticatedPage {
         () -> {
           CardPage cardPage =
               new CardPage(
-                  primaryStage, this.user, this, this.loginPage);
+                  primaryStage, this.user);
           primaryStage.setScene(cardPage.getScene());
         },
         0,

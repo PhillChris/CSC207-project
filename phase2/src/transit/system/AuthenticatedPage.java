@@ -7,17 +7,11 @@ import javafx.stage.Stage;
 
 public abstract class AuthenticatedPage extends Page {
   protected User user;
-  protected AuthenticatedPage parentPage;
-  protected LoginPage loginPage;
 
   public AuthenticatedPage(
       Stage primaryStage,
-      User user,
-      AuthenticatedPage parentPage,
-      LoginPage loginPage) {
+      User user) {
     this.user = user;
-    this.parentPage = parentPage;
-    this.loginPage = loginPage;
     addUserData(primaryStage);
   }
 
@@ -32,14 +26,14 @@ public abstract class AuthenticatedPage extends Page {
   protected Scene makeScene(Stage primaryStage) {
     newUserInfoButton(10, 10);
 
-    placeButton("Logout", () -> primaryStage.setScene(loginPage.getScene()), 10, 0);
+    placeButton("Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 10, 0);
 
     placeButton(
         "Change username",
         () -> {
           ChangeNamePage namePage =
               new ChangeNamePage(
-                  primaryStage, this.user, this, this.loginPage);
+                  primaryStage, this.user);
           primaryStage.setScene(namePage.getScene());
         },
         0,
@@ -54,7 +48,7 @@ public abstract class AuthenticatedPage extends Page {
                   "Are you sure you want this account to be removed?",
                   () -> {
                     user.removeUser();
-                    primaryStage.setScene(this.loginPage.getScene());
+                    primaryStage.setScene(new LoginPage(primaryStage).getScene());
                   });
         },
         0,

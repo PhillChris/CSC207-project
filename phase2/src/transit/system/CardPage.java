@@ -14,10 +14,8 @@ public class CardPage extends AuthenticatedPage {
 
   public CardPage(
       Stage primaryStage,
-      User user,
-      AuthenticatedPage parentPage,
-      LoginPage loginPage) {
-    super(primaryStage, user, parentPage, loginPage);
+      User user) {
+    super(primaryStage, user);
     this.scene = makeScene(primaryStage);
   }
 
@@ -44,7 +42,7 @@ public class CardPage extends AuthenticatedPage {
         }
       });
     }, 0, 1);
-    placeButton("Go Back", () -> primaryStage.setScene(parentPage.getScene()), 0, 2);
+    placeButton("Go Back", () -> primaryStage.setScene(new UserPage(primaryStage, this.user).getScene()), 0, 2);
 
 //    AddClock();
     return new Scene(grid, 300, 250);

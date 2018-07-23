@@ -10,6 +10,7 @@ import java.util.List;
 /** A class for making money calculations and generating daily reports. */
 public class CostCalculator {
 
+  private static HashMap<YearMonth, Integer> monthlyRevenue = new HashMap<>();
   /** Contains the expenditure per each day */
   private static HashMap<LocalDate, Integer> dailyRevenue = new HashMap<>();
   /** Contains the number of stations travelled per day by users */
@@ -27,6 +28,12 @@ public class CostCalculator {
     } else {
       dailyRevenue.put(date, fee);
       dailyLog.put(date, tripLength);
+    }
+
+    if (monthlyRevenue.containsKey(month)) {
+      monthlyRevenue.put(month, monthlyRevenue.get(month) + fee);
+    } else {
+      monthlyRevenue.put(month, fee);
     }
   }
 
@@ -47,5 +54,9 @@ public class CostCalculator {
           String.format("%s   $%.2f     %s%s", date, revenue, travelled, System.lineSeparator());
     }
     return message;
+  }
+
+  public static HashMap<YearMonth, Integer> getMonthlyRevenue() {
+    return monthlyRevenue;
   }
 }

@@ -21,7 +21,6 @@ public class Main extends Application {
 
   public void start(Stage primaryStage) throws IOException {
     primaryStage.setTitle("Transit System Simulator");
-    BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
     LoginPage loginPage = new LoginPage(primaryStage);
     primaryStage.setScene(loginPage.getScene());
     TransitTime.updateTimeLabel();

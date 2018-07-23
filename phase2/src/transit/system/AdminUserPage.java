@@ -18,17 +18,17 @@ public class AdminUserPage extends AuthenticatedPage {
 
   @Override
   protected Scene makeScene(Stage primaryStage) {
-    placeLabel("transit.system.Station name: ", 0, 1);
+    placeLabel("Station name: ", 0, 1);
     TextField stationName = placeTextField(1, 1);
 
-    placeLabel("transit.system.Station type: ", 0, 2);
+    placeLabel("Station type: ", 0, 2);
     ChoiceBox<String> stationTypes = new ChoiceBox<>();
     stationTypes.getItems().addAll("Bus", "Subway");
     stationTypes.getSelectionModel().select(0);
 
     grid.add(stationTypes, 1, 2);
     placeButton(
-        "Make transit.system.Station", () -> makeNewStation(stationName.getText(), stationTypes.getValue()), 1, 3);
+        "Make Station", () -> makeNewStation(stationName.getText(), stationTypes.getValue()), 1, 3);
 
     return new Scene(grid, 300, 250);
   }
@@ -43,8 +43,8 @@ public class AdminUserPage extends AuthenticatedPage {
     } catch (InvalidInputException e) {
       System.out.println("found");
       makeAlert(
-              "transit.system.Station Construction",
-              "Invalid transit.system.Station name",
+              "Station Construction",
+              "Station name",
               "A station of the same type and name already exists.",
               Alert.AlertType.WARNING)
           .showAndWait();

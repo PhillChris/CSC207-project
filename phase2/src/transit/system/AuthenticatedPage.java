@@ -75,7 +75,7 @@ public abstract class AuthenticatedPage extends Page {
         () -> {
           Alert alert =
               makeAlert(
-                  "transit.system.User Information",
+                  "User Information",
                   "Your user information:",
                       finalMessage,
                   Alert.AlertType.INFORMATION);

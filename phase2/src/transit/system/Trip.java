@@ -42,7 +42,7 @@ public class Trip {
   /** @return A string representation of a trip */
   public String toString() {
     return String.format(
-        "%s: transit.system.Trip started at %s (%s) and ended at %s (%s)",
+        "%s: Trip started at %s (%s) and ended at %s (%s)",
         timeStarted.toLocalDate(),
         priorStops.get(0),
         timeStarted.toLocalTime(),

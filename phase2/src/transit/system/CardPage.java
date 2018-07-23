@@ -52,7 +52,7 @@ public class CardPage extends AuthenticatedPage {
     int i = 0;
     for (Integer id: this.user.getCardsCopy().keySet()) {
       placeButton(
-          "transit.system.Card #" + user.getCardsCopy().get(id).getId(),
+          "Card #" + user.getCardsCopy().get(id).getId(),
           () -> System.out.println("This is a card!"),
           0,
           3 + i);

@@ -33,7 +33,7 @@ public class LoginPage extends Page {
               // might want to come up with a better way of doing this
               if (user instanceof AdminUser) {
                 userPage =
-                    new AdminUserPage(primaryStage, user, this);
+                    new AdminUserPage(primaryStage, user);
               } else {
                 userPage = new UserPage(primaryStage, user);
               }

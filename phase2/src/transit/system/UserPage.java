@@ -24,7 +24,7 @@ public class UserPage extends AuthenticatedPage {
           primaryStage.setScene(cardPage.getScene());
         },
         0,
-        2);
+        1);
     placeButton(
         "Monthly Expenditure (Current Year)",
       () -> {

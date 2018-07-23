@@ -1,8 +1,10 @@
 package transit.system;
 
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 /** A class keeping track of universal time in the transit system */
 public class TransitTime {
@@ -15,15 +17,18 @@ public class TransitTime {
 
   public static void updateTime() {
     if (running) {
-      currentTime = currentTime.plusMinutes(5);
+      currentTime = currentTime.plusMinutes(1);
     }
   }
 
   public static String getCurrentTime(){
-    String time = "Current Day: " + currentTime.getMonth().toString() + " " + currentTime.getDayOfMonth() + ", ";
-    time += currentTime.getYear() + System.lineSeparator();
-    time += "Time: " + currentTime.getHour() + ":" + currentTime.getMinute();
-    return time;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    String time = formatter.format(currentTime.toLocalTime());
+    LocalDate date = currentTime.toLocalDate();
+    String currentTime = String.format("Current Day: %s %s, %s", date.getMonth(), date.getDayOfMonth(), date.getYear());
+    currentTime += System.lineSeparator();
+    currentTime += String.format("Time: %s", time);
+    return currentTime;
   }
 
   /**

@@ -15,10 +15,11 @@ public class SignUpPage extends Page {
       Stage primaryStage, LoginPage parentPage) {
     super(primaryStage);
     this.parentPage = parentPage;
+    this.scene = makeScene(primaryStage);
   }
 
   protected Scene makeScene(Stage primaryStage) {
-    placeLabel("New transit.system.User: ", 0, 1);
+    placeLabel("User: ", 0, 1);
     placeLabel("New Email: ", 0, 2);
     placeLabel("New Password: ", 0, 3);
 

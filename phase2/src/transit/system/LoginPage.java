@@ -11,6 +11,7 @@ import java.io.IOException;
 public class LoginPage extends Page {
   public LoginPage(Stage primaryStage, BufferedWriter writer) throws IOException {
     super(primaryStage);
+    this.scene = makeScene(primaryStage);
   }
 
   protected Scene makeScene(Stage primaryStage) {

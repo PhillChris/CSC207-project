@@ -26,6 +26,16 @@ public class UserPage extends AuthenticatedPage {
         },
         0,
         2);
+    placeButton(
+        "Monthly Expenditure (Current Year)",
+      () -> {
+        UserGraphPage graphPage =
+          new UserGraphPage(
+            primaryStage, this.user);
+        primaryStage.setScene(graphPage.getScene());
+      },
+      0,
+      2);
     return super.makeScene(primaryStage);
   }
 

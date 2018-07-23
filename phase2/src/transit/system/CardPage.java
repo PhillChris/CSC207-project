@@ -46,9 +46,21 @@ public class CardPage extends AuthenticatedPage {
     for (Integer id: this.user.getCardsCopy().keySet()) {
       placeButton(
           "Card #" + user.getCardsCopy().get(id).getId(),
-          () -> System.out.println("This is a card!"),
+          () -> System.out.println("This is a card"),
           0,
           3 + i);
+      // if the current card is suspended
+      if (!user.getCardsCopy().get(id).isSuspended()) {
+        placeButton("Report card stolen", () -> {
+          user.getCardsCopy().get(id).suspendCard();
+          primaryStage.setScene(new CardPage(primaryStage, this.user).getScene());
+        }, 1, 3+i);
+      } else {
+        placeButton("Activate this card", () -> {
+          user.getCardsCopy().get(id).activateCard();
+          primaryStage.setScene(new CardPage(primaryStage, this.user).getScene());
+        }, 1, 3+i);
+      }
       i++;
     }
   }

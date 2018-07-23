@@ -16,7 +16,7 @@ public abstract class AuthenticatedPage extends Page {
       AuthenticatedPage parentPage,
       LoginPage loginPage) {
     super(primaryStage);
-    this.user = user;
+      this.user = user;
     this.parentPage = parentPage;
     this.loginPage = loginPage;
     addUserData(primaryStage);

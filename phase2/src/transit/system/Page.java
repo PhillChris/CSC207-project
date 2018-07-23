@@ -1,36 +1,24 @@
 package transit.system;
 
-import java.util.Optional;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.util.Optional;
 
 import static javafx.scene.paint.Color.BLACK;
 
 public abstract class Page {
   protected Scene scene;
-  protected GridPane grid;
+  protected GridPane grid = new GridPane();
   protected Label time;
-
-  public Page(Stage primaryStage) {
-    this.grid = new GridPane();
-//    this.scene = makeScene(primaryStage);
-    AddClock();
-  }
 
   public Scene getScene() {
     return this.scene;

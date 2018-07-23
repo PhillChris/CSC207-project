@@ -15,7 +15,6 @@ public abstract class AuthenticatedPage extends Page {
       User user,
       AuthenticatedPage parentPage,
       LoginPage loginPage) {
-    super(primaryStage);
     this.user = user;
     this.parentPage = parentPage;
     this.loginPage = loginPage;
@@ -60,6 +59,7 @@ public abstract class AuthenticatedPage extends Page {
         },
         0,
         6);
+    AddClock();
     return new Scene(grid, 300, 250);
   }
 

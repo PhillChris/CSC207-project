@@ -13,7 +13,6 @@ public class UserGraphPage extends Page{
   User user;
 
   public UserGraphPage(Stage primaryStage, User user) {
-    super(primaryStage);
     this.scene = makeScene(primaryStage);
     this.user = user;
   }

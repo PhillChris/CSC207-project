@@ -7,10 +7,10 @@ import javafx.stage.Stage;
 
 public class LoginPage extends Page {
   public LoginPage(Stage primaryStage) {
-    this.scene = makeScene(primaryStage);
+    makeScene(primaryStage);
   }
 
-  protected Scene makeScene(Stage primaryStage) {
+  protected void makeScene(Stage primaryStage) {
     placeLabel("Email: ", 0, 1);
     placeLabel("Password: ", 0, 2);
 
@@ -58,7 +58,7 @@ public class LoginPage extends Page {
         2,
         2);
     AddClock();
-    return new Scene(grid, 500, 250);
+    this.scene = new Scene(grid, 500, 250);
   }
 
   private boolean checkAuthorization(TextField email, TextField password) {

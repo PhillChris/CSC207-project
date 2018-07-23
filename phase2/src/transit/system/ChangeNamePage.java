@@ -8,10 +8,10 @@ public class ChangeNamePage extends AuthenticatedPage {
   public ChangeNamePage(
       Stage primaryStage, User user) {
     super(primaryStage, user);
-    this.scene = makeScene(primaryStage);
+    makeScene(primaryStage);
   }
 
-  public Scene makeScene(Stage primaryStage) {
+  public void makeScene(Stage primaryStage) {
     placeLabel("New Username: ", 0, 0);
     TextField newName = placeTextField(1, 0);
     placeButton(
@@ -23,7 +23,7 @@ public class ChangeNamePage extends AuthenticatedPage {
         1,
         1);
 
-    return new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, 300, 250);
   }
 
   protected void addUserData(Stage primaryStage) {

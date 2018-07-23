@@ -9,10 +9,10 @@ public class UserPage extends AuthenticatedPage {
       Stage primaryStage,
       User user) {
     super(primaryStage, user);
-    this.scene = makeScene(primaryStage);
+    makeScene(primaryStage);
   }
 
-  protected Scene makeScene(Stage primaryStage) {
+  protected void makeScene(Stage primaryStage) {
     placeButton(
         "Cards",
         () -> {
@@ -36,7 +36,7 @@ public class UserPage extends AuthenticatedPage {
       },
       0,
       3);
-    return super.makeScene(primaryStage);
+    super.makeScene(primaryStage);
   }
 
   protected void addUserData(Stage primaryStage) {

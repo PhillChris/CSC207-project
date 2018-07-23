@@ -17,11 +17,11 @@ public class UserGraphPage extends GraphPage{
     super(primaryStage, user);
   }
 
-  public Scene makeScene(Stage stage) {
+  public void makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
     LineChart chart = makeChart();
     Scene scene  = new Scene(chart,800,600);
-    return scene;
+    this.scene = scene;
   }
 
   public LineChart<String, Number> makeChart() {

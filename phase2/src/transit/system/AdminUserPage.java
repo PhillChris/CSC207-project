@@ -12,11 +12,11 @@ public class AdminUserPage extends AuthenticatedPage {
       Stage primaryStage,
       User user) {
     super(primaryStage, user);
-    this.scene = makeScene(primaryStage);
+    makeScene(primaryStage);
   }
 
   @Override
-  protected Scene makeScene(Stage primaryStage) {
+  protected void makeScene(Stage primaryStage) {
     placeLabel("Station name: ", 0, 1);
     TextField stationName = placeTextField(1, 1);
 
@@ -43,7 +43,7 @@ public class AdminUserPage extends AuthenticatedPage {
       0,
       2);
 
-    return new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, 300, 250);
   }
 
   public void addUserData(Stage primaryStage) {}

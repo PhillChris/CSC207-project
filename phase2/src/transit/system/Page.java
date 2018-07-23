@@ -23,7 +23,7 @@ public abstract class Page {
     return this.scene;
   }
 
-  abstract Scene makeScene(Stage primaryStage);
+  abstract void makeScene(Stage primaryStage);
 
   protected void placeLabel(String text, int col, int row) {
     Label tempLabel = new Label(text);

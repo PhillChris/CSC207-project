@@ -14,15 +14,14 @@ public class GraphPage extends Page{
 
   public GraphPage(Stage primaryStage, User user) {
     this.user = user;
-    this.scene = makeScene(primaryStage);
+    makeScene(primaryStage);
   }
 
-  public Scene makeScene(Stage stage) {
+  public void makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
     LineChart chart = makeChart();
     Scene scene  = new Scene(chart,800,600);
-
-    return scene;
+    this.scene = scene;
   }
 
   public LineChart<String, Number> makeChart() {

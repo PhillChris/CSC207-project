@@ -17,11 +17,7 @@ public abstract class AuthenticatedPage extends Page {
 
   protected abstract void addUserData(Stage primaryStage);
 
-  protected void updateLabel(Label label, String newMessage) {
-    label.setText(newMessage);
-  }
-
-  protected Scene makeScene(Stage primaryStage) {
+  protected void makeScene(Stage primaryStage) {
     newUserInfoButton(10, 10);
 
     placeButton("Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 10, 0);
@@ -52,7 +48,7 @@ public abstract class AuthenticatedPage extends Page {
         0,
         6);
     AddClock();
-    return new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, 300, 250);
   }
 
   protected void newUserInfoButton(int col, int row) {

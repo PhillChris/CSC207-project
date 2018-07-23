@@ -11,10 +11,10 @@ import javafx.stage.Stage;
 public class SignUpPage extends Page {
   public SignUpPage(
       Stage primaryStage) {
-    this.scene = makeScene(primaryStage);
+    makeScene(primaryStage);
   }
 
-  protected Scene makeScene(Stage primaryStage) {
+  protected void makeScene(Stage primaryStage) {
     placeLabel("User: ", 0, 1);
     placeLabel("New Email: ", 0, 2);
     placeLabel("New Password: ", 0, 3);
@@ -47,7 +47,7 @@ public class SignUpPage extends Page {
         1,
         6);
 
-    return new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, 300, 250);
   }
 
   void add(String username, String email, String password, boolean isAdmin)

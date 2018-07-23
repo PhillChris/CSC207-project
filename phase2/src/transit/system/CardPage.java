@@ -16,10 +16,10 @@ public class CardPage extends AuthenticatedPage {
       Stage primaryStage,
       User user) {
     super(primaryStage, user);
-    this.scene = makeScene(primaryStage);
+    makeScene(primaryStage);
   }
 
-  protected Scene makeScene(Stage primaryStage) {
+  protected void makeScene(Stage primaryStage) {
     placeButton(
         "Add card",
         () -> {
@@ -42,8 +42,8 @@ public class CardPage extends AuthenticatedPage {
     }, 0, 1);
     placeButton("Go Back", () -> primaryStage.setScene(new UserPage(primaryStage, this.user).getScene()), 0, 2);
 
-//    AddClock();
-    return new Scene(grid, 300, 250);
+    // AddClock();
+    this.scene = new Scene(grid, 300, 250);
   }
 
   protected void addUserData(Stage primaryStage) {

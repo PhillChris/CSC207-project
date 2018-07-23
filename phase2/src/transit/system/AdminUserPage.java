@@ -29,6 +29,20 @@ public class AdminUserPage extends AuthenticatedPage {
     placeButton(
         "Make Station", () -> makeNewStation(stationName.getText(), stationTypes.getValue()), 1, 3);
 
+    placeButton(
+      "Monthly Revenue (Current Year)",
+      () -> {
+        Stage secondaryStage = new Stage();
+        UserGraphPage graphPage =
+          new UserGraphPage(
+            secondaryStage, this.user);
+        secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getCurrentDate().getYear());
+        secondaryStage.setScene(graphPage.getScene());
+        secondaryStage.show();
+      },
+      0,
+      2);
+
     return new Scene(grid, 300, 250);
   }
 

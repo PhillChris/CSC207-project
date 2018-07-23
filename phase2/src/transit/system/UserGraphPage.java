@@ -6,15 +6,15 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
+import java.time.YearMonth;
+import java.util.HashMap;
 
 
 
-public class UserGraphPage extends Page{
-  User user;
+public class UserGraphPage extends GraphPage{
 
   public UserGraphPage(Stage primaryStage, User user) {
-    this.scene = makeScene(primaryStage);
-    this.user = user;
+    super(primaryStage, user);
   }
 
   public Scene makeScene(Stage stage) {
@@ -25,38 +25,17 @@ public class UserGraphPage extends Page{
   }
 
   public LineChart<String, Number> makeChart(User user) {
-    final CategoryAxis xAxis = new CategoryAxis();
-    final NumberAxis yAxis = new NumberAxis();
-    xAxis.setLabel("Month");
+    LineChart lineChart = super.makeChart();
 
-    final LineChart<String,Number> lineChart =
-      new LineChart<String,Number>(xAxis,yAxis);
-
-    lineChart.setTitle("Monthly Transit Expenditure (Current Year)");
-
+    lineChart.setTitle(String.format("Monthly Revenue (%s)", TransitTime.getCurrentDate().getYear()));
     XYChart.Series series = new XYChart.Series();
-    series.setName("Monthly Total");
-
-//    HashMap<YearMonth, Integer> expenditureMonthly = user.getExpenditureMonthly();
-//    for (YearMonth month : expenditureMonthly.keySet()) {
-//      if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
-//        double total = expenditureMonthly.get(month) / 100.0;
-//        series.getData().add(new XYChart.Data(month.getMonth(), total));
-//      }
-//    }
-
-    series.getData().add(new XYChart.Data("Jan", 23));
-    series.getData().add(new XYChart.Data("Feb", 14));
-    series.getData().add(new XYChart.Data("Mar", 15));
-    series.getData().add(new XYChart.Data("Apr", 24));
-    series.getData().add(new XYChart.Data("May", 34));
-    series.getData().add(new XYChart.Data("Jun", 36));
-    series.getData().add(new XYChart.Data("Jul", 22));
-    series.getData().add(new XYChart.Data("Aug", 45));
-    series.getData().add(new XYChart.Data("Sep", 43));
-    series.getData().add(new XYChart.Data("Oct", 17));
-    series.getData().add(new XYChart.Data("Nov", 29));
-    series.getData().add(new XYChart.Data("Dec", 25));
+    HashMap<YearMonth, Integer> expenditureMonthly = user.getExpenditureMonthly();
+    for (YearMonth month : expenditureMonthly.keySet()) {
+      if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
+        double total = expenditureMonthly.get(month) / 100.0;
+        series.getData().add(new XYChart.Data(month.getMonth(), total));
+      }
+    }
 
     lineChart.getData().add(series);
     return lineChart;

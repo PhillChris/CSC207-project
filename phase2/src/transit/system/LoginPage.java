@@ -57,7 +57,7 @@ public class LoginPage extends Page {
         },
         2,
         2);
-    AddClock();
+    addClock();
     this.scene = new Scene(grid, 500, 250);
   }
 

@@ -144,7 +144,7 @@ public abstract class Page {
   }
 
   /** Adds a clock with live updating time on the user page */
-  protected void AddClock() {
+  protected void addClock() {
     grid.add(TransitTime.getTimeLabel(), 0, 0);
   }
 }

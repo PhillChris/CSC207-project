@@ -37,7 +37,7 @@ public class CardPage extends AuthenticatedPage {
     }, 0, 1);
     placeButton("Go Back", () -> primaryStage.setScene(new UserPage(primaryStage, this.user).getScene()), 0, 2);
 
-    // AddClock();
+    // addClock();
     this.scene = new Scene(grid, 300, 250);
   }
 

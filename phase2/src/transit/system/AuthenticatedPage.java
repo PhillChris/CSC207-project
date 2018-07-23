@@ -2,36 +2,112 @@ package transit.system;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+/** Represents a page with an associated user in this system, upon having logged in */
 public abstract class AuthenticatedPage extends Page {
+  /** The user associated with this given authenticated page */
   protected User user;
 
-  public AuthenticatedPage(
-      Stage primaryStage,
-      User user) {
+  /**
+   * Abstract constructor: not to be called directly, associating the given user with this
+   * authenticated page
+   *
+   * @param primaryStage the stage on which this authenticated page is served
+   * @param user the user associated with this authenticated page
+   */
+  public AuthenticatedPage(Stage primaryStage, User user) {
     this.user = user;
     addUserData(primaryStage);
   }
 
+  /**
+   * Adds the user data in the given authenticated page
+   *
+   * @param primaryStage the stage on which this authenticated page is served
+   */
   protected abstract void addUserData(Stage primaryStage);
 
+  /**
+   * Makes the core implementation of UserPage, to be overriden by other authenticated pages
+   *
+   * @param primaryStage the stage which this scene is being served on, passed for button-action
+   */
   protected void makeScene(Stage primaryStage) {
     newUserInfoButton(10, 10);
+    newLogoutButton(primaryStage, 10, 0);
+    newChangeUserButton(primaryStage, 0, 4);
+    newRemoveAccountButton(primaryStage, 0, 6);
+    addClock();
+    this.scene = new Scene(grid, 300, 250);
+  }
 
-    placeButton("Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 10, 0);
+  /**
+   * A private helper to make a new userInfoButton at the given coordinates
+   *
+   * @param col the column in the grid where this user info button is displayed
+   * @param row the row in the grid where this user info button is displayed
+   */
+  private void newUserInfoButton(int col, int row) {
+    String message = "Username: " + user;
+    for (int i = 0; i < user.getCardsCopy().size(); i++) {
+      message += System.lineSeparator();
+      message += user.getCardsCopy().get(i);
+    }
+    String finalMessage = message;
+    placeButton(
+        "Info",
+        () -> {
+          Alert alert =
+              makeAlert(
+                  "User Information",
+                  "Your user information:",
+                  finalMessage,
+                  Alert.AlertType.INFORMATION);
+          alert.showAndWait();
+        },
+        col,
+        row);
+  }
 
+  /**
+   * A private helper method to add a logout button at the given coordinates
+   *
+   * @param primaryStage the stage which this button is being served on, passed for button-action
+   * @param col the column in the grid where this logout button is displayed
+   * @param row the row in the grid where this logout button is displayed
+   */
+  private void newLogoutButton(Stage primaryStage, int col, int row) {
+    placeButton(
+        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), col, row);
+  }
+
+  /**
+   * A private helper method to add a change username button at the given coordinates
+   *
+   * @param primaryStage the stage which this button is being served on, passed for button-action
+   * @param col the column in the grid where this change username button is displayed
+   * @param row the row in the grid where this change username button is displayed
+   */
+  private void newChangeUserButton(Stage primaryStage, int col, int row) {
     placeButton(
         "Change username",
         () -> {
-          ChangeNamePage namePage =
-              new ChangeNamePage(
-                  primaryStage, this.user);
+          ChangeNamePage namePage = new ChangeNamePage(primaryStage, this.user);
           primaryStage.setScene(namePage.getScene());
         },
-        0,
-        4);
+        col,
+        row);
+  }
+
+  /**
+   * A private helper method to add a new remove account button at the given coordinates
+   *
+   * @param primaryStage the stage which this button is being served on, passed for button-action
+   * @param col the column in the grid where this remove account button is displayed
+   * @param row the row in the grid where this remove account button is displayed
+   */
+  private void newRemoveAccountButton(Stage primaryStage, int col, int row) {
     placeButton(
         "Remove this account!",
         () ->
@@ -45,29 +121,5 @@ public abstract class AuthenticatedPage extends Page {
                 }),
         0,
         6);
-    AddClock();
-    this.scene = new Scene(grid, 300, 250);
-  }
-
-  protected void newUserInfoButton(int col, int row) {
-    String message = "Username: " + user;
-    for (int i = 0; i < user.getCardsCopy().size(); i++) {
-      message += System.lineSeparator();
-      message += user.getCardsCopy().get(i);
-    }
-      String finalMessage = message;
-      placeButton(
-        "Info",
-        () -> {
-          Alert alert =
-              makeAlert(
-                  "User Information",
-                  "Your user information:",
-                      finalMessage,
-                  Alert.AlertType.INFORMATION);
-          alert.showAndWait();
-        },
-        col,
-        row);
   }
 }

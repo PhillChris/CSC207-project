@@ -17,8 +17,6 @@ public abstract class AuthenticatedPage extends Page {
 
   protected abstract void addUserData(Stage primaryStage);
 
-  abstract void updatePage(Stage primaryStage);
-
   protected void updateLabel(Label label, String newMessage) {
     label.setText(newMessage);
   }

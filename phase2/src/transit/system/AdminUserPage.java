@@ -46,8 +46,6 @@ public class AdminUserPage extends AuthenticatedPage {
     return new Scene(grid, 300, 250);
   }
 
-  public void updatePage(Stage primaryStage) {}
-
   public void addUserData(Stage primaryStage) {}
 
   private void makeNewStation(String name, String type) {

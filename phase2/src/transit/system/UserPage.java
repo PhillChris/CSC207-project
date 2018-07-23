@@ -5,8 +5,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class UserPage extends AuthenticatedPage {
-  private Label userLabel;
-
   public UserPage(
       Stage primaryStage,
       User user) {
@@ -42,10 +40,6 @@ public class UserPage extends AuthenticatedPage {
   }
 
   protected void addUserData(Stage primaryStage) {
-    this.userLabel = placeLabel("Hello " + user.getUserName(), 0, 1);
-  }
-
-  void updatePage(Stage primaryStage) {
-    updateLabel(this.userLabel, "Hello " + user.getUserName());
+    placeLabel("Hello " + user.getUserName(), 0, 1);
   }
 }

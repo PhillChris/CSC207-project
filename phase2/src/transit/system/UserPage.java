@@ -29,10 +29,13 @@ public class UserPage extends AuthenticatedPage {
     placeButton(
         "Monthly Expenditure (Current Year)",
       () -> {
+        Stage secondaryStage = new Stage();
         UserGraphPage graphPage =
           new UserGraphPage(
-            primaryStage, this.user);
-        primaryStage.setScene(graphPage.getScene());
+            secondaryStage, this.user);
+        secondaryStage.setTitle("Monthly Expenditure for user " + user);
+        secondaryStage.setScene(graphPage.getScene());
+        secondaryStage.show();
       },
       0,
       2);

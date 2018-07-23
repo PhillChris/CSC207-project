@@ -2,9 +2,6 @@ package transit.system;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 
 /** A transit system simulation. */

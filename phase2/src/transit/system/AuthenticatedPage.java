@@ -49,12 +49,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this user info button is displayed
    */
   private void newUserInfoButton(int col, int row) {
-    String message = "Username: " + user;
-    for (int i = 0; i < user.getCardsCopy().size(); i++) {
-      message += System.lineSeparator();
-      message += user.getCardsCopy().get(i);
-    }
-    String finalMessage = message;
+    String message = getUserMessage();
     placeButton(
         "Info",
         () -> {
@@ -62,12 +57,26 @@ public abstract class AuthenticatedPage extends Page {
               makeAlert(
                   "User Information",
                   "Your user information:",
-                  finalMessage,
+                  message,
                   Alert.AlertType.INFORMATION);
           alert.showAndWait();
         },
         col,
         row);
+  }
+
+  /**
+   * A private helper method generating the user information to be displayed
+   *
+   * @return the user information to be displayed
+   */
+  private String getUserMessage(){
+    String temp = "Username: " + user;
+    for (Integer id: this.user.getCardsCopy().keySet()) {
+      temp += System.lineSeparator();
+      temp += user.getCardsCopy().get(id);
+    }
+    return temp;
   }
 
   /**

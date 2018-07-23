@@ -19,7 +19,7 @@ public class Main extends Application {
     launch(args);
   }
 
-  public void start(Stage primaryStage) throws IOException {
+  public void start(Stage primaryStage) {
     primaryStage.setTitle("Transit System Simulator");
     LoginPage loginPage = new LoginPage(primaryStage);
     primaryStage.setScene(loginPage.getScene());

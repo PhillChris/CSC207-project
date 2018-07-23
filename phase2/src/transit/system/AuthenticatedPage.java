@@ -34,17 +34,15 @@ public abstract class AuthenticatedPage extends Page {
         4);
     placeButton(
         "Remove this account!",
-        () -> {
-          Alert alert =
-              makeConfirmationAlert(
-                  "Delete account confirmation",
-                  "Confirm:",
-                  "Are you sure you want this account to be removed?",
-                  () -> {
-                    user.removeUser();
-                    primaryStage.setScene(new LoginPage(primaryStage).getScene());
-                  });
-        },
+        () ->
+            makeConfirmationAlert(
+                "Delete account confirmation",
+                "Confirm:",
+                "Are you sure you want this account to be removed?",
+                () -> {
+                  user.removeUser();
+                  primaryStage.setScene(new LoginPage(primaryStage).getScene());
+                }),
         0,
         6);
     AddClock();

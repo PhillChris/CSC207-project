@@ -3,15 +3,10 @@ package transit.system;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 public class CardPage extends AuthenticatedPage {
-  private ArrayList<Button> cardButtons = new ArrayList<>();
-
   public CardPage(
       Stage primaryStage,
       User user) {

@@ -12,6 +12,7 @@ public class UserPage extends AuthenticatedPage {
       User user,
       LoginPage parentPage) {
     super(primaryStage, user, null, parentPage);
+    this.scene = makeScene(primaryStage);
   }
 
   protected Scene makeScene(Stage primaryStage) {

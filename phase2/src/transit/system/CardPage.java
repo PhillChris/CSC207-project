@@ -18,6 +18,7 @@ public class CardPage extends AuthenticatedPage {
       AuthenticatedPage parentPage,
       LoginPage loginPage) {
     super(primaryStage, user, parentPage, loginPage);
+    this.scene = makeScene(primaryStage);
   }
 
   protected Scene makeScene(Stage primaryStage) {

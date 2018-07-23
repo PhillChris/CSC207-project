@@ -13,6 +13,7 @@ public class AdminUserPage extends AuthenticatedPage {
       User user,
       LoginPage loginPage) {
     super(primaryStage, user, null, loginPage);
+    this.scene = makeScene(primaryStage);
   }
 
   @Override

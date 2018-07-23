@@ -28,7 +28,7 @@ public abstract class Page {
 
   public Page(Stage primaryStage) {
     this.grid = new GridPane();
-    this.scene = makeScene(primaryStage);
+//    this.scene = makeScene(primaryStage);
     AddClock();
   }
 

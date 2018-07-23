@@ -13,8 +13,8 @@ public class GraphPage extends Page{
   protected User user;
 
   public GraphPage(Stage primaryStage, User user) {
-    this.scene = makeScene(primaryStage);
     this.user = user;
+    this.scene = makeScene(primaryStage);
   }
 
   public Scene makeScene(Stage stage) {

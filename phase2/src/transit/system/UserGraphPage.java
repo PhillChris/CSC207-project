@@ -19,12 +19,12 @@ public class UserGraphPage extends GraphPage{
 
   public Scene makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
-    LineChart chart = makeChart(user);
+    LineChart chart = makeChart();
     Scene scene  = new Scene(chart,800,600);
     return scene;
   }
 
-  public LineChart<String, Number> makeChart(User user) {
+  public LineChart<String, Number> makeChart() {
     LineChart lineChart = super.makeChart();
 
     lineChart.setTitle(String.format("Monthly Revenue (%s)", TransitTime.getCurrentDate().getYear()));
@@ -40,5 +40,4 @@ public class UserGraphPage extends GraphPage{
     lineChart.getData().add(series);
     return lineChart;
   }
-
 }

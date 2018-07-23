@@ -250,4 +250,8 @@ public class User {
       expenditureMonthly.put(month, lastTrip.getFee());
     }
   }
+
+  public HashMap<YearMonth, Integer> getExpenditureMonthly() {
+    return expenditureMonthly;
+  }
 }

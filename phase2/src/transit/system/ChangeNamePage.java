@@ -8,6 +8,7 @@ public class ChangeNamePage extends AuthenticatedPage {
   public ChangeNamePage(
       Stage primaryStage, User user, AuthenticatedPage parentPage, LoginPage loginPage) {
     super(primaryStage, user, parentPage, loginPage);
+    this.scene = makeScene(primaryStage);
   }
 
   public Scene makeScene(Stage primaryStage) {

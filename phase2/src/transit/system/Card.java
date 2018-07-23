@@ -108,6 +108,6 @@ public class Card {
 
   /** Returns a string representation of this card */
   public String toString() {
-    return String.format("transit.system.Card #%s has $%.2f remaining", this.id, this.balance / 100.0);
+    return String.format("Card #%s has $%.2f remaining", this.id, this.balance / 100.0);
   }
 }

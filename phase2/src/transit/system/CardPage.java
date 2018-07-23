@@ -45,6 +45,8 @@ public class CardPage extends AuthenticatedPage {
       });
     }, 0, 1);
     placeButton("Go Back", () -> primaryStage.setScene(parentPage.getScene()), 0, 2);
+
+//    AddClock();
     return new Scene(grid, 300, 250);
   }
 
@@ -52,7 +54,7 @@ public class CardPage extends AuthenticatedPage {
     int i = 0;
     for (Integer id: this.user.getCardsCopy().keySet()) {
       placeButton(
-          "transit.system.Card #" + user.getCardsCopy().get(id).getId(),
+          "Card #" + user.getCardsCopy().get(id).getId(),
           () -> System.out.println("This is a card!"),
           0,
           3 + i);
@@ -72,7 +74,7 @@ public class CardPage extends AuthenticatedPage {
     for (Integer id: this.user.getCardsCopy().keySet()) {
       this.cardButtons.add(
           placeButton(
-              "transit.system.Card #" + user.getCardsCopy().get(id).getId(),
+                  "Card #" + user.getCardsCopy().get(id).getId(),
               () -> System.out.println("This is a card!"),
               0,
               3 + i));

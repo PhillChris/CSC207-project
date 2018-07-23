@@ -5,12 +5,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-
 public class LoginPage extends Page {
-  public LoginPage(Stage primaryStage, BufferedWriter writer) throws IOException {
-    super(primaryStage);
+  public LoginPage(Stage primaryStage) {
     this.scene = makeScene(primaryStage);
   }
 
@@ -61,8 +57,8 @@ public class LoginPage extends Page {
         },
         2,
         2);
-
-    return new Scene(grid, 300, 250);
+    AddClock();
+    return new Scene(grid, 500, 250);
   }
 
   private boolean checkAuthorization(TextField email, TextField password) {

@@ -15,8 +15,8 @@ public abstract class AuthenticatedPage extends Page {
       User user,
       AuthenticatedPage parentPage,
       LoginPage loginPage) {
-    super(primaryStage);
       this.user = user;
+    this.user = user;
     this.parentPage = parentPage;
     this.loginPage = loginPage;
     addUserData(primaryStage);
@@ -60,6 +60,7 @@ public abstract class AuthenticatedPage extends Page {
         },
         0,
         6);
+    AddClock();
     return new Scene(grid, 300, 250);
   }
 
@@ -75,7 +76,7 @@ public abstract class AuthenticatedPage extends Page {
         () -> {
           Alert alert =
               makeAlert(
-                  "transit.system.User Information",
+                  "User Information",
                   "Your user information:",
                       finalMessage,
                   Alert.AlertType.INFORMATION);

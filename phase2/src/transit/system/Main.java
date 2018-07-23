@@ -1,10 +1,11 @@
 package transit.system;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import javafx.application.Application;
-import javafx.stage.Stage;
 
 /** A transit system simulation. */
 public class Main extends Application {
@@ -21,7 +22,7 @@ public class Main extends Application {
   public void start(Stage primaryStage) throws IOException {
     primaryStage.setTitle("Transit System Simulator");
     BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
-    LoginPage loginPage = new LoginPage(primaryStage, writer);
+    LoginPage loginPage = new LoginPage(primaryStage);
     primaryStage.setScene(loginPage.getScene());
     primaryStage.show();
   }

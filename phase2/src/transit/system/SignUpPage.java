@@ -13,7 +13,6 @@ public class SignUpPage extends Page {
 
   public SignUpPage(
       Stage primaryStage, LoginPage parentPage) {
-    super(primaryStage);
     this.parentPage = parentPage;
     this.scene = makeScene(primaryStage);
   }

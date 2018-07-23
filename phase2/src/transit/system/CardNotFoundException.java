@@ -4,6 +4,6 @@ package transit.system;
 public class CardNotFoundException extends TransitException {
   /** @return the error message that this exception returns. */
   public String getMessage() {
-    return "transit.system.Card Not Found: The given information does not map to a card in this transit system";
+    return "Card Not Found: The given information does not map to a card in this transit system";
   }
 }

@@ -18,7 +18,6 @@ public class MaintenancePage extends Page {
   }
   @Override
   void makeScene(Stage primaryStage) {
-
     placeLabel("Station name: ", 0, 1);
     TextField stationName = placeTextField(1, 1);
 

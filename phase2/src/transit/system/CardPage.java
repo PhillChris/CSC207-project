@@ -61,7 +61,7 @@ public class CardPage extends AuthenticatedPage {
     int i = 0;
     for (Integer id : this.user.getCardsCopy().keySet()) {
       placeButton(
-          "Card #" + user.getCardsCopy().get(id).getId(),
+          "Tap Card #" + user.getCardsCopy().get(id).getId(),
           () -> {
             Stage secondaryStage = new Stage();
             secondaryStage.setTitle("Tap Card#" + user.getCardsCopy().get(id).getId());

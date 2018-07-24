@@ -35,6 +35,11 @@ public class AdminUserPage extends AuthenticatedPage {
             },
             0,
             4);
+    placeButton(
+        "Toggle User Panel",
+        () -> primaryStage.setScene(new UserPage(primaryStage, user).getScene()),
+        0,
+        6);
     this.scene = new Scene(grid, 300, 250);
   }
 

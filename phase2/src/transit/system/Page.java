@@ -27,7 +27,8 @@ public abstract class Page {
 
   /**
    * Called upon Page construction to build the scene, placing the necessary elements to a given
-   * page
+   * page. NOTE: ALL CHILD IMPLEMENTATIONS MUST SET THE SCENE ATTRIBUTE, OTHERWISE NO SCREEN IS
+   * PASSED WHEN GETSCENE IS CALLED
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    *     purposes

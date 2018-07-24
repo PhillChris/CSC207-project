@@ -74,12 +74,8 @@ public class Card {
     return currentTrip != null;
   }
 
-  /**
-   * Activates this card, after having been found
-   *
-   * @param card the suspended transit.system.Card to be reactivated
-   */
-  void activateCard(Card card) {
+  /** Activates this card, after having been found */
+  void activateCard() {
     isActive = true;
   }
 

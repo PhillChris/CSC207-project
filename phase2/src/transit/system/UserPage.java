@@ -37,6 +37,14 @@ public class UserPage extends AuthenticatedPage {
       0,
       3);
     super.makeScene(primaryStage);
+
+    if (user instanceof AdminUser) {
+      placeButton(
+          "Toggle admin panel",
+          () -> primaryStage.setScene(new AdminUserPage(primaryStage, user).getScene()),
+          0,
+          20);
+    }
   }
 
   protected void addUserData(Stage primaryStage) {

@@ -1,11 +1,5 @@
 package transit.system;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
 /** Represents an transit.system.AdminUser in a transit system. */
 public class AdminUser extends User {
 
@@ -16,19 +10,18 @@ public class AdminUser extends User {
    * @param email the email of this transit.system.AdminUser
    * @param password the password of ths transit.system.AdminUser
    */
-  public AdminUser(String name, String email, String password) throws EmailInUseException {
+  public AdminUser(String name, String email, String password) throws InvalidEmailException, EmailInUseException {
     super(name, email, password);
   }
 
-  /** Requests the production of a daily report to dailyReports.txt */
-  void dailyReports() throws IOException {
-    String message = calculator.generateReportMessage();
-    Writer writer =
-        new BufferedWriter(
-            new OutputStreamWriter(new FileOutputStream("dailyReports.txt"), "utf-8"));
-    writer.write("Date         Revenue   Stations Travelled");
-    writer.write(System.lineSeparator());
-    writer.write(message);
-    writer.close();
+  /**
+   * Creates a daily report message
+   *
+   * @return the daily report message
+   */
+  public String dailyReports() {
+    String message = "Date         Revenue   Stations Travelled\n";
+    message += calculator.generateReportMessage();
+    return message;
   }
 }

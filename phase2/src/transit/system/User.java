@@ -29,15 +29,19 @@ public class User {
   private String password;
   /** The id given to the next card added by the user */
   private int cardCounter;
-
-  /**
+  /** Email format regex (from https://howtodoinjava.com/regex/java-regex-validate-email-address/) */
+  private final String EMAILREGEX = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+   /**
    * Construct a new instance of transit.system.User
    *
    * @param name the name of this transit.system.User
    * @param email the email of this transit.system.User
    * @param password the password of ths transit.system.User
    */
-  public User(String name, String email, String password) throws EmailInUseException {
+  public User(String name, String email, String password) throws InvalidEmailException, EmailInUseException {
+    if (!email.matches(EMAILREGEX)) {
+      throw new InvalidEmailException();
+    }
     if (allUsers.keySet().contains(email)) { // If this transit.system.User already exists
       throw new EmailInUseException();
     }
@@ -49,6 +53,7 @@ public class User {
     authLog.put(email, password);
     cardCounter = 1;
     expenditureMonthly = new HashMap<>();
+    expenditureMonthly.put(YearMonth.of(2018, 3), 5);
     calculator = new CostCalculator();
   }
 

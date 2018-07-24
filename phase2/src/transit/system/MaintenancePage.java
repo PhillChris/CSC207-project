@@ -12,7 +12,7 @@ import org.controlsfx.control.CheckComboBox;
 import java.util.ArrayList;
 
 public class MaintenancePage extends Page {
-
+  private CheckComboBox<Station> dropDownList = new CheckComboBox<>();
   public MaintenancePage(Stage primaryStage) {
     makeScene(primaryStage);
   }
@@ -30,12 +30,14 @@ public class MaintenancePage extends Page {
     placeButton(
             "Make Station", () -> makeNewStation(stationName.getText(), stationTypes.getValue()), 1, 3);
 
+    placeLabel("Make route!", 0, 5);
     ChoiceBox<String> routeType = new ChoiceBox();
     routeType.getItems().addAll("Bus", "Subway");
-    grid.add(routeType, 0, 5);
+    grid.add(routeType, 0, 6);
     routeType.setOnAction(
             e -> {
-              grid.add(addNewRoute(routeType.getValue()), 2, 5);
+              grid.getChildren().remove(this.dropDownList);
+              grid.add(addNewRoute(routeType.getValue()), 2, 6);
             });
     routeType.getSelectionModel().select(0);
     this.scene = new Scene(grid, 300, 250);
@@ -61,12 +63,12 @@ public class MaintenancePage extends Page {
     } catch (Exception e) {
       stations = FXCollections.observableList(new ArrayList<>());
     }
-    CheckComboBox<Station> dropDownList = new CheckComboBox<>(stations);
+    this.dropDownList = new CheckComboBox<>(stations);
     placeButton(
             "Make Route",
             () -> new Route(dropDownList.getCheckModel().getCheckedItems()),
             3,
-            5);
+        6);
     return dropDownList;
   }
 }

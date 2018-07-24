@@ -31,7 +31,6 @@ public class SignUpPage extends Page {
         "Make Account!",
         () -> {
           try {
-
             add(username.getText(), email.getText(), password.getText(), adminBox.isSelected());
             primaryStage.setScene(new LoginPage(primaryStage).getScene());
           } catch (EmailInUseException a) {

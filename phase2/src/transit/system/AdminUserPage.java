@@ -12,7 +12,6 @@ public class AdminUserPage extends AuthenticatedPage {
 
   @Override
   protected void makeScene(Stage primaryStage) {
-
     placeButton(
             "Monthly Revenue (Current Year)",
             () -> {

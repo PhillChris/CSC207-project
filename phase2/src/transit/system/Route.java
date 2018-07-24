@@ -14,15 +14,12 @@ public class Route {
   /**
    * Constructs a new route
    *
-   * @param stationNames List of all station names in this route in order
-   * @param type The type of the station that you are constructing routes over
+   * @param stations List of all station names in this route in order.
    */
-  public Route(List<String> stationNames, String type) {
-
-    for (String s : stationNames) {
-      Station station;
-      station = Station.getStationsCopy(type).get(s);
-      routeStations.add(station);
+  public Route(List<Station> stations) {
+    // TODO: we may want to add a check that the list of stations is not a duplicate
+    for (Station s : stations) {
+      routeStations.add(s);
     }
     routes.add(this);
   }

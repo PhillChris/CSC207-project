@@ -38,7 +38,7 @@ public class Station {
     return new HashMap<>(stations.get(type));
   }
 
-  public List<Station> getStations(String stationType) {
+  public static List<Station> getStations(String stationType) {
     return new ArrayList<>(stations.get(stationType).values());
   }
 

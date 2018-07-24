@@ -42,6 +42,14 @@ public class SignUpPage extends Page {
                     "The email you provided is currently in use by another user.",
                     AlertType.WARNING);
             alert.showAndWait();
+          } catch (InvalidEmailException a) {
+            Alert alert =
+              makeAlert(
+                "Invalid email!",
+                "Invalid email:",
+                "The email you provided is not valid.",
+                AlertType.WARNING);
+            alert.showAndWait();
           }
         },
         1,
@@ -51,7 +59,7 @@ public class SignUpPage extends Page {
   }
 
   void add(String username, String email, String password, boolean isAdmin)
-      throws EmailInUseException {
+      throws InvalidEmailException, EmailInUseException {
     try {
       if (isAdmin) {
         AdminUser admin = new AdminUser(username, email, password);
@@ -60,6 +68,8 @@ public class SignUpPage extends Page {
       }
     } catch (EmailInUseException a) {
       throw new EmailInUseException();
+    } catch (InvalidEmailException a) {
+      throw new InvalidEmailException();
     }
   }
 }

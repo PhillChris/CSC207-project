@@ -10,7 +10,7 @@ public class AdminUser extends User {
    * @param email the email of this transit.system.AdminUser
    * @param password the password of ths transit.system.AdminUser
    */
-  public AdminUser(String name, String email, String password) throws EmailInUseException {
+  public AdminUser(String name, String email, String password) throws InvalidEmailException, EmailInUseException {
     super(name, email, password);
   }
 

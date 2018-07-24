@@ -70,6 +70,10 @@ public class TransitTime {
     running = true;
   }
 
+  public static void fastForward() {
+    currentTime = currentTime.plusMinutes(60);
+  }
+
   private static void updateTime() {
     if (running) {
       currentTime = currentTime.plusMinutes(1);

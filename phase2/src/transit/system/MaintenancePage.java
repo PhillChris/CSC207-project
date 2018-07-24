@@ -21,20 +21,20 @@ public class MaintenancePage extends Page {
 
   @Override
   void makeScene(Stage primaryStage) {
-    placeLabel("Make route!", 0, 5);
+    placeLabel("Construct Route", 0, 5);
+    placeLabel("Route type: ", 0, 6);
     routeType.getItems().addAll("Bus", "Subway");
-    grid.add(routeType, 0, 6);
-    routeType.setOnAction(
-            e -> {
-              grid.getChildren().remove(this.dropDownList);
-              grid.add(addNewRoute(routeType.getValue()), 2, 6);
-            });
+    grid.add(routeType, 1, 6);
+    routeType.setOnAction(e -> makeRouteConstruction(routeType.getValue()));
     routeType.getSelectionModel().select(0);
 
     makeStationConstruction();
     this.scene = new Scene(grid, 300, 250);
   }
 
+  /**
+   * Constructs the UI for creating a Station.
+   */
   private void makeStationConstruction() {
     placeLabel("Station name: ", 0, 1);
     TextField stationName = placeTextField(1, 1);
@@ -73,7 +73,7 @@ public class MaintenancePage extends Page {
    * @param type the type of Stations to display in the dropDownList.
    * @return
    */
-  private CheckComboBox<Station> addNewRoute(String type) {
+  private void makeRouteConstruction(String type) {
     ObservableList<Station> stations;
     try {
       stations = FXCollections.observableList(Station.getStations(type));
@@ -85,11 +85,10 @@ public class MaintenancePage extends Page {
     // add to the drop down list all the stations of given type.
     this.dropDownList.getItems().addAll(stations);
     // the button that constructs the routes from the stations selected in the dropDownList.
+    grid.getChildren().remove(this.dropDownList);
+    placeLabel("Select Stations: ", 0, 7);
+    grid.add(this.dropDownList, 1, 7);
     placeButton(
-            "Make Route",
-            () -> new Route(dropDownList.getCheckModel().getCheckedItems()),
-            3,
-            6);
-    return dropDownList;
+            "Make Route", () -> new Route(dropDownList.getCheckModel().getCheckedItems()), 1, 8);
   }
 }

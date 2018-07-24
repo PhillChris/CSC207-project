@@ -36,6 +36,14 @@ public class UserPage extends AuthenticatedPage {
       3);
     super.makeScene(primaryStage);
 
+    placeButton("Pause time", () -> {
+      TransitTime.pauseTime();
+    }, 0, 15);
+
+    placeButton("Start time", () -> {
+      TransitTime.startTime();
+    }, 0, 16);
+
     if (user instanceof AdminUser) {
       placeButton(
           "Toggle admin panel",

@@ -23,12 +23,6 @@ public class TransitTime {
   /** Whether the time is currently moving forward */
   private static boolean running = true;
 
-  public static void updateTime() {
-    if (running) {
-      currentTime = currentTime.plusMinutes(1);
-    }
-  }
-
   public static Label getTimeLabel(){
     return time;
   }
@@ -66,6 +60,20 @@ public class TransitTime {
     currentTime += System.lineSeparator();
     currentTime += String.format("Time: %s", time);
     return currentTime;
+  }
+
+  public static void pauseTime() {
+    running = false;
+  }
+
+  public static void startTime() {
+    running = true;
+  }
+
+  private static void updateTime() {
+    if (running) {
+      currentTime = currentTime.plusMinutes(1);
+    }
   }
 
   /**

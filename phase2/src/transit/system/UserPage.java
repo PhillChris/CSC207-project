@@ -1,7 +1,5 @@
 package transit.system;
 
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class UserPage extends AuthenticatedPage {

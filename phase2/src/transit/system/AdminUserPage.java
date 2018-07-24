@@ -2,15 +2,13 @@ package transit.system;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class AdminUserPage extends AuthenticatedPage {
-
-  public AdminUserPage(
-      Stage primaryStage,
-      User user) {
+  public AdminUserPage(Stage primaryStage, User user) {
     super(primaryStage, user);
     makeScene(primaryStage);
   }
@@ -30,24 +28,36 @@ public class AdminUserPage extends AuthenticatedPage {
         "Make Station", () -> makeNewStation(stationName.getText(), stationTypes.getValue()), 1, 3);
 
     placeButton(
-      "Monthly Revenue (Current Year)",
-      () -> {
-        Stage secondaryStage = new Stage();
-        UserGraphPage graphPage =
-          new UserGraphPage(
-            secondaryStage, this.user);
-        secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getCurrentDate().getYear());
-        secondaryStage.setScene(graphPage.getScene());
-        secondaryStage.show();
-      },
-      0,
-      2);
+        "Monthly Revenue (Current Year)",
+        () -> {
+          Stage secondaryStage = new Stage();
+          UserGraphPage graphPage = new UserGraphPage(secondaryStage, this.user);
+          secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getCurrentDate().getYear());
+          secondaryStage.setScene(graphPage.getScene());
+          secondaryStage.show();
+        },
+        0,
+        2);
+
+    placeButton(
+        "See daily system reports",
+        () -> {
+          Alert alert =
+              makeAlert(
+                  "Daily report",
+                  "Here is a daily system report",
+                  ((AdminUser) user).dailyReports(),
+                  AlertType.INFORMATION);
+          alert.showAndWait();
+        },
+        0,
+        3);
 
     placeButton(
         "Toggle user panel",
         () -> primaryStage.setScene(new UserPage(primaryStage, this.user).getScene()),
         0,
-        3);
+        4);
 
     this.scene = new Scene(grid, 300, 250);
   }

@@ -21,7 +21,7 @@ public class AdminGraphPage extends GraphPage{
     for (YearMonth month : monthlyRevenue.keySet()) {
       if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
         double total = monthlyRevenue.get(month) / 100.0;
-        series.getData().add(new XYChart.Data(month.getMonth(), total));
+        series.getData().add(new XYChart.Data(month.getMonth().toString(), total));
       }
     }
 

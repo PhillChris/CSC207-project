@@ -33,7 +33,7 @@ public class UserGraphPage extends GraphPage{
     for (YearMonth month : expenditureMonthly.keySet()) {
       if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
         double total = expenditureMonthly.get(month) / 100.0;
-        series.getData().add(new XYChart.Data(month.getMonth(), total));
+        series.getData().add(new XYChart.Data(month.getMonth().toString(), total));
       }
     }
 

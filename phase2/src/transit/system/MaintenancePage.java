@@ -25,7 +25,6 @@ public class MaintenancePage extends Page {
     ChoiceBox<String> stationTypes = new ChoiceBox<>();
     stationTypes.getItems().addAll("Bus", "Subway");
     stationTypes.getSelectionModel().select(0);
-
     grid.add(stationTypes, 1, 2);
     placeButton(
             "Make Station", () -> makeNewStation(stationName.getText(), stationTypes.getValue()), 1, 3);

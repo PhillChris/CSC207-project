@@ -35,7 +35,10 @@ public class Station {
 
   /** @return HashMap of all stations of similar type */
   public static HashMap<String, Station> getStationsCopy(String type) {
-    return new HashMap<>(stations.get(type));
+    if (stations.containsKey(type)) {
+      return new HashMap<>(stations.get(type));
+    }
+    return null;
   }
 
   public static List<Station> getStations(String stationType) {

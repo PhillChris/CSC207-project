@@ -40,6 +40,7 @@ public class AdminUserPage extends AuthenticatedPage {
         () -> primaryStage.setScene(new UserPage(primaryStage, user).getScene()),
         0,
         6);
+    newLogoutButton(primaryStage, 10, 10);
     this.scene = new Scene(grid, 300, 250);
   }
 

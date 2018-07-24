@@ -86,7 +86,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param col the column in the grid where this logout button is displayed
    * @param row the row in the grid where this logout button is displayed
    */
-  private void newLogoutButton(Stage primaryStage, int col, int row) {
+  public void newLogoutButton(Stage primaryStage, int col, int row) {
     placeButton(
         "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), col, row);
   }

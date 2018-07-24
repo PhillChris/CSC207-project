@@ -65,7 +65,7 @@ public class CardPage extends AuthenticatedPage {
           () -> {
             Stage secondaryStage = new Stage();
             secondaryStage.setTitle("Tap Card#" + user.getCardsCopy().get(id).getId());
-            secondaryStage.setScene(new TapPage(secondaryStage, user.getCardsCopy().get(id)).getScene());
+            secondaryStage.setScene(new TapPage(secondaryStage, user, user.getCardsCopy().get(id)).getScene());
             secondaryStage.show();
           },
           0,

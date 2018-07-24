@@ -3,17 +3,17 @@ package transit.system;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
 public class TapPage extends Page {
-  private ArrayList<Button> routeButtons = new ArrayList<>();
-  private ChoiceBox<String> routeOptions = new ChoiceBox<>();
+  private ChoiceBox<Station> stationOptions = new ChoiceBox<>();
+  private User user;
   private Card card;
 
-  public TapPage(Stage secondaryStage, Card card) {
+  public TapPage(Stage secondaryStage, User user, Card card) {
     this.card = card;
+    this.user = user;
     makeScene(secondaryStage);
   }
 
@@ -26,16 +26,23 @@ public class TapPage extends Page {
       refreshRouteOptionItems(routeType.getValue());
     });
     grid.add(routeType, 1, 0);
-    grid.add(this.routeOptions, 0, 2);
+    grid.add(this.stationOptions, 0, 2);
+    placeButton("Tap!", () -> {
+      try {
+        user.tap(card, this.stationOptions.getValue(), TransitTime.getCurrentTime());
+      } catch (TransitException a) {
+        System.out.println(a.getMessage());
+      }
+    }, 0, 3);
     this.scene = new Scene(grid, 300, 250);
   }
 
   private void refreshRouteOptionItems(String type) {
     if (Station.getStationsCopy(type) != null) {
-      this.routeOptions.setItems(
-          FXCollections.observableList(new ArrayList<>(Station.getStationsCopy("Bus").keySet())));
+      this.stationOptions.setItems(
+          FXCollections.observableList(new ArrayList<>(Station.getStationsCopy("Bus").values())));
     } else {
-      this.routeOptions.getItems().removeAll(this.routeOptions.getItems());
+      this.stationOptions.getItems().removeAll(this.stationOptions.getItems());
     }
   }
 }

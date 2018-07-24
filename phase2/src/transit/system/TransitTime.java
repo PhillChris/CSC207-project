@@ -45,14 +45,18 @@ public class TransitTime {
               public void handle(ActionEvent event) {
                 TransitTime.updateTime();
                 time.setTextFill(BLACK);
-                time.setText(TransitTime.getCurrentTime());
+                time.setText(TransitTime.getCurrentTimeString());
               }
             });
     timeline.getKeyFrames().add(frame);
     timeline.playFromStart();
   }
 
-  public static String getCurrentTime() {
+  public static LocalDateTime getCurrentTime() {
+    return TransitTime.currentTime;
+  }
+
+  public static String getCurrentTimeString() {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     String time = formatter.format(currentTime.toLocalTime());
     LocalDate date = currentTime.toLocalDate();

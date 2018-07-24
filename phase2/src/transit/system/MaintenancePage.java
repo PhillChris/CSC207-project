@@ -65,9 +65,7 @@ public class MaintenancePage extends Page {
     CheckComboBox<Station> dropDownList = new CheckComboBox<>(stations);
     placeButton(
             "Make Route",
-            () -> {
-              new Route(dropDownList.getCheckModel().getCheckedItems());
-            },
+            () -> new Route(dropDownList.getCheckModel().getCheckedItems()),
             3,
             5);
     return dropDownList;

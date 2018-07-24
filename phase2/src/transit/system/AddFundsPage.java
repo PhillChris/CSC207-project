@@ -16,8 +16,8 @@ public class AddFundsPage extends AuthenticatedPage {
   public void makeScene(Stage primaryStage) {
     placeLabel("Add the following amount: ", 0, 0);
     placeCostButton(primaryStage, 10, 0, 1);
-    placeCostButton(primaryStage, 20, 1, 1);
-    placeCostButton(primaryStage, 50, 2, 1);
+    placeCostButton(primaryStage, 20, 0, 2);
+    placeCostButton(primaryStage, 50, 0, 3);
     this.scene = new Scene(grid, 300, 250);
   }
 

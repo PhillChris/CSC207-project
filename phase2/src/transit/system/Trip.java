@@ -110,7 +110,11 @@ public class Trip {
     priorStops.add(station);
     endStation = null;
     timeEnded = null;
-    maxFee -= tripFee;
+    if (maxFee - tripFee > 0) {
+      maxFee -= tripFee;
+    } else {
+      maxFee = 0;
+    }
     tripFee = station.getInitialFee();
     perStationFee = station.getPerStationFee();
   }

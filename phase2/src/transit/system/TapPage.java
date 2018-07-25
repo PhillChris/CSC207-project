@@ -10,7 +10,6 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class TapPage extends Page {
-  private ChoiceBox<Station> stationOptions = new ChoiceBox<>();
   private ArrayList<Button> stationButtons = new ArrayList<>();
   private User user;
   private Card card;
@@ -33,9 +32,9 @@ public class TapPage extends Page {
 
   private void refreshRouteOptionItems(String type) {
     // Clear out all buttons
-    for (Button button: stationButtons) {
-      grid.getChildren().remove(button);
-      stationButtons.remove(button);
+    for (int i = 0; i < stationButtons.size(); i++) {
+      grid.getChildren().remove(stationButtons.get(i));
+      stationButtons.remove(stationButtons.get(i));
     }
 
     // Add new buttons from the routes hash map of the given type
@@ -44,7 +43,7 @@ public class TapPage extends Page {
       for (Route route: Route.getRoutesCopy().get(type)) {
         int j = 0;
         for (Station station: route.getRouteStationsCopy()) {
-          placeButton(station.getName(), () -> {
+          stationButtons.add(placeButton(station.getName(), () -> {
             try {
               user.tap(card, station, TransitTime.getCurrentTime());
             } catch (TransitException a) {
@@ -58,7 +57,7 @@ public class TapPage extends Page {
                       AlertType.ERROR);
               alert.showAndWait();
             }
-          }, j, i);
+          }, j, i));
           j++;
         }
         i++;

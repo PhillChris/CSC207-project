@@ -19,3 +19,8 @@ ANDRE:
 - AdminUserPage: implemented core functionality (i.e. no styling)
 - Refactored station subclasses into Station superclass.
 - sorted source files into approriate packages.
+
+REN:
+- Regex check for email
+- Login page styling with CSS/JavaFx
+- Implemented user/admin graphs

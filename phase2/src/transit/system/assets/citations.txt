@@ -1,0 +1,2 @@
+All source images are in Google's Material Design Icon Pack (https://material.io/tools/icons/?style=baseline)
+which is made available under Apache license version 2.0

@@ -19,6 +19,7 @@ public class Route {
    * @param type The type of stations this route contains
    */
   public Route(List<Station> stations, String type) throws InvalidStationTypeException {
+    // Checks if the given type is a valid type
     if (!Arrays.asList(Station.POSSIBLE_TYPES).contains(type)) {
       throw new InvalidStationTypeException();
     } else {
@@ -26,6 +27,8 @@ public class Route {
       for (Station s : stations) {
         routeStations.add(s);
       }
+
+      // Adds the given route to the appropriate place in the hash map
       if (routes.get(type) != null) {
         routes.get(type).add(this);
       } else {

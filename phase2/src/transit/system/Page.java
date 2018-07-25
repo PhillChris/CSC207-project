@@ -48,6 +48,19 @@ public abstract class Page {
   }
 
   /**
+   * A general helper method to place a label with the given text at the given coordinates and give it an id
+   *
+   * @param text the message to be displayed by this label
+   * @param col the column in the grid where this label is displayed
+   * @param row the row in the grid where this label is displayed
+   */
+  protected void placeLabel(String text, int col, int row, String id) {
+    Label tempLabel = new Label(text);
+    tempLabel.setId(id);
+    grid.add(tempLabel, col, row);
+  }
+
+  /**
    * A general helper method to place a text field at the given coordinates
    *
    * @param col the column in the grid where this text field is displayed
@@ -56,6 +69,20 @@ public abstract class Page {
    */
   protected TextField placeTextField(int col, int row) {
     TextField textField = new TextField();
+    grid.add(textField, col, row);
+    return textField;
+  }
+
+  /**
+   * A general helper method to place a text field at the given coordinates and give it an id
+   *
+   * @param col the column in the grid where this text field is displayed
+   * @param row the row in the grid where this text field is displayed
+   * @return the created text field object, for reference in accessing entered data
+   */
+  protected TextField placeTextField(int col, int row, String id) {
+    TextField textField = new TextField();
+    textField.setId(id);
     grid.add(textField, col, row);
     return textField;
   }
@@ -74,6 +101,20 @@ public abstract class Page {
   }
 
   /**
+   * A general helper method to place a password text field at the given coordinates and give it an id
+   *
+   * @param col the column in the grid where this password field is displayed
+   * @param row the row in the grid where this password is displayed
+   * @return the created password field object, for reference in accessing entered data
+   */
+  protected PasswordField placePasswordField(int col, int row, String id) {
+    PasswordField passwordField = new PasswordField();
+    passwordField.setId(id);
+    grid.add(passwordField, col, row);
+    return passwordField;
+  }
+
+  /**
    * A general helper method to place a button running a custom function at the given coordinates
    *
    * @param text the text to be displayed on the given button
@@ -84,6 +125,21 @@ public abstract class Page {
   protected void placeButton(String text, Runnable function, int col, int row) {
     Button button = new Button(text);
     button.setOnAction(data -> function.run());
+    grid.add(button, col, row);
+  }
+
+  /**
+   * A general helper method to place a button running a custom function at the given coordinates and give it an id
+   *
+   * @param text the text to be displayed on the given button
+   * @param function the function to be run upon, having return type void
+   * @param col the column in the grid where this button is displayed
+   * @param row the row in the grid where this button is displayed
+   */
+  protected void placeButton(String text, Runnable function, int col, int row, String id) {
+    Button button = new Button(text);
+    button.setOnAction(data -> function.run());
+    button.setId(id);
     grid.add(button, col, row);
   }
 
@@ -146,6 +202,7 @@ public abstract class Page {
 
   /** Adds a clock with live updating time on the user page */
   protected void addClock() {
-    grid.add(TransitTime.getTimeLabel(), 0, 0);
+    Label tempLabel = TransitTime.getTimeLabel();
+    grid.add(tempLabel, 0, 0);
   }
 }

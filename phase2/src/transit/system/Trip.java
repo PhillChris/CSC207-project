@@ -135,22 +135,26 @@ public class Trip {
     Integer firstStationIndex = null;
     Integer secondStationIndex = null;
     // Loop through all the routes to find the start and end station
-    for (Route route : Route.getRoutesCopy()) {
-      if (firstStationIndex == null && secondStationIndex == null) {
-        for (int i = 0; i < route.getRouteStationsCopy().size(); i++) {
-          Station station = route.getRouteStationsCopy().get(i);
-          if (station.equals(priorStops.get(priorStops.size() - 1))) {
-            firstStationIndex = i;
+    for(String type: Station.POSSIBLE_TYPES) {
+      if (Route.getRoutesCopy().get(type) != null) {
+        for (Route route : Route.getRoutesCopy().get(type)) {
+          if (firstStationIndex == null && secondStationIndex == null) {
+            for (int i = 0; i < route.getRouteStationsCopy().size(); i++) {
+              Station station = route.getRouteStationsCopy().get(i);
+              if (station.equals(priorStops.get(priorStops.size() - 1))) {
+                firstStationIndex = i;
+              }
+              if (station.equals(endStation)) {
+                secondStationIndex = i;
+              }
+            }
           }
-          if (station.equals(endStation)) {
-            secondStationIndex = i;
+          // If one of the two stations was not found in this route
+          if (firstStationIndex == null || secondStationIndex == null) {
+            firstStationIndex = null;
+            secondStationIndex = null;
           }
         }
-      }
-      // If one of the two stations was not found in this route
-      if (firstStationIndex == null || secondStationIndex == null) {
-        firstStationIndex = null;
-        secondStationIndex = null;
       }
     }
 

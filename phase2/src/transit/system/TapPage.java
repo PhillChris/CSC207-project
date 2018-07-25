@@ -15,8 +15,8 @@ public class TapPage extends Page {
   private Card card;
 
   public TapPage(Stage secondaryStage, User user, Card card) {
-    this.card = card;
     this.user = user;
+    this.card = card;
     makeScene(secondaryStage);
   }
 
@@ -35,7 +35,7 @@ public class TapPage extends Page {
             user.tap(card, this.stationOptions.getValue(), TransitTime.getCurrentTime());
           } catch (TransitException a) {
             System.out.println(a.getMessage());
-          } catch (Exception b) {
+          }/* catch (Exception b) {
             Alert alert =
                 makeAlert(
                     "No station selected",
@@ -43,7 +43,7 @@ public class TapPage extends Page {
                     "No station was selected to be tapped, no tap request could be processed",
                     AlertType.ERROR);
             alert.showAndWait();
-          }
+          }*/
         },
         0,
         3);

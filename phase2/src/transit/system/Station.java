@@ -7,6 +7,8 @@ import java.util.Objects;
 
 /** A parent class for stations in this simulation */
 public class Station {
+  /** All acceptable possible route types in this transit system*/
+  public static final String[] POSSIBLE_TYPES = {"Bus", "Subway"};
   /** Maps the name of a station to the appropriate station object */
   private static HashMap<String, HashMap<String, Station>> stations = new HashMap<>();
   /** The fee charged per station travelled by this station */

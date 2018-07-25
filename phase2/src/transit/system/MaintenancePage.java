@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -90,6 +91,12 @@ public class MaintenancePage extends Page {
     placeLabel("Select Stations: ", 0, 7);
     grid.add(this.dropDownList, 1, 7);
     placeButton(
-            "Make Route", () -> new Route(dropDownList.getCheckModel().getCheckedItems()), 1, 8);
+            "Make Route", () -> {
+              try {
+                new Route(dropDownList.getCheckModel().getCheckedItems(), routeType.getValue());
+              } catch (InvalidStationTypeException a) {
+                makeAlert("Invalid Station Type", "Invalid Station Type", "The station type you are entering is not a station type recognized by the system", AlertType.ERROR).showAndWait();
+              }
+        }, 1, 8);
   }
 }

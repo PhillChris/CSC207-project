@@ -28,12 +28,12 @@ public class LoginPage extends Page {
               throw new UserNotFoundException();
             }
             if (checkAuthorization(email, password)) {
-              AuthenticatedPage userPage;
+              Page userPage;
               // need to check if we enter admin or normal user
               // might want to come up with a better way of doing this
               if (user instanceof AdminUser) {
                 userPage =
-                    new AdminUserPage(primaryStage, user);
+                    new AdminUserPage(primaryStage, (AdminUser) user);
               } else {
                 userPage = new UserPage(primaryStage, user);
               }

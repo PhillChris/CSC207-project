@@ -1,46 +1,51 @@
 package transit.system;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
 
-public class AdminUserPage extends AuthenticatedPage {
-
-  public AdminUserPage(Stage primaryStage, User user) {
-    super(primaryStage, user);
+public class AdminUserPage extends Page {
+  private AdminUser adminUser;
+  public AdminUserPage(Stage primaryStage, AdminUser adminUser) {
+    this.adminUser = adminUser;
     makeScene(primaryStage);
   }
 
   @Override
   protected void makeScene(Stage primaryStage) {
     placeButton(
-            "Monthly Revenue (Current Year)",
-            () -> {
-              Stage secondaryStage = new Stage();
-              UserGraphPage graphPage = new UserGraphPage(secondaryStage, this.user);
-              secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getCurrentDate().getYear());
-              secondaryStage.setScene(graphPage.getScene());
-              secondaryStage.show();
-            },
-            0,
-            2);
+        "Monthly Revenue (Current Year)",
+        () -> {
+          Stage secondaryStage = new Stage();
+          UserGraphPage graphPage = new UserGraphPage(secondaryStage, this.adminUser);
+          secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getCurrentDate().getYear());
+          secondaryStage.setScene(graphPage.getScene());
+          secondaryStage.show();
+        },
+        0,
+        2);
 
     placeButton(
-            "Maintenance",
-            () -> {
-              Stage secondaryStage = new Stage();
-              MaintenancePage maintenancePage = new MaintenancePage(secondaryStage);
-              secondaryStage.setTitle("Transit System Maintenance");
-              secondaryStage.setScene(maintenancePage.getScene());
-              secondaryStage.show();
-            },
-            0,
-            4);
+        "Maintenance",
+        () -> {
+          Stage secondaryStage = new Stage();
+          MaintenancePage maintenancePage = new MaintenancePage(secondaryStage);
+          secondaryStage.setTitle("Transit System Maintenance");
+          secondaryStage.setScene(maintenancePage.getScene());
+          secondaryStage.show();
+        },
+        0,
+        4);
+    placeButton("Daily Report", () -> {
+      Alert alert = makeAlert("", "", this.adminUser.dailyReports(), AlertType.INFORMATION);
+      alert.showAndWait();
+    }, 0, 5);
     placeButton(
         "Toggle User Panel",
-        () -> primaryStage.setScene(new UserPage(primaryStage, user).getScene()),
+        () -> primaryStage.setScene(new UserPage(primaryStage, this.adminUser).getScene()),
         0,
         6);
-    newLogoutButton(primaryStage, 10, 10);
     this.scene = new Scene(grid, 300, 250);
   }
 

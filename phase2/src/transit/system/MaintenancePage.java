@@ -8,6 +8,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
+import javafx.scene.layout.Region;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class MaintenancePage extends Page {
     routeType.getSelectionModel().select(0);
 
     makeStationConstruction();
-    this.scene = new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
   /**

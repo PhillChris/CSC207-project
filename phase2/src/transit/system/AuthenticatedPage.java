@@ -2,6 +2,7 @@ package transit.system;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 /** Represents a page with an associated user in this system, upon having logged in */
@@ -39,7 +40,7 @@ public abstract class AuthenticatedPage extends Page {
     newChangeUserButton(primaryStage, 0, 4);
     newRemoveAccountButton(primaryStage, 0, 6);
     addClock();
-    this.scene = new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
   /**

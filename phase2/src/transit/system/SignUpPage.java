@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.layout.Region;
 
 public class SignUpPage extends Page {
   public SignUpPage(
@@ -54,7 +55,7 @@ public class SignUpPage extends Page {
         1,
         6);
 
-    this.scene = new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
   void add(String username, String email, String password, boolean isAdmin)

@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import javafx.scene.layout.Region;
 
 public class TapPage extends Page {
   private ChoiceBox<Station> stationOptions = new ChoiceBox<>();
@@ -46,7 +47,7 @@ public class TapPage extends Page {
         },
         0,
         3);
-    this.scene = new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
   private void refreshRouteOptionItems(String type) {

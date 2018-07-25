@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class CardPage extends AuthenticatedPage {
@@ -54,7 +55,7 @@ public class CardPage extends AuthenticatedPage {
         2);
 
     // addClock();
-    this.scene = new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
   protected void addUserData(Stage primaryStage) {

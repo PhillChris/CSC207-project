@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.scene.layout.Region;
 
 public class AdminUserPage extends Page {
   private AdminUser adminUser;
@@ -53,7 +54,7 @@ public class AdminUserPage extends Page {
         6);
     placeButton(
         "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 0, 7);
-    this.scene = new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
   public void addUserData(Stage primaryStage) {}

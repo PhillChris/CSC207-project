@@ -2,6 +2,7 @@ package transit.system;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.layout.Region;
 
 public class AddFundsPage extends AuthenticatedPage {
   private Card card;
@@ -18,7 +19,7 @@ public class AddFundsPage extends AuthenticatedPage {
     placeCostButton(primaryStage, 10, 0, 1);
     placeCostButton(primaryStage, 20, 0, 2);
     placeCostButton(primaryStage, 50, 0, 3);
-    this.scene = new Scene(grid, 300, 250);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
   private void placeCostButton(Stage primaryStage, int cost, int col, int row) {

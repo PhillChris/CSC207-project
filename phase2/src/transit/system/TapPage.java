@@ -32,9 +32,9 @@ public class TapPage extends Page {
 
   private void refreshRouteOptionItems(String type) {
     // Clear out all buttons
-    for (int i = 0; i < stationButtons.size(); i++) {
-      grid.getChildren().remove(stationButtons.get(i));
-      stationButtons.remove(stationButtons.get(i));
+    while (!stationButtons.isEmpty()) {
+      grid.getChildren().remove(stationButtons.get(0));
+      stationButtons.remove(stationButtons.get(0));
     }
 
     // Add new buttons from the routes hash map of the given type

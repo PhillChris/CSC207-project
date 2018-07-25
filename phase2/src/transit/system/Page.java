@@ -10,6 +10,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -155,6 +157,13 @@ public abstract class Page {
     CheckBox checkBox = new CheckBox(text);
     grid.add(checkBox, col, row);
     return checkBox;
+  }
+
+  protected ImageView placeImage(String url, int col, int row, String id) {
+    ImageView image = new ImageView(new Image(url));
+    image.setId(id);
+    grid.add(image, col, row);
+    return image;
   }
 
   /**

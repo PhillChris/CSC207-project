@@ -125,6 +125,19 @@ public class User {
   }
 
   /**
+   * Takes the last 3 trips taken and returns a string representation of this list
+   *
+   * @return the last 3 trips message
+   */
+  String getLastThreeMessage() {
+    String message = "Last 3 trips by user " + this.name + ":";
+    for (Trip t: getLastThreeCopy()) {
+      message += "\n" + t;
+    }
+    return message;
+  }
+
+  /**
    * Change this transit.system.User's name.
    *
    * @param newName the new name of this transit.system.User.

@@ -1,11 +1,12 @@
 package transit.system;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class UserPage extends AuthenticatedPage {
-  public UserPage(
-      Stage primaryStage,
-      User user) {
+  public UserPage(Stage primaryStage, User user) {
     super(primaryStage, user);
     makeScene(primaryStage);
   }
@@ -14,27 +15,38 @@ public class UserPage extends AuthenticatedPage {
     placeButton(
         "Cards",
         () -> {
-          CardPage cardPage =
-              new CardPage(
-                  primaryStage, this.user);
+          CardPage cardPage = new CardPage(primaryStage, this.user);
           primaryStage.setScene(cardPage.getScene());
         },
         0,
         2);
     placeButton(
         "Monthly Expenditure (Current Year)",
-      () -> {
-        Stage secondaryStage = new Stage();
-        UserGraphPage graphPage =
-          new UserGraphPage(
-            secondaryStage, this.user);
-        secondaryStage.setTitle("Monthly Expenditure for user " + user);
-        secondaryStage.setScene(graphPage.getScene());
-        secondaryStage.show();
-      },
-      0,
-      3);
+        () -> {
+          Stage secondaryStage = new Stage();
+          UserGraphPage graphPage = new UserGraphPage(secondaryStage, this.user);
+          secondaryStage.setTitle("Monthly Expenditure for user " + user);
+          secondaryStage.setScene(graphPage.getScene());
+          secondaryStage.show();
+        },
+        0,
+        3);
     super.makeScene(primaryStage);
+
+    placeButton(
+        "Get last 3 trips",
+        () -> {
+          Alert a =
+              makeAlert(
+                  "Last 3 trips",
+                  "Last 3 trips of user " + user,
+                  user.getLastThreeMessage(),
+                  AlertType.INFORMATION);
+          a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+          a.showAndWait();
+        },
+        0,
+        7);
 
     placeButton("Pause time", () -> TransitTime.pauseTime(), 0, 15);
 

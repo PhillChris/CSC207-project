@@ -1,12 +1,13 @@
 package transit.system;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
 
 public class AdminUserPage extends Page {
   private AdminUser adminUser;
+
   public AdminUserPage(Stage primaryStage, AdminUser adminUser) {
     this.adminUser = adminUser;
     makeScene(primaryStage);
@@ -37,15 +38,21 @@ public class AdminUserPage extends Page {
         },
         0,
         4);
-    placeButton("Daily Report", () -> {
-      Alert alert = makeAlert("", "", this.adminUser.dailyReports(), AlertType.INFORMATION);
-      alert.showAndWait();
-    }, 0, 5);
+    placeButton(
+        "Daily Report",
+        () -> {
+          Alert alert = makeAlert("", "", this.adminUser.dailyReports(), AlertType.INFORMATION);
+          alert.showAndWait();
+        },
+        0,
+        5);
     placeButton(
         "Toggle User Panel",
         () -> primaryStage.setScene(new UserPage(primaryStage, this.adminUser).getScene()),
         0,
         6);
+    placeButton(
+        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 0, 7);
     this.scene = new Scene(grid, 300, 250);
   }
 

@@ -3,10 +3,10 @@ package transit.system;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
 
 public class TapPage extends Page {
   private ChoiceBox<Station> stationOptions = new ChoiceBox<>();
@@ -24,10 +24,7 @@ public class TapPage extends Page {
     ChoiceBox<String> routeType = new ChoiceBox();
     routeType.getItems().addAll("Bus", "Subway");
     refreshRouteOptionItems("Bus");
-    routeType.setOnAction(
-        e -> {
-          refreshRouteOptionItems(routeType.getValue());
-        });
+    routeType.setOnAction(e -> refreshRouteOptionItems(routeType.getValue()));
     grid.add(routeType, 1, 0);
     grid.add(this.stationOptions, 0, 2);
     placeButton(
@@ -54,8 +51,8 @@ public class TapPage extends Page {
 
   private void refreshRouteOptionItems(String type) {
     if (Station.getStationsCopy(type) != null) {
-      this.stationOptions.setItems(
-          FXCollections.observableList(new ArrayList<>(Station.getStationsCopy("Bus").values())));
+      this.stationOptions.getItems().setAll(
+          FXCollections.observableList(new ArrayList<>(Station.getStationsCopy(type).values())));
     } else {
       this.stationOptions.getItems().removeAll(this.stationOptions.getItems());
     }

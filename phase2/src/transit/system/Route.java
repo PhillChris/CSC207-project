@@ -1,32 +1,47 @@
 package transit.system;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /** Represents a travel route in this transit system */
 public class Route {
 
   /** A list of all routes in the transit system */
-  private static ArrayList<Route> routes = new ArrayList<>();
+  private static HashMap<String, ArrayList<Route>> routes = new HashMap<>();
   /** List containing all the stations of this route in travel order */
   private List<Station> routeStations = new ArrayList<>();
-
   /**
    * Constructs a new route
    *
    * @param stations List of all station names in this route in order.
+   * @param type The type of stations this route contains
    */
-  public Route(List<Station> stations) {
-    // TODO: we may want to add a check that the list of stations is not a duplicate
-    for (Station s : stations) {
-      routeStations.add(s);
+  public Route(List<Station> stations, String type) throws InvalidStationTypeException {
+    // Checks if the given type is a valid type
+    if (!Arrays.asList(Station.POSSIBLE_TYPES).contains(type)) {
+      throw new InvalidStationTypeException();
+    } else {
+      // TODO: we may want to add a check that the list of stations is not a duplicate
+      for (Station s : stations) {
+        routeStations.add(s);
+      }
+
+      // Adds the given route to the appropriate place in the hash map
+      if (routes.get(type) != null) {
+        routes.get(type).add(this);
+      } else {
+        ArrayList<Route> newStations = new ArrayList<>();
+        newStations.add(this);
+        routes.put(type, newStations);
+      }
     }
-    routes.add(this);
   }
 
   /** @return A copy of the arrayList of all RouteNames */
-  static ArrayList<Route> getRoutesCopy() {
-    return new ArrayList<>(routes);
+  static HashMap<String, ArrayList<Route>> getRoutesCopy() {
+    return new HashMap<>(routes);
   }
 
   /**

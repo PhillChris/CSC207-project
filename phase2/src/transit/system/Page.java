@@ -124,10 +124,11 @@ public abstract class Page {
    * @param col the column in the grid where this button is displayed
    * @param row the row in the grid where this button is displayed
    */
-  protected void placeButton(String text, Runnable function, int col, int row) {
+  protected Button placeButton(String text, Runnable function, int col, int row) {
     Button button = new Button(text);
     button.setOnAction(data -> function.run());
     grid.add(button, col, row);
+    return button;
   }
 
   /**

@@ -11,16 +11,21 @@ import java.util.List;
 public class User {
   /** HashMap linking each email to its transit.system.User */
   private static HashMap<String, User> allUsers = new HashMap<>();
+  /** The log mapping all users to their given password in the system */
+  private static HashMap<String, String> authLog = new HashMap<>();
   /** The transit.system.User's email */
   private final String email;
+  /**
+   * Email format regex (from https://howtodoinjava.com/regex/java-regex-validate-email-address/)
+   */
+  private final String EMAILREGEX =
+      "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
   /** Calculates and sends the daily revenue recieved from this user to the system */
   protected CostCalculator calculator;
   /** An ArrayList of this transit.system.User's last three trips */
   private ArrayList<Trip> lastThreeTrips = new ArrayList<>();
   /** HashMap linking each month to the total expenditure for that month */
   private HashMap<YearMonth, Integer> expenditureMonthly;
-  /** The log mapping all users to their given password in the system */
-  private static HashMap<String, String> authLog = new HashMap<>();
   /** An ArrayList of this transit.system.User's cards */
   private HashMap<Integer, Card> cards;
   /** This transit.system.User's name */
@@ -29,16 +34,19 @@ public class User {
   private String password;
   /** The id given to the next card added by the user */
   private int cardCounter;
-  /** Email format regex (from https://howtodoinjava.com/regex/java-regex-validate-email-address/) */
-  private final String EMAILREGEX = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-   /**
+  /**
+   * The trip before the last three trips, used for continuous trip corner-case in Trip modification
+   */
+  private Trip backTrip;
+  /**
    * Construct a new instance of transit.system.User
    *
    * @param name the name of this transit.system.User
    * @param email the email of this transit.system.User
    * @param password the password of ths transit.system.User
    */
-  public User(String name, String email, String password) throws InvalidEmailException, EmailInUseException {
+  public User(String name, String email, String password)
+      throws InvalidEmailException, EmailInUseException {
     if (!email.matches(EMAILREGEX)) {
       throw new InvalidEmailException();
     }
@@ -92,7 +100,7 @@ public class User {
   /** @return A copy of the cards this user holds */
   HashMap<Integer, Card> getCardsCopy() {
     HashMap<Integer, Card> tempMap = new HashMap<>();
-    for (Integer i: this.cards.keySet()) {
+    for (Integer i : this.cards.keySet()) {
       tempMap.put(i, this.cards.get(i));
     }
     return tempMap;
@@ -131,7 +139,7 @@ public class User {
    */
   String getLastThreeMessage() {
     String message = "Last 3 trips by user " + this.name + ":";
-    for (Trip t: getLastThreeCopy()) {
+    for (Trip t : getLastThreeCopy()) {
       message += "\n" + t;
     }
     return message;
@@ -153,7 +161,8 @@ public class User {
   }
 
   /**
-   * Remove a card from this transit.system.User's list of cards. If this user does not own the card, do nothing.
+   * Remove a card from this transit.system.User's list of cards. If this user does not own the
+   * card, do nothing.
    *
    * @param card the card to be removed from this Users collection of cards.
    */
@@ -194,8 +203,8 @@ public class User {
   }
 
   /**
-   * A helper method simulating this transit.system.User starting a new trip. This method starts a transit.system.Trip on the
-   * given transit.system.Card object.
+   * A helper method simulating this transit.system.User starting a new trip. This method starts a
+   * transit.system.Trip on the given transit.system.Card object.
    *
    * @param card The card which this transit.system.User taps
    * @param station The station which this transit.system.User taps at
@@ -213,6 +222,10 @@ public class User {
       if (lastTrip.isContinuousTrip(station, timeTapped)) {
         card.setCurrentTrip(lastTrip); // continue the last trip
         lastTrip.continueTrip(station);
+        this.lastThreeTrips.remove(lastTrip);
+        if (backTrip != null) {
+          this.lastThreeTrips.add(2, backTrip);
+        }
         foundContinuousTrip = true;
       }
     }
@@ -222,8 +235,9 @@ public class User {
   }
 
   /**
-   * Helper method which simulates this transit.system.User ending a trip. This method sets the given transit.system.Card's
-   * current transit.system.Trip to null and updates the transit.system.Card's balance.
+   * Helper method which simulates this transit.system.User ending a trip. This method sets the
+   * given transit.system.Card's current transit.system.Trip to null and updates the
+   * transit.system.Card's balance.
    *
    * @param card The card which this transit.system.User taps
    * @param station The station which this transit.system.User taps at
@@ -244,7 +258,8 @@ public class User {
       lastThreeTrips.add(trip);
     }
     if (lastThreeTrips.size() == 4) {
-      lastThreeTrips.remove(0);
+      // as a backup in case the trip you push now is a continuous trip
+      backTrip = lastThreeTrips.remove(0);
     }
     if (!trip.isValidTrip()) {
       throw new InvalidTripException(this.name, station.getName());

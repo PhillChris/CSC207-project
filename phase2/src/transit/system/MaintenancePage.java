@@ -4,11 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
-import javafx.scene.layout.Region;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,10 @@ public class MaintenancePage extends Page {
     placeLabel("Route type: ", 0, 6);
     routeType.getItems().addAll("Bus", "Subway");
     grid.add(routeType, 1, 6);
-    routeType.setOnAction(e -> makeRouteConstruction(routeType.getValue()));
+    routeType.setOnAction(e -> {
+      makeRouteConstruction(routeType.getValue());
+      dropDownList.getCheckModel().clearChecks();
+    });
     routeType.getSelectionModel().select(0);
 
     makeStationConstruction();
@@ -83,6 +87,7 @@ public class MaintenancePage extends Page {
     }
     ObservableList<Station> oldStations = this.dropDownList.getItems();
     oldStations.remove(0, oldStations.size()); // clear the old stations from view
+    this.dropDownList.getCheckModel().clearChecks();
     // add to the drop down list all the stations of given type.
     this.dropDownList.getItems().addAll(stations);
     // the button that constructs the routes from the stations selected in the dropDownList.
@@ -90,6 +95,13 @@ public class MaintenancePage extends Page {
     placeLabel("Select Stations: ", 0, 7);
     grid.add(this.dropDownList, 1, 7);
     placeButton(
-            "Make Route", () -> new Route(dropDownList.getCheckModel().getCheckedItems()), 1, 8);
+            "Make Route", () -> {
+              try {
+                new Route(dropDownList.getCheckModel().getCheckedItems(), routeType.getValue());
+                this.dropDownList.getCheckModel().clearChecks();
+              } catch (InvalidStationTypeException a) {
+                makeAlert("Invalid Station Type", "Invalid Station Type", "The station type you are entering is not a station type recognized by the system", AlertType.ERROR).showAndWait();
+              }
+        }, 1, 8);
   }
 }

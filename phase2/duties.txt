@@ -1,5 +1,6 @@
 NOTE: For Phase 1 functionality, duties were not divided by class and person-specific updates
-& responsibilities were never dictated, and so no reports of duties here are possbile.
+& responsibilities were never dictated, and so no reports of phase1 duties here are possible.
+Everyone had at least a small part in all classes.
 
 PHILLIP: 
 - Main: refactored to launch window
@@ -11,6 +12,8 @@ PHILLIP:
 - UserPage: implemented core functionality (i.e. no styling)
 - ChangeNamePage: implemented functionality (i.e. no styling)
 - CardPage: implemented core functionality (i.e. no styling)
+- TapPage: implemented core functionality (i.e. no styling), including Station buttons layout
+- Added tap numbers for each station
 
 FARDIN:
 - Implemented live time update and added display

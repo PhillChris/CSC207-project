@@ -142,4 +142,18 @@ public class Station {
       this.initialFee = 0;
     }
   }
+
+  public int getTapsOn(LocalDate date) {
+    if (tapsOn.get(date) != null) {
+      return tapsOn.get(date);
+    }
+    return 0;
+  }
+
+  public int getTapsOff(LocalDate date) {
+    if (tapsOff.get(date) != null) {
+      return tapsOff.get(date);
+    }
+    return 0;
+  }
 }

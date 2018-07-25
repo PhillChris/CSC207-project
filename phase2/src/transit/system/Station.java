@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.time.LocalDate;
 
 /** A parent class for stations in this simulation */
 public class Station {
@@ -17,6 +18,10 @@ public class Station {
   private int initialFee;
   /** The name of this station */
   private String name;
+  /** The number of people who have tapped on at this station. */
+  private HashMap<LocalDate, Integer> tapsOn = new HashMap<>();
+  /** The number of people who have tapped off at this station.*/
+  private HashMap<LocalDate, Integer> tapsOff = new HashMap<>();
   /**
    * Create a new instance of transit.system.Station
    *
@@ -105,6 +110,22 @@ public class Station {
    */
   public boolean isAssociatedStation(Station otherStation) {
     return this.name.equals(otherStation.getName());
+  }
+
+  void recordTapIn(LocalDate date) {
+    if (tapsOn.containsKey(date)) {
+      tapsOn.put(date, tapsOn.get(date) + 1);
+    } else {
+      tapsOn.put(date, 1);
+    }
+  }
+
+  void recordTapOut(LocalDate date) {
+    if (tapsOff.containsKey(date)) {
+      tapsOff.put(date, tapsOff.get(date) + 1);
+    } else {
+      tapsOff.put(date, 1);
+    }
   }
 
   /** @return A string representation of a station */

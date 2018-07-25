@@ -25,6 +25,7 @@ public class TapPage extends Page {
     ChoiceBox<String> routeType = new ChoiceBox();
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     refreshRouteOptionItems("Bus");
+    routeType.getSelectionModel().select(0);
     routeType.setOnAction(e -> refreshRouteOptionItems(routeType.getValue()));
     grid.add(routeType, 1, 0);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -39,29 +40,33 @@ public class TapPage extends Page {
 
     // Add new buttons from the routes hash map of the given type
     if (Route.getRoutesCopy().get(type) != null) {
-      int i = 1;
-      for (Route route: Route.getRoutesCopy().get(type)) {
-        int j = 0;
-        for (Station station: route.getRouteStationsCopy()) {
-          stationButtons.add(placeButton(station.getName(), () -> {
-            try {
-              user.tap(card, station, TransitTime.getCurrentTime());
-            } catch (TransitException a) {
-              System.out.println(a.getMessage());
-            } catch (Exception b) {
-              Alert alert =
-                  makeAlert(
-                      "Tap error",
-                      "Tap error",
-                      "There was a problem in tapping at this point, no tap request could be processed",
-                      AlertType.ERROR);
-              alert.showAndWait();
-            }
-          }, j, i));
-          j++;
-        }
-        i++;
+      makeStationButtons(type);
+    }
+  }
+
+  private void makeStationButtons(String type) {
+    int i = 1;
+    for (Route route: Route.getRoutesCopy().get(type)) {
+      int j = 0;
+      for (Station station: route.getRouteStationsCopy()) {
+        stationButtons.add(placeButton(station.getName(), () -> {
+          try {
+            user.tap(card, station, TransitTime.getCurrentTime());
+          } catch (TransitException a) {
+            System.out.println(a.getMessage());
+          } catch (Exception b) {
+            Alert alert =
+                makeAlert(
+                    "Tap error",
+                    "Tap error",
+                    "There was a problem in tapping at this point, no tap request could be processed",
+                    AlertType.ERROR);
+            alert.showAndWait();
+          }
+        }, j, i));
+        j++;
       }
+      i++;
     }
   }
 }

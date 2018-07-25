@@ -214,7 +214,7 @@ public class User {
   private void tapIn(Card card, Station station, LocalDateTime timeTapped)
       throws InsufficientFundsException {
     if (card.getBalance() <= 0) throw new InsufficientFundsException();
-
+    station.recordTapIn(timeTapped.toLocalDate());
     // Check if this transit.system.User is continuing a transit.system.Trip
     boolean foundContinuousTrip = false;
     Trip lastTrip = card.getLastTrip();
@@ -246,6 +246,7 @@ public class User {
    */
   private void tapOut(Card card, Station station, LocalDateTime timeTapped)
       throws InvalidTripException {
+    station.recordTapOut(timeTapped.toLocalDate());
     Trip trip = card.getCurrentTrip();
     trip.endTrip(station, timeTapped); // ends the trip
     card.subtractBalance(trip.getFee()); // deducts the balance
@@ -287,4 +288,5 @@ public class User {
   public HashMap<YearMonth, Integer> getExpenditureMonthly() {
     return expenditureMonthly;
   }
+
 }

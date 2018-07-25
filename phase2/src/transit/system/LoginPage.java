@@ -1,8 +1,6 @@
 package transit.system;
 
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -57,8 +55,6 @@ public class LoginPage extends Page {
             }
             if (checkAuthorization(emailInput, passInput)) {
               Page userPage;
-              // need to check if we enter admin or normal user
-              // might want to come up with a better way of doing this
               if (user instanceof AdminUser) {
                 userPage =
                     new AdminUserPage(primaryStage, (AdminUser) user);

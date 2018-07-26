@@ -1,7 +1,5 @@
 package transit.system;
 
-import transit.exceptions.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -47,8 +45,7 @@ public class User {
    * @param email the email of this transit.system.User
    * @param password the password of ths transit.system.User
    */
-  public User(String name, String email, String password)
-      throws TransitException {
+  public User(String name, String email, String password) throws TransitException {
     if (!email.matches(EMAILREGEX)) {
       throw new TransitException();
     }
@@ -188,8 +185,7 @@ public class User {
    * @param station The station which this transit.system.User taps at
    * @param timeTapped The time this transit.system.User taps their transit.system.Card
    */
-  public void tap(Card card, Station station, LocalDateTime timeTapped)
-      throws TransitException {
+  public void tap(Card card, Station station, LocalDateTime timeTapped) throws TransitException {
 
     if (card.isSuspended()) {
       throw new TransitException();
@@ -209,8 +205,7 @@ public class User {
    * @param station The station which this transit.system.User taps at
    * @param timeTapped The time this transit.system.User taps their transit.system.Card
    */
-  private void tapIn(Card card, Station station, LocalDateTime timeTapped)
-      throws TransitException {
+  private void tapIn(Card card, Station station, LocalDateTime timeTapped) throws TransitException {
     if (card.getBalance() <= 0) throw new TransitException();
     station.recordTapIn(timeTapped.toLocalDate());
     // Check if this transit.system.User is continuing a transit.system.Trip
@@ -285,5 +280,4 @@ public class User {
   public HashMap<YearMonth, Integer> getExpenditureMonthly() {
     return expenditureMonthly;
   }
-
 }

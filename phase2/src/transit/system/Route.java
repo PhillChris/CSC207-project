@@ -1,6 +1,5 @@
 package transit.system;
 
-import transit.exceptions.InvalidStationTypeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

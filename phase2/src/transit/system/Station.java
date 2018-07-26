@@ -1,5 +1,7 @@
 package transit.system;
 
+import transit.exceptions.InvalidInputException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

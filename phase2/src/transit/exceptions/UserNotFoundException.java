@@ -1,4 +1,6 @@
-package transit.system;
+package transit.exceptions;
+
+import transit.exceptions.TransitException;
 
 /** Thrown when a call is made to a non-existing user */
 public class UserNotFoundException extends TransitException {

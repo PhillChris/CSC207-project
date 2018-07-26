@@ -1,4 +1,6 @@
-package transit.system;
+package transit.exceptions;
+
+import transit.exceptions.TransitException;
 
 /** Exception thrown when someone attempts to use a suspended card */
 public class CardSuspendedException extends TransitException {

@@ -1,4 +1,4 @@
-package transit.system;
+package transit.exceptions;
 
 /** Thrown when an exception occurs in the transit system */
 public class TransitException extends Exception {

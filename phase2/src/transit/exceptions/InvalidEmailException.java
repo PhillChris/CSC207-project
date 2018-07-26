@@ -1,4 +1,6 @@
-package transit.system;
+package transit.exceptions;
+
+import transit.exceptions.TransitException;
 
 public class InvalidEmailException extends TransitException {
   public String getMessage() {

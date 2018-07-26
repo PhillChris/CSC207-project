@@ -1,4 +1,6 @@
-package transit.system;
+package transit.exceptions;
+
+import transit.exceptions.TransitException;
 
 /** Exception thrown when a transit.system.Trip is deemed invalid */
 public class InvalidTripException extends TransitException {
@@ -6,7 +8,7 @@ public class InvalidTripException extends TransitException {
   private String stationName;
 
   /**
-   * Create a new instance of this transit.system.InvalidTripException
+   * Create a new instance of this transit.exceptions.InvalidTripException
    *
    * @param userName the username of the user taking this trip
    * @param stationName the station that the user taking this trip taps out at

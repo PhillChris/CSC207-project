@@ -8,11 +8,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.layout.Region;
-import transit.pages.LoginPage;
-import transit.pages.Page;
 import transit.system.AdminUser;
-import transit.system.EmailInUseException;
-import transit.system.InvalidEmailException;
+import transit.exceptions.EmailInUseException;
+import transit.exceptions.InvalidEmailException;
 import transit.system.User;
 
 public class SignUpPage extends Page {

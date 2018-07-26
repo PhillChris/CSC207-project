@@ -10,9 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
-import transit.pages.Page;
-import transit.system.InvalidInputException;
-import transit.system.InvalidStationTypeException;
+import transit.exceptions.InvalidInputException;
+import transit.exceptions.InvalidStationTypeException;
 import transit.system.Route;
 import transit.system.Station;
 

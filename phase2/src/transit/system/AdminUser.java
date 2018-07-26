@@ -1,5 +1,8 @@
 package transit.system;
 
+import transit.exceptions.EmailInUseException;
+import transit.exceptions.InvalidEmailException;
+
 /** Represents an transit.system.AdminUser in a transit system. */
 public class AdminUser extends User {
 

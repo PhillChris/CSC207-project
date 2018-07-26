@@ -1,4 +1,6 @@
-package transit.system;
+package transit.exceptions;
+
+import transit.exceptions.TransitException;
 
 /** Thrown when a non-existing station is called */
 public class StationNotFoundException extends TransitException {

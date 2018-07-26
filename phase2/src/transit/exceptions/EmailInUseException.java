@@ -1,4 +1,6 @@
-package transit.system;
+package transit.exceptions;
+
+import transit.exceptions.TransitException;
 
 /**
  * Exception thrown when an attempt to create a user with an email already present in the system is

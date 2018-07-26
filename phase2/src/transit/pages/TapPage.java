@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.pages.Page;
+import transit.exceptions.TransitException;
 import transit.system.*;
 
 public class TapPage extends Page {

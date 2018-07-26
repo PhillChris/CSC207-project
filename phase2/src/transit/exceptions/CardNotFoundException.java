@@ -1,4 +1,6 @@
-package transit.system;
+package transit.exceptions;
+
+import transit.exceptions.TransitException;
 
 /** Exception thrown when a card is not found */
 public class CardNotFoundException extends TransitException {

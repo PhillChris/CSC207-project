@@ -1,4 +1,6 @@
-package transit.system;
+package transit.exceptions;
+
+import transit.exceptions.TransitException;
 
 /** Thrown when an invalid time is detected in the transit system */
 public class TimeException extends TransitException {

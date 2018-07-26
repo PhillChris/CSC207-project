@@ -1,4 +1,6 @@
-package transit.system;
+package transit.exceptions;
+
+import transit.exceptions.TransitException;
 
 /** Exception thrown when the parameters provided to a command in events.txt are incorrect */
 public class InvalidInputException extends TransitException {

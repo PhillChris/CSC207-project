@@ -1,5 +1,7 @@
 package transit.system;
 
+import transit.exceptions.InitLineException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;

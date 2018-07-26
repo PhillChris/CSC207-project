@@ -1,4 +1,6 @@
-package transit.system;
+package transit.exceptions;
+
+import transit.exceptions.TransitException;
 
 /** Exception thrown when a card with insufficient funds is used */
 public class InsufficientFundsException extends TransitException {

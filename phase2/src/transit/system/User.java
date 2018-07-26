@@ -66,7 +66,7 @@ public class User {
   }
 
   /** @return a copy of the HashMap of all Users */
-  static HashMap<String, User> getAllUsersCopy() {
+  public static HashMap<String, User> getAllUsersCopy() {
     HashMap<String, User> copy = new HashMap<>();
     for (String name : allUsers.keySet()) {
       copy.put(name, allUsers.get(name));
@@ -74,7 +74,7 @@ public class User {
     return copy;
   }
 
-  static HashMap<String, String> getAuthLogCopy() {
+  public static HashMap<String, String> getAuthLogCopy() {
     HashMap<String, String> copy = new HashMap<>();
     for (String name : authLog.keySet()) {
       copy.put(name, authLog.get(name));
@@ -83,12 +83,12 @@ public class User {
   }
 
   /** Removes this user from the system. */
-  void removeUser() {
+  public void removeUser() {
     allUsers.remove(this.email);
     authLog.remove(this.email);
   }
 
-  String getUserName() {
+  public String getUserName() {
     return this.name;
   }
 
@@ -98,7 +98,7 @@ public class User {
   }
 
   /** @return A copy of the cards this user holds */
-  HashMap<Integer, Card> getCardsCopy() {
+  public HashMap<Integer, Card> getCardsCopy() {
     HashMap<Integer, Card> tempMap = new HashMap<>();
     for (Integer i : this.cards.keySet()) {
       tempMap.put(i, this.cards.get(i));
@@ -107,7 +107,7 @@ public class User {
   }
 
   /** @return A String detailing average expenditure per month of this transit.system.User. */
-  String getAvgMonthly() {
+  public String getAvgMonthly() {
     String message = "Cost per month for user: " + this.name + System.lineSeparator();
     List<YearMonth> months = new ArrayList<>(this.expenditureMonthly.keySet());
     for (YearMonth month : months) {
@@ -127,7 +127,7 @@ public class User {
    *
    * @return up to the last three trips taken by this transit.system.User.
    */
-  List<Trip> getLastThreeCopy() {
+  public List<Trip> getLastThreeCopy() {
     List<Trip> copy = new ArrayList<>(lastThreeTrips);
     return copy;
   }
@@ -137,7 +137,7 @@ public class User {
    *
    * @return the last 3 trips message
    */
-  String getLastThreeMessage() {
+  public String getLastThreeMessage() {
     String message = "Last 3 trips by user " + this.name + ":";
     for (Trip t : getLastThreeCopy()) {
       message += "\n" + t;
@@ -150,12 +150,12 @@ public class User {
    *
    * @param newName the new name of this transit.system.User.
    */
-  void changeName(String newName) {
+  public void changeName(String newName) {
     this.name = newName;
   }
 
   /** Add a card to this transit.system.User's list of cards. */
-  void addCard() {
+  public void addCard() {
     this.cards.put(cardCounter, new Card(cardCounter));
     cardCounter++;
   }
@@ -166,7 +166,7 @@ public class User {
    *
    * @param card the card to be removed from this Users collection of cards.
    */
-  void removeCard(Card card) {
+  public void removeCard(Card card) {
     if (card != null) {
       if (this.cards.get(card.getId()) == card) {
         this.cards.remove(card.getId(), card);
@@ -189,7 +189,7 @@ public class User {
    * @throws CardSuspendedException Thrown if the given card is suspended
    * @throws InvalidTripException Thrown if the final trip made by the user is invalid
    */
-  void tap(Card card, Station station, LocalDateTime timeTapped)
+  public void tap(Card card, Station station, LocalDateTime timeTapped)
       throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
 
     if (card.isSuspended()) {

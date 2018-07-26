@@ -88,7 +88,7 @@ public class TransitTime {
   static void endDay(List<String> emptyList) {}
 
   /** @return The current date in the transit system */
-  static LocalDate getCurrentDate() {
+  public static LocalDate getCurrentDate() {
     return currentTime.toLocalDate();
   }
 }

@@ -27,7 +27,7 @@ public class Station {
    *
    * @param name The name of this station
    */
-  Station(String name, String stationType) throws InvalidInputException {
+  public Station(String name, String stationType) throws InvalidInputException {
     this.name = name;
     if (!stations.containsKey(stationType)) {
       stations.put(stationType, new HashMap<>());

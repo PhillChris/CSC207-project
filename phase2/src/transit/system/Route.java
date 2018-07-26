@@ -40,7 +40,7 @@ public class Route {
   }
 
   /** @return A copy of the arrayList of all RouteNames */
-  static HashMap<String, ArrayList<Route>> getRoutesCopy() {
+  public static HashMap<String, ArrayList<Route>> getRoutesCopy() {
     return new HashMap<>(routes);
   }
 
@@ -48,7 +48,7 @@ public class Route {
    * @return A copy of the list of the stations in this route (an external class shouldn't access
    *     the routes directly)
    */
-  List<Station> getRouteStationsCopy() {
+  public List<Station> getRouteStationsCopy() {
     return new ArrayList<>(routeStations);
   }
 }

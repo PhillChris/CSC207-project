@@ -1,17 +1,17 @@
 package transit.system;
 
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
+import transit.pages.GraphPage;
+
 import java.time.YearMonth;
 import java.util.HashMap;
 
 
 
-public class UserGraphPage extends GraphPage{
+public class UserGraphPage extends GraphPage {
 
   public UserGraphPage(Stage primaryStage, User user) {
     super(primaryStage, user);

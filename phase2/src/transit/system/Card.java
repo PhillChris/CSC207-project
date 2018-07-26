@@ -27,17 +27,17 @@ public class Card {
   }
 
   /** @return true if this card is not active */
-  boolean isSuspended() {
+  public boolean isSuspended() {
     return !isActive;
   }
 
   /** @return The ID of this card */
-  int getId() {
+  public int getId() {
     return this.id;
   }
 
   /** @return The balance of this card, in cents */
-  int getBalance() {
+  public int getBalance() {
     return this.balance;
   }
 
@@ -70,17 +70,17 @@ public class Card {
   }
 
   /** @return whether this card is currently on a trip */
-  boolean getTripStarted() {
+  public boolean getTripStarted() {
     return currentTrip != null;
   }
 
   /** Activates this card, after having been found */
-  void activateCard() {
+  public void activateCard() {
     isActive = true;
   }
 
   /** Suspends this card, after having been reported stolen */
-  void suspendCard() {
+  public void suspendCard() {
     isActive = false;
   }
 
@@ -89,7 +89,7 @@ public class Card {
    *
    * @param toAdd the amount of money to add to this transit.system.Card's balance, in cents
    */
-  void addBalance(int toAdd) {
+  public void addBalance(int toAdd) {
     this.balance += toAdd;
   }
 

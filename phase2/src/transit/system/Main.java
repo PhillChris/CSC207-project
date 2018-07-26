@@ -2,6 +2,8 @@ package transit.system;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import transit.pages.LoginPage;
+
 import java.io.IOException;
 
 /** A transit system simulation. */

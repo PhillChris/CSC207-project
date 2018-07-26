@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import transit.system.AdminUser;
 import transit.system.TransitTime;
 import transit.system.User;
-import transit.system.UserGraphPage;
 
 public class UserPage extends AuthenticatedPage {
   public UserPage(Stage primaryStage, User user) {

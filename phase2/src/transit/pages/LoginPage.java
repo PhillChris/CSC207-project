@@ -26,7 +26,7 @@ public class LoginPage extends Page {
     login.setId("loginLabel");
     loginPane.add(login, 0, 0, 2, 1);
 
-    ImageView emailIcon = new ImageView(new Image("transit/system/assets/email.png"));
+    ImageView emailIcon = new ImageView(new Image("transit/pages/assets/email.png"));
     emailIcon.setId("emailIcon");
     loginPane.add(emailIcon, 0, 1);
 
@@ -35,7 +35,7 @@ public class LoginPage extends Page {
     emailInput.setPromptText("Email");
     loginPane.add(emailInput, 1, 1);
 
-    ImageView lockIcon = new ImageView(new Image("transit/system/assets/lock.png"));
+    ImageView lockIcon = new ImageView(new Image("transit/pages/assets/lock.png"));
     lockIcon.setId("lockIcon");
     loginPane.add(lockIcon, 0, 2);
 
@@ -92,7 +92,7 @@ public class LoginPage extends Page {
 
     GridPane trainPane = new GridPane();
     trainPane.setPadding(new Insets(0, 0, 0, 10));
-    ImageView train = new ImageView(new Image("transit/system/assets/train.png"));
+    ImageView train = new ImageView(new Image("transit/pages/assets/train.png"));
     trainPane.add(train, 0, 0);
     grid.add(trainPane, 1, 1);
 
@@ -100,8 +100,8 @@ public class LoginPage extends Page {
     this.scene = new Scene(grid, 625, 400);
     grid.setHgap(10);
     grid.setVgap(10);
-    //scene.getStylesheets().add
-      //(LoginPage.class.getResource("styling/LoginPage.css").toExternalForm());
+    scene.getStylesheets().add
+      (LoginPage.class.getResource("styling/LoginPage.css").toExternalForm());
   }
 
   private boolean checkAuthorization(TextField email, TextField password) {

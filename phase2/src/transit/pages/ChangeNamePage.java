@@ -2,13 +2,12 @@ package transit.pages;
 
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 import transit.system.User;
 
 public class ChangeNamePage extends AuthenticatedPage {
-  public ChangeNamePage(
-      Stage primaryStage, User user) {
+  public ChangeNamePage(Stage primaryStage, User user) {
     super(primaryStage, user);
     makeScene(primaryStage);
   }
@@ -26,9 +25,5 @@ public class ChangeNamePage extends AuthenticatedPage {
         1);
 
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-  }
-
-  protected void addUserData(Stage primaryStage) {
-    // return this.scene; //todo: add user data here
   }
 }

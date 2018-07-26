@@ -11,6 +11,7 @@ import transit.system.User;
 public class UserPage extends AuthenticatedPage {
   public UserPage(Stage primaryStage, User user) {
     super(primaryStage, user);
+    addUserData(primaryStage);
     makeScene(primaryStage);
   }
 

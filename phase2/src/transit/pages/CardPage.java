@@ -8,6 +8,7 @@ import transit.system.User;
 public class CardPage extends AuthenticatedPage {
   public CardPage(Stage primaryStage, User user) {
     super(primaryStage, user);
+    addUserData(primaryStage);
     makeScene(primaryStage);
   }
 

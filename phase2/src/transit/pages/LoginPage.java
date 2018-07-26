@@ -7,19 +7,28 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import transit.exceptions.InvalidCredentialsException;
-import transit.exceptions.TransitException;
-import transit.exceptions.UserNotFoundException;
-import transit.system.*;
+import transit.system.AdminUser;
+import transit.system.User;
 
+/** Represents a login page for this system */
 public class LoginPage extends Page {
 
+  /**
+   * Initialized a new instance of LoginPace
+   *
+   * @param primaryStage The stage for this page to be displayed
+   */
   public LoginPage(Stage primaryStage) {
     makeScene(primaryStage);
   }
 
+  /**
+   * Sets the scene for this page
+   *
+   * @param primaryStage the stage which this scene is being served on, passed for button-action
+   */
   protected void makeScene(Stage primaryStage) {
-    //TODO: Clean this all up
+    // TODO: Clean this all up
     grid.setPadding(new Insets(30, 20, 20, 40));
     grid.setVgap(20);
     GridPane loginPane = new GridPane();
@@ -49,30 +58,28 @@ public class LoginPage extends Page {
 
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
-    loginButton.setOnAction((data) -> {
+    loginButton.setOnAction(
+        (data) -> {
           try {
             User user;
             if (User.getAllUsersCopy().containsKey(emailInput.getText())) {
               user = User.getAllUsersCopy().get(emailInput.getText());
             } else {
-              throw new UserNotFoundException();
+              throw new Exception();
             }
             if (checkAuthorization(emailInput, passInput)) {
               Page userPage;
               if (user instanceof AdminUser) {
-                userPage =
-                    new AdminUserPage(primaryStage, (AdminUser) user);
+                userPage = new AdminUserPage(primaryStage, (AdminUser) user);
               } else {
                 userPage = new UserPage(primaryStage, user);
               }
               primaryStage.setScene(userPage.getScene());
             } else {
-              throw new InvalidCredentialsException();
-
+              throw new Exception();
             }
-          } catch (TransitException a) {
-            System.out.println(a.getMessage());
-          }
+          } catch (Exception a) {
+          } // Error window should pop up
         });
     loginPane.add(loginButton, 0, 3, 2, 1);
 
@@ -85,8 +92,9 @@ public class LoginPage extends Page {
 
     Button signupButton = new Button("Signup");
     loginButton.setId("signupButton");
-    signupButton.setOnAction((data) -> {SignUpPage signupPage =
-              new SignUpPage(primaryStage);
+    signupButton.setOnAction(
+        (data) -> {
+          SignUpPage signupPage = new SignUpPage(primaryStage);
           primaryStage.setScene(signupPage.getScene());
         });
     loginPane.add(signupButton, 0, 6, 2, 1);
@@ -103,10 +111,18 @@ public class LoginPage extends Page {
     this.scene = new Scene(grid, 625, 400);
     grid.setHgap(10);
     grid.setVgap(10);
-    //scene.getStylesheets().add
-      //(LoginPage.class.getResource("styling/LoginPage.css").toExternalForm());
+    scene
+        .getStylesheets()
+        .add(LoginPage.class.getResource("styling/LoginPage.css").toExternalForm());
   }
 
+  /**
+   * Checks the input values provided by the user
+   *
+   * @param email The entry into the email box
+   * @param password The entry into the password box
+   * @return true if the given email and password correspond to a specific user, false otherwise
+   */
   private boolean checkAuthorization(TextField email, TextField password) {
     return User.getAuthLogCopy().get(email.getText()) != null
         && User.getAuthLogCopy().get(email.getText()).equals(password.getText());

@@ -48,12 +48,12 @@ public class User {
    * @param password the password of ths transit.system.User
    */
   public User(String name, String email, String password)
-      throws InvalidEmailException, EmailInUseException {
+      throws TransitException {
     if (!email.matches(EMAILREGEX)) {
-      throw new InvalidEmailException();
+      throw new TransitException();
     }
     if (allUsers.keySet().contains(email)) { // If this transit.system.User already exists
-      throw new EmailInUseException();
+      throw new TransitException();
     }
     this.name = name;
     this.email = email;
@@ -187,15 +187,12 @@ public class User {
    * @param card The card which this transit.system.User taps
    * @param station The station which this transit.system.User taps at
    * @param timeTapped The time this transit.system.User taps their transit.system.Card
-   * @throws InsufficientFundsException Thrown if the given card contains a negative balance
-   * @throws CardSuspendedException Thrown if the given card is suspended
-   * @throws InvalidTripException Thrown if the final trip made by the user is invalid
    */
   public void tap(Card card, Station station, LocalDateTime timeTapped)
-      throws InsufficientFundsException, CardSuspendedException, InvalidTripException {
+      throws TransitException {
 
     if (card.isSuspended()) {
-      throw new CardSuspendedException();
+      throw new TransitException();
     }
     if (card.getCurrentTrip() == null) {
       tapIn(card, station, timeTapped);
@@ -211,11 +208,10 @@ public class User {
    * @param card The card which this transit.system.User taps
    * @param station The station which this transit.system.User taps at
    * @param timeTapped The time this transit.system.User taps their transit.system.Card
-   * @throws InsufficientFundsException Thrown if the final trip made by the user is invalid
    */
   private void tapIn(Card card, Station station, LocalDateTime timeTapped)
-      throws InsufficientFundsException {
-    if (card.getBalance() <= 0) throw new InsufficientFundsException();
+      throws TransitException {
+    if (card.getBalance() <= 0) throw new TransitException();
     station.recordTapIn(timeTapped.toLocalDate());
     // Check if this transit.system.User is continuing a transit.system.Trip
     boolean foundContinuousTrip = false;
@@ -244,10 +240,9 @@ public class User {
    * @param card The card which this transit.system.User taps
    * @param station The station which this transit.system.User taps at
    * @param timeTapped The time this transit.system.User taps their transit.system.Card
-   * @throws InvalidTripException Thrown if the final trip made by the user is invalid
    */
   private void tapOut(Card card, Station station, LocalDateTime timeTapped)
-      throws InvalidTripException {
+      throws TransitException {
     station.recordTapOut(timeTapped.toLocalDate());
     Trip trip = card.getCurrentTrip();
     trip.endTrip(station, timeTapped); // ends the trip
@@ -265,7 +260,7 @@ public class User {
       backTrip = lastThreeTrips.remove(0);
     }
     if (!trip.isValidTrip()) {
-      throw new InvalidTripException(this.name, station.getName());
+      throw new TransitException();
     }
   }
 

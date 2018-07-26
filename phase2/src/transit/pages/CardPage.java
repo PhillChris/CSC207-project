@@ -5,12 +5,26 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.User;
 
+/** Represents a page containing all functionality associated with a user's set of cards */
 public class CardPage extends AuthenticatedPage {
+
+  /**
+   * Initialize a new instance of CardPage
+   *
+   * @param primaryStage The stage for this page to be displaced
+   * @param user The user associated with this page
+   */
   public CardPage(Stage primaryStage, User user) {
     super(primaryStage, user);
+    addUserData(primaryStage);
     makeScene(primaryStage);
   }
 
+  /**
+   * Sets the scene for this page
+   *
+   * @param primaryStage the stage which this scene is being served on, passed for button-action
+   */
   protected void makeScene(Stage primaryStage) {
     placeButton(
         "Add card",
@@ -31,6 +45,11 @@ public class CardPage extends AuthenticatedPage {
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
+  /**
+   * Adds personalized user data to this page
+   *
+   * @param primaryStage the stage which this scene is being served on, passed for button-action
+   */
   protected void addUserData(Stage primaryStage) {
     int i = 0;
     for (Integer id : this.user.getCardsCopy().keySet()) {

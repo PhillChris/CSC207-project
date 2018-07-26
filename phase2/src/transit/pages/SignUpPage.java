@@ -9,8 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.layout.Region;
 import transit.system.AdminUser;
-import transit.exceptions.EmailInUseException;
-import transit.exceptions.InvalidEmailException;
 import transit.system.User;
 
 public class SignUpPage extends Page {
@@ -38,21 +36,14 @@ public class SignUpPage extends Page {
           try {
             add(username.getText(), email.getText(), password.getText(), adminBox.isSelected());
             primaryStage.setScene(new LoginPage(primaryStage).getScene());
-          } catch (EmailInUseException a) {
+          } catch (Exception a) {
             Alert alert =
                 makeAlert(
                     "Email in use!",
                     "Email in use:",
-                    "The email you provided is currently in use by another user.",
+                    "The email you provided is not valid or" +
+                            " is currently in use by another user.",
                     AlertType.WARNING);
-            alert.showAndWait();
-          } catch (InvalidEmailException a) {
-            Alert alert =
-              makeAlert(
-                "Invalid email!",
-                "Invalid email:",
-                "The email you provided is not valid.",
-                AlertType.WARNING);
             alert.showAndWait();
           }
         },
@@ -63,17 +54,11 @@ public class SignUpPage extends Page {
   }
 
   void add(String username, String email, String password, boolean isAdmin)
-      throws InvalidEmailException, EmailInUseException {
-    try {
+      throws Exception {
       if (isAdmin) {
         AdminUser admin = new AdminUser(username, email, password);
       } else {
         User user = new User(username, email, password);
       }
-    } catch (EmailInUseException a) {
-      throw new EmailInUseException();
-    } catch (InvalidEmailException a) {
-      throw new InvalidEmailException();
-    }
   }
 }

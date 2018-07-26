@@ -20,7 +20,6 @@ public abstract class AuthenticatedPage extends Page {
    */
   public AuthenticatedPage(Stage primaryStage, User user) {
     this.user = user;
-    addUserData(primaryStage);
   }
 
   /**
@@ -28,7 +27,6 @@ public abstract class AuthenticatedPage extends Page {
    *
    * @param primaryStage the stage on which this authenticated page is served
    */
-  protected abstract void addUserData(Stage primaryStage);
 
   /**
    * Makes the core implementation of UserPage, to be overriden by other authenticated pages

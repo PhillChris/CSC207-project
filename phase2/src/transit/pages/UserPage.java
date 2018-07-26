@@ -4,17 +4,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.pages.AdminUserPage;
-import transit.pages.AuthenticatedPage;
-import transit.pages.CardPage;
 import transit.system.AdminUser;
 import transit.system.TransitTime;
 import transit.system.User;
-import transit.system.UserGraphPage;
 
 public class UserPage extends AuthenticatedPage {
   public UserPage(Stage primaryStage, User user) {
     super(primaryStage, user);
+    addUserData(primaryStage);
     makeScene(primaryStage);
   }
 

@@ -20,10 +20,10 @@ public class Route {
    * @param stations List of all station names in this route in order.
    * @param type The type of stations this route contains
    */
-  public Route(List<Station> stations, String type) throws InvalidStationTypeException {
+  public Route(List<Station> stations, String type) throws TransitException {
     // Checks if the given type is a valid type
     if (!Arrays.asList(Station.POSSIBLE_TYPES).contains(type)) {
-      throw new InvalidStationTypeException();
+      throw new TransitException();
     } else {
       // TODO: we may want to add a check that the list of stations is not a duplicate
       for (Station s : stations) {

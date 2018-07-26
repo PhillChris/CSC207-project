@@ -24,6 +24,11 @@ public class AddFundsPage extends AuthenticatedPage {
     makeScene(primaryStage);
   }
 
+  /**
+   * Sets the scene for this page
+   *
+   * @param primaryStage the stage which this scene is being served on, passed for button-action
+   */
   public void makeScene(Stage primaryStage) {
     placeLabel("Add the following amount: ", 0, 0);
     placeCostButton(primaryStage, 10, 0, 1);
@@ -32,6 +37,14 @@ public class AddFundsPage extends AuthenticatedPage {
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
+  /**
+   * Places the CostButton on this page
+   *
+   * @param primaryStage The stage for this page to be displayed
+   * @param cost The cost the button will add to the card when clicked
+   * @param col The column number of the button
+   * @param row The row number of the button
+   */
   private void placeCostButton(Stage primaryStage, int cost, int col, int row) {
     placeButton(
         "$" + cost,

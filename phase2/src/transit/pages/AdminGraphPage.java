@@ -3,7 +3,6 @@ package transit.pages;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-import transit.pages.GraphPage;
 import transit.system.CostCalculator;
 import transit.system.TransitTime;
 import transit.system.User;

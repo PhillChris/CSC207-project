@@ -10,9 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
-import transit.pages.Page;
-import transit.system.InvalidInputException;
-import transit.system.InvalidStationTypeException;
 import transit.system.Route;
 import transit.system.Station;
 
@@ -64,7 +61,7 @@ public class MaintenancePage extends Page {
                 if (routeType.getValue().equals(stationType)) {
                   this.dropDownList.getItems().add(newStation);
                 }
-              } catch (InvalidInputException e) {
+              } catch (Exception e) {
                 makeAlert(
                         "Station Construction",
                         "Station name",
@@ -104,7 +101,7 @@ public class MaintenancePage extends Page {
               try {
                 new Route(dropDownList.getCheckModel().getCheckedItems(), routeType.getValue());
                 this.dropDownList.getCheckModel().clearChecks();
-              } catch (InvalidStationTypeException a) {
+              } catch (Exception a) {
                 makeAlert("Invalid Station Type", "Invalid Station Type", "The station type you are entering is not a station type recognized by the system", AlertType.ERROR).showAndWait();
               }
         }, 1, 8);

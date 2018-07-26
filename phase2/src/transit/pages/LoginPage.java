@@ -52,7 +52,7 @@ public class LoginPage extends Page {
             if (User.getAllUsersCopy().containsKey(emailInput.getText())) {
               user = User.getAllUsersCopy().get(emailInput.getText());
             } else {
-              throw new UserNotFoundException();
+              throw new Exception();
             }
             if (checkAuthorization(emailInput, passInput)) {
               Page userPage;
@@ -64,12 +64,10 @@ public class LoginPage extends Page {
               }
               primaryStage.setScene(userPage.getScene());
             } else {
-              throw new InvalidCredentialsException();
+              throw new Exception();
 
             }
-          } catch (TransitException a) {
-            System.out.println(a.getMessage());
-          }
+          } catch (Exception a) {} // Error window should pop up
         });
     loginPane.add(loginButton, 0, 3, 2, 1);
 

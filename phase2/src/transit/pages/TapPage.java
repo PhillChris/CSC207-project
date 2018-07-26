@@ -1,6 +1,5 @@
 package transit.pages;
 
-import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -8,8 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.pages.Page;
 import transit.system.*;
+
+import java.util.ArrayList;
 
 public class TapPage extends Page {
   private ArrayList<Button> stationButtons = new ArrayList<>();
@@ -48,24 +48,27 @@ public class TapPage extends Page {
 
   private void makeStationButtons(String type) {
     int i = 1;
-    for (Route route: Route.getRoutesCopy().get(type)) {
+    for (Route route : Route.getRoutesCopy().get(type)) {
       int j = 0;
-      for (Station station: route.getRouteStationsCopy()) {
-        stationButtons.add(placeButton(station.getName(), () -> {
-          try {
-            user.tap(card, station, TransitTime.getCurrentTime());
-          } catch (TransitException a) {
-            System.out.println(a.getMessage());
-          } catch (Exception b) {
-            Alert alert =
-                makeAlert(
-                    "Tap error",
-                    "Tap error",
-                    "There was a problem in tapping at this point, no tap request could be processed",
-                    AlertType.ERROR);
-            alert.showAndWait();
-          }
-        }, j, i));
+      for (Station station : route.getRouteStationsCopy()) {
+        stationButtons.add(
+            placeButton(
+                station.getName(),
+                () -> {
+                  try {
+                    user.tap(card, station, TransitTime.getCurrentTime());
+                  } catch (Exception b) {
+                    Alert alert =
+                        makeAlert(
+                            "Tap error",
+                            "Tap error",
+                            "There was a problem in tapping at this point, no tap request could be processed",
+                            AlertType.ERROR);
+                    alert.showAndWait();
+                  }
+                },
+                j,
+                i));
         j++;
       }
       i++;

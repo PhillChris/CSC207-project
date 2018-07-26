@@ -27,7 +27,7 @@ public class Station {
    *
    * @param name The name of this station
    */
-  public Station(String name, String stationType) throws InvalidInputException {
+  public Station(String name, String stationType) throws TransitException {
     this.name = name;
     if (!stations.containsKey(stationType)) {
       stations.put(stationType, new HashMap<>());
@@ -36,7 +36,7 @@ public class Station {
       stations.get(stationType).put(name, this);
       this.setFees(stationType);
     } else {
-      throw new InvalidInputException(); // temporary exception
+      throw new TransitException(); // temporary exception
     }
   }
 

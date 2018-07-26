@@ -1,5 +1,7 @@
 package transit.system;
 
+import com.sun.jdi.connect.TransportTimeoutException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -31,9 +33,8 @@ public class TransitReader {
    * Initializes the program (i.e. constructs routes) with initialization data from events.txt
    *
    * @throws IOException if either events.txt or output.txt can't be found
-   * @throws InitLineException if the formatting of the initial line of events.txt is incorrect
    */
-  void init() throws IOException, InitLineException {
+  void init() throws IOException, TransitException {
 
     /* Reads the opening init line determining how many routes to make and
      * the current system date */
@@ -41,7 +42,7 @@ public class TransitReader {
     ArrayList<String> initLineWords = new ArrayList<>(Arrays.asList(initLine.split(SPLIT_SYMBOL)));
 
     if (initLineWords.size() != 3) { // if the formatting is incorrect for the initial line
-      throw new InitLineException();
+      throw new TransitException();
     }
 
     int numRoutes;
@@ -49,7 +50,7 @@ public class TransitReader {
     try {
       numRoutes = Integer.parseInt(initLineWords.get(1));
     } catch (NumberFormatException numberException) {
-      throw new InitLineException();
+      throw new TransitException();
     }
 
     /* Iterate through routes and names of stations given in the first lines of events.txt,

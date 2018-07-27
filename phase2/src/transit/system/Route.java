@@ -1,13 +1,14 @@
 package transit.system;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 /** Represents a travel route in this transit system */
-public class Route {
+public class Route implements Serializable {
 
   /** A list of all routes in the transit system */
   private static HashMap<String, ArrayList<Route>> routes = new HashMap<>();

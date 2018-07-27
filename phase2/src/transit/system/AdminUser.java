@@ -1,8 +1,10 @@
 package transit.system;
 
 
+import java.io.Serializable;
+
 /** Represents an transit.system.AdminUser in a transit system. */
-public class AdminUser extends User {
+public class AdminUser extends User implements Serializable {
 
   /**
    * Construct a new instance of transit.system.AdminUser

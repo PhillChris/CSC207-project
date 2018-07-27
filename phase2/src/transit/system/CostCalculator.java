@@ -1,5 +1,6 @@
 package transit.system;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /** A class for making money calculations and generating daily reports. */
-public class CostCalculator {
+public class CostCalculator implements Serializable {
 
   private static HashMap<YearMonth, Integer> monthlyRevenue = new HashMap<>();
   /** Contains the expenditure per each day */

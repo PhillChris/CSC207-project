@@ -1,7 +1,9 @@
 package transit.system;
 
+import java.io.Serializable;
+
 /** Represents a travel card in a transit system */
-public class Card {
+public class Card implements Serializable {
   /** The starting balance for all cards, in cents */
   private static final int CARD_INITIAL_BALANCE = 1900;
   /** Stores whether or not this card can be used (i.e. reported stolen) */

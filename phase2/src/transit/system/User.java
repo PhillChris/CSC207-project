@@ -1,5 +1,6 @@
 package transit.system;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /** Represents a transit.system.User in a transit system. */
-public class User {
+public class User implements Serializable {
   /** HashMap linking each email to its transit.system.User */
   private static HashMap<String, User> allUsers = new HashMap<>();
   /** The log mapping all users to their given password in the system */

@@ -1,6 +1,7 @@
 package transit.system;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 /** A parent class for stations in this simulation */
-public class Station {
+public class Station implements Serializable {
   /** All acceptable possible route types in this transit system*/
   public static final String[] POSSIBLE_TYPES = {"Bus", "Subway"};
   /** Maps the name of a station to the appropriate station object */

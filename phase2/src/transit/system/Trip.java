@@ -1,11 +1,12 @@
 package transit.system;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /** Represents an object of transit.system.Trip */
-public class Trip {
+public class Trip implements Serializable {
   /** The maximum duration between the start of two continuous trips */
   private static final Duration MAX_TRIP_LENGTH = Duration.ofMinutes(120);
   /** The time started by this trip */

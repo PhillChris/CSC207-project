@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import transit.system.AdminUser;
 import transit.system.User;
 
-import javax.xml.soap.Text;
-
 /** Represents a login page for this system */
 public class LoginPage extends Page {
 

@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import transit.system.Database;
 import transit.system.TransitTime;
 
 import java.util.Optional;
@@ -39,6 +40,7 @@ public abstract class Page {
             new EventHandler<WindowEvent>() {
               @Override
               public void handle(WindowEvent windowEvent) {
+                Database.writeToDatabase();
                 Platform.exit();
               }
             });

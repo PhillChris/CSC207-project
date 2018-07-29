@@ -17,6 +17,8 @@ public class User implements Serializable {
   private static HashMap<String, User> allUsers = new HashMap<>();
   /** The transit.system.User's email */
   private final String email;
+  /** Tracks all related statistics associated with this User */
+  protected UserInformation statistics;
   /** An ArrayList of this transit.system.User's cards */
   private HashMap<Integer, Card> cards;
   /** This transit.system.User's name */
@@ -25,8 +27,6 @@ public class User implements Serializable {
   private String password;
   /** The id given to the next card added by the user */
   private int cardCounter;
-  /** Tracks all related statistics associated with this User */
-  protected UserInformation statistics;
 
   /**
    * Construct a new instance of transit.system.User

@@ -34,11 +34,6 @@ public class UserInformation {
     return previousTrips;
   }
 
-  /** @return A string message representing the system's expenditure history */
-  String generateDailyReports() {
-    return calculator.generateReportMessage();
-  }
-
   /** @return The monthly expenditure for this user */
   HashMap<YearMonth, Integer> getMonthlyExpenditure() {
     return expenditureMonthly;

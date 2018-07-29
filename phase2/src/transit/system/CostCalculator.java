@@ -17,29 +17,8 @@ public class CostCalculator implements Serializable {
   /** Contains the number of stations travelled per day by users */
   private static HashMap<LocalDate, Integer> dailyLog = new HashMap<>();
 
-  /** Updates the expenditure and revenue in the entire system */
-  void updateSystemRevenue(int fee, int tripLength) {
-    LocalDate date = TransitTime.getCurrentDate();
-    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
-
-    if (dailyRevenue.containsKey(date)) {
-      dailyRevenue.put(date, dailyRevenue.get(date) + fee);
-      dailyLog.put(date, dailyLog.get(date) + tripLength);
-
-    } else {
-      dailyRevenue.put(date, fee);
-      dailyLog.put(date, tripLength);
-    }
-
-    if (monthlyRevenue.containsKey(month)) {
-      monthlyRevenue.put(month, monthlyRevenue.get(month) + fee);
-    } else {
-      monthlyRevenue.put(month, fee);
-    }
-  }
-
   /** @return The daily report table for all days passed during this simulation. */
-  public String generateReportMessage() {
+  public static String generateReportMessage() {
     // Loop through all days and write each day's revenue
     // The revenue collected for each day
     HashMap<LocalDate, Integer> dailyTotals = dailyRevenue;
@@ -59,5 +38,26 @@ public class CostCalculator implements Serializable {
 
   public static HashMap<YearMonth, Integer> getMonthlyRevenue() {
     return monthlyRevenue;
+  }
+
+  /** Updates the expenditure and revenue in the entire system */
+  void updateSystemRevenue(int fee, int tripLength) {
+    LocalDate date = TransitTime.getCurrentDate();
+    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
+
+    if (dailyRevenue.containsKey(date)) {
+      dailyRevenue.put(date, dailyRevenue.get(date) + fee);
+      dailyLog.put(date, dailyLog.get(date) + tripLength);
+
+    } else {
+      dailyRevenue.put(date, fee);
+      dailyLog.put(date, tripLength);
+    }
+
+    if (monthlyRevenue.containsKey(month)) {
+      monthlyRevenue.put(month, monthlyRevenue.get(month) + fee);
+    } else {
+      monthlyRevenue.put(month, fee);
+    }
   }
 }

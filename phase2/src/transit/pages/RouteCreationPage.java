@@ -31,7 +31,7 @@ public class RouteCreationPage extends Page {
     /** Set the buttons of this page */
     placeButton("Add subway route", () -> createRoute("String"), 0, 0);
     placeButton("Add bus route", () -> createRoute("Bus"), 0, 2);
-    placeLabel("Append to Existing Station:", 0, 4);
+    placeLabel("Append to Existing Route:", 0, 4);
     /** Create a button to append to each possible route */
     for (String type : Route.getRoutesCopy().keySet()) {
       for (int i = 0; i < Route.getRoutesCopy().get(type).size(); i++) {

@@ -21,7 +21,6 @@ public class Route implements Serializable {
   /**
    * Constructs a new route
    *
-   * @param stations List of all station names in this route in order.
    * @param type The type of stations this route contains
    */
   public Route(String type) {
@@ -51,14 +50,24 @@ public class Route implements Serializable {
   }
 
   /**
-   * Adds a new station to this route
+   * Adds a new station to this route at the start of the route
    *
-   * @param stationType The type of this station
    * @param stationName The name of this new station
    * @throws TransitException Thrown if the type of this station does not match the type of this
    *     route
    */
-  public void addStation(String stationName) {
+  public void addStationAtStart(String stationName) {
+    routeStations.add(0, new Station(stationName, this.routeType));
+  }
+
+  /**
+   * Adds a new station to this route at the end of the route
+   *
+   * @param stationName The name of this new station
+   * @throws TransitException Thrown if the type of this station does not match the type of this
+   *     route
+   */
+  public void addStationAtEnd(String stationName) {
     routeStations.add(new Station(stationName, this.routeType));
   }
 

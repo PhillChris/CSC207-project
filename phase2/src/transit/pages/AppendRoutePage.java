@@ -42,10 +42,10 @@ public class AppendRoutePage extends Page {
     placeLabel("Enter the name of the new station here", 8, 9);
     TextField textField = placeTextField(10, 10);
     placeButton(
-        "Add Station",
+        "Add Station at Start",
         () -> {
           if (textField.getText() != null) {
-            this.route.addStation(textField.getText());
+            this.route.addStationAtStart(textField.getText());
           }
           routeLabel.setText(this.route.toString());
         },
@@ -53,8 +53,19 @@ public class AppendRoutePage extends Page {
         15);
 
     placeButton(
-        "Confirm",
+        "Add Station at End",
         () -> {
+          if (textField.getText() != null) {
+            this.route.addStationAtEnd(textField.getText());
+          }
+          routeLabel.setText(this.route.toString());
+        },
+        10,
+        16);
+
+    placeButton(
+        "Confirm",
+        () ->
           makeConfirmationAlert(
               "Confirm Route?",
               "",
@@ -62,8 +73,7 @@ public class AppendRoutePage extends Page {
               () -> {
                 this.route.saveRoute();
                 stage.close();
-              });
-        },
+              }),
         20,
         20);
 

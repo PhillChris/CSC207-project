@@ -98,7 +98,7 @@ public class Station implements Serializable {
    *
    * @param newStation the station to be added to allStations.
    */
-  //  public void addStation(transit.system.Station newStation) {
+  //  public void addStationAtEnd(transit.system.Station newStation) {
   //    stations.put(newStation.name, newStation);
   //  }
 

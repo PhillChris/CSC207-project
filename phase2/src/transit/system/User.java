@@ -311,7 +311,7 @@ public class User implements Serializable {
   }
 
   private void recordTapOut(LocalDate timeTapped) {
-    if (tapOutLog != null) {
+    if (tapOutLog.get(timeTapped) != null) {
       tapOutLog.put(timeTapped, tapOutLog.get(timeTapped) + 1);
     } else {
       tapOutLog.put(timeTapped, 1);

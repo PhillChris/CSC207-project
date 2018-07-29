@@ -29,6 +29,11 @@ public class UserStatsPage extends Page {
           i);
       i++;
     }
+    placeButton(
+        "Go back",
+        () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
+        0,
+        i);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 }

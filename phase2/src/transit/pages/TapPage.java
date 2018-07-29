@@ -28,7 +28,9 @@ public class TapPage extends Page {
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     refreshRouteOptionItems("Bus");
     routeType.getSelectionModel().select(0);
-    routeType.setOnAction(e -> refreshRouteOptionItems(routeType.getValue()));
+    routeType.setOnAction(e -> {
+      refreshRouteOptionItems(routeType.getValue());
+    });
     grid.add(routeType, 1, 0);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }

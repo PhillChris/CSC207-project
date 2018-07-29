@@ -30,13 +30,9 @@ public class AdminUserPage extends Page {
         2);
 
     placeButton(
-        "Maintenance",
+        "Add/append route",
         () -> {
-          Stage secondaryStage = new Stage();
-          MaintenancePage maintenancePage = new MaintenancePage(secondaryStage);
-          secondaryStage.setTitle("Transit System Maintenance");
-          secondaryStage.setScene(maintenancePage.getScene());
-          secondaryStage.show();
+          createRoutePage();
         },
         0,
         4);
@@ -64,4 +60,12 @@ public class AdminUserPage extends Page {
   }
 
   public void addUserData(Stage primaryStage) {}
+
+  private void createRoutePage(){
+      Stage secondaryStage = new Stage();
+      RouteCreationPage routepage = new RouteCreationPage(secondaryStage);
+      secondaryStage.setScene(routepage.getScene());
+      secondaryStage.setTitle("Route Creation Page");
+      secondaryStage.show();
+  }
 }

@@ -16,31 +16,24 @@ import transit.system.Station;
 import java.util.ArrayList;
 
 /** Represents a page used to make maintenance changes to this system */
-public class MaintenancePage extends Page {
+public class RouteCreationPage extends Page {
   /** A dropDownList of stations */
   private CheckComboBox<Station> dropDownList = new CheckComboBox<>();
   /** A checkbox indicating the type of route */
   private ChoiceBox<String> routeType = new ChoiceBox<>();
 
-  public MaintenancePage(Stage primaryStage) {
+  public RouteCreationPage(Stage primaryStage) {
     makeScene(primaryStage);
   }
 
   @Override
   void makeScene(Stage primaryStage) {
-    placeLabel("Construct Route", 0, 5);
-    placeLabel("Route type: ", 0, 6);
-    routeType.getItems().addAll("Bus", "Subway");
-    grid.add(routeType, 1, 6);
-    routeType.setOnAction(
-        e -> {
-          makeRouteConstruction(routeType.getValue());
-          dropDownList.getCheckModel().clearChecks();
-        });
-    routeType.getSelectionModel().select(0);
+    placeButton("Add route", () -> createRoutePage(), 10, 10);
+  }
 
-    makeStationConstruction();
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+  private void createRoutePage() {
+    Stage secondaryStage = new Stage();
+
   }
 
   /** Constructs the UI for creating a Station. */

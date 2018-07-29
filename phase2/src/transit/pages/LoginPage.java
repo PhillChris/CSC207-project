@@ -2,7 +2,12 @@ package transit.pages;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -77,6 +82,7 @@ public class LoginPage extends Page {
     lockIcon.setId("lockIcon");
     loginPane.add(lockIcon, 0, 2);
   }
+
   protected void makeLabels(GridPane loginPane) {
     Label login = new Label("Login");
     login.setId("loginLabel");
@@ -105,10 +111,10 @@ public class LoginPage extends Page {
     Button signupButton = new Button("Signup");
     signupButton.setId("signupButton");
     signupButton.setOnAction(
-      (data) -> {
-        SignUpPage signupPage = new SignUpPage(primaryStage);
-        primaryStage.setScene(signupPage.getScene());
-      });
+        (data) -> {
+          SignUpPage signupPage = new SignUpPage(primaryStage);
+          primaryStage.setScene(signupPage.getScene());
+        });
     return signupButton;
   }
 
@@ -116,31 +122,35 @@ public class LoginPage extends Page {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
     loginButton.setOnAction(
-      (data) -> {
-        try {
-          User user;
-          if (User.getAllUsersCopy().containsKey(emailInput.getText())) {
-            user = User.getAllUsersCopy().get(emailInput.getText());
-          } else {
-            throw new Exception();
-          }
-          if (checkAuthorization(emailInput, passInput)) {
-            Page userPage;
-            if (user instanceof AdminUser) {
-              userPage = new AdminUserPage(primaryStage, (AdminUser) user);
+        (data) -> {
+          try {
+            User user;
+            if (User.getAllUsersCopy().containsKey(emailInput.getText())) {
+              user = User.getAllUsersCopy().get(emailInput.getText());
             } else {
-              userPage = new UserPage(primaryStage, user);
+              throw new Exception();
             }
-            primaryStage.setScene(userPage.getScene());
-          } else {
-            throw new Exception();
+            if (checkAuthorization(emailInput, passInput)) {
+              Page userPage;
+              if (user instanceof AdminUser) {
+                userPage = new AdminUserPage(primaryStage, (AdminUser) user);
+              } else {
+                userPage = new UserPage(primaryStage, user);
+              }
+              primaryStage.setScene(userPage.getScene());
+            } else {
+              throw new Exception();
+            }
+          } catch (Exception ignored) {
+            makeAlert(
+                "Invalid credentials",
+                "Invalid credentials:",
+                "The given credentials don't match a user in the transit system",
+                AlertType.ERROR).showAndWait();
           }
-        } catch (Exception ignored) {
-        } // Error window should pop up
-      });
+        });
     return loginButton;
   }
-
 
   /**
    * Checks the input values provided by the user

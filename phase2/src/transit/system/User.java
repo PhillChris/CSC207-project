@@ -185,12 +185,13 @@ public class User implements Serializable {
     // Record statistics
     statistics.recordTapIn();
     station.recordTapIn();
+
     // Check if this transit.system.User is continuing a transit.system.Trip
     boolean foundContinuousTrip = false;
     Trip lastTrip = card.getLastTrip();
-    if (lastTrip != null) { // if there is no lastTrip for this card
-      if (lastTrip.isContinuousTrip(station)) {
-        card.setCurrentTrip(lastTrip); // continue the last trip
+    if (lastTrip != null) {
+      if (lastTrip.isContinuousTrip(station)) { // continue the last trip
+        card.setCurrentTrip(lastTrip);
         lastTrip.continueTrip(station);
         statistics.getPreviousTrips().remove(lastTrip);
         foundContinuousTrip = true;

@@ -55,7 +55,12 @@ public class AdminUserPage extends Page {
     0,
     7);
     placeButton(
-        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 0, 8);
+      "User Statistics",
+        () -> primaryStage.setScene(new UserStatsPage(primaryStage, adminUser).getScene()),
+        0,
+        8);
+    placeButton(
+        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 0, 9);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 

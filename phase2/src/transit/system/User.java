@@ -202,6 +202,20 @@ public class User implements Serializable {
     }
   }
 
+  public int getTapsIn(LocalDate date) {
+    if (tapInLog.get(date) != null) {
+      return tapInLog.get(date);
+    }
+    return 0;
+  }
+
+  public int getTapsOut(LocalDate date) {
+    if (tapOutLog.get(date) != null) {
+      return tapOutLog.get(date);
+    }
+    return 0;
+  }
+
   /**
    * A helper method simulating this transit.system.User starting a new trip. This method starts a
    * transit.system.Trip on the given transit.system.Card object.

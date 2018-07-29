@@ -13,33 +13,28 @@ public class Route implements Serializable {
   /** A list of all routes in the transit system */
   private static HashMap<String, ArrayList<Route>> routes = new HashMap<>();
   /** List containing all the stations of this route in travel order */
-  private List<Station> routeStations = new ArrayList<>();
+  private List<Station> routeStations;
+  /**
+   * The type of this route
+   */
+  private String routeType;
   /**
    * Constructs a new route
    *
    * @param stations List of all station names in this route in order.
    * @param type The type of stations this route contains
    */
-  public Route(List<Station> stations, String type) throws TransitException {
+  public Route(String type) throws TransitException {
     // Checks if the given type is a valid type
     if (!Arrays.asList(Station.POSSIBLE_TYPES).contains(type)) {
       throw new TransitException();
     } else {
-      // TODO: we may want to add a check that the list of stations is not a duplicate
-      for (Station s : stations) {
-        routeStations.add(s);
-      }
-
-      // Adds the given route to the appropriate place in the hash map
-      if (routes.get(type) != null) {
-        routes.get(type).add(this);
-      } else {
-        ArrayList<Route> newStations = new ArrayList<>();
-        newStations.add(this);
-        routes.put(type, newStations);
-      }
+      this.routeType = type;
+      this.routeStations = new ArrayList<>();
     }
   }
+
+
 
   /** @return A copy of the arrayList of all RouteNames */
   public static HashMap<String, ArrayList<Route>> getRoutesCopy() {

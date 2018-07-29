@@ -50,8 +50,8 @@ public class AdminUserPage extends Page {
         0,
         6);
     placeButton(
-        "Station statistics",
-        () -> primaryStage.setScene(new StationStatsPage(primaryStage).getScene()),
+        "Station Statistics",
+        () -> primaryStage.setScene(new StationStatsPage(primaryStage, adminUser).getScene()),
     0,
     7);
     placeButton(

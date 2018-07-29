@@ -1,6 +1,7 @@
 package transit.pages;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -45,7 +46,15 @@ public class AppendRoutePage extends Page {
         "Add Station at Start",
         () -> {
           if (textField.getText() != null) {
-            this.route.addStationAtStart(textField.getText());
+            if (!this.route.containsName(textField.getText())) {
+              this.route.addStationAtStart(textField.getText());
+            } else {
+              makeAlert(
+                  "Station Name In Use",
+                  "Station Name In Use:",
+                  "This station name is used in this route",
+                  AlertType.ERROR).showAndWait();
+            }
           }
           routeLabel.setText(this.route.toString());
         },
@@ -56,7 +65,15 @@ public class AppendRoutePage extends Page {
         "Add Station at End",
         () -> {
           if (textField.getText() != null) {
-            this.route.addStationAtEnd(textField.getText());
+            if (!this.route.containsName(textField.getText())) {
+              this.route.addStationAtEnd(textField.getText());
+            } else {
+              makeAlert(
+                  "Station Name In Use",
+                  "Station Name In Use:",
+                  "This station name is used in this route",
+                  AlertType.ERROR).showAndWait();
+            }
           }
           routeLabel.setText(this.route.toString());
         },
@@ -66,14 +83,14 @@ public class AppendRoutePage extends Page {
     placeButton(
         "Confirm",
         () ->
-          makeConfirmationAlert(
-              "Confirm Route?",
-              "",
-              "Would you like to confirm the creation of this route?",
-              () -> {
-                this.route.saveRoute();
-                stage.close();
-              }),
+            makeConfirmationAlert(
+                "Confirm Route?",
+                "",
+                "Would you like to confirm the creation of this route?",
+                () -> {
+                  this.route.saveRoute();
+                  stage.close();
+                }),
         20,
         20);
 

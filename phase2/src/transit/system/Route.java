@@ -26,7 +26,7 @@ public class Route implements Serializable {
   public Route(String type) {
     this.routeType = type;
     this.routeStations = new ArrayList<>();
-    this.routeNum = -1;
+    this.routeNum = numRoutes + 1;
   }
 
   /** @return A copy of the arrayList of all RouteNames */
@@ -43,8 +43,11 @@ public class Route implements Serializable {
   public String toString() {
     String s = "Route Number: " + this.routeNum;
     s += System.lineSeparator();
-    for (Station station : this.routeStations) {
-      s += station.toString() + " < - > ";
+    for (int i = 0; i < this.routeStations.size(); i++) {
+      s += this.routeStations.get(i).toString();
+      if (i < this.routeStations.size() - 1) {
+        s += "< - >";
+      }
     }
     return s;
   }
@@ -73,7 +76,8 @@ public class Route implements Serializable {
 
   /** Gives this route an official route number and saves this route to the system */
   public void saveRoute() {
-    this.routeNum = numRoutes++;
+    numRoutes++;
+    this.routeNum = numRoutes;
     if (!routes.containsKey(this.routeType)) {
       ArrayList<Route> typeList = new ArrayList<>();
       typeList.add(this);
@@ -89,5 +93,15 @@ public class Route implements Serializable {
    */
   public List<Station> getRouteStationsCopy() {
     return new ArrayList<>(routeStations);
+  }
+
+  public boolean containsName(String stationName) {
+    boolean temp = false;
+    for (Station s: this.routeStations) {
+      if (s.getName().equals(stationName)) {
+        temp = true;
+      }
+    }
+    return temp;
   }
 }

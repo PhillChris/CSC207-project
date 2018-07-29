@@ -65,7 +65,13 @@ public class Route implements Serializable {
   /** Gives this route an official route number and saves this route to the system */
   public void saveRoute() {
     this.routeNum = numRoutes++;
-    routes.get(this.routeType).add(this);
+    if (!routes.containsKey(this.routeType)) {
+      ArrayList<Route> typeList = new ArrayList<>();
+      typeList.add(this);
+      routes.put(routeType, typeList);
+    } else {
+      routes.get(this.routeType).add(this);
+    }
   }
 
   /**

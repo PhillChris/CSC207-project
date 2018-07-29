@@ -1,6 +1,5 @@
 package transit.pages;
 
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,6 +14,9 @@ public class AppendRoutePage extends Page {
   /** A Label designed to represent the route associated with this page */
   private Label routeLabel;
 
+  /** The stage used by this page */
+  private Stage stage;
+
   /**
    * Initializes a new instance of AppendRoutePage
    *
@@ -22,8 +24,9 @@ public class AppendRoutePage extends Page {
    * @param route
    */
   public AppendRoutePage(Stage stage, Route route) {
+    this.stage = stage;
     this.route = route;
-    routeLabel = new Label();
+    routeLabel = new Label(this.route.toString());
     makeScene(stage);
   }
 
@@ -35,7 +38,7 @@ public class AppendRoutePage extends Page {
   @Override
   void makeScene(Stage primaryStage) {
     /** Set the grid of this page */
-    grid.add(routeLabel, 0, 0, 20, 2 );
+    grid.add(routeLabel, 0, 0, 20, 2);
     placeLabel("Enter the name of the new station here", 8, 9);
     TextField textField = placeTextField(10, 10);
     placeButton(
@@ -58,6 +61,7 @@ public class AppendRoutePage extends Page {
               "Would you like to confirm the creation of this route?",
               () -> {
                 this.route.saveRoute();
+                stage.close();
               });
         },
         20,

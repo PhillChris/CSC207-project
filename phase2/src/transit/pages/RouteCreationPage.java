@@ -2,18 +2,19 @@ package transit.pages;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.controlsfx.control.CheckComboBox;
 import transit.system.Route;
-import transit.system.Station;
 
 /** Represents a page used to make maintenance changes to this system */
 public class RouteCreationPage extends Page {
 
+  /** The stage used by this page */
+  private Stage stage;
+
   public RouteCreationPage(Stage primaryStage) {
     this.grid = new GridPane();
+    stage = primaryStage;
     grid.setPadding(new Insets(30, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
@@ -44,18 +45,14 @@ public class RouteCreationPage extends Page {
 
   /** Creates a page to create a new subway route */
   private void createRoute(String type) {
-    Stage secondaryStage = new Stage();
     Route route = new Route(type);
-    AppendRoutePage appendPage = new AppendRoutePage(secondaryStage, route);
-    secondaryStage.setScene(appendPage.getScene());
-    secondaryStage.show();
+    AppendRoutePage appendPage = new AppendRoutePage(stage, route);
+    stage.setScene(appendPage.getScene());
   }
 
   /** Creates a page to append to an existing station */
   private void appendExistingRoute(Route route) {
-    Stage secondaryStage = new Stage();
-    AppendRoutePage appendPage = new AppendRoutePage(secondaryStage, route);
-    secondaryStage.setScene(appendPage.getScene());
-    secondaryStage.show();
+    AppendRoutePage appendPage = new AppendRoutePage(stage, route);
+    stage.setScene(appendPage.getScene());
   }
 }

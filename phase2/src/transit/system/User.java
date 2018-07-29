@@ -26,7 +26,7 @@ public class User implements Serializable {
   /** The id given to the next card added by the user */
   private int cardCounter;
   /** Tracks all related statistics associated with this User */
-  private UserInformation statistics;
+  protected UserInformation statistics;
 
   /**
    * Construct a new instance of transit.system.User

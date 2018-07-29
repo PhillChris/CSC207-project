@@ -24,7 +24,7 @@ public class AdminUser extends User implements Serializable {
    */
   public String dailyReports() {
     String message = "Date         Revenue   Stations Travelled\n";
-    message += calculator.generateReportMessage();
+    message += statistics.generateDailyReports();
     return message;
   }
 }

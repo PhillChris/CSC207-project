@@ -9,8 +9,8 @@ import java.util.List;
 /** This class is designed to track all statistics related to a user */
 public class UserInformation {
   /** The user assoicated with these statistics */
-  User user;
-
+  private User user;
+  /** Log of all tap ins for each day */
   private HashMap<LocalDate, Integer> tapInLog;
   /** A log of taps mapping a given date to the number of taps out recorded */
   private HashMap<LocalDate, Integer> tapOutLog;
@@ -29,8 +29,14 @@ public class UserInformation {
     calculator = new CostCalculator();
   }
 
+  /** @return The previousTrips of this user */
   ArrayList<Trip> getPreviousTrips() {
     return previousTrips;
+  }
+
+  /** @return A string message representing the system's expenditure history */
+  String generateDailyReports() {
+    return calculator.generateReportMessage();
   }
 
   /** @return The monthly expenditure for this user */

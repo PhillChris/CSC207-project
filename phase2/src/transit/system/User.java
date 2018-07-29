@@ -23,6 +23,10 @@ public class User implements Serializable {
       "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
   /** Calculates and sends the daily revenue recieved from this user to the system */
   protected CostCalculator calculator;
+  /** A log of taps mapping a given date to the number of taps in recorded */
+  private HashMap<LocalDate, Integer> tapInLog = new HashMap<>();
+  /** A log of taps mapping a given date to the number of taps out recorded */
+  private HashMap<LocalDate, Integer> tapOutLog = new HashMap<>();
   /** An ArrayList of this transit.system.User's last three trips */
   private ArrayList<Trip> lastThreeTrips = new ArrayList<>();
   /** HashMap linking each month to the total expenditure for that month */
@@ -208,6 +212,7 @@ public class User implements Serializable {
    */
   private void tapIn(Card card, Station station, LocalDateTime timeTapped) throws TransitException {
     if (card.getBalance() <= 0) throw new TransitException();
+    recordTapIn(timeTapped.toLocalDate());
     station.recordTapIn(timeTapped.toLocalDate());
     // Check if this transit.system.User is continuing a transit.system.Trip
     boolean foundContinuousTrip = false;
@@ -239,6 +244,7 @@ public class User implements Serializable {
    */
   private void tapOut(Card card, Station station, LocalDateTime timeTapped)
       throws TransitException {
+    recordTapOut(timeTapped.toLocalDate());
     station.recordTapOut(timeTapped.toLocalDate());
     Trip trip = card.getCurrentTrip();
     trip.endTrip(station, timeTapped); // ends the trip
@@ -280,5 +286,21 @@ public class User implements Serializable {
 
   public HashMap<YearMonth, Integer> getExpenditureMonthly() {
     return expenditureMonthly;
+  }
+
+  private void recordTapIn(LocalDate timeTapped) {
+    if (tapInLog.get(timeTapped) != null) {
+      tapInLog.put(timeTapped, tapInLog.get(timeTapped) + 1);
+    } else {
+      tapInLog.put(timeTapped, 1);
+    }
+  }
+
+  private void recordTapOut(LocalDate timeTapped) {
+    if (tapOutLog != null) {
+      tapOutLog.put(timeTapped, tapOutLog.get(timeTapped) + 1);
+    } else {
+      tapOutLog.put(timeTapped, 1);
+    }
   }
 }

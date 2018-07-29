@@ -11,8 +11,6 @@ import java.util.Objects;
 public class Station implements Serializable {
   /** All acceptable possible route types in this transit system */
   public static final String[] POSSIBLE_TYPES = {"Bus", "Subway"};
-  /** Maps the name of a station to the appropriate station object */
-  private static HashMap<String, HashMap<String, Station>> stations = new HashMap<>();
   /** The fee charged per station travelled by this station */
   private int perStationFee;
   /** The initial fee charged by this station at the start of a trip */
@@ -30,26 +28,8 @@ public class Station implements Serializable {
    */
   public Station(String name, String stationType) {
     this.name = name;
-    if (!stations.containsKey(stationType)) {
-      stations.put(stationType, new HashMap<>());
-      stations.get(stationType).put(name, this);
-      this.setFees(stationType);
-    } else if (!stations.get(stationType).containsKey(name)) {
-      stations.get(stationType).put(name, this);
-      this.setFees(stationType);
-    }
-  }
-
-  /** @return HashMap of all stations of similar type */
-  public static HashMap<String, Station> getStationsCopy(String type) {
-    if (stations.containsKey(type)) {
-      return new HashMap<>(stations.get(type));
-    }
-    return null;
-  }
-
-  public static List<Station> getStations(String stationType) {
-    return new ArrayList<>(stations.get(stationType).values());
+    this.setFees(stationType);
+    this.setFees(stationType);
   }
 
   @Override

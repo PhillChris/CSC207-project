@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.AdminUser;
+import transit.system.Route;
 import transit.system.Station;
 import transit.system.TransitTime;
 
@@ -19,8 +20,8 @@ public class StationStatsPage extends Page {
     int i = 1;
     for (String type : Station.POSSIBLE_TYPES) {
       placeLabel("Station statistics!", 0, 0);
-      if (Station.getStationsCopy(type) != null) {
-        for (Station station : Station.getStations(type)) {
+      for (Route route: Route.getRoutesCopy().get(type)) {
+        for (Station station : route.getRouteStationsCopy()) {
           placeLabel(
               station.getName()
                   + ": "

@@ -71,11 +71,6 @@ public class Card implements Serializable {
     lastTrip = trip;
   }
 
-  /** @return whether this card is currently on a trip */
-  public boolean getTripStarted() {
-    return currentTrip != null;
-  }
-
   /** Activates this card, after having been found */
   public void activateCard() {
     isActive = true;
@@ -102,10 +97,5 @@ public class Card implements Serializable {
    */
   void subtractBalance(int toSubtract) {
     this.balance -= toSubtract;
-  }
-
-  /** Returns a string representation of this card */
-  public String toString() {
-    return String.format("Card #%s has $%.2f remaining", this.id, this.balance / 100.0);
   }
 }

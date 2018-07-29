@@ -1,6 +1,5 @@
 package transit.system;
 
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.Objects;
 
 /** A parent class for stations in this simulation */
 public class Station implements Serializable {
-  /** All acceptable possible route types in this transit system*/
+  /** All acceptable possible route types in this transit system */
   public static final String[] POSSIBLE_TYPES = {"Bus", "Subway"};
   /** Maps the name of a station to the appropriate station object */
   private static HashMap<String, HashMap<String, Station>> stations = new HashMap<>();
@@ -22,23 +21,20 @@ public class Station implements Serializable {
   private String name;
   /** The number of people who have tapped on at this station. */
   private HashMap<LocalDate, Integer> tapsOn = new HashMap<>();
-  /** The number of people who have tapped off at this station.*/
+  /** The number of people who have tapped off at this station. */
   private HashMap<LocalDate, Integer> tapsOff = new HashMap<>();
   /**
    * Create a new instance of transit.system.Station
    *
    * @param name The name of this station
    */
-  public Station(String name, String stationType) throws TransitException {
+  public Station(String name, String stationType) {
     this.name = name;
     if (!stations.containsKey(stationType)) {
       stations.put(stationType, new HashMap<>());
-    }
-    if (!stations.get(stationType).containsKey(name)) {
+    } else if (!stations.get(stationType).containsKey(name)) {
       stations.get(stationType).put(name, this);
       this.setFees(stationType);
-    } else {
-      throw new TransitException(); // temporary exception
     }
   }
 

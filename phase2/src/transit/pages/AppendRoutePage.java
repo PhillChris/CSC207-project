@@ -1,6 +1,8 @@
 package transit.pages;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import transit.system.Route;
 
@@ -8,6 +10,12 @@ import transit.system.Route;
 public class AppendRoutePage extends Page {
   /** The route associated with this page */
   private Route route;
+
+  /** A Label designed to represent the route associated with this page */
+  private Label routeLabel;
+
+  /** A textfield designed to take the names of new stations */
+  private TextField userEntry;
 
   /**
    * Initializes a new instance of AppendRoutePage
@@ -18,6 +26,8 @@ public class AppendRoutePage extends Page {
   public AppendRoutePage(Stage stage, Route route) {
     this.route = route;
     makeScene(stage);
+    routeLabel = new Label();
+    userEntry = new TextField();
   }
 
   /**
@@ -26,11 +36,34 @@ public class AppendRoutePage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  void makeScene(Stage primaryStage) {}
+  void makeScene(Stage primaryStage) {
+    /** Set the grid of this page */
+    grid.setPadding(new Insets(20, 10, 10, 20));
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.add(routeLabel, 0, 0);
+    grid.add(userEntry, 10, 10);
+    placeButton(
+        "Add Station",
+        () -> {
+          this.route.addStation(userEntry.getText());
+          routeLabel.setText(this.route.toString());
+        },
+        10,
+        15);
 
-  /** @return A label designed to describe the route associated with this page */
-  private Label routeLabel() {
-    Label routeLabel = new Label();
-    return routeLabel;
+    placeButton(
+        "Confirm",
+        () -> {
+          makeConfirmationAlert(
+              "Confirm Route?",
+              "",
+              "Would you like to confirm the creation of this route?",
+              () -> {
+                this.route.saveRoute();
+              });
+        },
+        20,
+        20);
   }
 }

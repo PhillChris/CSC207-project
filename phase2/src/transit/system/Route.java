@@ -41,12 +41,17 @@ public class Route implements Serializable {
     return new HashMap<>(routes);
   }
 
+  /** @return The type of this route */
+  public String getRouteType() {
+    return routeType;
+  }
+
   /** @return A string representation of this route */
   public String toString() {
     String s = "Route Number: " + this.routeNum;
     s += System.lineSeparator();
-    for (Station station: this.routeStations){
-      s += station.toString() +  " < - > ";
+    for (Station station : this.routeStations) {
+      s += station.toString() + " < - > ";
     }
     return s;
   }
@@ -59,12 +64,8 @@ public class Route implements Serializable {
    * @throws TransitException Thrown if the type of this station does not match the type of this
    *     route
    */
-  public void addStation(String stationType, String stationName) throws TransitException {
-    if (!stationType.equals(routeType)) {
-      throw new TransitException();
-    } else {
-      routeStations.add(new Station(stationName, stationType));
-    }
+  public void addStation(String stationName) {
+    routeStations.add(new Station(stationName, this.routeType));
   }
 
   /** Gives this route an official route number and saves this route to the system */

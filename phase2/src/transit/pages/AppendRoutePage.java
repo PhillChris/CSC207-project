@@ -15,9 +15,6 @@ public class AppendRoutePage extends Page {
   /** A Label designed to represent the route associated with this page */
   private Label routeLabel;
 
-  /** A textfield designed to take the names of new stations */
-  private TextField userEntry;
-
   /**
    * Initializes a new instance of AppendRoutePage
    *
@@ -38,16 +35,15 @@ public class AppendRoutePage extends Page {
   @Override
   void makeScene(Stage primaryStage) {
     /** Set the grid of this page */
-    grid.setPadding(new Insets(20, 10, 10, 20));
-    grid.setHgap(10);
-    grid.setVgap(10);
-    grid.add(routeLabel, 0, 0);
+    grid.add(routeLabel, 0, 0, 20, 2 );
     placeLabel("Enter the name of the new station here", 8, 9);
     TextField textField = placeTextField(10, 10);
     placeButton(
         "Add Station",
         () -> {
-          this.route.addStation(userEntry.getText());
+          if (textField.getText() != null) {
+            this.route.addStation(textField.getText());
+          }
           routeLabel.setText(this.route.toString());
         },
         10,
@@ -67,6 +63,6 @@ public class AppendRoutePage extends Page {
         20,
         20);
 
-    this.scene = new Scene(grid, 100, 100);
+    this.scene = new Scene(grid, 1000, 1000);
   }
 }

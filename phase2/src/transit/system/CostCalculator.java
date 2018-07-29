@@ -3,10 +3,7 @@ package transit.system;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 /** A class for making money calculations and generating daily reports. */
 public class CostCalculator implements Serializable {
@@ -16,6 +13,11 @@ public class CostCalculator implements Serializable {
   private static HashMap<LocalDate, Integer> dailyRevenue = new HashMap<>();
   /** Contains the number of stations travelled per day by users */
   private static HashMap<LocalDate, Integer> dailyLog = new HashMap<>();
+
+  /** @return The hashmap of monthy revenue for the system */
+  public static HashMap<YearMonth, Integer> getMonthlyRevenue() {
+    return monthlyRevenue;
+  }
 
   /** Updates the expenditure and revenue in the entire system */
   void updateSystemRevenue(int fee, int tripLength) {
@@ -36,12 +38,5 @@ public class CostCalculator implements Serializable {
     } else {
       monthlyRevenue.put(month, fee);
     }
-  }
-
-  /**
-   * @return The hashmap of monthy revenue for the system
-   */
-  public static HashMap<YearMonth, Integer> getMonthlyRevenue() {
-    return monthlyRevenue;
   }
 }

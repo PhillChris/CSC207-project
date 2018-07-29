@@ -16,7 +16,7 @@ public class Route implements Serializable {
   private List<Station> routeStations;
   /** The type of this route */
   private String routeType;
-  /** The number of this route. -1 for routes that have not been officially added to this system */
+  /** The number of this route. */
   private int routeNum;
   /**
    * Constructs a new route
@@ -29,14 +29,9 @@ public class Route implements Serializable {
     this.routeNum = numRoutes + 1;
   }
 
-  /** @return A copy of the arrayList of all RouteNames */
+  /** @return A shallow copy of the arrayList of all RouteNames */
   public static HashMap<String, ArrayList<Route>> getRoutesCopy() {
     return new HashMap<>(routes);
-  }
-
-  /** @return The type of this route */
-  public String getRouteType() {
-    return routeType;
   }
 
   /** @return A string representation of this route */
@@ -59,16 +54,15 @@ public class Route implements Serializable {
    * @throws TransitException Thrown if the type of this station does not match the type of this
    *     route
    */
-  public void setRouteStations(List<String> stationNames){
+  public void setRouteStations(List<String> stationNames) {
     ArrayList<Station> stations = new ArrayList<>();
-    for (String name: stationNames){
+    for (String name : stationNames) {
       stations.add(new Station(name, routeType));
     }
     this.routeStations = stations;
-
   }
 
-  /** Gives this route an official route number and saves this route to the system */
+  /** Officially adds this route to the system */
   public void saveRoute() {
     numRoutes++;
     // If no route of the same type already exists
@@ -79,7 +73,7 @@ public class Route implements Serializable {
     }
     // If routes of the same type already exist
     else {
-      if (!routes.get(routeType).contains(this)){
+      if (!routes.get(routeType).contains(this)) {
         routes.get(this.routeType).add(this); // Only add this route to hashmap if not already there
       }
     }
@@ -93,20 +87,8 @@ public class Route implements Serializable {
     return new ArrayList<>(routeStations);
   }
 
-  public boolean containsName(String stationName) {
-    boolean temp = false;
-    for (Station s: this.routeStations) {
-      if (s.getName().equals(stationName)) {
-        temp = true;
-      }
-    }
-    return temp;
-  }
-
-  /**
-   * @return The number of this route
-   */
-  public int getRouteNum(){
+  /** @return The number of this route */
+  public int getRouteNum() {
     return this.routeNum;
   }
 }

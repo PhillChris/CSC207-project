@@ -1,7 +1,6 @@
 package transit.pages;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.AdminUser;
@@ -22,20 +21,16 @@ public class StationStatsPage extends Page {
       placeLabel("Station statistics!", 0, 0);
       if (Station.getStationsCopy(type) != null) {
         for (Station station : Station.getStations(type)) {
-          placeButton(
-              station.getName(),
-              () ->
-                  makeAlert(
-                          station.getName() + " info",
-                          station.getName() + " info:",
-                          station.getTapsOn(TransitTime.getCurrentDate())
-                              + " taps on, "
-                              + station.getTapsOff(TransitTime.getCurrentDate())
-                              + " taps off.",
-                          AlertType.INFORMATION)
-                      .showAndWait(),
+          placeLabel(
+              station.getName()
+                  + ": "
+                  + station.getTapsOn(TransitTime.getCurrentDate())
+                  + " taps on, "
+                  + station.getTapsOff(TransitTime.getCurrentDate())
+                  + " taps off.",
               0,
-              i);
+              i,
+              "station" + station.getName());
           i++;
         }
       }

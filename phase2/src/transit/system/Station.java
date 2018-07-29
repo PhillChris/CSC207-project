@@ -32,6 +32,7 @@ public class Station implements Serializable {
     this.name = name;
     if (!stations.containsKey(stationType)) {
       stations.put(stationType, new HashMap<>());
+      stations.get(stationType).put(name, this);
     } else if (!stations.get(stationType).containsKey(name)) {
       stations.get(stationType).put(name, this);
       this.setFees(stationType);

@@ -29,7 +29,7 @@ public class RouteCreationPage extends Page {
   @Override
   void makeScene(Stage primaryStage) {
     /** Set the buttons of this page */
-    placeButton("Add subway route", () -> createRoute("String"), 0, 0);
+    placeButton("Add subway route", () -> createRoute("Subway"), 0, 0);
     placeButton("Add bus route", () -> createRoute("Bus"), 0, 2);
     placeLabel("Append to Existing Route:", 0, 4);
     /** Create a button to append to each possible route */
@@ -39,7 +39,6 @@ public class RouteCreationPage extends Page {
         placeButton(route.toString(), () -> appendExistingRoute(route), 0, 6 + 2 * i);
       }
     }
-
     this.scene = new Scene(grid, 600, 400);
   }
 

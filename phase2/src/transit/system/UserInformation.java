@@ -18,24 +18,28 @@ public class UserInformation {
   private ArrayList<Trip> previousTrips;
   /** HashMap linking each month to the total expenditure for that month */
   private HashMap<YearMonth, Integer> expenditureMonthly;
-  /** An ArrayList of this transit.system.User's cards */
+  /** Calculates and sends the daily revenue recieved from this user to the system */
+  private CostCalculator calculator;
+
+  /** Initializes a new instance of UserInformation */
   UserInformation() {
     tapInLog = new HashMap<>();
     tapOutLog = new HashMap<>();
     previousTrips = new ArrayList<>();
+    calculator = new CostCalculator();
   }
 
-  ArrayList<Trip> getPreviousTrips(){
+  ArrayList<Trip> getPreviousTrips() {
     return previousTrips;
   }
 
   /** @return The monthly expenditure for this user */
-  public HashMap<YearMonth, Integer> getMonthlyExpenditure() {
+  HashMap<YearMonth, Integer> getMonthlyExpenditure() {
     return expenditureMonthly;
   }
 
   /** @return A String detailing average expenditure per month of this transit.system.User. */
-  public String avgMonthlyMessage() {
+  String avgMonthlyMessage() {
     String message = "Cost per month for user: " + this.user.getUserName() + System.lineSeparator();
     List<YearMonth> months = new ArrayList<>(this.expenditureMonthly.keySet());
     for (YearMonth month : months) {
@@ -51,7 +55,7 @@ public class UserInformation {
   }
 
   /** @return A string representation of the last three trips travelled by the user */
-  public String lastThreeTripsMessage() {
+  String lastThreeTripsMessage() {
     String message = "Last 3 trips by user " + this.user.getUserName() + ":";
     for (int i = 0; i < Math.min(3, previousTrips.size()); i++) {
       Trip t = previousTrips.get(previousTrips.size() - 1 - i);
@@ -112,11 +116,13 @@ public class UserInformation {
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
     Trip lastTrip = card.getLastTrip();
 
-    // Update Monthly Expenditure History
+    // Update user's personal monthly expenditure History
     if (expenditureMonthly.containsKey(month)) {
       expenditureMonthly.put(month, expenditureMonthly.get(month) + lastTrip.getFee());
     } else {
       expenditureMonthly.put(month, lastTrip.getFee());
     }
+    // Update system's expenditure history
+    calculator.updateSystemRevenue(lastTrip.getFee(), Math.max(lastTrip.getTripLegLength(), 0));
   }
 }

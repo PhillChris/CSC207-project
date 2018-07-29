@@ -19,8 +19,6 @@ public class User implements Serializable {
   private static HashMap<String, String> authLog = new HashMap<>();
   /** The transit.system.User's email */
   private final String email;
-  /** Calculates and sends the daily revenue recieved from this user to the system */
-  protected CostCalculator calculator;
   /** A log of taps mapping a given date to the number of taps in recorded */
   /** An ArrayList of this transit.system.User's cards */
   private HashMap<Integer, Card> cards;
@@ -55,7 +53,6 @@ public class User implements Serializable {
     authLog.put(email, password);
     cardCounter = 1;
     this.statistics = new UserInformation();
-    calculator = new CostCalculator();
   }
 
   /** @return a copy of the HashMap of all Users */
@@ -223,7 +220,6 @@ public class User implements Serializable {
     statistics.recordTapOut();
     station.recordTapOut();
     statistics.updateSpendingHistory(card);
-    calculator.updateSystemRevenue(trip.getFee(), Math.max(trip.getTripLegLength(), 0));
     if (!statistics.getPreviousTrips().contains(trip)) {
       statistics.getPreviousTrips().add(trip);
     }

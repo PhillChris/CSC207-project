@@ -35,7 +35,7 @@ public class AppendRoutePage extends Page {
     this.route = route;
     stationNames = new ArrayList<>();
     for (Station station : route.getRouteStationsCopy()) {
-      stationNames.add(station.getName());
+      stationNames.add(station.toString());
     }
     routeLabel = new Label();
     setRouteLabel();

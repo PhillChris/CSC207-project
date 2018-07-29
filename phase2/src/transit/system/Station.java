@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-/** A parent class for stations in this simulation */
+/** A class for stations in this simulation */
 public class Station implements Serializable {
   /** All acceptable possible route types in this transit system */
   public static final String[] POSSIBLE_TYPES = {"Bus", "Subway"};
@@ -14,10 +14,13 @@ public class Station implements Serializable {
   private int initialFee;
   /** The name of this station */
   private String name;
-  /** The number of people who have tapped on at this station. */
+  /** The number of people who have tapped on at this station per day. */
   private HashMap<LocalDate, Integer> tapsOn = new HashMap<>();
-  /** The number of people who have tapped off at this station. */
+  /** The number of people who have tapped off at this station per day. */
   private HashMap<LocalDate, Integer> tapsOff = new HashMap<>();
+  /** The stationType of this station */
+  private String stationType;
+
   /**
    * Create a new instance of transit.system.Station
    *
@@ -25,8 +28,8 @@ public class Station implements Serializable {
    */
   public Station(String name, String stationType) {
     this.name = name;
-    this.setFees(stationType);
-    this.setFees(stationType);
+    this.stationType = stationType;
+    this.setFees();
   }
 
   @Override
@@ -38,8 +41,8 @@ public class Station implements Serializable {
     return false;
   }
 
-  /** @return the name of this station */
-  public String getName() {
+  /** @return A string representation of a station */
+  public String toString() {
     return this.name;
   }
 
@@ -53,10 +56,7 @@ public class Station implements Serializable {
     return perStationFee;
   }
 
-  /**
-   * Records the tapping in of a station
-   * @param date
-   */
+  /** Records the tapping in of a station */
   void recordTapIn() {
     LocalDate day = TransitTime.getCurrentDate();
     if (tapsOn.containsKey(day)) {
@@ -66,6 +66,7 @@ public class Station implements Serializable {
     }
   }
 
+  /** Records the tapping out of a station */
   void recordTapOut() {
     LocalDate date = TransitTime.getCurrentDate();
     if (tapsOff.containsKey(date)) {
@@ -75,12 +76,12 @@ public class Station implements Serializable {
     }
   }
 
-  /** @return A string representation of a station */
-  public String toString() {
-    return this.name;
-  }
-
-  private void setFees(String stationType) {
+  /**
+   * Sets the fees of this station
+   *
+   * @param stationType
+   */
+  private void setFees() {
     if (stationType.equals("Bus")) {
       this.perStationFee = 0;
       this.initialFee = 200;
@@ -90,6 +91,10 @@ public class Station implements Serializable {
     }
   }
 
+  /**
+   * @param date A day of the simulation
+   * @return The numeber of taps on for this station at date
+   */
   public int getTapsOn(LocalDate date) {
     if (tapsOn.get(date) != null) {
       return tapsOn.get(date);
@@ -97,6 +102,10 @@ public class Station implements Serializable {
     return 0;
   }
 
+  /**
+   * @param date A day of the simulation
+   * @return The numeber of taps off for this station at date
+   */
   public int getTapsOff(LocalDate date) {
     if (tapsOff.get(date) != null) {
       return tapsOff.get(date);

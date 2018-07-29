@@ -39,7 +39,7 @@ public class AdminUserPage extends Page {
     placeButton(
         "Daily Report",
         () -> {
-          Alert alert = makeAlert("", "", this.adminUser.dailyReports(), AlertType.INFORMATION);
+          Alert alert = makeAlert("", "", adminUser.dailyReports(), AlertType.INFORMATION);
           alert.showAndWait();
         },
         0,

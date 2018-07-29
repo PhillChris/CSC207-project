@@ -55,7 +55,7 @@ public class TapPage extends Page {
       for (Station station : route.getRouteStationsCopy()) {
         stationButtons.add(
             placeButton(
-                station.getName(),
+                station.toString(),
                 () -> {
                   try {
                     user.tap(card, station, TransitTime.getCurrentTime());

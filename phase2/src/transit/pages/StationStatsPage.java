@@ -23,7 +23,7 @@ public class StationStatsPage extends Page {
       for (Route route: Route.getRoutesCopy().get(type)) {
         for (Station station : route.getRouteStationsCopy()) {
           placeLabel(
-              station.getName()
+              station.toString()
                   + ": "
                   + station.getTapsOn(TransitTime.getCurrentDate())
                   + " taps on, "
@@ -31,7 +31,7 @@ public class StationStatsPage extends Page {
                   + " taps off.",
               0,
               i,
-              "station" + station.getName());
+              "station" + station.toString());
           i++;
         }
       }

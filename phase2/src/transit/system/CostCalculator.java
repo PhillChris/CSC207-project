@@ -3,7 +3,10 @@ package transit.system;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /** A class for making money calculations and generating daily reports. */
 public class CostCalculator implements Serializable {
@@ -13,11 +16,6 @@ public class CostCalculator implements Serializable {
   private static HashMap<LocalDate, Integer> dailyRevenue = new HashMap<>();
   /** Contains the number of stations travelled per day by users */
   private static HashMap<LocalDate, Integer> dailyLog = new HashMap<>();
-
-  /** @return The hashmap of monthy revenue for the system */
-  public static HashMap<YearMonth, Integer> getMonthlyRevenue() {
-    return monthlyRevenue;
-  }
 
   /** Updates the expenditure and revenue in the entire system */
   void updateSystemRevenue(int fee, int tripLength) {
@@ -38,5 +36,28 @@ public class CostCalculator implements Serializable {
     } else {
       monthlyRevenue.put(month, fee);
     }
+  }
+
+  /** @return The daily report table for all days passed during this simulation. */
+  public String generateReportMessage() {
+    // Loop through all days and write each day's revenue
+    // The revenue collected for each day
+    HashMap<LocalDate, Integer> dailyTotals = dailyRevenue;
+    // List of all the dates collected
+    List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
+    dates.sort(Collections.reverseOrder());
+    String message = System.lineSeparator(); // The message to be outputted to Daily Reports
+    for (LocalDate day : dates) {
+      String date = day.toString();
+      double revenue = dailyRevenue.get(day) / 100.0;
+      int travelled = dailyLog.get(day);
+      message +=
+          String.format("%s   $%.2f     %s%s", date, revenue, travelled, System.lineSeparator());
+    }
+    return message;
+  }
+
+  public static HashMap<YearMonth, Integer> getMonthlyRevenue() {
+    return monthlyRevenue;
   }
 }

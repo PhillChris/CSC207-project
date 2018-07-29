@@ -19,7 +19,7 @@ public class User implements Serializable {
   /**
    * Email format regex (from https://howtodoinjava.com/regex/java-regex-validate-email-address/)
    */
-  private final String EMAILREGEX =
+  private static final String EMAILREGEX =
       "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
   /** Calculates and sends the daily revenue recieved from this user to the system */
   protected CostCalculator calculator;
@@ -28,7 +28,7 @@ public class User implements Serializable {
   /** A log of taps mapping a given date to the number of taps out recorded */
   private HashMap<LocalDate, Integer> tapOutLog = new HashMap<>();
   /** An ArrayList of this transit.system.User's last three trips */
-  private ArrayList<Trip> lastThreeTrips = new ArrayList<>();
+  private ArrayList<Trip> previousTrips = new ArrayList<>();
   /** HashMap linking each month to the total expenditure for that month */
   private HashMap<YearMonth, Integer> expenditureMonthly;
   /** An ArrayList of this transit.system.User's cards */
@@ -39,10 +39,7 @@ public class User implements Serializable {
   private String password;
   /** The id given to the next card added by the user */
   private int cardCounter;
-  /**
-   * The trip before the last three trips, used for continuous trip corner-case in Trip modification
-   */
-  private Trip backTrip;
+
   /**
    * Construct a new instance of transit.system.User
    *
@@ -127,27 +124,19 @@ public class User implements Serializable {
   }
 
   /**
-   * Return the last three trips taken on any of this transit.system.User's cards.
-   *
-   * @return up to the last three trips taken by this transit.system.User.
-   */
-  public List<Trip> getLastThreeCopy() {
-    List<Trip> copy = new ArrayList<>(lastThreeTrips);
-    return copy;
-  }
-
-  /**
    * Takes the last 3 trips taken and returns a string representation of this list
    *
    * @return the last 3 trips message
    */
   public String getLastThreeMessage() {
     String message = "Last 3 trips by user " + this.name + ":";
-    for (Trip t : getLastThreeCopy()) {
-      message += "\n" + t;
+    for (int i = 0; i < Math.min(3, previousTrips.size()); i++){
+      Trip t = previousTrips.get(previousTrips.size() - 1 - i);
+      message += "\n" + t.toString();
     }
     return message;
   }
+
 
   /**
    * Change this transit.system.User's name.
@@ -235,10 +224,7 @@ public class User implements Serializable {
       if (lastTrip.isContinuousTrip(station)) {
         card.setCurrentTrip(lastTrip); // continue the last trip
         lastTrip.continueTrip(station);
-        this.lastThreeTrips.remove(lastTrip);
-        if (backTrip != null) {
-          this.lastThreeTrips.add(2, backTrip);
-        }
+        this.previousTrips.remove(lastTrip);
         foundContinuousTrip = true;
       }
     }
@@ -268,12 +254,8 @@ public class User implements Serializable {
     updateSpendingHistory(card); // Update's this transit.system.User's spending history
     // Update System's spending history
     calculator.updateSystemRevenue(trip.getFee(), Math.max(trip.getTripLegLength(), 0));
-    if (!lastThreeTrips.contains(trip)) {
-      lastThreeTrips.add(trip);
-    }
-    if (lastThreeTrips.size() == 4) {
-      // as a backup in case the trip you push now is a continuous trip
-      backTrip = lastThreeTrips.remove(0);
+    if (!previousTrips.contains(trip)) {
+      previousTrips.add(trip);
     }
     if (!trip.isValidTrip()) {
       throw new TransitException();

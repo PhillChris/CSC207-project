@@ -10,23 +10,50 @@ import javafx.util.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import static javafx.scene.paint.Color.BLACK;
 
 /** A class keeping track of universal time in the transit system */
 public class TransitTime {
 
-  protected static Label time = new Label();
+  /** A label designed to represent to current time of this simulation */
+  private static Label time = new Label();
   /** The current time of the transit system */
   private static LocalDateTime currentTime = LocalDateTime.now();
   /** Whether the time is currently moving forward */
   private static boolean running = true;
 
-  public static Label getTimeLabel(){
+  /** @return The current time of the simulation */
+  public static LocalDateTime getCurrentTime() {
+    return TransitTime.currentTime;
+  }
+
+  /** @return The current date in the transit system */
+  public static LocalDate getCurrentDate() {
+    return currentTime.toLocalDate();
+  }
+
+  /** @return A label describing the current time of the simulation */
+  public static Label getTimeLabel() {
     return time;
   }
 
+  /** Pauses the simulation time */
+  public static void pauseTime() {
+    running = false;
+  }
+
+  /** Restarts the simulation time */
+  public static void startTime() {
+    running = true;
+  }
+
+  /** Moves the simulation time forward one hour */
+  public static void fastForward() {
+    currentTime = currentTime.plusMinutes(60);
+  }
+
+  /** Updates the time label as time progresses */
   protected static void updateTimeLabel() {
     Timeline timeline = new Timeline();
     timeline.setCycleCount(Timeline.INDEFINITE);
@@ -46,10 +73,14 @@ public class TransitTime {
     timeline.playFromStart();
   }
 
-  public static LocalDateTime getCurrentTime() {
-    return TransitTime.currentTime;
+  /** Increments the time of the simulation */
+  private static void updateTime() {
+    if (running) {
+      currentTime = currentTime.plusMinutes(1);
+    }
   }
 
+  /** @return A string formatting of the current simulation time */
   public static String getCurrentTimeString() {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     String time = formatter.format(currentTime.toLocalTime());
@@ -60,35 +91,5 @@ public class TransitTime {
     currentTime += System.lineSeparator();
     currentTime += String.format("Time: %s", time);
     return currentTime;
-  }
-
-  public static void pauseTime() {
-    running = false;
-  }
-
-  public static void startTime() {
-    running = true;
-  }
-
-  public static void fastForward() {
-    currentTime = currentTime.plusMinutes(60);
-  }
-
-  private static void updateTime() {
-    if (running) {
-      currentTime = currentTime.plusMinutes(1);
-    }
-  }
-
-  /**
-   * Ends a day in the simulation
-   *
-   * @param emptyList Information given by the user
-   */
-  static void endDay(List<String> emptyList) {}
-
-  /** @return The current date in the transit system */
-  public static LocalDate getCurrentDate() {
-    return currentTime.toLocalDate();
   }
 }

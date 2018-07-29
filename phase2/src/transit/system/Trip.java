@@ -2,7 +2,6 @@ package transit.system;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -41,17 +40,6 @@ public class Trip implements Serializable {
     tripLegLength = 0;
   }
 
-  /** @return A string representation of a trip */
-  public String toString() {
-    return String.format(
-        "%s: Trip started at %s (%s) and ended at %s (%s)",
-        timeStarted.toLocalDate(),
-        priorStops.get(0),
-        timeStarted.toLocalTime(),
-        endStation,
-        timeEnded.toLocalTime());
-  }
-
   /** @return The length of the current leg of this trip */
   int getTripLegLength() {
     return tripLegLength;
@@ -79,15 +67,32 @@ public class Trip implements Serializable {
     }
   }
 
+  /** @return A string representation of a trip */
+  public String toString() {
+    String endTime;
+    String finalStation;
+    if (timeEnded != null && endStation != null) {
+      endTime = timeEnded.toString();
+      finalStation = endStation.toString();
+    } else {
+      endTime = "Not Ended";
+      finalStation = "Null";
+    }
+    return String.format(
+        "Trip started at %s (%s) and ended at %s (%s)",
+        timeStarted.toString(), priorStops.get(0), endTime, finalStation, timeEnded.toLocalTime());
+  }
+
   /**
-   * Returns whether or not this transit.system.Trip is a valid transit.system.Trip. Note: an unfinished trip is always invalid. A
-   * trip must be completed to be valid.
+   * Returns whether or not this transit.system.Trip is a valid transit.system.Trip. Note: an
+   * unfinished trip is always invalid. A trip must be completed to be valid.
    *
    * @return true if this is a valid trip
    */
   boolean isValidTrip() {
     return (timeEnded != null && endStation != null && tripLegLength != -1);
   }
+
   /**
    * Checks if a trip continues another trip
    *
@@ -137,30 +142,34 @@ public class Trip implements Serializable {
     }
   }
 
-  /** A helper which updates the trip leg length */
+  /** A helper which updates the trip leg length. A trip length of -1 describes an invalid trip */
   private void updateTripLegLength() {
+    // The indices of the start and stop station
     Integer firstStationIndex = null;
     Integer secondStationIndex = null;
-    // Loop through all the routes to find the start and end station
-    for(String type: Station.POSSIBLE_TYPES) {
-      if (Route.getRoutesCopy().get(type) != null) {
-        for (Route route : Route.getRoutesCopy().get(type)) {
-          if (firstStationIndex == null && secondStationIndex == null) {
-            for (int i = 0; i < route.getRouteStationsCopy().size(); i++) {
-              Station station = route.getRouteStationsCopy().get(i);
-              if (station.equals(priorStops.get(priorStops.size() - 1))) {
-                firstStationIndex = i;
-              }
-              if (station.equals(endStation)) {
-                secondStationIndex = i;
-              }
+
+    // Loop through all the routes
+    for (String type : Station.POSSIBLE_TYPES) {
+      for (Route route : Route.getRoutesCopy().get(type)) {
+        // Do not check routes if the start and end station have already been found
+        if (firstStationIndex == null && secondStationIndex == null) {
+          // Loop through all the stations in a given route
+          for (int i = 0; i < route.getRouteStationsCopy().size(); i++) {
+            Station station = route.getRouteStationsCopy().get(i);
+            // Check equality in start station for this leg
+            if (station.equals(priorStops.get(priorStops.size() - 1))) {
+              firstStationIndex = i;
+            }
+            // Check for equality in the end station for this leg
+            if (station.equals(endStation)) {
+              secondStationIndex = i;
             }
           }
-          // If one of the two stations was not found in this route
-          if (firstStationIndex == null || secondStationIndex == null) {
-            firstStationIndex = null;
-            secondStationIndex = null;
-          }
+        }
+        // If one of the two stations was not found in this route, set both indices to null
+        if (firstStationIndex == null || secondStationIndex == null) {
+          firstStationIndex = null;
+          secondStationIndex = null;
         }
       }
     }

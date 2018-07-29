@@ -2,6 +2,7 @@ package transit.system;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -32,8 +33,8 @@ public class Trip implements Serializable {
    * @param startTime Time which this trip is started
    * @param station transit.system.Station which this trip is started
    */
-  public Trip(LocalDateTime startTime, Station station) {
-    timeStarted = startTime;
+  public Trip(Station station) {
+    timeStarted = TransitTime.getCurrentTime();
     tripFee = station.getInitialFee();
     perStationFee = station.getPerStationFee();
     priorStops.add(station);
@@ -62,9 +63,9 @@ public class Trip implements Serializable {
    * @param station the station where this transit.system.Trip ends
    * @param endTime the station where this transit.system.Trip continuous
    */
-  void endTrip(Station station, LocalDateTime endTime) {
+  void endTrip(Station station) {
     endStation = station;
-    timeEnded = endTime;
+    timeEnded = TransitTime.getCurrentTime();
     updateTripLegLength();
     tripFee += updateFinalFee();
   }
@@ -94,10 +95,11 @@ public class Trip implements Serializable {
    * @param time time for the start of the continuation
    * @return true if continuous trip, false otherwise
    */
-  boolean isContinuousTrip(Station newStation, LocalDateTime time) {
+  boolean isContinuousTrip(Station newStation) {
+    LocalDateTime time = TransitTime.getCurrentTime();
     boolean withinTimeLimit =
         Duration.between(timeStarted, time).toMinutes() <= (MAX_TRIP_LENGTH.toMinutes());
-    return (this.endStation.isAssociatedStation(newStation) && withinTimeLimit);
+    return (this.endStation.equals(newStation) && withinTimeLimit);
   }
 
   /**

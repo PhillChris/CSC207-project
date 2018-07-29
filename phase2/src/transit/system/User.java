@@ -196,9 +196,9 @@ public class User implements Serializable {
       throw new TransitException();
     }
     if (card.getCurrentTrip() == null) {
-      tapIn(card, station, timeTapped);
+      tapIn(card, station);
     } else {
-      tapOut(card, station, timeTapped);
+      tapOut(card, station);
     }
   }
 
@@ -224,15 +224,15 @@ public class User implements Serializable {
    * @param station The station which this transit.system.User taps at
    * @param timeTapped The time this transit.system.User taps their transit.system.Card
    */
-  private void tapIn(Card card, Station station, LocalDateTime timeTapped) throws TransitException {
+  private void tapIn(Card card, Station station) throws TransitException {
     if (card.getBalance() <= 0) throw new TransitException();
-    recordTapIn(timeTapped.toLocalDate());
-    station.recordTapIn(timeTapped.toLocalDate());
+    recordTapIn();
+    station.recordTapIn();
     // Check if this transit.system.User is continuing a transit.system.Trip
     boolean foundContinuousTrip = false;
     Trip lastTrip = card.getLastTrip();
     if (lastTrip != null) { // if there is no lastTrip for this card
-      if (lastTrip.isContinuousTrip(station, timeTapped)) {
+      if (lastTrip.isContinuousTrip(station)) {
         card.setCurrentTrip(lastTrip); // continue the last trip
         lastTrip.continueTrip(station);
         this.lastThreeTrips.remove(lastTrip);
@@ -243,7 +243,7 @@ public class User implements Serializable {
       }
     }
     if (!foundContinuousTrip) {
-      card.setCurrentTrip(new Trip(timeTapped, station));
+      card.setCurrentTrip(new Trip(station));
     }
   }
 
@@ -256,12 +256,12 @@ public class User implements Serializable {
    * @param station The station which this transit.system.User taps at
    * @param timeTapped The time this transit.system.User taps their transit.system.Card
    */
-  private void tapOut(Card card, Station station, LocalDateTime timeTapped)
+  private void tapOut(Card card, Station station)
       throws TransitException {
-    recordTapOut(timeTapped.toLocalDate());
-    station.recordTapOut(timeTapped.toLocalDate());
+    recordTapOut();
+    station.recordTapOut();
     Trip trip = card.getCurrentTrip();
-    trip.endTrip(station, timeTapped); // ends the trip
+    trip.endTrip(station); // ends the trip
     card.subtractBalance(trip.getFee()); // deducts the balance
     card.setLastTrip(trip);
     card.setCurrentTrip(null);
@@ -302,7 +302,8 @@ public class User implements Serializable {
     return expenditureMonthly;
   }
 
-  private void recordTapIn(LocalDate timeTapped) {
+  private void recordTapIn() {
+    LocalDate timeTapped = TransitTime.getCurrentDate();
     if (tapInLog.get(timeTapped) != null) {
       tapInLog.put(timeTapped, tapInLog.get(timeTapped) + 1);
     } else {
@@ -310,7 +311,8 @@ public class User implements Serializable {
     }
   }
 
-  private void recordTapOut(LocalDate timeTapped) {
+  private void recordTapOut() {
+    LocalDate timeTapped = TransitTime.getCurrentDate();
     if (tapOutLog.get(timeTapped) != null) {
       tapOutLog.put(timeTapped, tapOutLog.get(timeTapped) + 1);
     } else {

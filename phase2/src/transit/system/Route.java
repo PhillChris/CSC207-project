@@ -2,7 +2,6 @@ package transit.system;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,15 +24,10 @@ public class Route implements Serializable {
    * @param stations List of all station names in this route in order.
    * @param type The type of stations this route contains
    */
-  public Route(String type) throws TransitException {
-    // Checks if the given type is a valid type
-    if (!Arrays.asList(Station.POSSIBLE_TYPES).contains(type)) {
-      throw new TransitException();
-    } else {
-      this.routeType = type;
-      this.routeStations = new ArrayList<>();
-      this.routeNum = -1;
-    }
+  public Route(String type) {
+    this.routeType = type;
+    this.routeStations = new ArrayList<>();
+    this.routeNum = -1;
   }
 
   /** @return A copy of the arrayList of all RouteNames */

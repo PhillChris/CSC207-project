@@ -1,6 +1,7 @@
 package transit.pages;
 
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -25,9 +26,8 @@ public class AppendRoutePage extends Page {
    */
   public AppendRoutePage(Stage stage, Route route) {
     this.route = route;
-    makeScene(stage);
     routeLabel = new Label();
-    userEntry = new TextField();
+    makeScene(stage);
   }
 
   /**
@@ -42,7 +42,8 @@ public class AppendRoutePage extends Page {
     grid.setHgap(10);
     grid.setVgap(10);
     grid.add(routeLabel, 0, 0);
-    grid.add(userEntry, 10, 10);
+    placeLabel("Enter the name of the new station here", 8, 9);
+    TextField textField = placeTextField(10, 10);
     placeButton(
         "Add Station",
         () -> {
@@ -65,5 +66,7 @@ public class AppendRoutePage extends Page {
         },
         20,
         20);
+
+    this.scene = new Scene(grid, 100, 100);
   }
 }

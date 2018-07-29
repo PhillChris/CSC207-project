@@ -3,11 +3,7 @@ package transit.pages;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -143,10 +139,11 @@ public class LoginPage extends Page {
             }
           } catch (Exception ignored) {
             makeAlert(
-                "Invalid credentials",
-                "Invalid credentials:",
-                "The given credentials don't match a user in the transit system",
-                AlertType.ERROR).showAndWait();
+                    "Invalid credentials",
+                    "Invalid credentials:",
+                    "The given credentials don't match a user in the transit system",
+                    AlertType.ERROR)
+                .showAndWait();
           }
         });
     return loginButton;
@@ -160,7 +157,7 @@ public class LoginPage extends Page {
    * @return true if the given email and password correspond to a specific user, false otherwise
    */
   private boolean checkAuthorization(TextField email, TextField password) {
-    return User.getAuthLogCopy().get(email.getText()) != null
-        && User.getAuthLogCopy().get(email.getText()).equals(password.getText());
+    return User.getAllUsersCopy().containsKey(email)
+        && User.getAllUsersCopy().get(email).correctAuthentification(password.getText());
   }
 }

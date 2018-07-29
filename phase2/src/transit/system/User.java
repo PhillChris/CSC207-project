@@ -15,11 +15,8 @@ public class User implements Serializable {
       "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
   /** HashMap linking each email to its transit.system.User */
   private static HashMap<String, User> allUsers = new HashMap<>();
-  /** The log mapping all users to their given password in the system */
-  private static HashMap<String, String> authLog = new HashMap<>();
   /** The transit.system.User's email */
   private final String email;
-  /** A log of taps mapping a given date to the number of taps in recorded */
   /** An ArrayList of this transit.system.User's cards */
   private HashMap<Integer, Card> cards;
   /** This transit.system.User's name */
@@ -50,7 +47,6 @@ public class User implements Serializable {
     this.password = password;
     this.cards = new HashMap<>();
     allUsers.put(email, this);
-    authLog.put(email, password);
     cardCounter = 1;
     this.statistics = new UserInformation();
   }
@@ -64,18 +60,13 @@ public class User implements Serializable {
     return copy;
   }
 
-  public static HashMap<String, String> getAuthLogCopy() {
-    HashMap<String, String> copy = new HashMap<>();
-    for (String name : authLog.keySet()) {
-      copy.put(name, authLog.get(name));
-    }
-    return copy;
+  public boolean correctAuthentification(String password) {
+    return this.password.equals(password);
   }
 
   /** Removes this user from the system. */
   public void removeUser() {
     allUsers.remove(this.email);
-    authLog.remove(this.email);
   }
 
   /** @return The name associated with this user */

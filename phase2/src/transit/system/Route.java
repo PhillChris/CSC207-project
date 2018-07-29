@@ -41,6 +41,16 @@ public class Route implements Serializable {
     return new HashMap<>(routes);
   }
 
+  /** @return A string representation of this route */
+  public String toString() {
+    String s = "Route Number: " + this.routeNum;
+    s += System.lineSeparator();
+    for (Station station: this.routeStations){
+      s += station.toString() +  " < - > ";
+    }
+    return s;
+  }
+
   /**
    * Adds a new station to this route
    *

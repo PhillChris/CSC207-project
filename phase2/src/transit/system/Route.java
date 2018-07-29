@@ -53,37 +53,35 @@ public class Route implements Serializable {
   }
 
   /**
-   * Adds a new station to this route at the start of the route
+   * Sets the new station to this route at the start of the route
    *
    * @param stationName The name of this new station
    * @throws TransitException Thrown if the type of this station does not match the type of this
    *     route
    */
-  public void addStationAtStart(String stationName) {
-    routeStations.add(0, new Station(stationName, this.routeType));
-  }
+  public void setRouteStations(List<String> stationNames){
+    ArrayList<Station> stations = new ArrayList<>();
+    for (String name: stationNames){
+      stations.add(new Station(name, routeType));
+    }
+    this.routeStations = stations;
 
-  /**
-   * Adds a new station to this route at the end of the route
-   *
-   * @param stationName The name of this new station
-   * @throws TransitException Thrown if the type of this station does not match the type of this
-   *     route
-   */
-  public void addStationAtEnd(String stationName) {
-    routeStations.add(new Station(stationName, this.routeType));
   }
 
   /** Gives this route an official route number and saves this route to the system */
   public void saveRoute() {
     numRoutes++;
-    this.routeNum = numRoutes;
+    // If no route of the same type already exists
     if (!routes.containsKey(this.routeType)) {
       ArrayList<Route> typeList = new ArrayList<>();
       typeList.add(this);
       routes.put(routeType, typeList);
-    } else {
-      routes.get(this.routeType).add(this);
+    }
+    // If routes of the same type already exist
+    else {
+      if (!routes.get(routeType).contains(this)){
+        routes.get(this.routeType).add(this); // Only add this route to hashmap if not already there
+      }
     }
   }
 
@@ -103,5 +101,12 @@ public class Route implements Serializable {
       }
     }
     return temp;
+  }
+
+  /**
+   * @return The number of this route
+   */
+  public int getRouteNum(){
+    return this.routeNum;
   }
 }

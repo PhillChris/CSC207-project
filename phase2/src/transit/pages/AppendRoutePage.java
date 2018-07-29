@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import transit.system.Route;
+import transit.system.Station;
+
+import java.util.ArrayList;
 
 /** Page used to add new stations to a route */
 public class AppendRoutePage extends Page {
@@ -18,6 +21,9 @@ public class AppendRoutePage extends Page {
   /** The stage used by this page */
   private Stage stage;
 
+  /** The list of stations added and viewed by the user */
+  private ArrayList<String> stationNames;
+
   /**
    * Initializes a new instance of AppendRoutePage
    *
@@ -27,7 +33,12 @@ public class AppendRoutePage extends Page {
   public AppendRoutePage(Stage stage, Route route) {
     this.stage = stage;
     this.route = route;
-    routeLabel = new Label(this.route.toString());
+    stationNames = new ArrayList<>();
+    for (Station station : route.getRouteStationsCopy()) {
+      stationNames.add(station.getName());
+    }
+    routeLabel = new Label();
+    setRouteLabel();
     makeScene(stage);
   }
 
@@ -46,17 +57,18 @@ public class AppendRoutePage extends Page {
         "Add Station at Start",
         () -> {
           if (textField.getText() != null) {
-            if (!this.route.containsName(textField.getText())) {
-              this.route.addStationAtStart(textField.getText());
+            if (!stationNames.contains(textField.getText())) {
+              stationNames.add(0, textField.getText());
             } else {
               makeAlert(
-                  "Station Name In Use",
-                  "Station Name In Use:",
-                  "This station name is used in this route",
-                  AlertType.ERROR).showAndWait();
+                      "Station Name In Use",
+                      "Station Name In Use:",
+                      "This station name is used in this route",
+                      AlertType.ERROR)
+                  .showAndWait();
             }
           }
-          routeLabel.setText(this.route.toString());
+          setRouteLabel();
         },
         10,
         15);
@@ -65,17 +77,18 @@ public class AppendRoutePage extends Page {
         "Add Station at End",
         () -> {
           if (textField.getText() != null) {
-            if (!this.route.containsName(textField.getText())) {
-              this.route.addStationAtEnd(textField.getText());
+            if (!stationNames.contains(textField.getText())) {
+              stationNames.add(textField.getText());
             } else {
               makeAlert(
-                  "Station Name In Use",
-                  "Station Name In Use:",
-                  "This station name is used in this route",
-                  AlertType.ERROR).showAndWait();
+                      "Station Name In Use",
+                      "Station Name In Use:",
+                      "This station name is used in this route",
+                      AlertType.ERROR)
+                  .showAndWait();
             }
           }
-          routeLabel.setText(this.route.toString());
+          setRouteLabel();
         },
         10,
         16);
@@ -88,6 +101,7 @@ public class AppendRoutePage extends Page {
                 "",
                 "Would you like to confirm the creation of this route?",
                 () -> {
+                  this.route.setRouteStations(stationNames);
                   this.route.saveRoute();
                   stage.close();
                 }),
@@ -95,5 +109,14 @@ public class AppendRoutePage extends Page {
         20);
 
     this.scene = new Scene(grid, 1000, 1000);
+  }
+
+  /** Sets the label describing the associated route */
+  private void setRouteLabel() {
+    String text = "Route number: " + this.route.getRouteNum() + System.lineSeparator();
+    for (String name : stationNames) {
+      text += name + " <-> ";
+    }
+    routeLabel.setText(text);
   }
 }

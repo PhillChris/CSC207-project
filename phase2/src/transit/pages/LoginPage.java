@@ -157,7 +157,7 @@ public class LoginPage extends Page {
    * @return true if the given email and password correspond to a specific user, false otherwise
    */
   private boolean checkAuthorization(TextField email, TextField password) {
-    return User.getAllUsersCopy().containsKey(email)
-        && User.getAllUsersCopy().get(email).correctAuthentification(password.getText());
+    return User.getAllUsersCopy().containsKey(email.getText())
+        && User.getAllUsersCopy().get(email.getText()).correctAuthentification(password.getText());
   }
 }

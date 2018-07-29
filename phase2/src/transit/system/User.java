@@ -169,7 +169,6 @@ public class User implements Serializable {
    *
    * @param card The card which this transit.system.User taps
    * @param station The station which this transit.system.User taps at
-   * @param timeTapped The time this transit.system.User taps their transit.system.Card
    */
   private void tapIn(Card card, Station station) throws TransitException {
     if (card.getBalance() <= 0) throw new TransitException(); // Not enough fund
@@ -198,7 +197,6 @@ public class User implements Serializable {
    *
    * @param card The card which this User taps
    * @param station The station which this User taps at
-   * @param timeTapped The time this User taps their Card
    */
   private void tapOut(Card card, Station station) throws TransitException {
     // Update Card and Trip information

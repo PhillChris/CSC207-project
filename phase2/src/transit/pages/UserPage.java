@@ -80,6 +80,9 @@ public class UserPage extends AuthenticatedPage {
 
     placeButton("Jump ahead 1 hour", () -> TransitTime.fastForward(), 0, 17);
 
+    placeButton("Jump ahead 1 day", () -> TransitTime.skipDay(), 0, 18);
+
+
     if (user instanceof AdminUser) {
       placeButton(
           "Toggle admin panel",

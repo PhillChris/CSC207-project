@@ -53,6 +53,8 @@ public class TransitTime {
     currentTime = currentTime.plusMinutes(60);
   }
 
+  public static void skipDay() { currentTime = currentTime.plusDays(1); }
+
   /** Updates the time label as time progresses */
   protected static void updateTimeLabel() {
     Timeline timeline = new Timeline();

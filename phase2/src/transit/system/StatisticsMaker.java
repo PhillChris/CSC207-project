@@ -1,6 +1,7 @@
 package transit.system;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class StatisticsMaker implements Serializable {
   private static HashMap<LocalDate, Integer> dailyLog = new HashMap<>();
   /** Contains the number of trips made by users */
   private static HashMap<LocalDate, Integer> dailyNumTrips = new HashMap<>();
+  /** Contains the dates in this program*/
+  private static ArrayList<LocalDate> dates = new ArrayList<>();
 
   /** @return The daily report table for all days passed during this simulation. */
   public static String generateReportMessage() {
@@ -25,10 +28,10 @@ public class StatisticsMaker implements Serializable {
     // The revenue collected for each day
     HashMap<LocalDate, Integer> dailyTotals = dailyRevenue;
     // List of all the dates collected
-    List<LocalDate> dates = new ArrayList<LocalDate>(dailyTotals.keySet());
-    dates.sort(Collections.reverseOrder());
+    List<LocalDate> datesTemp = new ArrayList<LocalDate>(dates);
+    datesTemp.sort(Collections.reverseOrder());
     String message = System.lineSeparator(); // The message to be outputted to Daily Reports
-    for (LocalDate day : dates) {
+    for (LocalDate day : datesTemp) {
       String date = day.toString();
       double revenue = dailyRevenue.get(day) / 100.0;
       int travelled = dailyLog.get(day);
@@ -129,17 +132,22 @@ public class StatisticsMaker implements Serializable {
     return null;
   }
 
-  /** Updates the expenditure and revenue in the entire system */
+  /** Updates the expenditure and revenue in the entire system
+   *
+   * @param fee the fees having been charged for this system for this past trip
+   * @param tripLength the length of this trip in stations
+   */
   void updateSystemStats(int fee, int tripLength) {
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
 
-    if (dailyRevenue.containsKey(date)) {
+    if (dates.contains(date)) {
       dailyRevenue.put(date, dailyRevenue.get(date) + fee);
       dailyLog.put(date, dailyLog.get(date) + tripLength);
       dailyNumTrips.put(date, dailyNumTrips.get(date) + 1);
 
     } else {
+      dates.add(date);
       dailyRevenue.put(date, fee);
       dailyLog.put(date, tripLength);
       dailyNumTrips.put(date, 1);
@@ -150,5 +158,9 @@ public class StatisticsMaker implements Serializable {
     } else {
       monthlyRevenue.put(month, fee);
     }
+  }
+
+  public static ArrayList<LocalDate> getDatesCopy() {
+    return new ArrayList<>(dates);
   }
 }

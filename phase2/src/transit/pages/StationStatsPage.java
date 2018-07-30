@@ -34,13 +34,13 @@ public class StationStatsPage extends Page {
    */
   @Override
   public void makeScene(Stage primaryStage) {
-    int i = 1;
     HashMap<Station, ArrayList<Integer>> busStationStats = StatisticsMaker.makeStationsMap("Bus");
     HashMap<Station, ArrayList<Integer>> subwayStationStats =
         StatisticsMaker.makeStationsMap("Subway");
     placeLabel("Station statistics!", 0, 0);
-    placeLabel("Bus Stations: ", 0, i);
-    i++;
+    placeDateOptions(0, 1);
+    placeLabel("Bus Stations: ", 0, 2);
+    int i = 3;
     for (Station station : busStationStats.keySet()) {
       placeLabel(
           "Station "

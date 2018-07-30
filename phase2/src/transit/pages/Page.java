@@ -1,5 +1,6 @@
 package transit.pages;
 
+import java.time.LocalDate;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import transit.system.Database;
+import transit.system.StatisticsMaker;
 import transit.system.TransitTime;
 
 import java.util.Optional;
@@ -64,9 +66,10 @@ public abstract class Page {
    * @param col the column in the grid where this label is displayed
    * @param row the row in the grid where this label is displayed
    */
-  protected void placeLabel(String text, int col, int row) {
+  protected Label placeLabel(String text, int col, int row) {
     Label tempLabel = new Label(text);
     grid.add(tempLabel, col, row);
+    return tempLabel;
   }
 
   /**
@@ -76,10 +79,11 @@ public abstract class Page {
    * @param col the column in the grid where this label is displayed
    * @param row the row in the grid where this label is displayed
    */
-  protected void placeLabel(String text, int col, int row, String id) {
+  protected Label placeLabel(String text, int col, int row, String id) {
     Label tempLabel = new Label(text);
     tempLabel.setId(id);
     grid.add(tempLabel, col, row);
+    return tempLabel;
   }
 
   /**
@@ -178,6 +182,18 @@ public abstract class Page {
     CheckBox checkBox = new CheckBox(text);
     grid.add(checkBox, col, row);
     return checkBox;
+  }
+
+  protected ChoiceBox<LocalDate> placeDateOptions(int col, int row) {
+    ChoiceBox<LocalDate> dates = new ChoiceBox<>();
+    if (StatisticsMaker.getDatesCopy().isEmpty()) {
+      dates.getItems().addAll(TransitTime.getCurrentDate());
+    } else {
+      dates.getItems().addAll(StatisticsMaker.getDatesCopy());
+    }
+    dates.getSelectionModel().select(0);
+    grid.add(dates, col, row);
+    return dates;
   }
 
   protected ImageView placeImage(String url, int col, int row, String id) {

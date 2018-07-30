@@ -48,7 +48,7 @@ public class User implements Serializable {
     this.cards = new HashMap<>();
     allUsers.put(email, this);
     cardCounter = 1;
-    this.statistics = new UserInformation();
+    this.statistics = new UserInformation(this);
   }
 
   /** @return a copy of the HashMap of all Users */

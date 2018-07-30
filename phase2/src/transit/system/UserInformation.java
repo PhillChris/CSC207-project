@@ -22,11 +22,12 @@ public class UserInformation {
   private StatisticsMaker calculator;
 
   /** Initializes a new instance of UserInformation */
-  UserInformation() {
-    tapInLog = new HashMap<>();
-    tapOutLog = new HashMap<>();
-    previousTrips = new ArrayList<>();
-    calculator = new StatisticsMaker();
+  UserInformation(User user) {
+    this.tapInLog = new HashMap<>();
+    this.tapOutLog = new HashMap<>();
+    this.previousTrips = new ArrayList<>();
+    this.calculator = new StatisticsMaker();
+    this.user = user;
   }
 
   /** @return The previousTrips of this user */
@@ -57,7 +58,7 @@ public class UserInformation {
 
   /** @return A string representation of the last three trips travelled by the user */
   String lastThreeTripsMessage() {
-    String message = "Last 3 trips by user " + this.user.getUserName() + ":";
+    String message = "Last 3 trips by user " + this.user + ":";
     for (int i = 0; i < Math.min(3, previousTrips.size()); i++) {
       Trip t = previousTrips.get(previousTrips.size() - 1 - i);
       message += "\n" + t.toString();

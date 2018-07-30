@@ -57,7 +57,7 @@ public class LoginPage extends Page {
    *
    * @param primaryStage the stage on which this LoginPage is being represented
    */
-  protected void makeLoginPane(Stage primaryStage) {
+  private void makeLoginPane(Stage primaryStage) {
     GridPane loginPane = new GridPane();
     loginPane.setHgap(10);
     loginPane.setVgap(12);
@@ -84,7 +84,7 @@ public class LoginPage extends Page {
    *
    * @param loginPane the login pane being constructed in this LoginPage
    */
-  protected void makeIcons(GridPane loginPane) {
+  private void makeIcons(GridPane loginPane) {
     ImageView emailIcon = new ImageView(new Image("transit/pages/assets/email.png"));
     emailIcon.setId("emailIcon");
     loginPane.add(emailIcon, 0, 1);
@@ -99,7 +99,7 @@ public class LoginPage extends Page {
    *
    * @param loginPane the login pane being constructed in this LoginPage
    */
-  protected void makeLabels(GridPane loginPane) {
+  private void makeLabels(GridPane loginPane) {
     Label login = new Label("Login");
     login.setId("loginLabel");
     loginPane.add(login, 0, 0, 2, 1);
@@ -110,7 +110,7 @@ public class LoginPage extends Page {
   }
 
   /** @return the password input field for this LoginPage */
-  protected PasswordField makePassInput() {
+  private PasswordField makePassInput() {
     PasswordField passInput = new PasswordField();
     passInput.setId("passInput");
     passInput.setPromptText("Password");
@@ -118,7 +118,7 @@ public class LoginPage extends Page {
   }
 
   /** @return the email input field for this LoginPage */
-  protected TextField makeEmailInput() {
+  private TextField makeEmailInput() {
     TextField emailInput = new TextField();
     emailInput.setId("emailInput");
     emailInput.setPromptText("Email");
@@ -126,7 +126,7 @@ public class LoginPage extends Page {
   }
 
   /** @return the SignUp button for this LoginPage */
-  protected Button makeSignUpButton(Stage primaryStage) {
+  private Button makeSignUpButton(Stage primaryStage) {
     Button signupButton = new Button("Signup");
     signupButton.setId("signupButton");
     signupButton.setOnAction(
@@ -143,7 +143,7 @@ public class LoginPage extends Page {
    * @param primaryStage the stage on which this LoginPage is being served
    * @return the login button on this LoginPage
    */
-  protected Button makeLoginButton(TextField emailInput, TextField passInput, Stage primaryStage) {
+  private Button makeLoginButton(TextField emailInput, TextField passInput, Stage primaryStage) {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
     loginButton.setOnAction(

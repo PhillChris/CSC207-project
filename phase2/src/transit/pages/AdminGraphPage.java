@@ -3,7 +3,7 @@ package transit.pages;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-import transit.system.CostCalculator;
+import transit.system.StatisticsMaker;
 import transit.system.TransitTime;
 import transit.system.User;
 
@@ -34,7 +34,7 @@ public class AdminGraphPage extends GraphPage {
     lineChart.setTitle(
         String.format("Monthly Revenue (%s)", TransitTime.getCurrentDate().getYear()));
     XYChart.Series series = new XYChart.Series();
-    HashMap<YearMonth, Integer> monthlyRevenue = CostCalculator.getMonthlyRevenue();
+    HashMap<YearMonth, Integer> monthlyRevenue = StatisticsMaker.getMonthlyRevenue();
     for (YearMonth month : monthlyRevenue.keySet()) {
       if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
         double total = monthlyRevenue.get(month) / 100.0;

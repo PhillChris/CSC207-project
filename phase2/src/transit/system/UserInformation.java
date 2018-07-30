@@ -19,14 +19,14 @@ public class UserInformation {
   /** HashMap linking each month to the total expenditure for that month */
   private HashMap<YearMonth, Integer> expenditureMonthly = new HashMap<>();
   /** Calculates and sends the daily revenue recieved from this user to the system */
-  private CostCalculator calculator;
+  private StatisticsMaker calculator;
 
   /** Initializes a new instance of UserInformation */
   UserInformation() {
     tapInLog = new HashMap<>();
     tapOutLog = new HashMap<>();
     previousTrips = new ArrayList<>();
-    calculator = new CostCalculator();
+    calculator = new StatisticsMaker();
   }
 
   /** @return The previousTrips of this user */

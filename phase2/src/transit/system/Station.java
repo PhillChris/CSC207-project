@@ -78,8 +78,6 @@ public class Station implements Serializable {
 
   /**
    * Sets the fees of this station
-   *
-   * @param stationType
    */
   private void setFees() {
     if (stationType.equals("Bus")) {

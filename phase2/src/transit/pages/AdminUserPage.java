@@ -5,7 +5,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.AdminUser;
-import transit.system.CostCalculator;
+import transit.system.StatisticsMaker;
 import transit.system.TransitTime;
 
 /** Represents the page seen by an AdminUser when logging into the transit system */
@@ -53,7 +53,7 @@ public class AdminUserPage extends Page {
     placeButton(
         "Daily Report",
         () ->
-            makeAlert("", "", CostCalculator.generateReportMessage(), AlertType.INFORMATION)
+            makeAlert("", "", StatisticsMaker.generateReportMessage(), AlertType.INFORMATION)
                 .showAndWait(),
         0,
         5);

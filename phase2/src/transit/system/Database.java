@@ -1,8 +1,6 @@
 package transit.system;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,6 +22,29 @@ public class Database {
       out.writeObject(toWrite);
     } catch (IOException e) {
       System.out.println("Couldn't find file");
+    }
+  }
+
+  /**
+   * Read all objects stored in the .ser files used to store all data related to the transit system.
+   */
+  public static void readFromDatabase() {
+    readRoutes();
+  }
+
+  /**
+   * Read the HashMap of route objects from the .ser file storing them (the file path given by
+   * routeLocation).
+   */
+  private static void readRoutes() {
+    try {
+      FileInputStream fileIn = new FileInputStream(routeLocation);
+      ObjectInputStream in = new ObjectInputStream(fileIn);
+      Route.setRoutes((HashMap<String, ArrayList<Route>>) in.readObject());
+    } catch (IOException e) {
+      System.out.println("File not found when deserializing.");
+    } catch (ClassNotFoundException h) {
+      System.out.println("Wrong class contained in serialization file.");
     }
   }
 }

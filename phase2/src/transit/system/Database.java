@@ -23,4 +23,14 @@ public class Database {
       System.out.println("Couldn't find file");
     }
   }
+
+  private static void writeObject(String fileLocation, Object toWrite) {
+    try {
+      FileOutputStream fileOut = new FileOutputStream(fileLocation);
+      ObjectOutputStream out = new ObjectOutputStream(fileOut);
+      out.writeObject(toWrite);
+    } catch (IOException e) {
+      System.out.println("Couldn't find file");
+    }
+  }
 }

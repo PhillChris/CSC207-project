@@ -30,6 +30,7 @@ public class Database {
    */
   public static void readFromDatabase() {
     readRoutes();
+    readUsers();
   }
 
   /**
@@ -41,6 +42,22 @@ public class Database {
       FileInputStream fileIn = new FileInputStream(routeLocation);
       ObjectInputStream in = new ObjectInputStream(fileIn);
       Route.setRoutes((HashMap<String, ArrayList<Route>>) in.readObject());
+    } catch (IOException e) {
+      System.out.println("File not found when deserializing.");
+    } catch (ClassNotFoundException h) {
+      System.out.println("Wrong class contained in serialization file.");
+    }
+  }
+
+  /**
+   * Read the HashMap of User objects from the .ser file storing them (the file path given by
+   * USERS_LOCATION).
+   */
+  private static void readUsers() {
+    try {
+      FileInputStream fileIn = new FileInputStream(USERS_LOCATION);
+      ObjectInputStream in = new ObjectInputStream(fileIn);
+      User.setAllUsers((HashMap<String, User>) in.readObject());
     } catch (IOException e) {
       System.out.println("File not found when deserializing.");
     } catch (ClassNotFoundException h) {

@@ -29,6 +29,16 @@ public class Route implements Serializable {
     this.routeNum = numRoutes + 1;
   }
 
+  /**
+   * Set the static routes attribute to the passed parameter. Note: this method should only be
+   * used for deserialization of Route objects when the program is first being loaded in.
+   *
+   * @param routes the value to set the routes attribute to.
+   */
+  public static void setRoutes(HashMap<String, ArrayList<Route>> routes) {
+    Route.routes = routes;
+  }
+
   /** @return A shallow copy of the arrayList of all RouteNames */
   public static HashMap<String, ArrayList<Route>> getRoutesCopy() {
     return new HashMap<>(routes);

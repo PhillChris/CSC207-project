@@ -20,6 +20,7 @@ public class AdminUserPage extends Page {
    * @param adminUser the AdminUser whose page is to be constructed
    */
   public AdminUserPage(Stage primaryStage, AdminUser adminUser) {
+    super(primaryStage);
     this.adminUser = adminUser;
     makeScene(primaryStage);
   }
@@ -77,7 +78,7 @@ public class AdminUserPage extends Page {
   }
 
   /**
-   * Makes the route creation page popup when the apppropriate button is pushed
+   * Makes the route creation page popup when the appropriate button is pushed
    */
   private void createRoutePage() {
     Stage secondaryStage = new Stage();
@@ -87,9 +88,7 @@ public class AdminUserPage extends Page {
     secondaryStage.show();
   }
 
-  /**
-   * Makes the user graph page popup when the apppropriate button is pushed
-   */
+  /** Makes the user graph page popup when the appropriate button is pushed */
   private void createUserGraphPage() {
     Stage secondaryStage = new Stage();
     UserGraphPage graphPage = new UserGraphPage(secondaryStage, this.adminUser);

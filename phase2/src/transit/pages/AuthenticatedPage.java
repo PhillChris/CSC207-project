@@ -19,6 +19,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param user the user associated with this authenticated page
    */
   public AuthenticatedPage(Stage primaryStage, User user) {
+    super(primaryStage);
     this.user = user;
   }
 

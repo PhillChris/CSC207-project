@@ -3,7 +3,11 @@ package transit.pages;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -28,6 +32,7 @@ public class LoginPage extends Page {
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
+  @Override
   protected void makeScene(Stage primaryStage) {
     grid.setPadding(new Insets(30, 20, 20, 40));
     grid.setHgap(10);
@@ -47,6 +52,11 @@ public class LoginPage extends Page {
         .add(LoginPage.class.getResource("styling/LoginPage.css").toExternalForm());
   }
 
+  /**
+   * Makes the login GridPane for styling purposes
+   *
+   * @param primaryStage the stage on which this LoginPage is being represented
+   */
   protected void makeLoginPane(Stage primaryStage) {
     GridPane loginPane = new GridPane();
     loginPane.setHgap(10);
@@ -69,6 +79,11 @@ public class LoginPage extends Page {
     grid.add(loginPane, 0, 1);
   }
 
+  /**
+   * Makes all icons in the login pane
+   *
+   * @param loginPane the login pane being constructed in this LoginPage
+   */
   protected void makeIcons(GridPane loginPane) {
     ImageView emailIcon = new ImageView(new Image("transit/pages/assets/email.png"));
     emailIcon.setId("emailIcon");
@@ -79,6 +94,11 @@ public class LoginPage extends Page {
     loginPane.add(lockIcon, 0, 2);
   }
 
+  /**
+   * Makes all labels in the login pane
+   *
+   * @param loginPane the login pane being constructed in this LoginPage
+   */
   protected void makeLabels(GridPane loginPane) {
     Label login = new Label("Login");
     login.setId("loginLabel");
@@ -89,6 +109,7 @@ public class LoginPage extends Page {
     loginPane.add(noAccount, 0, 5, 2, 1);
   }
 
+  /** @return the password input field for this LoginPage */
   protected PasswordField makePassInput() {
     PasswordField passInput = new PasswordField();
     passInput.setId("passInput");
@@ -96,6 +117,7 @@ public class LoginPage extends Page {
     return passInput;
   }
 
+  /** @return the email input field for this LoginPage */
   protected TextField makeEmailInput() {
     TextField emailInput = new TextField();
     emailInput.setId("emailInput");
@@ -103,6 +125,7 @@ public class LoginPage extends Page {
     return emailInput;
   }
 
+  /** @return the SignUp button for this LoginPage */
   protected Button makeSignUpButton(Stage primaryStage) {
     Button signupButton = new Button("Signup");
     signupButton.setId("signupButton");
@@ -114,6 +137,12 @@ public class LoginPage extends Page {
     return signupButton;
   }
 
+  /**
+   * @param emailInput the email input field in this LoginPage
+   * @param passInput the password input field in this LoginPage
+   * @param primaryStage the stage on which this LoginPage is being served
+   * @return the login button on this LoginPage
+   */
   protected Button makeLoginButton(TextField emailInput, TextField passInput, Stage primaryStage) {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");

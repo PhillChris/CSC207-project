@@ -22,8 +22,6 @@ public abstract class Page {
   /** Represents the grid where elements on the page are placed */
   protected GridPane grid = new GridPane();
 
-  private Stage primaryStage;
-
   public Page() {
   }
 
@@ -35,7 +33,6 @@ public abstract class Page {
    * @param primaryStage the PRIMARY stage of this application.
    */
   public Page(Stage primaryStage) {
-    this.primaryStage = primaryStage;
     primaryStage.setOnCloseRequest(
             new EventHandler<WindowEvent>() {
               @Override

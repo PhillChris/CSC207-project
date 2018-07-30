@@ -29,7 +29,6 @@ public class Trip implements Serializable {
   /**
    * Construct a new instance of transit.system.Trip
    *
-   * @param startTime Time which this trip is started
    * @param station transit.system.Station which this trip is started
    */
   public Trip(Station station) {
@@ -49,7 +48,6 @@ public class Trip implements Serializable {
    * End this transit.system.Trip
    *
    * @param station the station where this transit.system.Trip ends
-   * @param endTime the station where this transit.system.Trip continuous
    */
   void endTrip(Station station) {
     endStation = station;
@@ -97,7 +95,6 @@ public class Trip implements Serializable {
    * Checks if a trip continues another trip
    *
    * @param newStation new station
-   * @param time time for the start of the continuation
    * @return true if continuous trip, false otherwise
    */
   boolean isContinuousTrip(Station newStation) {

@@ -33,6 +33,7 @@ public abstract class AuthenticatedPage extends Page {
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
+  @Override
   protected void makeScene(Stage primaryStage) {
     newUserInfoButton(10, 10);
     newLogoutButton(primaryStage, 10, 0);

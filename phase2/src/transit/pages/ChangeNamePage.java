@@ -25,6 +25,7 @@ public class ChangeNamePage extends AuthenticatedPage {
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
+  @Override
   public void makeScene(Stage primaryStage) {
     placeLabel("New Username: ", 0, 0);
     TextField newName = placeTextField(1, 0);

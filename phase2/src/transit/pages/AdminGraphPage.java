@@ -27,6 +27,7 @@ public class AdminGraphPage extends GraphPage {
    *
    * @return A line chart representing this system's monthly revenue
    */
+  @Override
   public LineChart<String, Number> makeChart() {
     LineChart lineChart = super.makeChart();
 

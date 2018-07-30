@@ -1,5 +1,6 @@
 package transit.pages;
 
+import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -7,8 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import transit.system.Route;
 import transit.system.Station;
-
-import java.util.ArrayList;
 
 /** Page used to add new stations to a route */
 public class AppendRoutePage extends Page {
@@ -52,46 +51,17 @@ public class AppendRoutePage extends Page {
     /** Set the grid of this page */
     grid.add(routeLabel, 0, 0, 20, 2);
     placeLabel("Enter the name of the new station here", 8, 9);
-    TextField textField = placeTextField(10, 10);
-    placeButton(
-        "Add Station at Start",
-        () -> {
-          if (textField.getText() != null) {
-            if (!stationNames.contains(textField.getText())) {
-              stationNames.add(0, textField.getText());
-            } else {
-              makeAlert(
-                      "Station Name In Use",
-                      "Station Name In Use:",
-                      "This station name is used in this route",
-                      AlertType.ERROR)
-                  .showAndWait();
-            }
-          }
-          setRouteLabel();
-        },
-        10,
-        15);
+    makeSceneButtons();
+    this.scene = new Scene(grid, 1000, 1000);
+  }
 
-    placeButton(
-        "Add Station at End",
-        () -> {
-          if (textField.getText() != null) {
-            if (!stationNames.contains(textField.getText())) {
-              stationNames.add(textField.getText());
-            } else {
-              makeAlert(
-                      "Station Name In Use",
-                      "Station Name In Use:",
-                      "This station name is used in this route",
-                      AlertType.ERROR)
-                  .showAndWait();
-            }
-          }
-          setRouteLabel();
-        },
-        10,
-        16);
+  /** Constructs all buttons in this scene */
+  private void makeSceneButtons() {
+    TextField textField = placeTextField(10, 10);
+
+    placeButton("Add Station at Start", () -> addStationAtStart(textField), 10, 15);
+
+    placeButton("Add Station at End", () -> addStationAtEnd(textField), 10, 16);
 
     placeButton(
         "Confirm",
@@ -107,8 +77,38 @@ public class AppendRoutePage extends Page {
                 }),
         20,
         20);
+  }
 
-    this.scene = new Scene(grid, 1000, 1000);
+  private void addStationAtStart(TextField textField) {
+    if (textField.getText() != null) {
+      if (!stationNames.contains(textField.getText())) {
+        stationNames.add(0, textField.getText());
+      } else {
+        makeAlert(
+                "Station Name In Use",
+                "Station Name In Use:",
+                "This station name is used in this route",
+                AlertType.ERROR)
+            .showAndWait();
+      }
+    }
+    setRouteLabel();
+  }
+
+  private void addStationAtEnd(TextField textField) {
+    if (textField.getText() != null) {
+      if (!stationNames.contains(textField.getText())) {
+        stationNames.add(textField.getText());
+      } else {
+        makeAlert(
+                "Station Name In Use",
+                "Station Name In Use:",
+                "This station name is used in this route",
+                AlertType.ERROR)
+            .showAndWait();
+      }
+    }
+    setRouteLabel();
   }
 
   /** Sets the label describing the associated route */

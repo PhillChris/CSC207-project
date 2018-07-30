@@ -30,6 +30,7 @@ public class GraphPage extends Page {
    *
    * @param stage The stage for this page to be displayed
    */
+  @Override
   public void makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
     LineChart chart = makeChart();

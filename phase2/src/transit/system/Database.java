@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Database {
-  public static final String routeLocation = "/tmp/routes.ser";
+  public static final String routeLocation = "./tmp/routes.ser";
 
   public static void writeToDatabase() {
     writeRoutes();

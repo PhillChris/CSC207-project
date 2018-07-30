@@ -8,10 +8,13 @@ import java.util.HashMap;
 
 public class Database {
   public static final String routeLocation = "./tmp/routes.ser";
+  public static final String USERS_LOCATION = "./tmp/user.ser";
 
   public static void writeToDatabase() {
     HashMap<String, ArrayList<Route>> routes = Route.getRoutesCopy();
     writeObject(routeLocation, routes);
+    HashMap<String, User> users = User.getAllUsersCopy();
+    writeObject(USERS_LOCATION, users);
   }
 
   private static void writeObject(String fileLocation, Object toWrite) {

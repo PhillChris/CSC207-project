@@ -124,6 +124,6 @@ public class UserInformation {
       expenditureMonthly.put(month, lastTrip.getFee());
     }
     // Update system's expenditure history
-    calculator.updateSystemRevenue(lastTrip.getFee(), Math.max(lastTrip.getTripLegLength(), 0));
+    calculator.updateSystemStats(lastTrip.getFee(), Math.max(lastTrip.getTripLegLength(), 0));
   }
 }

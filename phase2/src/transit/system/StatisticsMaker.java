@@ -16,6 +16,8 @@ public class StatisticsMaker implements Serializable {
   private static HashMap<LocalDate, Integer> dailyRevenue = new HashMap<>();
   /** Contains the number of stations travelled per day by users */
   private static HashMap<LocalDate, Integer> dailyLog = new HashMap<>();
+  /** Contains the number of trips made by users */
+  private static HashMap<LocalDate, Integer> dailyNumTrips = new HashMap<>();
 
   /** @return The daily report table for all days passed during this simulation. */
   public static String generateReportMessage() {
@@ -33,6 +35,8 @@ public class StatisticsMaker implements Serializable {
       message +=
           String.format("%s   $%.2f     %s%s", date, revenue, travelled, System.lineSeparator());
     }
+    message += "Total stations travelled: " + totalLegLength() + System.lineSeparator();
+    message += "Average stations travelled: " + averageLegLength() + System.lineSeparator();
     return message;
   }
 
@@ -40,34 +44,31 @@ public class StatisticsMaker implements Serializable {
     return monthlyRevenue;
   }
 
-  /** Updates the expenditure and revenue in the entire system */
-  void updateSystemRevenue(int fee, int tripLength) {
-    LocalDate date = TransitTime.getCurrentDate();
-    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
-
-    if (dailyRevenue.containsKey(date)) {
-      dailyRevenue.put(date, dailyRevenue.get(date) + fee);
-      dailyLog.put(date, dailyLog.get(date) + tripLength);
-
-    } else {
-      dailyRevenue.put(date, fee);
-      dailyLog.put(date, tripLength);
+  /** @return the average number of stations traveled per trip in the given day */
+  public static double averageLegLength() {
+    if (dailyNumTrips.get(TransitTime.getCurrentDate()) != null) {
+      return dailyLog.get(TransitTime.getCurrentDate())
+          / dailyNumTrips.get(TransitTime.getCurrentDate());
     }
+    return 0.0;
+  }
 
-    if (monthlyRevenue.containsKey(month)) {
-      monthlyRevenue.put(month, monthlyRevenue.get(month) + fee);
-    } else {
-      monthlyRevenue.put(month, fee);
+  /** @return the total number of stations traveled in the current day */
+  public static double totalLegLength() {
+    if (dailyLog.get(TransitTime.getCurrentDate()) != null) {
+      return dailyLog.get(TransitTime.getCurrentDate());
     }
+    return 0.0;
   }
 
   /** @return a station hash map, with all logically equivalent stations */
   public static HashMap<Station, ArrayList<Integer>> makeStationsMap(String type) {
     HashMap<Station, ArrayList<Integer>> temp = new HashMap<>();
     if (Route.getRoutesCopy().get(type) != null) {
-      for (Route route: Route.getRoutesCopy().get(type)) {
-        for (Station station: route.getRouteStationsCopy()) {
+      for (Route route : Route.getRoutesCopy().get(type)) {
+        for (Station station : route.getRouteStationsCopy()) {
           ArrayList<Integer> newStats;
+          // if a logically equivalent station is present in the hash map
           if (findStation(temp, station) != null) {
             newStats = refreshStats(temp, station, findStation(temp, station));
             temp.replace(findStation(temp, station), newStats);
@@ -75,7 +76,6 @@ public class StatisticsMaker implements Serializable {
             newStats = makeNewStats(station);
             temp.put(station, newStats);
           }
-
         }
       }
     }
@@ -85,15 +85,18 @@ public class StatisticsMaker implements Serializable {
   /**
    * Refreshed the list of statistics kept in stations
    *
-   * @param temp the hashmap of station stats being generated
+   * @param temp the hash map of station stats being generated
    * @param station the station whose stats are being fetched
    * @param matchedStation the station which matched with this station in temp
    * @return the refreshed list of statistics kept in logically equivalent stations
    */
-  private static ArrayList<Integer> refreshStats(HashMap<Station, ArrayList<Integer>> temp, Station station, Station matchedStation) {
+  private static ArrayList<Integer> refreshStats(
+      HashMap<Station, ArrayList<Integer>> temp, Station station, Station matchedStation) {
     ArrayList<Integer> newStats = new ArrayList<>();
-    newStats.add(0,temp.get(matchedStation).get(0) + station.getTapsOn(TransitTime.getCurrentDate()));
-    newStats.add(1, temp.get(matchedStation).get(1) + station.getTapsOff(TransitTime.getCurrentDate()));
+    newStats.add(
+        0, temp.get(matchedStation).get(0) + station.getTapsOn(TransitTime.getCurrentDate()));
+    newStats.add(
+        1, temp.get(matchedStation).get(1) + station.getTapsOff(TransitTime.getCurrentDate()));
     return newStats;
   }
 
@@ -110,12 +113,42 @@ public class StatisticsMaker implements Serializable {
     return newStats;
   }
 
+  /**
+   * Looks for a logically equivalent station in the given hashmap
+   *
+   * @param temp the hashmap to look for logically equivalent stations in
+   * @param station the station to compare to
+   * @return the logically equivalent station present in the hashmap, or null if none is found
+   */
   private static Station findStation(HashMap<Station, ArrayList<Integer>> temp, Station station) {
-    for (Station s: temp.keySet()) {
+    for (Station s : temp.keySet()) {
       if (s.equals(station)) {
         return s;
       }
     }
     return null;
+  }
+
+  /** Updates the expenditure and revenue in the entire system */
+  void updateSystemStats(int fee, int tripLength) {
+    LocalDate date = TransitTime.getCurrentDate();
+    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
+
+    if (dailyRevenue.containsKey(date)) {
+      dailyRevenue.put(date, dailyRevenue.get(date) + fee);
+      dailyLog.put(date, dailyLog.get(date) + tripLength);
+      dailyNumTrips.put(date, dailyNumTrips.get(date) + 1);
+
+    } else {
+      dailyRevenue.put(date, fee);
+      dailyLog.put(date, tripLength);
+      dailyNumTrips.put(date, 1);
+    }
+
+    if (monthlyRevenue.containsKey(month)) {
+      monthlyRevenue.put(month, monthlyRevenue.get(month) + fee);
+    } else {
+      monthlyRevenue.put(month, fee);
+    }
   }
 }

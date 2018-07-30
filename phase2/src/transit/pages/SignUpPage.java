@@ -37,7 +37,12 @@ public class SignUpPage extends Page {
     PasswordField password = placePasswordField(1, 3);
     CheckBox adminBox = placeCheckBox("Is Admin?", 1, 4);
 
-    makeButtons(primaryStage, username, email, password, adminBox);
+    makeButtons(
+        primaryStage,
+        username.getText(),
+        email.getText(),
+        password.getText(),
+        adminBox.isSelected());
 
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
@@ -57,18 +62,24 @@ public class SignUpPage extends Page {
     }
   }
 
+  /** Places the labels in this signup page */
   private void placeLabels() {
     placeLabel("User: ", 0, 1);
     placeLabel("New Email: ", 0, 2);
     placeLabel("New Password: ", 0, 3);
   }
 
+  /**
+   * Constructs and places the buttons in this SignUp page
+   *
+   * @param primaryStage the stage on which this SignUp page is being served
+   * @param username the username of the user which is being created
+   * @param email the email of the user which is being created
+   * @param password the password of the user which is being created
+   * @param isAdmin whether or not the user being created is an admin
+   */
   private void makeButtons(
-      Stage primaryStage,
-      TextField username,
-      TextField email,
-      PasswordField password,
-      CheckBox adminBox) {
+      Stage primaryStage, String username, String email, String password, boolean isAdmin) {
     placeButton(
         "Go back", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 1, 5);
 
@@ -76,7 +87,7 @@ public class SignUpPage extends Page {
         "Make Account!",
         () -> {
           try {
-            add(username.getText(), email.getText(), password.getText(), adminBox.isSelected());
+            add(username, email, password, isAdmin);
             primaryStage.setScene(new LoginPage(primaryStage).getScene());
           } catch (Exception a) {
             Alert alert =

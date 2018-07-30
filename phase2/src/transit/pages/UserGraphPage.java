@@ -9,8 +9,7 @@ import transit.system.User;
 import java.time.YearMonth;
 import java.util.HashMap;
 
-
-
+/** */
 public class UserGraphPage extends GraphPage {
 
   public UserGraphPage(Stage primaryStage, User user) {

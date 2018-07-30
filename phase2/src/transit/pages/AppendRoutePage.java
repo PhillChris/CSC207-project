@@ -79,6 +79,12 @@ public class AppendRoutePage extends Page {
         20);
   }
 
+  /**
+   * Adds a station at the start of the current route plan
+   *
+   * @param textField the textfield containing the name of the station to be added at the beginning
+   *     of the route
+   */
   private void addStationAtStart(TextField textField) {
     if (textField.getText() != null) {
       if (!stationNames.contains(textField.getText())) {
@@ -95,6 +101,12 @@ public class AppendRoutePage extends Page {
     setRouteLabel();
   }
 
+  /**
+   * Adds a station at the end of the current route plan
+   *
+   * @param textField the textfield containing the name of the station to be added at the beginning
+   *     of the route
+   */
   private void addStationAtEnd(TextField textField) {
     if (textField.getText() != null) {
       if (!stationNames.contains(textField.getText())) {

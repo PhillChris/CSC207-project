@@ -47,8 +47,10 @@ public class UserPage extends AuthenticatedPage {
     placeButton(
         "Cards",
         () -> {
-          CardPage cardPage = new CardPage(primaryStage, this.user);
-          primaryStage.setScene(cardPage.getScene());
+          Stage newStage = new Stage();
+          CardPage cardPage = new CardPage(newStage, this.user);
+          newStage.setScene(cardPage.getScene());
+          newStage.show();
         },
         0,
         2);

@@ -191,7 +191,7 @@ public abstract class Page {
     } else {
       dates.getItems().addAll(StatisticsMaker.getDatesCopy());
     }
-    dates.getSelectionModel().select(0);
+    dates.getSelectionModel().select(dates.getItems().size() - 1);
     grid.add(dates, col, row);
     return dates;
   }

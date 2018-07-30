@@ -65,7 +65,7 @@ public class StatisticsMaker implements Serializable {
   }
 
   /** @return a station hash map, with all logically equivalent stations */
-  public static HashMap<Station, ArrayList<Integer>> makeStationsMap(String type) {
+  public static HashMap<Station, ArrayList<Integer>> makeStationsMap(String type, LocalDate selectedDate) {
     HashMap<Station, ArrayList<Integer>> temp = new HashMap<>();
     if (Route.getRoutesCopy().get(type) != null) {
       for (Route route : Route.getRoutesCopy().get(type)) {
@@ -73,10 +73,10 @@ public class StatisticsMaker implements Serializable {
           ArrayList<Integer> newStats;
           // if a logically equivalent station is present in the hash map
           if (findStation(temp, station) != null) {
-            newStats = refreshStats(temp, station, findStation(temp, station));
+            newStats = refreshStats(temp, station, findStation(temp, station), selectedDate);
             temp.replace(findStation(temp, station), newStats);
           } else {
-            newStats = makeNewStats(station);
+            newStats = makeNewStats(station, selectedDate);
             temp.put(station, newStats);
           }
         }
@@ -94,12 +94,12 @@ public class StatisticsMaker implements Serializable {
    * @return the refreshed list of statistics kept in logically equivalent stations
    */
   private static ArrayList<Integer> refreshStats(
-      HashMap<Station, ArrayList<Integer>> temp, Station station, Station matchedStation) {
+      HashMap<Station, ArrayList<Integer>> temp, Station station, Station matchedStation, LocalDate selectedDate) {
     ArrayList<Integer> newStats = new ArrayList<>();
     newStats.add(
-        0, temp.get(matchedStation).get(0) + station.getTapsOn(TransitTime.getCurrentDate()));
+        0, temp.get(matchedStation).get(0) + station.getTapsOn(selectedDate));
     newStats.add(
-        1, temp.get(matchedStation).get(1) + station.getTapsOff(TransitTime.getCurrentDate()));
+        1, temp.get(matchedStation).get(1) + station.getTapsOff(selectedDate));
     return newStats;
   }
 
@@ -109,10 +109,10 @@ public class StatisticsMaker implements Serializable {
    * @param station the station whose stats are being fetched
    * @return the new list of statistics kept in logically equivalent stations
    */
-  private static ArrayList<Integer> makeNewStats(Station station) {
+  private static ArrayList<Integer> makeNewStats(Station station, LocalDate selectedDate) {
     ArrayList<Integer> newStats = new ArrayList<>();
-    newStats.add(0, station.getTapsOn(TransitTime.getCurrentDate()));
-    newStats.add(1, station.getTapsOff(TransitTime.getCurrentDate()));
+    newStats.add(0, station.getTapsOn(selectedDate));
+    newStats.add(1, station.getTapsOff(selectedDate));
     return newStats;
   }
 

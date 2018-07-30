@@ -1,9 +1,12 @@
 package transit.pages;
 
+import javafx.scene.control.ChoiceBox;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import transit.system.AdminUser;
 import transit.system.Station;
@@ -12,9 +15,10 @@ import transit.system.TransitTime;
 
 /** Represents a page displaying statistics collected about stations */
 public class StationStatsPage extends Page {
-
   /** The admin user accessing the current StationStatsPage */
   private AdminUser admin;
+  /** An arraylist of the current labels in the system */
+  private ArrayList<Label> stationLabels = new ArrayList<>();
 
   /**
    * Construcs a new StationStatsPage
@@ -34,15 +38,25 @@ public class StationStatsPage extends Page {
    */
   @Override
   public void makeScene(Stage primaryStage) {
-    HashMap<Station, ArrayList<Integer>> busStationStats = StatisticsMaker.makeStationsMap("Bus");
-    HashMap<Station, ArrayList<Integer>> subwayStationStats =
-        StatisticsMaker.makeStationsMap("Subway");
     placeLabel("Station statistics!", 0, 0);
-    placeDateOptions(0, 1);
+    ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
+    dateOptions.setOnAction(e -> refreshStats(primaryStage, dateOptions.getValue()));
+    refreshStats(primaryStage, TransitTime.getCurrentDate());
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+  }
+
+  private void refreshStats(Stage primaryStage, LocalDate selectedDate) {
+    while (!stationLabels.isEmpty()) {
+      grid.getChildren().remove(stationLabels.get(0));
+      stationLabels.remove(stationLabels.get(0));
+    }
+    HashMap<Station, ArrayList<Integer>> busStationStats = StatisticsMaker.makeStationsMap("Bus", selectedDate);
+    HashMap<Station, ArrayList<Integer>> subwayStationStats =
+        StatisticsMaker.makeStationsMap("Subway", selectedDate);
     placeLabel("Bus Stations: ", 0, 2);
     int i = 3;
     for (Station station : busStationStats.keySet()) {
-      placeLabel(
+      stationLabels.add(placeLabel(
           "Station "
               + station
               + ": "
@@ -51,13 +65,13 @@ public class StationStatsPage extends Page {
               + busStationStats.get(station).get(1)
               + " taps off.",
           0,
-          i);
+          i));
       i++;
     }
     placeLabel("Subway Stations:", 0, i);
     i++;
     for (Station station : subwayStationStats.keySet()) {
-      placeLabel(
+      stationLabels.add(placeLabel(
           "Station "
               + station
               + ": "
@@ -66,7 +80,7 @@ public class StationStatsPage extends Page {
               + subwayStationStats.get(station).get(1)
               + " taps off.",
           0,
-          i);
+          i));
       i++;
     }
     placeButton(
@@ -74,25 +88,5 @@ public class StationStatsPage extends Page {
         () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
         0,
         i);
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-  }
-
-  /**
-   * Write the statistics which occur to the given station
-   *
-   * @param station the station whose information we are now rendering
-   * @param i the current index of the loop in StationStatsPage.makeScene
-   */
-  private void writeStationStat(Station station, int i) {
-    placeLabel(
-        station.toString()
-            + ": "
-            + station.getTapsOn(TransitTime.getCurrentDate())
-            + " taps on, "
-            + station.getTapsOff(TransitTime.getCurrentDate())
-            + " taps off.",
-        0,
-        i,
-        "station" + station.toString());
   }
 }

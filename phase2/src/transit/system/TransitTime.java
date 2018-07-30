@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static javafx.scene.paint.Color.BLACK;
+import static javafx.scene.paint.Color.PINK;
 
 /** A class keeping track of universal time in the transit system */
 public class TransitTime {
@@ -54,6 +55,8 @@ public class TransitTime {
   }
 
   public static void skipDay() { currentTime = currentTime.plusDays(1); }
+
+  public static void skipMonth() { currentTime = currentTime.plusMonths(1); }
 
   /** Updates the time label as time progresses */
   protected static void updateTimeLabel() {

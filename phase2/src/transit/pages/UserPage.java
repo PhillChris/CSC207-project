@@ -82,6 +82,8 @@ public class UserPage extends AuthenticatedPage {
 
     placeButton("Jump ahead 1 day", () -> TransitTime.skipDay(), 0, 18);
 
+    placeButton("Jump ahead 1 month", () -> TransitTime.skipMonth(), 0, 18);
+
 
     if (user instanceof AdminUser) {
       placeButton(

@@ -21,7 +21,7 @@ public class StationStatsPage extends Page {
   private ArrayList<Label> stationLabels = new ArrayList<>();
 
   /**
-   * Construcs a new StationStatsPage
+   * Constructs a new StationStatsPage
    *
    * @param primaryStage the stage on which this page is being served
    * @param admin the AdminUser accessing the given statistics
@@ -45,6 +45,12 @@ public class StationStatsPage extends Page {
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
+  /**
+   * Refreshes all of the station statistics displayed on this page
+   *
+   * @param primaryStage the stage on which this page is served
+   * @param selectedDate the date selected on this page
+   */
   private void refreshStats(Stage primaryStage, LocalDate selectedDate) {
     while (!stationLabels.isEmpty()) {
       grid.getChildren().remove(stationLabels.get(0));
@@ -53,8 +59,9 @@ public class StationStatsPage extends Page {
     HashMap<Station, ArrayList<Integer>> busStationStats = StatisticsMaker.makeStationsMap("Bus", selectedDate);
     HashMap<Station, ArrayList<Integer>> subwayStationStats =
         StatisticsMaker.makeStationsMap("Subway", selectedDate);
-    placeLabel("Bus Stations: ", 0, 2);
-    int i = 3;
+    int i = 2;
+    placeLabel("Bus Stations: ", 0, i);
+    i++;
     for (Station station : busStationStats.keySet()) {
       stationLabels.add(placeLabel(
           "Station "

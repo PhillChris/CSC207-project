@@ -27,7 +27,6 @@ public class User implements Serializable {
   private String password;
   /** The id given to the next card added by the user */
   private int cardCounter;
-
   /**
    * Construct a new instance of transit.system.User
    *
@@ -49,6 +48,10 @@ public class User implements Serializable {
     allUsers.put(email, this);
     cardCounter = 1;
     this.statistics = new UserInformation(this);
+  }
+
+  public static void setAllUsers(HashMap<String, User> allUsers) {
+    User.allUsers = allUsers;
   }
 
   /** @return a copy of the HashMap of all Users */

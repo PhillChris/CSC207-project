@@ -1,5 +1,6 @@
 package transit.system;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /** This class is designed to track all statistics related to a user */
-public class UserInformation {
+public class UserInformation implements Serializable {
   /** The user assoicated with these statistics */
   private User user;
   /** Log of all tap ins for each day */

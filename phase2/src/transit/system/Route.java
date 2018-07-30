@@ -50,7 +50,6 @@ public class Route implements Serializable {
   /**
    * Sets the new station to this route at the start of the route
    *
-   * @param stationName The name of this new station
    * @throws TransitException Thrown if the type of this station does not match the type of this
    *     route
    */

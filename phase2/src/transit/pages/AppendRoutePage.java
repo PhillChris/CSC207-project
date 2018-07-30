@@ -114,8 +114,11 @@ public class AppendRoutePage extends Page {
   /** Sets the label describing the associated route */
   private void setRouteLabel() {
     String text = "Route number: " + this.route.getRouteNum() + System.lineSeparator();
-    for (String name : stationNames) {
-      text += name + " <-> ";
+    for (int i = 0; i < stationNames.size(); i++) {
+      text += stationNames.get(i);
+      if (i < stationNames.size() - 1) {
+        text += " <-> ";
+      }
     }
     routeLabel.setText(text);
   }

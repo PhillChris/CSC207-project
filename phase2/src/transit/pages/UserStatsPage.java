@@ -41,7 +41,7 @@ public class UserStatsPage extends Page {
     dateOptions.setOnAction(e -> {
       refreshStats(primaryStage, dateOptions.getValue());
     });
-    refreshStats(primaryStage, TransitTime.getCurrentDate());
+    refreshStats(primaryStage, dateOptions.getItems().get(0));
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 

@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import transit.system.AdminUser;
 import transit.system.Station;
 import transit.system.StatisticsMaker;
-import transit.system.TransitTime;
 
 /** Represents a page displaying statistics collected about stations */
 public class StationStatsPage extends Page {

@@ -40,8 +40,10 @@ public class StationStatsPage extends Page {
   public void makeScene(Stage primaryStage) {
     placeLabel("Station statistics!", 0, 0);
     ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
-    dateOptions.setOnAction(e -> refreshStats(primaryStage, dateOptions.getValue()));
-    refreshStats(primaryStage, TransitTime.getCurrentDate());
+    dateOptions.setOnAction(e -> {
+      refreshStats(primaryStage, dateOptions.getValue());
+    });
+    refreshStats(primaryStage, dateOptions.getItems().get(0));
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 

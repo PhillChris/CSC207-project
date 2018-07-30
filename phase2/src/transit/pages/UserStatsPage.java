@@ -7,6 +7,7 @@ import transit.system.AdminUser;
 import transit.system.TransitTime;
 import transit.system.User;
 
+/** Represents a page displaying all stats regarding users in this TransitSystem */
 public class UserStatsPage extends Page {
   private AdminUser admin;
 

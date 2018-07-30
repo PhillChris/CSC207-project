@@ -8,14 +8,42 @@ import transit.system.AdminUser;
 import transit.system.TransitTime;
 import transit.system.User;
 
+/** Represents a page displayed when a user logs in in this transit system */
 public class UserPage extends AuthenticatedPage {
+
+  /**
+   * Constructs a new UserPage in this simulation
+   *
+   * @param primaryStage the stage on which this page is being served
+   * @param user the user whose page is being displayed
+   */
   public UserPage(Stage primaryStage, User user) {
     super(primaryStage, user);
-    addUserData(primaryStage);
+    addUserData();
     makeScene(primaryStage);
   }
 
+  /**
+   * Makes the scene in which this UserPage is being displayed
+   *
+   * @param primaryStage the stage which this scene is being served on, passed for button-action
+   */
+  @Override
   protected void makeScene(Stage primaryStage) {
+    placeUserButtons(primaryStage);
+  }
+
+  /** Adds the user-specific data on this page */
+  protected void addUserData() {
+    placeLabel("Hello " + user.getUserName(), 0, 1);
+  }
+
+  /**
+   * Places the buttons on this UserPage
+   *
+   * @param primaryStage the stage on which this page is served
+   */
+  private void placeUserButtons(Stage primaryStage) {
     placeButton(
         "Cards",
         () -> {
@@ -26,13 +54,7 @@ public class UserPage extends AuthenticatedPage {
         2);
     placeButton(
         "Monthly Expenditure (Current Year)",
-        () -> {
-          Stage secondaryStage = new Stage();
-          UserGraphPage graphPage = new UserGraphPage(secondaryStage, this.user);
-          secondaryStage.setTitle("Monthly Expenditure for user " + user);
-          secondaryStage.setScene(graphPage.getScene());
-          secondaryStage.show();
-        },
+        () -> makeMonthlyExpenditurePage(),
         0,
         3);
     super.makeScene(primaryStage);
@@ -67,7 +89,12 @@ public class UserPage extends AuthenticatedPage {
     }
   }
 
-  protected void addUserData(Stage primaryStage) {
-    placeLabel("Hello " + user.getUserName(), 0, 1);
+  /** Creates a popup window containing a monthly expenditure page*/
+  private void makeMonthlyExpenditurePage() {
+    Stage secondaryStage = new Stage();
+    UserGraphPage graphPage = new UserGraphPage(secondaryStage, this.user);
+    secondaryStage.setTitle("Monthly Expenditure for user " + user);
+    secondaryStage.setScene(graphPage.getScene());
+    secondaryStage.show();
   }
 }

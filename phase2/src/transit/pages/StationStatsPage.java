@@ -35,10 +35,12 @@ public class StationStatsPage extends Page {
     int i = 1;
     placeLabel("Station statistics!", 0, 0);
     for (String type : Station.POSSIBLE_TYPES) {
-      for (Route route: Route.getRoutesCopy().get(type)) {
-        for (Station station : route.getRouteStationsCopy()) {
-          writeStationStat(station, i);
-          i++;
+      if (Route.getRoutesCopy().get(type) != null) {
+        for (Route route: Route.getRoutesCopy().get(type)) {
+          for (Station station : route.getRouteStationsCopy()) {
+            writeStationStat(station, i);
+            i++;
+          }
         }
       }
     }

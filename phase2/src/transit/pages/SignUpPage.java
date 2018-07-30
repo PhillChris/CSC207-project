@@ -39,10 +39,10 @@ public class SignUpPage extends Page {
 
     makeButtons(
         primaryStage,
-        username.getText(),
-        email.getText(),
-        password.getText(),
-        adminBox.isSelected());
+        username,
+        email,
+        password,
+        adminBox);
 
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
@@ -79,7 +79,7 @@ public class SignUpPage extends Page {
    * @param isAdmin whether or not the user being created is an admin
    */
   private void makeButtons(
-      Stage primaryStage, String username, String email, String password, boolean isAdmin) {
+      Stage primaryStage, TextField username, TextField email, PasswordField password, CheckBox adminBox) {
     placeButton(
         "Go back", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 1, 5);
 
@@ -87,7 +87,7 @@ public class SignUpPage extends Page {
         "Make Account!",
         () -> {
           try {
-            add(username, email, password, isAdmin);
+            add(username.getText(), email.getText(), password.getText(), adminBox.isSelected());
             primaryStage.setScene(new LoginPage(primaryStage).getScene());
           } catch (Exception a) {
             Alert alert =

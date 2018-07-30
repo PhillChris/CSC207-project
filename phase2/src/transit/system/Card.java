@@ -90,6 +90,15 @@ public class Card implements Serializable {
     this.balance += toAdd;
   }
 
+  /** @return a string representation of this card */
+  public String toString() {
+    return "Card #"
+        + this.id
+        + " has $"
+        + String.format("%.2f", this.balance / 100.0)
+        + " remaining";
+  }
+
   /**
    * Subtracts given number of cents from this transit.system.Card's balance.
    *

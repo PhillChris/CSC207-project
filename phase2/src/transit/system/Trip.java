@@ -147,22 +147,25 @@ public class Trip implements Serializable {
 
     // Loop through all the routes
     for (String type : Station.POSSIBLE_TYPES) {
-      for (Route route : Route.getRoutesCopy().get(type)) {
-        // Do not check routes if the start and end station have already been found
-        if (firstStationIndex == null && secondStationIndex == null) {
-          // Loop through all the stations in a given route
-          for (int i = 0; i < route.getRouteStationsCopy().size(); i++) {
-            Station station = route.getRouteStationsCopy().get(i);
-            // Check equality in start station for this leg
-            if (station.equals(priorStops.get(priorStops.size() - 1))) {
-              firstStationIndex = i;
-            }
-            // Check for equality in the end station for this leg
-            if (station.equals(endStation)) {
-              secondStationIndex = i;
+      if (Route.getRoutesCopy().get(type) != null) {
+        for (Route route : Route.getRoutesCopy().get(type)) {
+          // Do not check routes if the start and end station have already been found
+          if (firstStationIndex == null && secondStationIndex == null) {
+            // Loop through all the stations in a given route
+            for (int i = 0; i < route.getRouteStationsCopy().size(); i++) {
+              Station station = route.getRouteStationsCopy().get(i);
+              // Check equality in start station for this leg
+              if (station.equals(priorStops.get(priorStops.size() - 1))) {
+                firstStationIndex = i;
+              }
+              // Check for equality in the end station for this leg
+              if (station.equals(endStation)) {
+                secondStationIndex = i;
+              }
             }
           }
         }
+
         // If one of the two stations was not found in this route, set both indices to null
         if (firstStationIndex == null || secondStationIndex == null) {
           firstStationIndex = null;

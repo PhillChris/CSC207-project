@@ -17,7 +17,7 @@ public class UserInformation {
   /** An ArrayList of this transit.system.User's last three trips */
   private ArrayList<Trip> previousTrips;
   /** HashMap linking each month to the total expenditure for that month */
-  private HashMap<YearMonth, Integer> expenditureMonthly;
+  private HashMap<YearMonth, Integer> expenditureMonthly = new HashMap<>();
   /** Calculates and sends the daily revenue recieved from this user to the system */
   private CostCalculator calculator;
 

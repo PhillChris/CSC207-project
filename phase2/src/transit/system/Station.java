@@ -35,10 +35,7 @@ public class Station implements Serializable {
   @Override
   /** @return whether or not these two stations are logically equivalent */
   public boolean equals(Object o) {
-    if (o instanceof Station) {
-      return this.name.equals(((Station) o).name);
-    }
-    return false;
+    return o instanceof Station && this.name.equals(((Station) o).name);
   }
 
   /** @return A string representation of a station */

@@ -44,7 +44,7 @@ public class Card implements Serializable {
   }
 
   /** @return The current transit.system.Trip this card is on, or null if it is not on a trip */
-  Trip getCurrentTrip() {
+  public Trip getCurrentTrip() {
     return currentTrip;
   }
 
@@ -58,7 +58,7 @@ public class Card implements Serializable {
   }
 
   /** @return The last transit.system.Trip that this transit.system.Card has completed */
-  Trip getLastTrip() {
+  public Trip getLastTrip() {
     return lastTrip;
   }
 

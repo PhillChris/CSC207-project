@@ -28,6 +28,15 @@ public class TransitTime {
     return TransitTime.currentTime;
   }
 
+  /**
+   * Set the currentTime to the given parameter
+   *
+   * @param time the time to set the currentTime to.
+   */
+  static void setCurrentTime(LocalDateTime time) {
+    TransitTime.currentTime = time;
+  }
+
   /** @return The current date in the transit system */
   public static LocalDate getCurrentDate() {
     return currentTime.toLocalDate();
@@ -54,10 +63,14 @@ public class TransitTime {
   }
 
   /** Moves the simulation time forward one day */
-  public static void skipDay() { currentTime = currentTime.plusDays(1); }
+  public static void skipDay() {
+    currentTime = currentTime.plusDays(1);
+  }
 
   /** Moves the simulation time forward one month */
-  public static void skipMonth() { currentTime = currentTime.plusMonths(1); }
+  public static void skipMonth() {
+    currentTime = currentTime.plusMonths(1);
+  }
 
   /** Updates the time label as time progresses */
   protected static void updateTimeLabel() {

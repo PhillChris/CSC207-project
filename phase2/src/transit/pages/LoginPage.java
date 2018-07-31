@@ -33,14 +33,17 @@ public class LoginPage extends Page {
   protected void makeScene(Stage primaryStage) {
     grid.setPadding(new Insets(20, 20, 20, 40));
     grid.setHgap(10);
-    grid.setVgap(12);
+    grid.setVgap(10);
 
     makeLoginPane(primaryStage);
+    GridPane trainPane = new GridPane();
     ImageView train = new ImageView(new Image("transit/pages/assets/train.png"));
-    grid.add(train, 2, 0, 1, 8);
+    trainPane.setPadding(new Insets(30, 0, 0, 10));
+    trainPane.add(train, 0, 0);
+    grid.add(trainPane, 1, 0, 1, 2);
 
     addClock();
-    this.scene = new Scene(grid, 600, 375);
+    this.scene = new Scene(grid, 625, 400);
 
     scene
         .getStylesheets()
@@ -53,60 +56,65 @@ public class LoginPage extends Page {
    * @param primaryStage the stage on which this LoginPage is being represented
    */
   private void makeLoginPane(Stage primaryStage) {
-    makeLabels();
-    makeIcons();
+    GridPane loginPane = new GridPane();
+    loginPane.setHgap(10);
+    loginPane.setVgap(12);
+    makeLabels(loginPane);
+    makeIcons(loginPane);
 
     TextField emailInput = makeEmailInput();
+    loginPane.add(emailInput, 1, 1);
     PasswordField passInput = makePassInput();
+    loginPane.add(passInput, 1, 2);
 
-    Label errorMessage = makeErrorMessage();
+    Label errorMessage = new Label("");
+    errorMessage.setId("errorMessage");
+    loginPane.add(errorMessage, 1, 3);
+    GridPane.setHalignment(errorMessage, HPos.RIGHT);
 
-    makeSignUpButton(primaryStage);
-    makeLoginButton(emailInput, passInput, errorMessage, primaryStage);
+    Button signupButton = makeSignUpButton(primaryStage);
+    loginPane.add(signupButton, 0, 6, 2, 1);
+    Button loginButton = makeLoginButton(emailInput, passInput, errorMessage, primaryStage);
+    loginPane.add(loginButton, 0, 3, 2, 1);
 
     Separator horizontalSeparator = new Separator();
-    grid.add(horizontalSeparator, 0, 5, 2, 1);
+    loginPane.add(horizontalSeparator, 0, 4, 2, 1);
+    grid.add(loginPane, 0, 1);
   }
 
   /**
-   * Makes all icons in the scene
+   * Makes all icons in the login pane
    *
+   * @param loginPane the login pane being constructed in this LoginPage
    */
-  private void makeIcons() {
+  private void makeIcons(GridPane loginPane) {
     ImageView emailIcon = new ImageView(new Image("transit/pages/assets/email.png"));
-    grid.add(emailIcon, 0, 2);
+    loginPane.add(emailIcon, 0, 1);
 
     ImageView keyIcon = new ImageView(new Image("transit/pages/assets/key.png"));
-    grid.add(keyIcon, 0, 3);
+    loginPane.add(keyIcon, 0, 2);
   }
 
   /**
-   * Makes all labels in the scene
+   * Makes all labels in the login pane
    *
+   * @param loginPane the login pane being constructed in this LoginPage
    */
-  private void makeLabels() {
+  private void makeLabels(GridPane loginPane) {
     Label login = new Label("Login");
     login.setId("loginLabel");
-    grid.add(login, 0, 1, 2, 1);
+    loginPane.add(login, 0, 0, 2, 1);
 
     Label noAccount = new Label("No account?");
     noAccount.setId("noAccount");
-    grid.add(noAccount, 0, 6, 2, 1);
+    loginPane.add(noAccount, 0, 5, 2, 1);
   }
 
-  private Label makeErrorMessage() {
-    Label errorMessage = new Label("");
-    errorMessage.setId("errorMessage");
-    grid.add(errorMessage, 1, 4);
-    GridPane.setHalignment(errorMessage, HPos.RIGHT);
-    return errorMessage;
-  }
-
+  /** @return the password input field for this LoginPage */
   private PasswordField makePassInput() {
     PasswordField passInput = new PasswordField();
     passInput.setId("passInput");
     passInput.setPromptText("Password");
-    grid.add(passInput, 1, 3);
     return passInput;
   }
 
@@ -115,12 +123,11 @@ public class LoginPage extends Page {
     TextField emailInput = new TextField();
     emailInput.setId("emailInput");
     emailInput.setPromptText("Email");
-    grid.add(emailInput, 1, 2);
     return emailInput;
   }
 
   /** @return the SignUp button for this LoginPage */
-  private void makeSignUpButton(Stage primaryStage) {
+  private Button makeSignUpButton(Stage primaryStage) {
     Button signupButton = new Button("Signup");
     signupButton.setId("signupButton");
     signupButton.setOnAction(
@@ -128,7 +135,7 @@ public class LoginPage extends Page {
           SignUpPage signupPage = new SignUpPage(primaryStage);
           primaryStage.setScene(signupPage.getScene());
         });
-    grid.add(signupButton, 0, 7, 2, 1);
+    return signupButton;
   }
 
   /**
@@ -138,7 +145,7 @@ public class LoginPage extends Page {
    * @param primaryStage the stage on which this LoginPage is being served
    * @return the login button on this LoginPage
    */
-  private void makeLoginButton(TextField emailInput, TextField passInput, Label errorMessage, Stage primaryStage) {
+  private Button makeLoginButton(TextField emailInput, TextField passInput, Label errorMessage, Stage primaryStage) {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
     loginButton.setOnAction(
@@ -166,7 +173,7 @@ public class LoginPage extends Page {
           } catch (Exception ignored) {
           }
         });
-    grid.add(loginButton, 0, 4, 2, 1);
+    return loginButton;
   }
 
   /**

@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Database {
-  public static final String routeLocation = "./tmp/routes.ser";
-  public static final String USERS_LOCATION = "./tmp/user.ser";
-  public static final String TIME_LOCATION = "./tmp/time.ser";
+  public static final String routeLocation =
+          "." + File.separator + "tmp" + File.separator + "routes.ser";
+  public static final String USERS_LOCATION =
+          "." + File.separator + "tmp" + File.separator + "user.ser";
+  public static final String TIME_LOCATION =
+          "." + File.separator + "tmp" + File.separator + "time.ser";
 
   public static void writeToDatabase() {
     HashMap<String, ArrayList<Route>> routes = Route.getRoutesCopy();

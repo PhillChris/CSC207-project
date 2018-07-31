@@ -28,8 +28,13 @@ public class TransitTime {
     return TransitTime.currentTime;
   }
 
-  static void setCurrentTime(LocalDateTime currentTime) {
-    TransitTime.currentTime = currentTime;
+  /**
+   * Set the currentTime to the given parameter
+   *
+   * @param time the time to set the currentTime to.
+   */
+  static void setCurrentTime(LocalDateTime time) {
+    TransitTime.currentTime = time;
   }
 
   /** @return The current date in the transit system */

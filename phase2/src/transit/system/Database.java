@@ -19,6 +19,12 @@ public class Database {
     writeObject(TIME_LOCATION, time);
   }
 
+  /**
+   * Write the given object to the passed file location in serialized format.
+   *
+   * @param fileLocation the location at which the object will be written.
+   * @param toWrite      the object to write.
+   */
   private static void writeObject(String fileLocation, Object toWrite) {
     try {
       FileOutputStream fileOut = new FileOutputStream(fileLocation);

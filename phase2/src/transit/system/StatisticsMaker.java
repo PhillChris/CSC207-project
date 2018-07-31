@@ -3,6 +3,7 @@ package transit.system;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -179,21 +180,23 @@ public class StatisticsMaker implements Serializable {
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
 
     if (dates.contains(date)) {
+      monthlyRevenue.put(YearMonth.from(date), monthlyRevenue.get(YearMonth.from(date)) + fee);
       dailyRevenue.put(date, dailyRevenue.get(date) + fee);
       dailyLog.put(date, dailyLog.get(date) + tripLength);
       dailyNumTrips.put(date, dailyNumTrips.get(date) + 1);
 
     } else {
       dates.add(date);
+      monthlyRevenue.put(YearMonth.from(date), fee);
       dailyRevenue.put(date, fee);
       dailyLog.put(date, tripLength);
       dailyNumTrips.put(date, 1);
     }
 
-    if (monthlyRevenue.containsKey(month)) {
+    /* if (monthlyRevenue.containsKey(month)) {
       monthlyRevenue.put(month, monthlyRevenue.get(month) + fee);
     } else {
       monthlyRevenue.put(month, fee);
-    }
+    } */
   }
 }

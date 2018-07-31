@@ -250,7 +250,7 @@ public abstract class Page {
   /** Adds a clock with live updating time on the user page */
   protected void addClock() {
     Label tempLabel = TransitTime.getTimeLabel();
-    grid.add(tempLabel, 0, 0);
+    grid.add(tempLabel, 0, 0, 2, 1);
   }
 
   /** @return the current trips message of this page */

@@ -43,9 +43,46 @@ public class StatisticsMaker implements Serializable {
     return message;
   }
 
-  public static HashMap<YearMonth, Integer> getMonthlyRevenue() {
-    return monthlyRevenue;
+  public static HashMap<YearMonth, Integer> getMonthlyRevenueCopy() {
+    return new HashMap<>(monthlyRevenue);
   }
+
+  public static HashMap<LocalDate, Integer> getDailyRevenueCopy() {
+    return new HashMap<>(dailyRevenue);
+  }
+
+  public static HashMap<LocalDate, Integer> getDailyLogCopy() {
+    return new HashMap<>(dailyLog);
+  }
+
+  public static HashMap<LocalDate, Integer> getDailyNumTripsCopy() {
+    return new HashMap<>(dailyNumTrips);
+  }
+
+  public static ArrayList<LocalDate> getDatesCopy() {
+    return new ArrayList<>(dates);
+  }
+
+  public static void setMonthlyRevenue(HashMap<YearMonth, Integer> newMonthlyRevenue) {
+    monthlyRevenue = newMonthlyRevenue;
+  }
+
+  public static void setDailyRevenue(HashMap<LocalDate, Integer> newDailyRevenue) {
+    dailyRevenue = newDailyRevenue;
+  }
+
+  public static void setDailyLog(HashMap<LocalDate, Integer> newDailyLog) {
+    dailyLog = newDailyLog;
+  }
+
+  public static void setDailyNumTrips(HashMap<LocalDate, Integer> newDailyNumTrips) {
+    dailyNumTrips = newDailyNumTrips;
+  }
+
+  public static void setDates(ArrayList<LocalDate> newDates) {
+    dates = newDates;
+  }
+
 
   /** @return the average number of stations traveled per trip in the given day */
   public static double averageLegLength() {
@@ -158,9 +195,5 @@ public class StatisticsMaker implements Serializable {
     } else {
       monthlyRevenue.put(month, fee);
     }
-  }
-
-  public static ArrayList<LocalDate> getDatesCopy() {
-    return new ArrayList<>(dates);
   }
 }

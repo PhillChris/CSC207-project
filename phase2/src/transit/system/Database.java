@@ -30,13 +30,36 @@ public class Database {
   }
 
   /**
-   * Read all objects stored in the .ser files used to store all data related to the transit system.
+   * Read all objects stored in the .ser files used to store all data related to the transit system,
+   * then store the objects read in their relevant class to be used in the application.
    */
   public static void readFromDatabase() {
-    readRoutes();
-    readUsers();
+    HashMap<String, ArrayList<Route>> routes = (HashMap<String, ArrayList<Route>>) readObject(routeLocation);
+    Route.setRoutes(routes);
+    HashMap<String, User> users = (HashMap<String, User>) readObject(USERS_LOCATION);
+    User.setAllUsers(users);
   }
 
+  /**
+   * Reads an object from the specified location and returns it. Note that this method should be
+   * called only when you know what object is stored at the file location or you will be unable to
+   * cast the returned Object to something useful.
+   *
+   * @param fileLocation the file location to read the object from.
+   * @return the object read from the file location.
+   */
+  public static Object readObject(String fileLocation) {
+    try {
+      FileInputStream fileIn = new FileInputStream(fileLocation);
+      ObjectInputStream in = new ObjectInputStream(fileIn);
+      return in.readObject();
+    } catch (IOException e) {
+      System.out.println("File not found when deserializing.");
+    } catch (ClassNotFoundException h) {
+      System.out.println("Wrong class contained in serialization file.");
+    }
+    return null;
+  }
   /**
    * Read the HashMap of route objects from the .ser file storing them (the file path given by
    * routeLocation).

@@ -13,7 +13,8 @@ PHILLIP:
 - ChangeNamePage: implemented functionality (i.e. no styling)
 - CardPage: implemented core functionality (i.e. no styling)
 - TapPage: implemented core functionality (i.e. no styling), including Station buttons layout
-- Added tap numbers for each station
+- Added tap numbers for each station, recorded by stations and users, and displayed them in
+  UserStatsPage and StationStatsPage
 
 FARDIN:
 - Implemented live time update and added display

@@ -120,11 +120,7 @@ public class Trip implements Serializable {
     priorStops.add(station);
     endStation = null;
     timeEnded = null;
-    if (maxFee - tripFee > 0) {
-      maxFee -= tripFee;
-    } else {
-      maxFee = 0;
-    }
+    maxFee = Math.max(0, maxFee - tripFee);
     tripFee = station.getInitialFee();
     perStationFee = station.getPerStationFee();
   }

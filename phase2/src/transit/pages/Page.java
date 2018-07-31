@@ -252,20 +252,4 @@ public abstract class Page {
     Label tempLabel = TransitTime.getTimeLabel();
     grid.add(tempLabel, 0, 0, 2, 1);
   }
-
-  /** @return the current trips message of this page */
-  protected String generateCurrentTripMessage(User user) {
-    String message = "Current trips:" + System.lineSeparator();
-    for (Card card : user.getCardsCopy().values()) {
-      if (card.getCurrentTrip() != null) {
-        message +=
-            "Trip started with card #"
-                + card.getId()
-                + " at station "
-                + card.getCurrentTrip().getStartStation()
-                + System.lineSeparator();
-      }
-    }
-    return message;
-  }
 }

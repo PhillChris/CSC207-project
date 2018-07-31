@@ -3,6 +3,7 @@ package transit.system;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,9 +44,46 @@ public class StatisticsMaker implements Serializable {
     return message;
   }
 
-  public static HashMap<YearMonth, Integer> getMonthlyRevenue() {
-    return monthlyRevenue;
+  public static HashMap<YearMonth, Integer> getMonthlyRevenueCopy() {
+    return new HashMap<>(monthlyRevenue);
   }
+
+  public static HashMap<LocalDate, Integer> getDailyRevenueCopy() {
+    return new HashMap<>(dailyRevenue);
+  }
+
+  public static HashMap<LocalDate, Integer> getDailyLogCopy() {
+    return new HashMap<>(dailyLog);
+  }
+
+  public static HashMap<LocalDate, Integer> getDailyNumTripsCopy() {
+    return new HashMap<>(dailyNumTrips);
+  }
+
+  public static ArrayList<LocalDate> getDatesCopy() {
+    return new ArrayList<>(dates);
+  }
+
+  public static void setMonthlyRevenue(HashMap<YearMonth, Integer> newMonthlyRevenue) {
+    monthlyRevenue = newMonthlyRevenue;
+  }
+
+  public static void setDailyRevenue(HashMap<LocalDate, Integer> newDailyRevenue) {
+    dailyRevenue = newDailyRevenue;
+  }
+
+  public static void setDailyLog(HashMap<LocalDate, Integer> newDailyLog) {
+    dailyLog = newDailyLog;
+  }
+
+  public static void setDailyNumTrips(HashMap<LocalDate, Integer> newDailyNumTrips) {
+    dailyNumTrips = newDailyNumTrips;
+  }
+
+  public static void setDates(ArrayList<LocalDate> newDates) {
+    dates = newDates;
+  }
+
 
   /** @return the average number of stations traveled per trip in the given day */
   public static double averageLegLength() {
@@ -142,25 +180,23 @@ public class StatisticsMaker implements Serializable {
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
 
     if (dates.contains(date)) {
+      monthlyRevenue.put(YearMonth.from(date), monthlyRevenue.get(YearMonth.from(date)) + fee);
       dailyRevenue.put(date, dailyRevenue.get(date) + fee);
       dailyLog.put(date, dailyLog.get(date) + tripLength);
       dailyNumTrips.put(date, dailyNumTrips.get(date) + 1);
 
     } else {
       dates.add(date);
+      monthlyRevenue.put(YearMonth.from(date), fee);
       dailyRevenue.put(date, fee);
       dailyLog.put(date, tripLength);
       dailyNumTrips.put(date, 1);
     }
 
-    if (monthlyRevenue.containsKey(month)) {
+    /* if (monthlyRevenue.containsKey(month)) {
       monthlyRevenue.put(month, monthlyRevenue.get(month) + fee);
     } else {
       monthlyRevenue.put(month, fee);
-    }
-  }
-
-  public static ArrayList<LocalDate> getDatesCopy() {
-    return new ArrayList<>(dates);
+    } */
   }
 }

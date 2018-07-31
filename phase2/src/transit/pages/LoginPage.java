@@ -1,8 +1,8 @@
 package transit.pages;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -41,8 +41,9 @@ public class LoginPage extends Page {
     makeLoginPane(primaryStage);
     GridPane trainPane = new GridPane();
     ImageView train = new ImageView(new Image("transit/pages/assets/train.png"));
+    trainPane.setPadding(new Insets(30, 0, 0, 10));
     trainPane.add(train, 0, 0);
-    grid.add(trainPane, 1, 1);
+    grid.add(trainPane, 1, 0, 1, 2);
 
     addClock();
     this.scene = new Scene(grid, 625, 400);
@@ -57,7 +58,7 @@ public class LoginPage extends Page {
    *
    * @param primaryStage the stage on which this LoginPage is being represented
    */
-  protected void makeLoginPane(Stage primaryStage) {
+  private void makeLoginPane(Stage primaryStage) {
     GridPane loginPane = new GridPane();
     loginPane.setHgap(10);
     loginPane.setVgap(12);
@@ -69,10 +70,16 @@ public class LoginPage extends Page {
     PasswordField passInput = makePassInput();
     loginPane.add(passInput, 1, 2);
 
+    Label errorMessage = new Label("");
+    errorMessage.setId("errorMessage");
+    loginPane.add(errorMessage, 1, 3);
+    GridPane.setHalignment(errorMessage, HPos.RIGHT);
+
     Button signupButton = makeSignUpButton(primaryStage);
     loginPane.add(signupButton, 0, 6, 2, 1);
-    Button loginButton = makeLoginButton(emailInput, passInput, primaryStage);
+    Button loginButton = makeLoginButton(emailInput, passInput, errorMessage, primaryStage);
     loginPane.add(loginButton, 0, 3, 2, 1);
+
 
     Separator horizontalSeparator = new Separator();
     loginPane.add(horizontalSeparator, 0, 4, 2, 1);
@@ -84,7 +91,7 @@ public class LoginPage extends Page {
    *
    * @param loginPane the login pane being constructed in this LoginPage
    */
-  protected void makeIcons(GridPane loginPane) {
+  private void makeIcons(GridPane loginPane) {
     ImageView emailIcon = new ImageView(new Image("transit/pages/assets/email.png"));
     emailIcon.setId("emailIcon");
     loginPane.add(emailIcon, 0, 1);
@@ -99,7 +106,7 @@ public class LoginPage extends Page {
    *
    * @param loginPane the login pane being constructed in this LoginPage
    */
-  protected void makeLabels(GridPane loginPane) {
+  private void makeLabels(GridPane loginPane) {
     Label login = new Label("Login");
     login.setId("loginLabel");
     loginPane.add(login, 0, 0, 2, 1);
@@ -110,7 +117,7 @@ public class LoginPage extends Page {
   }
 
   /** @return the password input field for this LoginPage */
-  protected PasswordField makePassInput() {
+  private PasswordField makePassInput() {
     PasswordField passInput = new PasswordField();
     passInput.setId("passInput");
     passInput.setPromptText("Password");
@@ -118,7 +125,7 @@ public class LoginPage extends Page {
   }
 
   /** @return the email input field for this LoginPage */
-  protected TextField makeEmailInput() {
+  private TextField makeEmailInput() {
     TextField emailInput = new TextField();
     emailInput.setId("emailInput");
     emailInput.setPromptText("Email");
@@ -126,7 +133,7 @@ public class LoginPage extends Page {
   }
 
   /** @return the SignUp button for this LoginPage */
-  protected Button makeSignUpButton(Stage primaryStage) {
+  private Button makeSignUpButton(Stage primaryStage) {
     Button signupButton = new Button("Signup");
     signupButton.setId("signupButton");
     signupButton.setOnAction(
@@ -140,10 +147,11 @@ public class LoginPage extends Page {
   /**
    * @param emailInput the email input field in this LoginPage
    * @param passInput the password input field in this LoginPage
+   * @param errorMessage the error message field on this LoginPage to be modified as needed
    * @param primaryStage the stage on which this LoginPage is being served
    * @return the login button on this LoginPage
    */
-  protected Button makeLoginButton(TextField emailInput, TextField passInput, Stage primaryStage) {
+  private Button makeLoginButton(TextField emailInput, TextField passInput, Label errorMessage, Stage primaryStage) {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
     loginButton.setOnAction(
@@ -153,6 +161,7 @@ public class LoginPage extends Page {
             if (User.getAllUsersCopy().containsKey(emailInput.getText())) {
               user = User.getAllUsersCopy().get(emailInput.getText());
             } else {
+              errorMessage.setText("User email not found.");
               throw new Exception();
             }
             if (checkAuthorization(emailInput, passInput)) {
@@ -164,15 +173,10 @@ public class LoginPage extends Page {
               }
               primaryStage.setScene(userPage.getScene());
             } else {
+              errorMessage.setText("Incorrect password.");
               throw new Exception();
             }
           } catch (Exception ignored) {
-            makeAlert(
-                    "Invalid credentials",
-                    "Invalid credentials:",
-                    "The given credentials don't match a user in the transit system",
-                    AlertType.ERROR)
-                .showAndWait();
           }
         });
     return loginButton;

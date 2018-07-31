@@ -8,7 +8,6 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import transit.system.AdminUser;
-import transit.system.TransitTime;
 import transit.system.User;
 
 /** Represents a page displaying all stats regarding users in this TransitSystem */

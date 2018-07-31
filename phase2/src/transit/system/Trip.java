@@ -65,6 +65,11 @@ public class Trip implements Serializable {
     }
   }
 
+  /** @return the station at which this Trip started*/
+  public String getStartStation() {
+    return priorStops.get(0).toString();
+  }
+
   /** @return A string representation of a trip */
   public String toString() {
     String endTime;
@@ -78,7 +83,7 @@ public class Trip implements Serializable {
     }
     return String.format(
         "Trip started at %s (%s) and ended at %s (%s)",
-        timeStarted.toString(), priorStops.get(0), endTime, finalStation, timeEnded.toLocalTime());
+        timeStarted.toString(), priorStops.get(0), endTime, finalStation);
   }
 
   /**

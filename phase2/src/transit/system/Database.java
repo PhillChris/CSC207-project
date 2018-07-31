@@ -23,7 +23,7 @@ public class Database {
    * Write the given object to the passed file location in serialized format.
    *
    * @param fileLocation the location at which the object will be written.
-   * @param toWrite      the object to write.
+   * @param toWrite the object to write.
    */
   private static void writeObject(String fileLocation, Object toWrite) {
     try {
@@ -40,12 +40,19 @@ public class Database {
    * then store the objects read in their relevant class to be used in the application.
    */
   public static void readFromDatabase() {
-    HashMap<String, ArrayList<Route>> routes = (HashMap<String, ArrayList<Route>>) readObject(routeLocation);
-    Route.setRoutes(routes);
+    HashMap<String, ArrayList<Route>> routes =
+            (HashMap<String, ArrayList<Route>>) readObject(routeLocation);
+    if (routes != null) {
+      Route.setRoutes(routes);
+    }
     HashMap<String, User> users = (HashMap<String, User>) readObject(USERS_LOCATION);
-    User.setAllUsers(users);
+    if (users != null) {
+      User.setAllUsers(users);
+    }
     LocalDateTime applicationTime = (LocalDateTime) readObject(TIME_LOCATION);
-    TransitTime.setCurrentTime(applicationTime);
+    if (applicationTime != null) {
+      TransitTime.setCurrentTime(applicationTime);
+    }
   }
 
   /**
@@ -60,7 +67,8 @@ public class Database {
     try {
       FileInputStream fileIn = new FileInputStream(fileLocation);
       ObjectInputStream in = new ObjectInputStream(fileIn);
-      return in.readObject();
+      Object object = in.readObject();
+      if (object == null) return in.readObject();
     } catch (IOException e) {
       System.out.println("File not found when deserializing.");
     } catch (ClassNotFoundException h) {

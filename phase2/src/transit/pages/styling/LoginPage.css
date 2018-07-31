@@ -33,13 +33,13 @@
 #loginLabel {
     -fx-color: #727272;
     -fx-font-size: 20px;
-    -fx-padding: 10px 0px 0px 2px;
+    -fx-padding: 0px 0px 0px 2px;
 }
 
 #noAccount {
     -fx-color: #727272;
     -fx-font-size: 18px;
-    -fx-padding: 10px 0px 0px 2px;
+    -fx-padding: 0px 0px 0px 2px;
 }
 
 #errorMessage {

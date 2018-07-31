@@ -31,7 +31,7 @@ public class LoginPage extends Page {
    */
   @Override
   protected void makeScene(Stage primaryStage) {
-    grid.setPadding(new Insets(30, 20, 20, 40));
+    grid.setPadding(new Insets(20, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
 
@@ -77,7 +77,6 @@ public class LoginPage extends Page {
     Button loginButton = makeLoginButton(emailInput, passInput, errorMessage, primaryStage);
     loginPane.add(loginButton, 0, 3, 2, 1);
 
-
     Separator horizontalSeparator = new Separator();
     loginPane.add(horizontalSeparator, 0, 4, 2, 1);
     grid.add(loginPane, 0, 1);
@@ -90,12 +89,10 @@ public class LoginPage extends Page {
    */
   private void makeIcons(GridPane loginPane) {
     ImageView emailIcon = new ImageView(new Image("transit/pages/assets/email.png"));
-    emailIcon.setId("emailIcon");
     loginPane.add(emailIcon, 0, 1);
 
-    ImageView lockIcon = new ImageView(new Image("transit/pages/assets/lock.png"));
-    lockIcon.setId("lockIcon");
-    loginPane.add(lockIcon, 0, 2);
+    ImageView keyIcon = new ImageView(new Image("transit/pages/assets/key.png"));
+    loginPane.add(keyIcon, 0, 2);
   }
 
   /**

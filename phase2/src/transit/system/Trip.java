@@ -57,7 +57,7 @@ public class Trip implements Serializable {
   }
 
   /** @return The current fee of this trip */
-  int getFee() {
+  public int getFee() {
     if (tripFee < maxFee) {
       return tripFee;
     } else {

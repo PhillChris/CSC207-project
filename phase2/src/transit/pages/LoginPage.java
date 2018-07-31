@@ -1,6 +1,9 @@
 package transit.pages;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -41,8 +44,9 @@ public class LoginPage extends Page {
     makeLoginPane(primaryStage);
     GridPane trainPane = new GridPane();
     ImageView train = new ImageView(new Image("transit/pages/assets/train.png"));
+    trainPane.setPadding(new Insets(30, 0, 0, 10));
     trainPane.add(train, 0, 0);
-    grid.add(trainPane, 1, 1);
+    grid.add(trainPane, 1, 0, 1, 2);
 
     addClock();
     this.scene = new Scene(grid, 625, 400);
@@ -69,10 +73,16 @@ public class LoginPage extends Page {
     PasswordField passInput = makePassInput();
     loginPane.add(passInput, 1, 2);
 
+    Label errorMessage = new Label("");
+    errorMessage.setId("errorMessage");
+    loginPane.add(errorMessage, 1, 3);
+    GridPane.setHalignment(errorMessage, HPos.RIGHT);
+
     Button signupButton = makeSignUpButton(primaryStage);
     loginPane.add(signupButton, 0, 6, 2, 1);
-    Button loginButton = makeLoginButton(emailInput, passInput, primaryStage);
+    Button loginButton = makeLoginButton(emailInput, passInput, errorMessage, primaryStage);
     loginPane.add(loginButton, 0, 3, 2, 1);
+
 
     Separator horizontalSeparator = new Separator();
     loginPane.add(horizontalSeparator, 0, 4, 2, 1);
@@ -143,7 +153,7 @@ public class LoginPage extends Page {
    * @param primaryStage the stage on which this LoginPage is being served
    * @return the login button on this LoginPage
    */
-  private Button makeLoginButton(TextField emailInput, TextField passInput, Stage primaryStage) {
+  private Button makeLoginButton(TextField emailInput, TextField passInput, Label errorMessage, Stage primaryStage) {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
     loginButton.setOnAction(
@@ -153,6 +163,7 @@ public class LoginPage extends Page {
             if (User.getAllUsersCopy().containsKey(emailInput.getText())) {
               user = User.getAllUsersCopy().get(emailInput.getText());
             } else {
+              errorMessage.setText("User email not found.");
               throw new Exception();
             }
             if (checkAuthorization(emailInput, passInput)) {
@@ -164,15 +175,10 @@ public class LoginPage extends Page {
               }
               primaryStage.setScene(userPage.getScene());
             } else {
+              errorMessage.setText("Incorrect password.");
               throw new Exception();
             }
           } catch (Exception ignored) {
-            makeAlert(
-                    "Invalid credentials",
-                    "Invalid credentials:",
-                    "The given credentials don't match a user in the transit system",
-                    AlertType.ERROR)
-                .showAndWait();
           }
         });
     return loginButton;

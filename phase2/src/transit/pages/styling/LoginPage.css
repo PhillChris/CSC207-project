@@ -16,18 +16,18 @@
     -fx-padding: 7px;
 }
 
-#emailInput {
+.text-field {
     -fx-prompt-text-fill: #757575;
     -fx-background-color: #fcfcfc;
     -fx-color: #757575;
     -fx-padding: 10px;
 }
 
-#passInput {
+.password-field {
     -fx-prompt-text-fill: #757575;
     -fx-background-color: #fcfcfc;
     -fx-color: #757575;
-    -fx-padding: 8px;
+    -fx-padding: 10px;
 }
 
 #loginLabel {

@@ -6,8 +6,12 @@ import javafx.stage.Stage;
 import transit.system.User;
 
 /** Represents a page containing all functionality associated with a user's set of cards */
-public class CardPage extends AuthenticatedPage {
+public class CardPage extends Page {
 
+  /**
+   * The user associated with this CardPage
+   */
+  private User user;
   /**
    * Initialize a new instance of CardPage
    *
@@ -15,7 +19,7 @@ public class CardPage extends AuthenticatedPage {
    * @param user The user associated with this page
    */
   public CardPage(Stage primaryStage, User user) {
-    super(primaryStage, user);
+    this.user = user;
     addUserData(primaryStage);
     makeScene(primaryStage);
   }
@@ -62,10 +66,7 @@ public class CardPage extends AuthenticatedPage {
    */
   private void addCardButtons(Stage primaryStage, int id, int i) {
     placeButton(
-        "Tap Card #" + user.getCardsCopy().get(id).getId(),
-        () -> makeTapPage(id),
-        0,
-        3 + i);
+            "Tap Card #" + user.getCardsCopy().get(id).getId(), () -> makeTapPage(id), 0, 3 + i);
 
     placeButton(
         "Add funds",

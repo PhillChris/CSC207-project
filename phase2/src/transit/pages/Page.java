@@ -11,10 +11,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import transit.system.Card;
 import transit.system.Database;
 import transit.system.StatisticsMaker;
+import transit.system.User;
 import transit.system.TransitTime;
-
 import java.util.Optional;
 
 /** Represents a general page serving scenes to be represented in the transit system program */
@@ -250,5 +251,21 @@ public abstract class Page {
   protected void addClock() {
     Label tempLabel = TransitTime.getTimeLabel();
     grid.add(tempLabel, 0, 0);
+  }
+
+  /** @return the current trips message of this page */
+  protected String generateCurrentTripMessage(User user) {
+    String message = "Current trips:" + System.lineSeparator();
+    for (Card card : user.getCardsCopy().values()) {
+      if (card.getCurrentTrip() != null) {
+        message +=
+            "Trip started with card #"
+                + card.getId()
+                + " at station "
+                + card.getCurrentTrip().getStartStation()
+                + System.lineSeparator();
+      }
+    }
+    return message;
   }
 }

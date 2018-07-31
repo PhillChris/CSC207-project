@@ -1,6 +1,7 @@
 package transit.pages;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Card;
@@ -8,9 +9,10 @@ import transit.system.User;
 
 /** Represents a page containing all functionality associated with a user's set of cards */
 public class CardPage extends Page {
-
   /** The user associated with this CardPage */
   private User user;
+  /** S*/
+  private Label currentTrips;
   /**
    * Initialize a new instance of CardPage
    *
@@ -49,7 +51,7 @@ public class CardPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   protected void addUserData(Stage primaryStage) {
-    placeLabel(generateCurrentTripMessage(), 0, 1);
+    this.currentTrips = placeLabel(generateCurrentTripMessage(user), 0, 1);
     int i = 0;
     for (Integer id : this.user.getCardsCopy().keySet()) {
       addCardButtons(primaryStage, id, i);
@@ -121,23 +123,7 @@ public class CardPage extends Page {
     Stage secondaryStage = new Stage();
     secondaryStage.setTitle("Tap Card#" + user.getCardsCopy().get(id).getId());
     secondaryStage.setScene(
-        new TapPage(secondaryStage, user, user.getCardsCopy().get(id)).getScene());
+        new TapPage(secondaryStage, user, user.getCardsCopy().get(id), this.currentTrips).getScene());
     secondaryStage.show();
-  }
-
-  /** @return the current trips message of this page */
-  private String generateCurrentTripMessage() {
-    String message = "Current trips:" + System.lineSeparator();
-    for (Card card : user.getCardsCopy().values()) {
-      if (card.getCurrentTrip() != null) {
-        message +=
-            "Trip started with card #"
-                + card.getId()
-                + " at station "
-                + card.getCurrentTrip().getStartStation()
-                + System.lineSeparator();
-      }
-    }
-    return message;
   }
 }

@@ -2,10 +2,7 @@ package transit.pages;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -150,6 +147,7 @@ public class LoginPage extends Page {
   /**
    * @param emailInput the email input field in this LoginPage
    * @param passInput the password input field in this LoginPage
+   * @param errorMessage the error message field on this LoginPage to be modified as needed
    * @param primaryStage the stage on which this LoginPage is being served
    * @return the login button on this LoginPage
    */

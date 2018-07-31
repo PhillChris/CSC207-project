@@ -36,7 +36,7 @@ public class TapPage extends Page {
   /**
    * Makes the scene which displays this page
    *
-   *  @param secondaryStage the popup stage on which this page is served
+   * @param secondaryStage the popup stage on which this page is served
    */
   @Override
   public void makeScene(Stage secondaryStage) {
@@ -75,8 +75,7 @@ public class TapPage extends Page {
     for (Route route : Route.getRoutesCopy().get(type)) {
       int j = 0;
       for (Station station : route.getRouteStationsCopy()) {
-        stationButtons.add(
-          placeStationButton(station, j, i));
+        stationButtons.add(placeStationButton(station, j, i));
         j++;
       }
       i++;
@@ -95,17 +94,39 @@ public class TapPage extends Page {
     return placeButton(
         station.toString(),
         () -> {
+          Alert alert;
           try {
             user.tap(card, station, TransitTime.getCurrentTime());
+            if (card.getCurrentTrip() != null) {
+              alert =
+                      makeAlert(
+                              "Tapped In",
+                              "Tapped in",
+                              String.format(
+                                      "Tap in at %s, at time %s",
+                                      station.toString(), TransitTime.getCurrentTimeString()),
+                              AlertType.CONFIRMATION);
+            } else {
+              alert =
+                      makeAlert(
+                              "Tapped Out",
+                              "Tapped Out",
+                              String.format(
+                                      "Tap out at %s, at time %s, with trip fee $%.2f.",
+                                      station.toString(),
+                                      TransitTime.getCurrentTimeString(),
+                                      (card.getLastTrip().getFee()) / 100.0),
+                              AlertType.CONFIRMATION);
+            }
           } catch (Exception b) {
-            Alert alert =
+            alert =
                 makeAlert(
                     "Tap error",
                     "Tap error",
                     "There was a problem in tapping at this point, no tap request could be processed",
                     AlertType.ERROR);
-            alert.showAndWait();
           }
+          alert.showAndWait();
         },
         col,
         row);

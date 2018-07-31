@@ -3,9 +3,9 @@ package transit.pages;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
+import transit.system.AdminUser;
 import transit.system.StatisticsMaker;
 import transit.system.TransitTime;
-import transit.system.User;
 
 import java.time.YearMonth;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public class AdminGraphPage extends GraphPage {
    * @param primaryStage The stage for this page to be displayed
    * @param user The user associated with this page
    */
-  public AdminGraphPage(Stage primaryStage, User user) {
+  public AdminGraphPage(Stage primaryStage, AdminUser user) {
     super(primaryStage, user);
   }
 
@@ -34,7 +34,7 @@ public class AdminGraphPage extends GraphPage {
     lineChart.setTitle(
         String.format("Monthly Revenue (%s)", TransitTime.getCurrentDate().getYear()));
     XYChart.Series series = new XYChart.Series();
-    HashMap<YearMonth, Integer> monthlyRevenue = StatisticsMaker.getMonthlyRevenue();
+    HashMap<YearMonth, Integer> monthlyRevenue = StatisticsMaker.getMonthlyRevenueCopy();
     for (YearMonth month : monthlyRevenue.keySet()) {
       if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
         double total = monthlyRevenue.get(month) / 100.0;

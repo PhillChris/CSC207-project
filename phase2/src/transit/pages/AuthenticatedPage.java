@@ -51,7 +51,6 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this user info button is displayed
    */
   private void newUserInfoButton(int col, int row) {
-    String message = getUserMessage();
     placeButton(
         "Info",
         () -> {
@@ -59,7 +58,7 @@ public abstract class AuthenticatedPage extends Page {
               makeAlert(
                   "User Information",
                   "Your user information:",
-                  message,
+                  getUserMessage(),
                   Alert.AlertType.INFORMATION);
           alert.showAndWait();
         },

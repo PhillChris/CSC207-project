@@ -2,7 +2,6 @@ package transit.system;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.HashMap;
 
@@ -145,9 +144,8 @@ public class User implements Serializable {
    *
    * @param card The card which this transit.system.User taps
    * @param station The station which this transit.system.User taps at
-   * @param timeTapped The time this transit.system.User taps their transit.system.Card
    */
-  public void tap(Card card, Station station, LocalDateTime timeTapped) throws TransitException {
+  public void tap(Card card, Station station) throws TransitException {
 
     if (card.isSuspended()) {
       throw new TransitException();

@@ -11,7 +11,7 @@ import transit.system.User;
 public class CardPage extends Page {
   /** The user associated with this CardPage */
   private User user;
-  /** S*/
+  /** The label of current trips associated with the */
   private Label currentTrips;
   /**
    * Initialize a new instance of CardPage
@@ -68,7 +68,7 @@ public class CardPage extends Page {
    */
   private void addCardButtons(Stage primaryStage, int id, int i) {
     placeButton(
-        "Tap Card #" + user.getCardsCopy().get(id).getId(), () -> makeTapPage(id), 0, 3 + i);
+        "Tap Card #" + user.getCardsCopy().get(id).getId(), () -> makeTapPage(id, primaryStage), 0, 3 + i);
 
     placeButton(
         "Add funds",
@@ -119,11 +119,28 @@ public class CardPage extends Page {
    *
    * @param id The id of the card whose tap page is to be displayed
    */
-  private void makeTapPage(int id) {
+  private void makeTapPage(int id, Stage primaryStage) {
     Stage secondaryStage = new Stage();
     secondaryStage.setTitle("Tap Card#" + user.getCardsCopy().get(id).getId());
     secondaryStage.setScene(
-        new TapPage(secondaryStage, user, user.getCardsCopy().get(id), this.currentTrips).getScene());
+        new TapPage(secondaryStage, user, user.getCardsCopy().get(id), primaryStage).getScene());
     secondaryStage.show();
   }
+
+  /** @return the current trips message of this page */
+  private String generateCurrentTripMessage(User user) {
+    String message = "Current trips:" + System.lineSeparator();
+    for (Card card : user.getCardsCopy().values()) {
+      if (card.getCurrentTrip() != null) {
+        message +=
+            "Trip started with card #"
+                + card.getId()
+                + " at station "
+                + card.getCurrentTrip().getStartStation()
+                + System.lineSeparator();
+      }
+    }
+    return message;
+  }
+
 }

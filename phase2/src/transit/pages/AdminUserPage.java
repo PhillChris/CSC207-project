@@ -45,7 +45,7 @@ public class AdminUserPage extends Page {
     placeButton(
         "Monthly Revenue (Current Year)",
         () -> {
-          createUserGraphPage();
+          createAdminGraphPage();
         },
         0,
         2);
@@ -88,10 +88,10 @@ public class AdminUserPage extends Page {
     secondaryStage.show();
   }
 
-  /** Makes the user graph page popup when the appropriate button is pushed */
-  private void createUserGraphPage() {
+  /** Makes the admin graph page popup when the appropriate button is pushed */
+  private void createAdminGraphPage() {
     Stage secondaryStage = new Stage();
-    UserGraphPage graphPage = new UserGraphPage(secondaryStage, this.adminUser);
+    AdminGraphPage graphPage = new AdminGraphPage(secondaryStage, this.adminUser);
     secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getCurrentDate().getYear());
     secondaryStage.setScene(graphPage.getScene());
     secondaryStage.show();

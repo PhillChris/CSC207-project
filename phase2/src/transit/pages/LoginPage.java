@@ -3,11 +3,7 @@ package transit.pages;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -24,6 +20,7 @@ public class LoginPage extends Page {
    * @param primaryStage The stage for this page to be displayed
    */
   public LoginPage(Stage primaryStage) {
+    super(primaryStage);
     makeScene(primaryStage);
   }
 

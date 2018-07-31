@@ -38,6 +38,8 @@ public class Database {
     Route.setRoutes(routes);
     HashMap<String, User> users = (HashMap<String, User>) readObject(USERS_LOCATION);
     User.setAllUsers(users);
+    LocalDateTime applicationTime = (LocalDateTime) readObject(TIME_LOCATION);
+    TransitTime.setCurrentTime(applicationTime);
   }
 
   /**

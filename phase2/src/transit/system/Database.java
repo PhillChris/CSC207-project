@@ -1,18 +1,22 @@
 package transit.system;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Database {
   public static final String routeLocation = "./tmp/routes.ser";
   public static final String USERS_LOCATION = "./tmp/user.ser";
+  public static final String TIME_LOCATION = "./tmp/time.ser";
 
   public static void writeToDatabase() {
     HashMap<String, ArrayList<Route>> routes = Route.getRoutesCopy();
     writeObject(routeLocation, routes);
     HashMap<String, User> users = User.getAllUsersCopy();
     writeObject(USERS_LOCATION, users);
+    LocalDateTime time = TransitTime.getCurrentTime();
+    writeObject(TIME_LOCATION, time);
   }
 
   private static void writeObject(String fileLocation, Object toWrite) {

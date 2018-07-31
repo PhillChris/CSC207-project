@@ -21,7 +21,7 @@ public class TapPage extends Page {
   /** The card which is currently tapping */
   private Card card;
   /** The label outlining current trips this user is taking */
-  private Label currentTrips;
+  private Stage cardPageStage;
 
   /**
    * Constructs a new TapPage
@@ -29,12 +29,12 @@ public class TapPage extends Page {
    * @param secondaryStage the stage on which this page is being served
    * @param user the user whose card is currently tapping
    * @param card the card which is currently tapping
-   * @param currentTripLabel the label to update when this page
+   * @param cardPageStage the label to update when this page
    */
-  public TapPage(Stage secondaryStage, User user, Card card, Label currentTrips) {
+  public TapPage(Stage secondaryStage, User user, Card card, Stage cardPageStage) {
     this.user = user;
     this.card = card;
-    this.currentTrips = currentTrips;
+    this.cardPageStage = cardPageStage;
     makeScene(secondaryStage);
   }
 
@@ -123,7 +123,7 @@ public class TapPage extends Page {
                                       (card.getLastTrip().getFee()) / 100.0),
                               AlertType.CONFIRMATION);
             }
-            this.currentTrips.setText(generateCurrentTripMessage(user));
+            this.cardPageStage.setScene(new CardPage(cardPageStage, user).getScene());
           } catch (Exception b) {
             alert =
                 makeAlert(

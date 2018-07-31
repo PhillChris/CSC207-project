@@ -41,7 +41,7 @@ public class Database {
    */
   public static void readFromDatabase() {
     HashMap<String, ArrayList<Route>> routes =
-            (HashMap<String, ArrayList<Route>>) readObject(routeLocation);
+            (HashMap<String, ArrayList<Route>>) Database.readObject(routeLocation);
     if (routes != null) {
       Route.setRoutes(routes);
     }
@@ -67,8 +67,7 @@ public class Database {
     try {
       FileInputStream fileIn = new FileInputStream(fileLocation);
       ObjectInputStream in = new ObjectInputStream(fileIn);
-      Object object = in.readObject();
-      if (object == null) return in.readObject();
+      return in.readObject();
     } catch (IOException e) {
       System.out.println("File not found when deserializing.");
     } catch (ClassNotFoundException h) {

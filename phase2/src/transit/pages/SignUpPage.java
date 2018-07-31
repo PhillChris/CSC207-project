@@ -40,6 +40,7 @@ public class SignUpPage extends Page {
     grid.setVgap(10);
 
     GridPane signupPane = new GridPane();
+    signupPane.setPadding(new Insets(0, 0, 0, 0));
     signupPane.setHgap(10);
     signupPane.setVgap(12);
 
@@ -113,7 +114,7 @@ public class SignUpPage extends Page {
     grid.add(trainPane, 1, 0, 1, 2);
 
     addClock();
-    this.scene = new Scene(grid, 625, 400);
+    this.scene = new Scene(grid, 600, 375);
     scene.getStylesheets().add(SignUpPage.class.getResource("styling/SignUpPage.css").toExternalForm());
   }
 

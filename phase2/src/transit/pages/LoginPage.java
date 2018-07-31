@@ -43,7 +43,7 @@ public class LoginPage extends Page {
     grid.add(trainPane, 1, 0, 1, 2);
 
     addClock();
-    this.scene = new Scene(grid, 625, 400);
+    this.scene = new Scene(grid, 600, 375);
 
     scene
         .getStylesheets()
@@ -128,7 +128,7 @@ public class LoginPage extends Page {
 
   /** @return the SignUp button for this LoginPage */
   private Button makeSignUpButton(Stage primaryStage) {
-    Button signupButton = new Button("Signup");
+    Button signupButton = new Button("Sign Up");
     signupButton.setId("signupButton");
     signupButton.setOnAction(
         (data) -> {

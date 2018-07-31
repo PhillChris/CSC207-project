@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.*;
@@ -19,6 +20,8 @@ public class TapPage extends Page {
   private User user;
   /** The card which is currently tapping */
   private Card card;
+  /** The label outlining current trips this user is taking */
+  private Label currentTrips;
 
   /**
    * Constructs a new TapPage
@@ -26,10 +29,12 @@ public class TapPage extends Page {
    * @param secondaryStage the stage on which this page is being served
    * @param user the user whose card is currently tapping
    * @param card the card which is currently tapping
+   * @param currentTripLabel the label to update when this page
    */
-  public TapPage(Stage secondaryStage, User user, Card card) {
+  public TapPage(Stage secondaryStage, User user, Card card, Label currentTrips) {
     this.user = user;
     this.card = card;
+    this.currentTrips = currentTrips;
     makeScene(secondaryStage);
   }
 
@@ -118,6 +123,7 @@ public class TapPage extends Page {
                                       (card.getLastTrip().getFee()) / 100.0),
                               AlertType.CONFIRMATION);
             }
+            this.currentTrips.setText(generateCurrentTripMessage(user));
           } catch (Exception b) {
             alert =
                 makeAlert(

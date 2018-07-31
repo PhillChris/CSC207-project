@@ -1,17 +1,18 @@
 package transit.pages;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import transit.system.Card;
 import transit.system.User;
 
 /** Represents a page containing all functionality associated with a user's set of cards */
 public class CardPage extends Page {
-
-  /**
-   * The user associated with this CardPage
-   */
+  /** The user associated with this CardPage */
   private User user;
+  /** S*/
+  private Label currentTrips;
   /**
    * Initialize a new instance of CardPage
    *
@@ -50,6 +51,7 @@ public class CardPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   protected void addUserData(Stage primaryStage) {
+    this.currentTrips = placeLabel(generateCurrentTripMessage(user), 0, 1);
     int i = 0;
     for (Integer id : this.user.getCardsCopy().keySet()) {
       addCardButtons(primaryStage, id, i);
@@ -66,7 +68,7 @@ public class CardPage extends Page {
    */
   private void addCardButtons(Stage primaryStage, int id, int i) {
     placeButton(
-            "Tap Card #" + user.getCardsCopy().get(id).getId(), () -> makeTapPage(id), 0, 3 + i);
+        "Tap Card #" + user.getCardsCopy().get(id).getId(), () -> makeTapPage(id), 0, 3 + i);
 
     placeButton(
         "Add funds",
@@ -121,7 +123,7 @@ public class CardPage extends Page {
     Stage secondaryStage = new Stage();
     secondaryStage.setTitle("Tap Card#" + user.getCardsCopy().get(id).getId());
     secondaryStage.setScene(
-        new TapPage(secondaryStage, user, user.getCardsCopy().get(id)).getScene());
+        new TapPage(secondaryStage, user, user.getCardsCopy().get(id), this.currentTrips).getScene());
     secondaryStage.show();
   }
 }

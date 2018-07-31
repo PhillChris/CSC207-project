@@ -143,10 +143,10 @@ public class SignUpPage extends Page {
    * Constructs and places the buttons in this SignUp page
    *
    * @param primaryStage the stage on which this SignUp page is being served
-   * @param username the username of the user which is being created
-   * @param email the email of the user which is being created
-   * @param password the password of the user which is being created
-   * @param adminBox whether or not the user being created is an admin
+   * @param username the username field of the user which is being created
+   * @param email the email field of the user which is being created
+   * @param password the password field of the user which is being created
+   * @param adminBox the checkbox determining whether or not the user being created is an admin
    */
   private void makeButtons(
       Stage primaryStage, TextField username, TextField email, PasswordField password,

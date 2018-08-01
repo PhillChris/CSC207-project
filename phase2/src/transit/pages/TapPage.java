@@ -129,7 +129,6 @@ public class TapPage extends Page {
                           (card.getLastTrip().getFee()) / 100.0),
                       AlertType.CONFIRMATION);
             }
-            this.cardPageStage.setScene(new CardPage(cardPageStage, user).getScene());
           } catch (Exception b) {
             alert =
                 makeAlert(
@@ -139,6 +138,7 @@ public class TapPage extends Page {
                     AlertType.ERROR);
           }
           alert.showAndWait();
+          this.cardPageStage.setScene(new CardPage(cardPageStage, user).getScene());
         },
         col,
         row);
@@ -156,7 +156,7 @@ public class TapPage extends Page {
     routeType.setOnAction(
         e ->
             secondaryStage.setScene(
-                new TapPage(secondaryStage, user, card, secondaryStage, routeType.getValue()).getScene()));
+                new TapPage(secondaryStage, user, card, cardPageStage, routeType.getValue()).getScene()));
     refreshRouteOptionItems(routeType.getValue());
   }
 }

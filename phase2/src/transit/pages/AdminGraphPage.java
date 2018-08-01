@@ -42,6 +42,7 @@ public class AdminGraphPage extends GraphPage {
       }
     }
 
+    lineChart.getData().add(series);
     return lineChart;
   }
 }

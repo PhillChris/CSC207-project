@@ -9,7 +9,7 @@ import java.util.List;
 
 /** This class is designed to track all statistics related to a user */
 public class UserInformation implements Serializable {
-  /** The user assoicated with these statistics */
+  /** The user associated with these statistics */
   private User user;
   /** Log of all tap ins for each day */
   private HashMap<LocalDate, Integer> tapInLog;

@@ -123,7 +123,7 @@ public class CardPage extends Page {
     Stage secondaryStage = new Stage();
     secondaryStage.setTitle("Tap Card#" + user.getCardsCopy().get(id).getId());
     secondaryStage.setScene(
-        new TapPage(secondaryStage, user, user.getCardsCopy().get(id), primaryStage).getScene());
+        new TapPage(secondaryStage, user, user.getCardsCopy().get(id), primaryStage, "Bus").getScene());
     secondaryStage.show();
   }
 

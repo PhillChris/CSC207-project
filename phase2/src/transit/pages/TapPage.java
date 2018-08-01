@@ -1,16 +1,18 @@
 package transit.pages;
 
+import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.*;
-
-import java.util.ArrayList;
+import transit.system.Card;
+import transit.system.Route;
+import transit.system.Station;
+import transit.system.TransitTime;
+import transit.system.User;
 
 /** Represents a page displaying all possibilities for tapping in this transit system */
 public class TapPage extends Page {
@@ -22,6 +24,8 @@ public class TapPage extends Page {
   private Card card;
   /** The label outlining current trips this user is taking */
   private Stage cardPageStage;
+  /** The type selected in the selection bar upon creation of this TapPage */
+  private String selectedType;
 
   /**
    * Constructs a new TapPage
@@ -31,10 +35,12 @@ public class TapPage extends Page {
    * @param card the card which is currently tapping
    * @param cardPageStage the label to update when this page
    */
-  public TapPage(Stage secondaryStage, User user, Card card, Stage cardPageStage) {
+  public TapPage(
+      Stage secondaryStage, User user, Card card, Stage cardPageStage, String selectedType) {
     this.user = user;
     this.card = card;
     this.cardPageStage = cardPageStage;
+    this.selectedType = selectedType;
     makeScene(secondaryStage);
   }
 
@@ -47,7 +53,7 @@ public class TapPage extends Page {
   public void makeScene(Stage secondaryStage) {
     placeLabel("Choose route type!", 0, 0);
     ChoiceBox<String> routeType = new ChoiceBox();
-    setupRouteTypeBox(routeType);
+    setupRouteTypeBox(routeType, secondaryStage);
     grid.add(routeType, 1, 0);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
@@ -104,24 +110,24 @@ public class TapPage extends Page {
             user.tap(card, station);
             if (card.getCurrentTrip() != null) {
               alert =
-                      makeAlert(
-                              "Tapped In",
-                              "Tapped in",
-                              String.format(
-                                      "Tap in at %s, at time %s",
-                                      station.toString(), TransitTime.getCurrentTimeString()),
-                              AlertType.CONFIRMATION);
+                  makeAlert(
+                      "Tapped In",
+                      "Tapped in",
+                      String.format(
+                          "Tap in at %s, at time %s",
+                          station.toString(), TransitTime.getCurrentTimeString()),
+                      AlertType.CONFIRMATION);
             } else {
               alert =
-                      makeAlert(
-                              "Tapped Out",
-                              "Tapped Out",
-                              String.format(
-                                      "Tap out at %s, at time %s, with trip fee $%.2f.",
-                                      station.toString(),
-                                      TransitTime.getCurrentTimeString(),
-                                      (card.getLastTrip().getFee()) / 100.0),
-                              AlertType.CONFIRMATION);
+                  makeAlert(
+                      "Tapped Out",
+                      "Tapped Out",
+                      String.format(
+                          "Tap out at %s, at time %s, with trip fee $%.2f.",
+                          station.toString(),
+                          TransitTime.getCurrentTimeString(),
+                          (card.getLastTrip().getFee()) / 100.0),
+                      AlertType.CONFIRMATION);
             }
             this.cardPageStage.setScene(new CardPage(cardPageStage, user).getScene());
           } catch (Exception b) {
@@ -143,10 +149,14 @@ public class TapPage extends Page {
    *
    * @param routeType the checkbox selecting route type
    */
-  private void setupRouteTypeBox(ChoiceBox<String> routeType) {
+  private void setupRouteTypeBox(ChoiceBox<String> routeType, Stage secondaryStage) {
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
-    refreshRouteOptionItems("Bus"); /* Loads the first round of buttons*/
-    routeType.getSelectionModel().select(0);
-    routeType.setOnAction(e -> refreshRouteOptionItems(routeType.getValue()));
+    refreshRouteOptionItems(this.selectedType); /* Loads the first round of buttons*/
+    routeType.getSelectionModel().select(this.selectedType);
+    routeType.setOnAction(
+        e ->
+            secondaryStage.setScene(
+                new TapPage(secondaryStage, user, card, secondaryStage, routeType.getValue()).getScene()));
+    refreshRouteOptionItems(routeType.getValue());
   }
 }

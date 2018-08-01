@@ -33,12 +33,15 @@ public class User implements Serializable {
    * @param email the email of this transit.system.User
    * @param password the password of ths transit.system.User
    */
-  public User(String name, String email, String password) throws TransitException {
+  public User(String name, String email, String password) throws MessageTransitException {
     if (!email.matches(EMAILREGEX)) {
-      throw new TransitException();
+      throw new InvalidEmailException();
     }
     if (allUsers.keySet().contains(email)) { // If this transit.system.User already exists
-      throw new TransitException();
+      throw new EmailInUseException();
+    }
+    if (password.length() < 6) {
+      throw new InvalidPasswordException();
     }
     this.name = name;
     this.email = email;

@@ -3,6 +3,7 @@ package transit.pages;
 import java.time.LocalDate;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -61,28 +62,21 @@ public abstract class Page {
   abstract void makeScene(Stage primaryStage);
 
   /**
-   * A general helper method to place a label with the given text at the given coordinates
-   *
-   * @param text the message to be displayed by this label
-   * @param col the column in the grid where this label is displayed
-   * @param row the row in the grid where this label is displayed
-   */
-  protected Label placeLabel(String text, int col, int row) {
-    Label tempLabel = new Label(text);
-    grid.add(tempLabel, col, row);
-    return tempLabel;
-  }
-
-  /**
    * A general helper method to place a label with the given text at the given coordinates and give it an id
    *
    * @param text the message to be displayed by this label
    * @param col the column in the grid where this label is displayed
    * @param row the row in the grid where this label is displayed
    */
-  protected Label placeLabel(String text, int col, int row, String id) {
+  protected Label placeLabel(GridPane grid, String text, int col, int row, String id) {
     Label tempLabel = new Label(text);
     tempLabel.setId(id);
+    grid.add(tempLabel, col, row);
+    return tempLabel;
+  }
+
+  protected Label placeLabel(String text, int col, int row) {
+    Label tempLabel = new Label(text);
     grid.add(tempLabel, col, row);
     return tempLabel;
   }
@@ -107,24 +101,12 @@ public abstract class Page {
    * @param row the row in the grid where this text field is displayed
    * @return the created text field object, for reference in accessing entered data
    */
-  protected TextField placeTextField(int col, int row, String id) {
+  protected TextField placeTextField(GridPane grid, String promptText, int col, int row, String id) {
     TextField textField = new TextField();
     textField.setId(id);
+    textField.setPromptText(promptText);
     grid.add(textField, col, row);
     return textField;
-  }
-
-  /**
-   * A general helper method to place a password text field at the given coordinates
-   *
-   * @param col the column in the grid where this password field is displayed
-   * @param row the row in the grid where this password is displayed
-   * @return the created password field object, for reference in accessing entered data
-   */
-  protected PasswordField placePasswordField(int col, int row) {
-    PasswordField passwordField = new PasswordField();
-    grid.add(passwordField, col, row);
-    return passwordField;
   }
 
   /**
@@ -134,9 +116,10 @@ public abstract class Page {
    * @param row the row in the grid where this password is displayed
    * @return the created password field object, for reference in accessing entered data
    */
-  protected PasswordField placePasswordField(int col, int row, String id) {
+  protected PasswordField placePasswordField(GridPane grid, String promptText, int col, int row, String id) {
     PasswordField passwordField = new PasswordField();
     passwordField.setId(id);
+    passwordField.setPromptText(promptText);
     grid.add(passwordField, col, row);
     return passwordField;
   }
@@ -171,6 +154,12 @@ public abstract class Page {
     grid.add(button, col, row);
   }
 
+  protected void placeSeparator(GridPane grid, int col, int row, int colSpan, String id) {
+    Separator horizontalSeparator = new Separator();
+    horizontalSeparator.setId(id);
+    grid.add(horizontalSeparator, col, row, colSpan, 1);
+  }
+
   /**
    * A general helper method to place a checkbox at the given coordinates
    *
@@ -197,11 +186,10 @@ public abstract class Page {
     return dates;
   }
 
-  protected ImageView placeImage(String url, int col, int row, String id) {
+  protected void placeImage(GridPane grid, String url, int col, int row, String id) {
     ImageView image = new ImageView(new Image(url));
     image.setId(id);
     grid.add(image, col, row);
-    return image;
   }
 
   /**
@@ -251,5 +239,13 @@ public abstract class Page {
   protected void addClock() {
     Label tempLabel = TransitTime.getTimeLabel();
     grid.add(tempLabel, 0, 0, 2, 1);
+  }
+
+  protected void addTrain() {
+    GridPane trainPane = new GridPane();
+    ImageView train = new ImageView(new Image("transit/pages/assets/train.png"));
+    trainPane.setPadding(new Insets(30, 0, 0, 10));
+    trainPane.add(train, 0, 0);
+    grid.add(trainPane, 1, 0, 1, 2);
   }
 }

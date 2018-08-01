@@ -4,8 +4,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import transit.system.AdminUser;
@@ -36,11 +34,7 @@ public class LoginPage extends Page {
     grid.setVgap(10);
 
     makeLoginPane(primaryStage);
-    GridPane trainPane = new GridPane();
-    ImageView train = new ImageView(new Image("transit/pages/assets/train.png"));
-    trainPane.setPadding(new Insets(30, 0, 0, 10));
-    trainPane.add(train, 0, 0);
-    grid.add(trainPane, 1, 0, 1, 2);
+    addTrain();
 
     addClock();
     this.scene = new Scene(grid, 600, 375);
@@ -59,27 +53,21 @@ public class LoginPage extends Page {
     GridPane loginPane = new GridPane();
     loginPane.setHgap(10);
     loginPane.setVgap(12);
-    makeLabels(loginPane);
-    makeIcons(loginPane);
+    placeLabels(loginPane);
+    placeIcons(loginPane);
 
-    TextField emailInput = makeEmailInput();
-    loginPane.add(emailInput, 1, 1);
-    PasswordField passInput = makePassInput();
-    loginPane.add(passInput, 1, 2);
+    TextField emailInput = makeEmailInput(loginPane);
+    PasswordField passInput = makePassInput(loginPane);
 
-    Label errorMessage = new Label("");
-    errorMessage.setId("errorMessage");
-    loginPane.add(errorMessage, 1, 3);
-    GridPane.setHalignment(errorMessage, HPos.RIGHT);
+    Label errorMessage = makeErrorMessage(loginPane);
 
-    Button signupButton = makeSignUpButton(primaryStage);
-    loginPane.add(signupButton, 0, 6, 2, 1);
-    Button loginButton = makeLoginButton(emailInput, passInput, errorMessage, primaryStage);
-    loginPane.add(loginButton, 0, 3, 2, 1);
+    placeSignUpButton(primaryStage, loginPane);
+    placeLoginButton(primaryStage, loginPane, emailInput, passInput, errorMessage);
 
-    Separator horizontalSeparator = new Separator();
-    loginPane.add(horizontalSeparator, 0, 4, 2, 1);
+    placeSeparator(loginPane);
+
     grid.add(loginPane, 0, 1);
+
   }
 
   /**
@@ -87,12 +75,9 @@ public class LoginPage extends Page {
    *
    * @param loginPane the login pane being constructed in this LoginPage
    */
-  private void makeIcons(GridPane loginPane) {
-    ImageView emailIcon = new ImageView(new Image("transit/pages/assets/email.png"));
-    loginPane.add(emailIcon, 0, 1);
-
-    ImageView keyIcon = new ImageView(new Image("transit/pages/assets/key.png"));
-    loginPane.add(keyIcon, 0, 2);
+  private void placeIcons(GridPane loginPane) {
+    placeImage(loginPane, "transit/pages/assets/email.png", 0, 1, "emailIcon");
+    placeImage(loginPane, "transit/pages/assets/key.png", 0, 2, "keyIcon");
   }
 
   /**
@@ -100,42 +85,39 @@ public class LoginPage extends Page {
    *
    * @param loginPane the login pane being constructed in this LoginPage
    */
-  private void makeLabels(GridPane loginPane) {
-    Label login = new Label("Login");
-    login.setId("loginLabel");
-    loginPane.add(login, 0, 0, 2, 1);
+  private void placeLabels(GridPane loginPane) {
+    Label login = placeLabel(loginPane, "Login", 0, 0, "loginLabel");
+    GridPane.setColumnSpan(login, 2);
 
-    Label noAccount = new Label("No account?");
-    noAccount.setId("noAccount");
-    loginPane.add(noAccount, 0, 5, 2, 1);
+    Label noAccount = placeLabel(loginPane, "No account?", 0, 5, "noAccount");
+    GridPane.setColumnSpan(noAccount, 2);;
   }
 
   /** @return the password input field for this LoginPage */
-  private PasswordField makePassInput() {
-    PasswordField passInput = new PasswordField();
-    passInput.setId("passInput");
-    passInput.setPromptText("Password");
-    return passInput;
+  private PasswordField makePassInput(GridPane loginPane) {
+    return placePasswordField(loginPane, "Password", 1, 2, "passInput");
   }
 
   /** @return the email input field for this LoginPage */
-  private TextField makeEmailInput() {
-    TextField emailInput = new TextField();
-    emailInput.setId("emailInput");
-    emailInput.setPromptText("Email");
-    return emailInput;
+  private TextField makeEmailInput(GridPane loginPane) {
+    return placeTextField(loginPane, "Email", 1, 1, "emailInput");
   }
 
-  /** @return the SignUp button for this LoginPage */
-  private Button makeSignUpButton(Stage primaryStage) {
-    Button signupButton = new Button("Sign Up");
-    signupButton.setId("signupButton");
-    signupButton.setOnAction(
+  private Label makeErrorMessage(GridPane loginPane) {
+    Label errorMessage = placeLabel(loginPane, "", 1, 3, "errorMessage");
+    GridPane.setHalignment(errorMessage, HPos.RIGHT);
+    return errorMessage;
+  }
+
+  private void placeSignUpButton(Stage primaryStage, GridPane loginPane) {
+    Button signUpButton = new Button("Sign Up");
+    signUpButton.setId("signUpButton");
+    signUpButton.setOnAction(
         (data) -> {
           SignUpPage signupPage = new SignUpPage(primaryStage);
           primaryStage.setScene(signupPage.getScene());
         });
-    return signupButton;
+    loginPane.add(signUpButton, 0, 6, 2, 1);
   }
 
   /**
@@ -143,9 +125,9 @@ public class LoginPage extends Page {
    * @param passInput the password input field in this LoginPage
    * @param errorMessage the error message field on this LoginPage to be modified as needed
    * @param primaryStage the stage on which this LoginPage is being served
-   * @return the login button on this LoginPage
    */
-  private Button makeLoginButton(TextField emailInput, TextField passInput, Label errorMessage, Stage primaryStage) {
+  private void placeLoginButton(Stage primaryStage, GridPane loginPane,
+                                 TextField emailInput, TextField passInput, Label errorMessage) {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
     loginButton.setOnAction(
@@ -173,7 +155,11 @@ public class LoginPage extends Page {
           } catch (Exception ignored) {
           }
         });
-    return loginButton;
+    loginPane.add(loginButton, 0, 3, 2, 1);
+  }
+
+  private void placeSeparator(GridPane loginPane) {
+    placeSeparator(loginPane, 0, 4, 2, "horizontalSeparator");
   }
 
   /**

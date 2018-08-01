@@ -1,4 +1,7 @@
 package transit.system;
 
-public class MessageTransitException {
+import javafx.scene.control.Label;
+
+public abstract class MessageTransitException extends TransitException {
+  public abstract void setMessage(Label errorMessage);
 }

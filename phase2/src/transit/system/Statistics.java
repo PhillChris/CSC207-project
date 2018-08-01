@@ -11,14 +11,14 @@ public interface Statistics<T> {
    *
    * @return a HashMap of the statistics on each day of the past week
    */
-  HashMap<LocalDate, T> generateWeeklyMessage();
+  HashMap<LocalDate, T> generateWeeklyValues();
 
   /**
    * Generates statistics for each month in the past year (the last 7 days)
    *
    * @return a HashMap of the statistics on each day of the past week
    */
-  HashMap<YearMonth, T> generateMonthlyMessage();
+  HashMap<YearMonth, T> generateMonthlyValues();
 
   /**
    * Create default values for the HashMap returned by the generateWeeklyMessage method. This makes

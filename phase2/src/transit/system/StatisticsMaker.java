@@ -192,11 +192,5 @@ public class StatisticsMaker implements Serializable {
       dailyLog.put(date, tripLength);
       dailyNumTrips.put(date, 1);
     }
-
-    /* if (monthlyRevenue.containsKey(month)) {
-      monthlyRevenue.put(month, monthlyRevenue.get(month) + fee);
-    } else {
-      monthlyRevenue.put(month, fee);
-    } */
   }
 }

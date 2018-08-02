@@ -1,14 +1,21 @@
 package transit.pages;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import transit.system.AdminUser;
 import transit.system.User;
+import transit.system.UserRow;
 
 /** Represents a page displaying all stats regarding users in this TransitSystem */
 public class UserStatsPage extends Page {
@@ -37,40 +44,55 @@ public class UserStatsPage extends Page {
   void makeScene(Stage primaryStage) {
     placeLabel("User stats page", 0, 0);
     ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
+    TableView t = makeTable(dateOptions.getItems().get(0));
     dateOptions.setOnAction(e -> {
-      refreshStats(primaryStage, dateOptions.getValue());
+      t.setItems(FXCollections.observableList(generateUserData(dateOptions.getValue())));
     });
-    refreshStats(primaryStage, dateOptions.getItems().get(0));
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-  }
-
-  /**
-   * Refreshes all of the station statistics displayed on this page
-   *
-   * @param primaryStage the stage on which this page is served
-   * @param selectedDate the date selected on this page
-   */
-  private void refreshStats(Stage primaryStage, LocalDate selectedDate) {
-    int i = 2;
-    while (!userStats.isEmpty()) {
-      grid.getChildren().remove(userStats.get(0));
-      userStats.remove(userStats.get(0));
-    }
-    for (User u : User.getAllUsersCopy().values()) {
-      userStats.add(placeLabel(u.getUserName()
-              + " taps on: "
-              + u.getTapsIn(selectedDate)
-              + ", taps off: "
-              + u.getTapsOut(selectedDate),
-          0,
-          i)
-      );
-      i++;
-    }
     placeButton(
         "Go back",
         () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
-        0,
-        i);
+        0, 3);
+    grid.add(t, 0, 2);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+  }
+
+  private TableView makeTable(LocalDate selectedDate) {
+    TableView dataTable = new TableView();
+    dataTable.setEditable(true);
+
+    TableColumn usernameColumn = makeNewStringColumn("Username", "username");
+    TableColumn tapsOnColumn = makeNewIntColumn("Taps In", "tapsIn");
+    TableColumn tapsOffColumn = makeNewIntColumn("Taps Out","tapsOut");
+
+    ArrayList<UserRow> userRows = generateUserData(selectedDate);
+    ObservableList<UserRow> data = FXCollections.observableArrayList(userRows);
+
+    dataTable.getColumns().addAll(usernameColumn, tapsOnColumn, tapsOffColumn);
+    dataTable.setItems(data);
+
+    return dataTable;
+  }
+
+  private TableColumn makeNewStringColumn(String title, String paramName) {
+    TableColumn tempColumn = new TableColumn(title);
+    tempColumn.setCellValueFactory(new PropertyValueFactory<UserRow, String>(paramName));
+    tempColumn.setMinWidth(200.0);
+    return tempColumn;
+  }
+
+  private TableColumn makeNewIntColumn(String title, String paramName) {
+    TableColumn tempColumn = new TableColumn(title);
+    tempColumn.setCellValueFactory(new PropertyValueFactory<UserRow, Integer>(paramName));
+    tempColumn.setMinWidth(200.0);
+    return tempColumn;
+  }
+
+  private ArrayList<UserRow> generateUserData(LocalDate selectedDate) {
+    ArrayList<UserRow> temp = new ArrayList<>();
+    for (User u : User.getAllUsersCopy().values()) {
+      UserRow tempRow = new UserRow(u, selectedDate);
+      temp.add(tempRow);
+    }
+    return temp;
   }
 }

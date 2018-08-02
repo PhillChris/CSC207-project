@@ -37,7 +37,7 @@ public class SignUpPage extends Page {
     addTrain();
     addClock();
 
-    this.scene = new Scene(grid, 600, 375);
+    this.scene = new Scene(grid, 600, 400);
     scene.getStylesheets().add(SignUpPage.class.getResource("styling/SignUpPage.css").toExternalForm());
   }
 
@@ -54,11 +54,19 @@ public class SignUpPage extends Page {
     TextField emailInput = makeEmailInput(signUpPane);
     PasswordField passInput = makePassInput(signUpPane);
 
-    CheckBox adminBox = new CheckBox("Admin?");
-    signUpPane.add(adminBox, 0, 4, 2, 1);
+    ToggleGroup group = new ToggleGroup();
 
-    CheckBox studentBox = new CheckBox("Student?");
-    signUpPane.add(studentBox, 0, 5, 2, 1);
+    RadioButton userBox = new RadioButton("Normal User?");
+    signUpPane.add(userBox, 0, 4, 2, 1);
+
+    RadioButton adminBox = new RadioButton("Admin?");
+    signUpPane.add(adminBox, 0, 5, 2, 1);
+
+    RadioButton studentBox = new RadioButton("Student?");
+    signUpPane.add(studentBox, 0, 6, 2, 1);
+
+
+    group.getToggles().setAll(userBox, adminBox, studentBox);
 
     Label errorMessage = makeErrorMessage(signUpPane);
 
@@ -97,7 +105,7 @@ public class SignUpPage extends Page {
 
   private void placeSeparator(GridPane signUpPane) {
     Separator horizontalSeparator = new Separator();
-    signUpPane.add(horizontalSeparator, 0, 6, 2, 1);
+    signUpPane.add(horizontalSeparator, 0, 8, 2, 1);
   }
 
   private void placeIcons(GridPane signUpPane) {
@@ -107,7 +115,7 @@ public class SignUpPage extends Page {
   }
 
   private void placeSignUpButton(GridPane signUpPane, TextField userInput, TextField emailInput,
-                                 PasswordField passInput, CheckBox adminBox, CheckBox studentBox, Label errorMessage) {
+                                 PasswordField passInput, RadioButton adminBox, RadioButton studentBox, Label errorMessage) {
     Button signUpButton = new Button("Sign Up");
     signUpButton.setOnAction((data) -> {
       try {
@@ -118,14 +126,14 @@ public class SignUpPage extends Page {
         e.setMessage(errorMessage);
       }
     });
-    signUpPane.add(signUpButton, 0, 7, 2, 1);
+    signUpPane.add(signUpButton, 0, 8, 2, 1);
     GridPane.setHalignment(signUpButton, HPos.LEFT);
   }
 
   private void placeBackButton(Stage primaryStage, GridPane signUpPane) {
     Button backButton = new Button("Go Back");
     backButton.setOnAction((data) -> primaryStage.setScene(new LoginPage(primaryStage).getScene()));
-    signUpPane.add(backButton, 1, 7, 2, 1);
+    signUpPane.add(backButton, 1, 8, 2, 1);
     GridPane.setHalignment(backButton, HPos.RIGHT);
     GridPane.setMargin(backButton, new Insets(0, 10, 0, 0));
   }

@@ -17,17 +17,17 @@ import transit.system.StationRow;
 import transit.system.StatisticsMaker;
 
 /** Represents a page displaying statistics collected about stations */
-public class StationStatsPage extends TablePage {
-  /** The admin user accessing the current StationStatsPage */
+public class StationTablePage extends TablePage {
+  /** The admin user accessing the current StationTablePage */
   private AdminUser admin;
 
   /**
-   * Constructs a new StationStatsPage
+   * Constructs a new StationTablePage
    *
    * @param primaryStage the stage on which this page is being served
    * @param admin the AdminUser accessing the given statistics
    */
-  public StationStatsPage(Stage primaryStage, AdminUser admin) {
+  public StationTablePage(Stage primaryStage, AdminUser admin) {
     this.admin = admin;
     makeScene(primaryStage);
   }
@@ -61,7 +61,7 @@ public class StationStatsPage extends TablePage {
   }
 
   /**
-   * Makes the table to be displayed in this StationStatsPage
+   * Makes the table to be displayed in this StationTablePage
    *
    * @param selectedDate the date which your data is to be retrieved
    * @return the table to be displayed

@@ -1,7 +1,7 @@
 package transit.system;
 import java.time.LocalDate;
 
-/** Represents a row in the StationStatsPage table*/
+/** Represents a row in the StationTablePage table*/
 public class StationRow extends Row {
   /** Makes a new instance of a StationRow*/
   public StationRow(Station station, LocalDate selectedDate) {

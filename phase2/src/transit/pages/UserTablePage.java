@@ -2,7 +2,6 @@ package transit.pages;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -17,19 +16,19 @@ import transit.system.User;
 import transit.system.UserRow;
 
 /** Represents a page displaying all stats regarding users in this TransitSystem */
-public class UserStatsPage extends TablePage {
-  /** The admin accessing this UserStatsPage */
+public class UserTablePage extends TablePage {
+  /** The admin accessing this UserTablePage */
   private AdminUser admin;
-  /** The stats being displayed on this UserStatsPage */
+  /** The stats being displayed on this UserTablePage */
   private ArrayList<Label> userStats = new ArrayList<>();
 
   /**
-   * Constructs a new UserStatsPage
+   * Constructs a new UserTablePage
    *
-   * @param primaryStage the stage on which this UserStatsPage is shown
+   * @param primaryStage the stage on which this UserTablePage is shown
    * @param admin the adminUser tied to this
    */
-  public UserStatsPage(Stage primaryStage, AdminUser admin) {
+  public UserTablePage(Stage primaryStage, AdminUser admin) {
     this.admin = admin;
     makeScene(primaryStage);
   }
@@ -59,7 +58,7 @@ public class UserStatsPage extends TablePage {
     // Associate CSS with this page
     this.scene
         .getStylesheets()
-        .add(UserStatsPage.class.getResource("styling/TableRows.css").toExternalForm());
+        .add(UserTablePage.class.getResource("styling/TableRows.css").toExternalForm());
   }
 
   /**
@@ -86,7 +85,7 @@ public class UserStatsPage extends TablePage {
 
 
 
-  /** Generates all of the user rows for use in the UserStatsPage
+  /** Generates all of the user rows for use in the UserTablePage
    *
    * @param selectedDate the date selected for data retrieval
    * @return the rows of data to be represented in this table

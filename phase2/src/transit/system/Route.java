@@ -14,6 +14,11 @@ public class Route implements Serializable {
   private static HashMap<String, ArrayList<Route>> routes = new HashMap<>();
   /** List containing all the stations of this route in travel order */
   private List<Station> routeStations;
+  /**
+   * HashMap containing HashMap of all stations of given types as values, where the keys of the
+   * inner HashMap are the station names.
+   */
+  private HashMap<String, HashMap<String, Station>> allStations = new HashMap<>();
   /** The type of this route */
   private String routeType;
   /** The number of this route. */
@@ -30,8 +35,8 @@ public class Route implements Serializable {
   }
 
   /**
-   * Set the static routes attribute to the passed parameter. Note: this method should only be
-   * used for deserialization of Route objects when the program is first being loaded in.
+   * Set the static routes attribute to the passed parameter. Note: this method should only be used
+   * for deserialization of Route objects when the program is first being loaded in.
    *
    * @param routes the value to set the routes attribute to.
    */

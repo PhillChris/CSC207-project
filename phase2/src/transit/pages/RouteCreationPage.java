@@ -12,6 +12,10 @@ public class RouteCreationPage extends Page {
   /** The stage used by this page */
   private Stage stage;
 
+  /**
+   * Construct a new instance of RouteCreationPage
+   * @param primaryStage The stage for this page to be displayed
+   */
   public RouteCreationPage(Stage primaryStage) {
     this.grid = new GridPane();
     stage = primaryStage;

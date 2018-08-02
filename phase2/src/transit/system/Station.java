@@ -8,6 +8,15 @@ import java.util.HashMap;
 public class Station implements Serializable {
   /** All acceptable possible route types in this transit system */
   public static final String[] POSSIBLE_TYPES = {"Bus", "Subway"};
+  /** The fee charged when starting a bus trip to non-students */
+  public static final int BUS_INITIAL_FEE = 200;
+  /** The fee charged when starting a bus trip to students */
+  public static final int STUDENT_BUS_INITIAL_FEE = 100;
+  /** The fee charged when passing each subway station to non-students */
+  public static final int SUBWAY_PERSTATION_FEE = 50;
+  /** The fee charged when passing each subway station to students */
+  public static final int STUDENT_SUBWAY_PERSTATION_FEE = 40;
+
   /** The fee charged per station travelled by this station */
   private int perStationFee;
   /** The initial fee charged by this station at the start of a trip */
@@ -89,13 +98,13 @@ public class Station implements Serializable {
   private void setFees() {
     if (stationType.equals("Bus")) {
       this.perStationFee = 0;
-      this.initialFee = 200;
+      this.initialFee = BUS_INITIAL_FEE;
       this.perStationStudentFee = 0;
-      this.initialStudentFee = 100;
+      this.initialStudentFee = STUDENT_BUS_INITIAL_FEE;
     } else {
-      this.perStationFee = 50;
+      this.perStationFee = SUBWAY_PERSTATION_FEE;
       this.initialFee = 0;
-      this.perStationStudentFee = 40;
+      this.perStationStudentFee = STUDENT_SUBWAY_PERSTATION_FEE;
       this.initialStudentFee = 0;
     }
   }

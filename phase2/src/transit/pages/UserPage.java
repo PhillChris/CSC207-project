@@ -4,7 +4,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.TransitTime;
 import transit.system.User;
 
 /** Represents a page displayed when a user logs in in this transit system */
@@ -80,7 +79,7 @@ public class UserPage extends AuthenticatedPage {
           "Toggle admin panel",
           () -> primaryStage.setScene(new AdminUserPage(primaryStage, user).getScene()),
           0,
-          20);
+          8);
     }
   }
 

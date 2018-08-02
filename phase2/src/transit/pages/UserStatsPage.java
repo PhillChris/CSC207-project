@@ -9,7 +9,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.AdminUser;
@@ -17,7 +16,7 @@ import transit.system.User;
 import transit.system.UserRow;
 
 /** Represents a page displaying all stats regarding users in this TransitSystem */
-public class UserStatsPage extends Page {
+public class UserStatsPage extends TablePage {
   /** The admin accessing this UserStatsPage */
   private AdminUser admin;
   /** The stats being displayed on this UserStatsPage */
@@ -46,7 +45,7 @@ public class UserStatsPage extends Page {
     TableView t = makeTable(dateOptions.getItems().get(0));
     dateOptions.setOnAction(
         e -> {
-          t.setItems(FXCollections.observableList(generateUserData(dateOptions.getValue())));
+          t.setItems(FXCollections.observableList(generateData(dateOptions.getValue())));
         });
     placeButton(
         "Go back",
@@ -72,11 +71,11 @@ public class UserStatsPage extends Page {
     TableView dataTable = new TableView();
     dataTable.setEditable(true);
 
-    TableColumn usernameColumn = makeNewStringColumn("Username", "username");
+    TableColumn usernameColumn = makeNewStringColumn("Username", "name");
     TableColumn tapsOnColumn = makeNewIntColumn("Taps In", "tapsIn");
     TableColumn tapsOffColumn = makeNewIntColumn("Taps Out", "tapsOut");
 
-    ArrayList<UserRow> userRows = generateUserData(selectedDate);
+    ArrayList<UserRow> userRows = generateData(selectedDate);
     ObservableList<UserRow> data = FXCollections.observableArrayList(userRows);
 
     dataTable.getColumns().addAll(usernameColumn, tapsOnColumn, tapsOffColumn);
@@ -85,21 +84,14 @@ public class UserStatsPage extends Page {
     return dataTable;
   }
 
-  private TableColumn makeNewStringColumn(String title, String paramName) {
-    TableColumn tempColumn = new TableColumn(title);
-    tempColumn.setCellValueFactory(new PropertyValueFactory<UserRow, String>(paramName));
-    tempColumn.setMinWidth(200.0);
-    return tempColumn;
-  }
 
-  private TableColumn makeNewIntColumn(String title, String paramName) {
-    TableColumn tempColumn = new TableColumn(title);
-    tempColumn.setCellValueFactory(new PropertyValueFactory<UserRow, Integer>(paramName));
-    tempColumn.setMinWidth(200.0);
-    return tempColumn;
-  }
 
-  private ArrayList<UserRow> generateUserData(LocalDate selectedDate) {
+  /** Generates all of the user rows for use in the UserStatsPage
+   *
+   * @param selectedDate the date selected for data retrieval
+   * @return the rows of data to be represented in this table
+   */
+  protected ArrayList<UserRow> generateData(LocalDate selectedDate) {
     ArrayList<UserRow> temp = new ArrayList<>();
     for (User u : User.getAllUsersCopy().values()) {
       UserRow tempRow = new UserRow(u, selectedDate);

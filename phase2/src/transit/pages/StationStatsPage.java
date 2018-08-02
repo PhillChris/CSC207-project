@@ -1,19 +1,25 @@
 package transit.pages;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.layout.Region;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import transit.system.AdminUser;
 import transit.system.Station;
 import transit.system.StatisticsMaker;
+import transit.system.StationRow;
+import transit.system.UserRow;
 
 /** Represents a page displaying statistics collected about stations */
-public class StationStatsPage extends Page {
+public class StationStatsPage extends TablePage {
   /** The admin user accessing the current StationStatsPage */
   private AdminUser admin;
   /** An arraylist of the current labels in the system */
@@ -39,10 +45,16 @@ public class StationStatsPage extends Page {
   public void makeScene(Stage primaryStage) {
     placeLabel("Station statistics!", 0, 0);
     ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
+    TableView t = makeTable(dateOptions.getItems().get(0));
     dateOptions.setOnAction(e -> {
-      refreshStats(primaryStage, dateOptions.getValue());
+      t.setItems(FXCollections.observableList(generateData(dateOptions.getValue())));
     });
-    refreshStats(primaryStage, dateOptions.getItems().get(0));
+    grid.add(t, 0, 2);
+    placeButton(
+        "Go back",
+        () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
+        0,
+        3);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
@@ -96,5 +108,36 @@ public class StationStatsPage extends Page {
         () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
         0,
         i);
+  }
+
+  private TableView makeTable(LocalDate selectedDate) {
+    TableView dataTable = new TableView();
+    dataTable.setEditable(true);
+
+    TableColumn stationNameColumn = makeNewStringColumn("Station Name", "name");
+    TableColumn tapsOnColumn = makeNewIntColumn("Taps In", "tapsIn");
+    TableColumn tapsOffColumn = makeNewIntColumn("Taps Out", "tapsOut");
+
+    ArrayList<StationRow> stationRows = generateData(selectedDate);
+    ObservableList<StationRow> data = FXCollections.observableArrayList(stationRows);
+
+    dataTable.getColumns().addAll(stationNameColumn, tapsOnColumn, tapsOffColumn);
+    dataTable.setItems(data);
+
+    return dataTable;
+  }
+
+  protected ArrayList<StationRow> generateData(LocalDate selectedDate) {
+    ArrayList<StationRow> temp = new ArrayList<>();
+    HashMap<Station, ArrayList<Integer>> busStationStats = StatisticsMaker.makeStationsMap("Bus", selectedDate);
+    HashMap<Station, ArrayList<Integer>> subwayStationStats =
+        StatisticsMaker.makeStationsMap("Subway", selectedDate);
+    for (Station busStation: busStationStats.keySet()) {
+      temp.add(new StationRow(busStation, selectedDate));
+    }
+    for (Station subwayStation: subwayStationStats.keySet()) {
+      temp.add(new StationRow(subwayStation, selectedDate));
+    }
+    return temp;
   }
 }

@@ -1,27 +1,26 @@
 package transit.pages;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.time.LocalDate;
-import javafx.collections.ObservableList;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
 import transit.system.AdminUser;
 import transit.system.User;
 import transit.system.UserRow;
 
 /** Represents a page displaying all stats regarding users in this TransitSystem */
 public class UserStatsPage extends Page {
-  /** The admin accessing this UserStatsPage*/
+  /** The admin accessing this UserStatsPage */
   private AdminUser admin;
-  /** The stats being displayed on this UserStatsPage*/
+  /** The stats being displayed on this UserStatsPage */
   private ArrayList<Label> userStats = new ArrayList<>();
 
   /**
@@ -45,24 +44,37 @@ public class UserStatsPage extends Page {
     placeLabel("User stats page", 0, 0);
     ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
     TableView t = makeTable(dateOptions.getItems().get(0));
-    dateOptions.setOnAction(e -> {
-      t.setItems(FXCollections.observableList(generateUserData(dateOptions.getValue())));
-    });
+    dateOptions.setOnAction(
+        e -> {
+          t.setItems(FXCollections.observableList(generateUserData(dateOptions.getValue())));
+        });
     placeButton(
         "Go back",
         () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
-        0, 3);
+        0,
+        3);
     grid.add(t, 0, 2);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+
+    // Associate CSS with this page
+    this.scene
+        .getStylesheets()
+        .add(UserStatsPage.class.getResource("styling/TableRows.css").toExternalForm());
   }
 
+  /**
+   * Creates a new table of statistics for the UserStats page
+   *
+   * @param selectedDate the current date in the program
+   * @return a table containing the
+   */
   private TableView makeTable(LocalDate selectedDate) {
     TableView dataTable = new TableView();
     dataTable.setEditable(true);
 
     TableColumn usernameColumn = makeNewStringColumn("Username", "username");
     TableColumn tapsOnColumn = makeNewIntColumn("Taps In", "tapsIn");
-    TableColumn tapsOffColumn = makeNewIntColumn("Taps Out","tapsOut");
+    TableColumn tapsOffColumn = makeNewIntColumn("Taps Out", "tapsOut");
 
     ArrayList<UserRow> userRows = generateUserData(selectedDate);
     ObservableList<UserRow> data = FXCollections.observableArrayList(userRows);

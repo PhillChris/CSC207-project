@@ -154,6 +154,13 @@ public abstract class Page {
     grid.add(button, col, row);
   }
 
+  protected Button placeButton(String text, Runnable function, int col, int row, int colSpan) {
+    Button button = new Button(text);
+    button.setOnAction(data -> function.run());
+    grid.add(button, col, row, colSpan, 1);
+    return button;
+  }
+
   protected void placeSeparator(GridPane grid, int col, int row, int colSpan, String id) {
     Separator horizontalSeparator = new Separator();
     horizontalSeparator.setId(id);

@@ -1,9 +1,16 @@
 package transit.pages;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import transit.system.TransitTime;
+
+import java.sql.Time;
 
 /** Represents a time control window in this simulation */
 public class TimeControlPage extends Page {
@@ -18,18 +25,40 @@ public class TimeControlPage extends Page {
    * @param secondaryStage the alternate window on which this popup is served
    */
   void makeScene(Stage secondaryStage) {
-    placeButton("Pause time", () -> TransitTime.pauseTime(), 0, 0);
+    grid.setHgap(10);
+    grid.setVgap(10);
 
-    placeButton("Start time", () -> TransitTime.startTime(), 0, 1);
+    Button control = placeButton("Pause time", () -> {}, 0, 0, 4);
+    control.setId("control");
+    GridPane.setHalignment(control, HPos.CENTER);
 
-    placeButton("Jump ahead 1 hour", () -> TransitTime.fastForward(), 0, 2);
 
-    placeButton("Jump ahead 1 day", () -> TransitTime.skipDay(), 0, 3);
+    control.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        if (TransitTime.isRunning()) {
+          TransitTime.pauseTime();
+          control.setText("Resume time");
+        } else {
+          TransitTime.startTime();
+          control.setText("Pause time");
+        }
+      }
+    });
 
-    placeButton("Jump ahead 1 month", () -> TransitTime.skipMonth(), 0, 4);
+    control.setPrefWidth(250);
+
+    placeLabel("Jump ahead: ", 0, 1);
+
+    placeButton("1 hour", () -> TransitTime.fastForward(), 1, 1);
+
+    placeButton("1 day", () -> TransitTime.skipDay(), 2, 1);
+
+    placeButton("1 month", () -> TransitTime.skipMonth(), 3, 1);
 
     grid.setAlignment(Pos.CENTER);
 
-    this.scene = new Scene(grid, 150, 150);
+    this.scene = new Scene(grid, 360, 100);
+    scene.getStylesheets().add(TimeControlPage.class.getResource("styling/TimeControlPage.css").toExternalForm());
   }
 }

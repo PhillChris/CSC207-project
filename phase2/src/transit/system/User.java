@@ -191,17 +191,13 @@ public class User implements Serializable {
     if (lastTrip != null) {
       if (lastTrip.isContinuousTrip(station)) { // continue the last trip
         card.setCurrentTrip(lastTrip);
-        lastTrip.continueTrip(station);
+        lastTrip.continueTrip(station, this.permission);
         statistics.getPreviousTrips().remove(lastTrip);
         foundContinuousTrip = true;
       }
     }
     if (!foundContinuousTrip) {
-      if (this.permission == "student") {
-        card.setCurrentTrip(new StudentTrip(station));
-      } else {
-        card.setCurrentTrip(new Trip(station));
-      }
+      card.setCurrentTrip(new Trip(station, this.permission));
     }
   }
 

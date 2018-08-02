@@ -12,6 +12,10 @@ public class Station implements Serializable {
   private int perStationFee;
   /** The initial fee charged by this station at the start of a trip */
   private int initialFee;
+  /** The fee charged per station travelled by students by this station */
+  private int perStationStudentFee;
+  /** The initial fee charged by this station to students at the start of a trip*/
+  private int initialStudentFee;
   /** The name of this station */
   private String name;
   /** The number of people who have tapped on at this station per day. */
@@ -44,12 +48,18 @@ public class Station implements Serializable {
   }
 
   /** @return the fare charged by this station at the start of a new trip portion */
-  public int getInitialFee() {
-    return this.initialFee;
+  public int getInitialFee(String permission) {
+    if (permission == "student") {
+      return this.initialStudentFee;
+    }
+    return this.initialStudentFee;
   }
 
   /** @return the fare charged by this station when a user travels by it */
-  public int getPerStationFee() {
+  public int getPerStationFee(String permission) {
+    if (permission == "student") {
+      return perStationStudentFee;
+    }
     return perStationFee;
   }
 
@@ -80,9 +90,13 @@ public class Station implements Serializable {
     if (stationType.equals("Bus")) {
       this.perStationFee = 0;
       this.initialFee = 200;
+      this.perStationStudentFee = 0;
+      this.initialStudentFee = 100;
     } else {
       this.perStationFee = 50;
       this.initialFee = 0;
+      this.perStationStudentFee = 40;
+      this.initialStudentFee = 0;
     }
   }
 

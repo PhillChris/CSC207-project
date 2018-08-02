@@ -31,10 +31,10 @@ public class Trip implements Serializable {
    *
    * @param station transit.system.Station which this trip is started
    */
-  public Trip(Station station) {
+  public Trip(Station station, String permission) {
     timeStarted = TransitTime.getCurrentTime();
-    tripFee = station.getInitialFee();
-    perStationFee = station.getPerStationFee();
+    tripFee = station.getInitialFee(permission);
+    perStationFee = station.getPerStationFee(permission);
     priorStops.add(station);
     tripLegLength = 0;
   }
@@ -115,14 +115,14 @@ public class Trip implements Serializable {
    *
    * @param station the station that the trip is being continued from.
    */
-  void continueTrip(Station station) {
+  void continueTrip(Station station, String permission) {
     priorStops.add(endStation);
     priorStops.add(station);
     endStation = null;
     timeEnded = null;
     maxFee = Math.max(0, maxFee - tripFee);
-    tripFee = station.getInitialFee();
-    perStationFee = station.getPerStationFee();
+    tripFee = station.getInitialFee(permission);
+    perStationFee = station.getPerStationFee(permission);
   }
 
   /**

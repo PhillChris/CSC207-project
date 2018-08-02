@@ -37,7 +37,7 @@ public class SignUpPage extends Page {
     addTrain();
     addClock();
 
-    this.scene = new Scene(grid, 600, 400);
+    this.scene = new Scene(grid, 600, 375);
     scene.getStylesheets().add(SignUpPage.class.getResource("styling/SignUpPage.css").toExternalForm());
   }
 
@@ -54,25 +54,42 @@ public class SignUpPage extends Page {
     TextField emailInput = makeEmailInput(signUpPane);
     PasswordField passInput = makePassInput(signUpPane);
 
-    ToggleGroup group = new ToggleGroup();
-
-    RadioButton userBox = new RadioButton("Normal User?");
-    signUpPane.add(userBox, 0, 4, 2, 1);
-
-    RadioButton adminBox = new RadioButton("Admin?");
-    signUpPane.add(adminBox, 0, 5, 2, 1);
-
-    RadioButton studentBox = new RadioButton("Student?");
-    signUpPane.add(studentBox, 0, 6, 2, 1);
+    ComboBox<String> userType = new ComboBox<>();
+    userType.getItems().addAll(
+      "Normal",
+      "Admin",
+      "Student"
+    );
 
 
-    group.getToggles().setAll(userBox, adminBox, studentBox);
+
+    userType.getSelectionModel().selectFirst();
+
+
+
+    signUpPane.add(userType, 1, 4, 2, 1);
+    GridPane.setHalignment(userType, HPos.RIGHT);
+    GridPane.setMargin(userType, new Insets(0, 9, 0, 0));
+
+//    ToggleGroup group = new ToggleGroup();
+//
+//    RadioButton userBox = new RadioButton("Normal User?");
+//    signUpPane.add(userBox, 0, 4, 2, 1);
+//
+//    RadioButton adminBox = new RadioButton("Admin?");
+//    signUpPane.add(adminBox, 0, 5, 2, 1);
+//
+//    RadioButton studentBox = new RadioButton("Student?");
+//    signUpPane.add(studentBox, 0, 6, 2, 1);
+
+
+//    group.getToggles().setAll(userBox, adminBox, studentBox);
 
     Label errorMessage = makeErrorMessage(signUpPane);
 
     placeSeparator(signUpPane);
 
-    placeSignUpButton(signUpPane, userInput, emailInput, passInput, adminBox, studentBox, errorMessage);
+    placeSignUpButton(signUpPane, userInput, emailInput, passInput, userType, errorMessage);
     placeBackButton(primaryStage, signUpPane);
 
     grid.add(signUpPane, 0, 1);
@@ -95,17 +112,22 @@ public class SignUpPage extends Page {
     Label signUp = new Label("Sign up");
     signUp.setId("signUpLabel");
     signUpPane.add(signUp, 0, 0, 2, 1);
+
+    Label userType = new Label("User type:");
+    userType.setId("typeLabel");
+    signUpPane.add(userType, 0, 4, 2, 1);
+
   }
 
   private Label makeErrorMessage(GridPane signUpPane) {
-    Label errorMessage = placeLabel(signUpPane, "", 1, 4, "errorMessage");
+    Label errorMessage = placeLabel(signUpPane, "", 1, 0, "errorMessage");
     GridPane.setHalignment(errorMessage, HPos.RIGHT);
     return errorMessage;
   }
 
   private void placeSeparator(GridPane signUpPane) {
     Separator horizontalSeparator = new Separator();
-    signUpPane.add(horizontalSeparator, 0, 8, 2, 1);
+    signUpPane.add(horizontalSeparator, 0, 5, 2, 1);
   }
 
   private void placeIcons(GridPane signUpPane) {
@@ -115,39 +137,39 @@ public class SignUpPage extends Page {
   }
 
   private void placeSignUpButton(GridPane signUpPane, TextField userInput, TextField emailInput,
-                                 PasswordField passInput, RadioButton adminBox, RadioButton studentBox, Label errorMessage) {
+                                 PasswordField passInput, ComboBox<String> userType, Label errorMessage) {
     Button signUpButton = new Button("Sign Up");
     signUpButton.setOnAction((data) -> {
       try {
-        add(userInput.getText(), emailInput.getText(), passInput.getText(), adminBox.isSelected(), studentBox.isSelected());
+        add(userInput.getText(), emailInput.getText(), passInput.getText(), userType.getValue());
         errorMessage.setText("Account created");
         errorMessage.setTextFill(Color.web("#33AF54"));
       } catch (MessageTransitException e) {
         e.setMessage(errorMessage);
       }
     });
-    signUpPane.add(signUpButton, 0, 8, 2, 1);
+    signUpPane.add(signUpButton, 0, 6, 2, 1);
+    GridPane.setMargin(signUpButton, new Insets(2, 0, 0, 0));
     GridPane.setHalignment(signUpButton, HPos.LEFT);
   }
 
   private void placeBackButton(Stage primaryStage, GridPane signUpPane) {
     Button backButton = new Button("Go Back");
     backButton.setOnAction((data) -> primaryStage.setScene(new LoginPage(primaryStage).getScene()));
-    signUpPane.add(backButton, 1, 8, 2, 1);
+    signUpPane.add(backButton, 1, 6, 2, 1);
     GridPane.setHalignment(backButton, HPos.RIGHT);
-    GridPane.setMargin(backButton, new Insets(0, 10, 0, 0));
+    GridPane.setMargin(backButton, new Insets(2, 10, 0, 0));
   }
   /**
    * @param username the proposed username of this new user
    * @param email the proposed email of this new user
    * @param password the proposed password of this new user
-   * @param isAdmin whether or not this new user is an AdminUser
    * @throws MessageTransitException if there is a problem in constructing a user with these given parameters
    */
-  private void add(String username, String email, String password, boolean isAdmin, boolean isStudent) throws MessageTransitException {
-    if (isAdmin) {
+  private void add(String username, String email, String password, String userType) throws MessageTransitException {
+    if (userType.equals("Admin")) {
       new User(username, email, password, "admin");
-    } else if (isStudent) {
+    } else if (userType.equals("Student")) {
       new User(username, email, password, "student");
     } else {
       new User(username, email, password, "user");

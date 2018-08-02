@@ -149,7 +149,7 @@ public class LoginPage extends Page {
             }
             if (checkAuthorization(emailInput, passInput)) {
               Page userPage;
-              if (user.getPermission() == "admin") {
+              if (user.getPermission().equals("admin")) {
                 userPage = new AdminUserPage(primaryStage, user);
               } else {
                 userPage = new UserPage(primaryStage, user);
@@ -163,6 +163,7 @@ public class LoginPage extends Page {
           }
         });
     loginPane.add(loginButton, 0, 3, 2, 1);
+    GridPane.setMargin(loginButton, new Insets(3, 0, 0, 0));
   }
 
   /**

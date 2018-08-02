@@ -32,6 +32,13 @@
 }
 
 #errorMessage {
-    -fx-text-fill: red;
-    -fx-font-size: 14px;
+    -fx-color: #727272;
+    -fx-font-size: 20px;
+    -fx-padding: 0px 0px 0px 2px;
+}
+
+#typeLabel {
+    -fx-color: #727272;
+    -fx-font-size: 18px;
+    -fx-padding: 0px 0px 0px 2px;
 }

@@ -13,6 +13,6 @@ public class AdminUser extends User implements Serializable {
    * @param password the password of ths transit.system.AdminUser
    */
   public AdminUser(String name, String email, String password) throws MessageTransitException {
-    super(name, email, password);
+    super(name, email, password,"admin");
   }
 }

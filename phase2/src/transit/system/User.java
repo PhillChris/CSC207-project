@@ -26,6 +26,8 @@ public class User implements Serializable {
   private String password;
   /** The id given to the next card added by the user */
   private int cardCounter;
+  /** Determines the permissions and pricing of this user*/
+  private String permission;
   /**
    * Construct a new instance of transit.system.User
    *
@@ -33,7 +35,7 @@ public class User implements Serializable {
    * @param email the email of this transit.system.User
    * @param password the password of ths transit.system.User
    */
-  public User(String name, String email, String password) throws MessageTransitException {
+  public User(String name, String email, String password, String permission) throws MessageTransitException {
     if (!email.matches(EMAILREGEX)) {
       throw new InvalidEmailException();
     }
@@ -46,6 +48,7 @@ public class User implements Serializable {
     this.name = name;
     this.email = email;
     this.password = password;
+    this.permission = permission;
     this.cards = new HashMap<>();
     allUsers.put(email, this);
     cardCounter = 1;
@@ -78,6 +81,9 @@ public class User implements Serializable {
   public String getUserName() {
     return this.name;
   }
+
+  /** @return The permission on this user */
+  public String getPermission() { return this.permission; }
 
   /** @return The monthly expenditure of this User */
   public HashMap<YearMonth, Integer> getExpenditureMonthly() {

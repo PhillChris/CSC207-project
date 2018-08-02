@@ -104,7 +104,5 @@ public class Card implements Serializable {
    *
    * @param toSubtract the amount of money to subtract to this transit.system.Card's balance
    */
-  void subtractBalance(int toSubtract) {
-    this.balance -= toSubtract;
-  }
+  void subtractBalance(int toSubtract) { this.balance -= toSubtract; }
 }

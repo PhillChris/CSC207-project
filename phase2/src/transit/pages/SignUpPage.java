@@ -57,11 +57,14 @@ public class SignUpPage extends Page {
     CheckBox adminBox = new CheckBox("Admin?");
     signUpPane.add(adminBox, 0, 4, 2, 1);
 
+    CheckBox studentBox = new CheckBox("Student?");
+    signUpPane.add(studentBox, 0, 5, 2, 1);
+
     Label errorMessage = makeErrorMessage(signUpPane);
 
     placeSeparator(signUpPane);
 
-    placeSignUpButton(signUpPane, userInput, emailInput, passInput, adminBox, errorMessage);
+    placeSignUpButton(signUpPane, userInput, emailInput, passInput, adminBox, studentBox, errorMessage);
     placeBackButton(primaryStage, signUpPane);
 
     grid.add(signUpPane, 0, 1);
@@ -94,7 +97,7 @@ public class SignUpPage extends Page {
 
   private void placeSeparator(GridPane signUpPane) {
     Separator horizontalSeparator = new Separator();
-    signUpPane.add(horizontalSeparator, 0, 5, 2, 1);
+    signUpPane.add(horizontalSeparator, 0, 6, 2, 1);
   }
 
   private void placeIcons(GridPane signUpPane) {
@@ -104,25 +107,25 @@ public class SignUpPage extends Page {
   }
 
   private void placeSignUpButton(GridPane signUpPane, TextField userInput, TextField emailInput,
-                                 PasswordField passInput, CheckBox adminBox, Label errorMessage) {
+                                 PasswordField passInput, CheckBox adminBox, CheckBox studentBox, Label errorMessage) {
     Button signUpButton = new Button("Sign Up");
     signUpButton.setOnAction((data) -> {
       try {
-        add(userInput.getText(), emailInput.getText(), passInput.getText(), adminBox.isSelected());
+        add(userInput.getText(), emailInput.getText(), passInput.getText(), adminBox.isSelected(), studentBox.isSelected());
         errorMessage.setText("Account created");
         errorMessage.setTextFill(Color.web("#33AF54"));
       } catch (MessageTransitException e) {
         e.setMessage(errorMessage);
       }
     });
-    signUpPane.add(signUpButton, 0, 6, 2, 1);
+    signUpPane.add(signUpButton, 0, 7, 2, 1);
     GridPane.setHalignment(signUpButton, HPos.LEFT);
   }
 
   private void placeBackButton(Stage primaryStage, GridPane signUpPane) {
     Button backButton = new Button("Go Back");
     backButton.setOnAction((data) -> primaryStage.setScene(new LoginPage(primaryStage).getScene()));
-    signUpPane.add(backButton, 1, 6, 2, 1);
+    signUpPane.add(backButton, 1, 7, 2, 1);
     GridPane.setHalignment(backButton, HPos.RIGHT);
     GridPane.setMargin(backButton, new Insets(0, 10, 0, 0));
   }
@@ -133,11 +136,13 @@ public class SignUpPage extends Page {
    * @param isAdmin whether or not this new user is an AdminUser
    * @throws MessageTransitException if there is a problem in constructing a user with these given parameters
    */
-  private void add(String username, String email, String password, boolean isAdmin) throws MessageTransitException {
+  private void add(String username, String email, String password, boolean isAdmin, boolean isStudent) throws MessageTransitException {
     if (isAdmin) {
       new AdminUser(username, email, password);
+    } else if (isStudent) {
+      new User(username, email, password, "student");
     } else {
-      new User(username, email, password);
+      new User(username, email, password, "user");
     }
   }
 }

@@ -1,5 +1,6 @@
 package transit.pages;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
@@ -27,6 +28,9 @@ public class ChangeNamePage extends AuthenticatedPage {
    */
   @Override
   public void makeScene(Stage primaryStage) {
+    grid.setPadding(new Insets(20, 20, 20, 20));
+    grid.setHgap(10);
+    grid.setVgap(10);
     placeLabel("New Username: ", 0, 0);
     TextField newName = placeTextField(1, 0);
     placeButton(
@@ -35,9 +39,9 @@ public class ChangeNamePage extends AuthenticatedPage {
           user.changeName(newName.getText());
           primaryStage.setScene(new UserPage(primaryStage, user).getScene());
         },
-        1,
-        1);
+        2,
+        0);
 
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    this.scene = new Scene(grid, 460, 65);
   }
 }

@@ -1,7 +1,13 @@
 package transit.pages;
 
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.User;
@@ -36,12 +42,16 @@ public abstract class AuthenticatedPage extends Page {
    */
   @Override
   protected void makeScene(Stage primaryStage) {
-    newUserInfoButton(10, 10);
-    newLogoutButton(primaryStage, 10, 0);
+    grid.setPadding(new Insets(20, 20, 20, 40));
+    grid.setHgap(10);
+    grid.setVgap(10);
+
+    newUserInfoButton(1, 0);
+    newLogoutButton(primaryStage, 2, 0);
     newChangeUserButton(primaryStage, 0, 4);
     newRemoveAccountButton(primaryStage, 0, 6);
     addClock();
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    this.scene = new Scene(grid, 600, 375);
   }
 
   /**
@@ -51,7 +61,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this user info button is displayed
    */
   private void newUserInfoButton(int col, int row) {
-    placeButton(
+    Button info = placeButton(
         "Info",
         () -> {
           Alert alert =
@@ -64,6 +74,8 @@ public abstract class AuthenticatedPage extends Page {
         },
         col,
         row);
+    GridPane.setHalignment(info, HPos.RIGHT);
+    GridPane.setHgrow(info, Priority.ALWAYS);
   }
 
   /**
@@ -88,8 +100,10 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this logout button is displayed
    */
   public void newLogoutButton(Stage primaryStage, int col, int row) {
-    placeButton(
-        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), col, row);
+    Button logout = placeButton(
+        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), grid, col, row);
+    GridPane.setHalignment(logout, HPos.RIGHT);
+    GridPane.setHgrow(logout, Priority.ALWAYS);
   }
 
   /**
@@ -104,7 +118,10 @@ public abstract class AuthenticatedPage extends Page {
         "Change username",
         () -> {
           ChangeNamePage namePage = new ChangeNamePage(primaryStage, this.user);
-          primaryStage.setScene(namePage.getScene());
+          Stage nameWindow = new Stage();
+          nameWindow.setTitle("Change username");
+          nameWindow.setScene(namePage.getScene());
+          nameWindow.show();
         },
         col,
         row);

@@ -14,11 +14,20 @@ public class Route implements Serializable {
   private static HashMap<String, ArrayList<Route>> routes = new HashMap<>();
   /** List containing all the stations of this route in travel order */
   private List<Station> routeStations;
+
+  public static HashMap<String, HashMap<String, Station>> getAllStationsCopy() {
+    return allStations;
+  }
+
+  static void setAllStations(HashMap<String, HashMap<String, Station>> newAllStations) {
+    allStations = newAllStations;
+  }
+
   /**
    * HashMap containing HashMap of all stations of given types as values, where the keys of the
    * inner HashMap are the station names.
    */
-  private HashMap<String, HashMap<String, Station>> allStations = new HashMap<>();
+  private static HashMap<String, HashMap<String, Station>> allStations = new HashMap<>();
   /** The type of this route */
   private String routeType;
   /** The number of this route. */

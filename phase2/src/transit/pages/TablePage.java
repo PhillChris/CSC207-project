@@ -2,12 +2,13 @@ package transit.pages;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
-import javafx.scene.Scene;
+import java.util.HashMap;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import transit.system.Row;
-import transit.system.UserRow;
+import transit.system.StationRow;
 
 public abstract class TablePage extends Page {
   /** To be implemented by child classes */
@@ -42,5 +43,26 @@ public abstract class TablePage extends Page {
     return tempColumn;
   }
 
-  protected abstract ArrayList generateData(LocalDate selectedDate);
+  /** @return a new empty table */
+  protected TableView getTable() {
+    TableView table = new TableView();
+    table.setEditable(true);
+    return table;
+  }
+
+  /**
+   * Fetches data to be stored in this TablePage
+   *
+   * @param selectedDate the date which your data is to be retrieved
+   * @return a list of the data rows to be represented in your TablePage
+   */
+  protected abstract ArrayList generateData(LocalDate selectedDate, int tableOption);
+
+  /**
+   * Creates the table to be displayed in this TablePage
+   *
+   * @param selectedDate the date which your data is to be retrieved
+   * @return the table to be displayed
+   */
+  protected abstract TableView makeTable(LocalDate selectedDate, int tableOption);
 }

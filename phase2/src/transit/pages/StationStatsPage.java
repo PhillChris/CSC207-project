@@ -1,29 +1,25 @@
 package transit.pages;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import transit.system.AdminUser;
 import transit.system.Station;
-import transit.system.StatisticsMaker;
 import transit.system.StationRow;
-import transit.system.UserRow;
+import transit.system.StatisticsMaker;
 
 /** Represents a page displaying statistics collected about stations */
 public class StationStatsPage extends TablePage {
   /** The admin user accessing the current StationStatsPage */
   private AdminUser admin;
-  /** An arraylist of the current labels in the system */
-  private ArrayList<Label> stationLabels = new ArrayList<>();
 
   /**
    * Constructs a new StationStatsPage
@@ -37,7 +33,7 @@ public class StationStatsPage extends TablePage {
   }
 
   /**
-   * Makes the scene to be served on the given primaryStage,=
+   * Makes the scene to be served on the given primaryStage
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
@@ -45,99 +41,74 @@ public class StationStatsPage extends TablePage {
   public void makeScene(Stage primaryStage) {
     placeLabel("Station statistics!", 0, 0);
     ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
-    TableView t = makeTable(dateOptions.getItems().get(0));
-    dateOptions.setOnAction(e -> {
-      t.setItems(FXCollections.observableList(generateData(dateOptions.getValue())));
-    });
-    grid.add(t, 0, 2);
+    placeLabel("Bus stations:", 0, 2);
+    TableView busTable = makeTable(dateOptions.getItems().get(0), 0);
+    TableView subwayTable = makeTable(dateOptions.getItems().get(0), 1);
+    dateOptions.setOnAction(
+        e -> {
+          busTable.setItems(FXCollections.observableList(generateData(dateOptions.getValue(), 0)));
+          subwayTable.setItems(FXCollections.observableList(generateData(dateOptions.getValue(), 1)));
+        });
+    grid.add(busTable, 0, 3);
+    placeLabel("Subway stations:", 0, 4);
+    grid.add(subwayTable, 0, 5);
     placeButton(
         "Go back",
         () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
         0,
-        3);
+        6);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
   /**
-   * Refreshes all of the station statistics displayed on this page
+   * Makes the table to be displayed in this StationStatsPage
    *
-   * @param primaryStage the stage on which this page is served
-   * @param selectedDate the date selected on this page
+   * @param selectedDate the date which your data is to be retrieved
+   * @return the table to be displayed
    */
-  private void refreshStats(Stage primaryStage, LocalDate selectedDate) {
-    while (!stationLabels.isEmpty()) {
-      grid.getChildren().remove(stationLabels.get(0));
-      stationLabels.remove(stationLabels.get(0));
-    }
-    HashMap<Station, ArrayList<Integer>> busStationStats = StatisticsMaker.makeStationsMap("Bus", selectedDate);
-    HashMap<Station, ArrayList<Integer>> subwayStationStats =
-        StatisticsMaker.makeStationsMap("Subway", selectedDate);
-    int i = 2;
-    placeLabel("Bus Stations: ", 0, i);
-    i++;
-    for (Station station : busStationStats.keySet()) {
-      stationLabels.add(placeLabel(
-          "Station "
-              + station
-              + ": "
-              + busStationStats.get(station).get(0)
-              + " taps on and "
-              + busStationStats.get(station).get(1)
-              + " taps off.",
-          0,
-          i));
-      i++;
-    }
-    placeLabel("Subway Stations:", 0, i);
-    i++;
-    for (Station station : subwayStationStats.keySet()) {
-      stationLabels.add(placeLabel(
-          "Station "
-              + station
-              + ": "
-              + subwayStationStats.get(station).get(0)
-              + " taps on and "
-              + subwayStationStats.get(station).get(1)
-              + " taps off.",
-          0,
-          i));
-      i++;
-    }
-    placeButton(
-        "Go back",
-        () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
-        0,
-        i);
-  }
+  @Override
+  protected TableView makeTable(LocalDate selectedDate, int tableOption) {
+    TableView table = getTable();
 
-  private TableView makeTable(LocalDate selectedDate) {
-    TableView dataTable = new TableView();
-    dataTable.setEditable(true);
-
-    TableColumn stationNameColumn = makeNewStringColumn("Station Name", "name");
+    TableColumn nameColumn = makeNewStringColumn("Station Name", "name");
     TableColumn tapsOnColumn = makeNewIntColumn("Taps In", "tapsIn");
     TableColumn tapsOffColumn = makeNewIntColumn("Taps Out", "tapsOut");
 
-    ArrayList<StationRow> stationRows = generateData(selectedDate);
-    ObservableList<StationRow> data = FXCollections.observableArrayList(stationRows);
-
-    dataTable.getColumns().addAll(stationNameColumn, tapsOnColumn, tapsOffColumn);
-    dataTable.setItems(data);
-
-    return dataTable;
+    if (tableOption == 0) {
+      ArrayList<StationRow> busStationRows = generateData(selectedDate, 0);
+      ObservableList<StationRow> busData = FXCollections.observableArrayList(busStationRows);
+      table.setItems(busData);
+    } else {
+      ArrayList<StationRow> subwayStationRows = generateData(selectedDate, 1);
+      ObservableList<StationRow> subwayData = FXCollections.observableArrayList(subwayStationRows);
+      table.setItems(subwayData);
+    }
+    table.getColumns().addAll(nameColumn, tapsOnColumn, tapsOffColumn);
+    return table;
   }
 
-  protected ArrayList<StationRow> generateData(LocalDate selectedDate) {
-    ArrayList<StationRow> temp = new ArrayList<>();
-    HashMap<Station, ArrayList<Integer>> busStationStats = StatisticsMaker.makeStationsMap("Bus", selectedDate);
-    HashMap<Station, ArrayList<Integer>> subwayStationStats =
-        StatisticsMaker.makeStationsMap("Subway", selectedDate);
-    for (Station busStation: busStationStats.keySet()) {
-      temp.add(new StationRow(busStation, selectedDate));
+  /**
+   * Fetches station data and creates StationRows to be displayed
+   *
+   * @param selectedDate the date which your data is to be retrieved
+   * @return the data to be shown in the table
+   */
+  @Override
+  protected ArrayList generateData(LocalDate selectedDate, int tableOption) {
+    ArrayList<StationRow> tempList = new ArrayList<>();
+    if (tableOption == 0) {
+      HashMap<Station, ArrayList<Integer>> busStationStats =
+          StatisticsMaker.makeStationsMap("Bus", selectedDate);
+      for (Station busStation : busStationStats.keySet()) {
+        tempList.add(new StationRow(busStation, selectedDate));
+      }
+    } else {
+      HashMap<Station, ArrayList<Integer>> subwayStationStats =
+          StatisticsMaker.makeStationsMap("Subway", selectedDate);
+      for (Station subwayStation : subwayStationStats.keySet()) {
+        tempList.add(new StationRow(subwayStation, selectedDate));
+      }
     }
-    for (Station subwayStation: subwayStationStats.keySet()) {
-      temp.add(new StationRow(subwayStation, selectedDate));
-    }
-    return temp;
+    return tempList;
   }
 }

@@ -2,6 +2,7 @@ package transit.pages;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -40,12 +41,12 @@ public class UserStatsPage extends TablePage {
    */
   @Override
   void makeScene(Stage primaryStage) {
-    placeLabel("User stats page", 0, 0);
+    placeLabel("User statistics!", 0, 0);
     ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
-    TableView t = makeTable(dateOptions.getItems().get(0));
+    TableView t = makeTable(dateOptions.getItems().get(0), 0);
     dateOptions.setOnAction(
         e -> {
-          t.setItems(FXCollections.observableList(generateData(dateOptions.getValue())));
+          t.setItems(FXCollections.observableList(generateData(dateOptions.getValue(), 0)));
         });
     placeButton(
         "Go back",
@@ -67,15 +68,14 @@ public class UserStatsPage extends TablePage {
    * @param selectedDate the current date in the program
    * @return a table containing the
    */
-  private TableView makeTable(LocalDate selectedDate) {
-    TableView dataTable = new TableView();
-    dataTable.setEditable(true);
+  protected TableView makeTable(LocalDate selectedDate, int tableOption) {
+    TableView dataTable = getTable();
 
     TableColumn usernameColumn = makeNewStringColumn("Username", "name");
     TableColumn tapsOnColumn = makeNewIntColumn("Taps In", "tapsIn");
     TableColumn tapsOffColumn = makeNewIntColumn("Taps Out", "tapsOut");
 
-    ArrayList<UserRow> userRows = generateData(selectedDate);
+    ArrayList<UserRow> userRows = generateData(selectedDate, 0);
     ObservableList<UserRow> data = FXCollections.observableArrayList(userRows);
 
     dataTable.getColumns().addAll(usernameColumn, tapsOnColumn, tapsOffColumn);
@@ -91,12 +91,14 @@ public class UserStatsPage extends TablePage {
    * @param selectedDate the date selected for data retrieval
    * @return the rows of data to be represented in this table
    */
-  protected ArrayList<UserRow> generateData(LocalDate selectedDate) {
-    ArrayList<UserRow> temp = new ArrayList<>();
-    for (User u : User.getAllUsersCopy().values()) {
-      UserRow tempRow = new UserRow(u, selectedDate);
-      temp.add(tempRow);
+  protected ArrayList generateData(LocalDate selectedDate, int tableOption) {
+    ArrayList<UserRow> tempList = new ArrayList<>();
+    if (tableOption == 0){
+      for (User u : User.getAllUsersCopy().values()) {
+        UserRow tempRow = new UserRow(u, selectedDate);
+        tempList.add(tempRow);
+      }
     }
-    return temp;
+    return tempList;
   }
 }

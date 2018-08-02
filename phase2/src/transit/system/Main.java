@@ -3,6 +3,7 @@ package transit.system;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import transit.pages.LoginPage;
+import transit.pages.TimeControlPage;
 
 import java.io.IOException;
 
@@ -23,7 +24,11 @@ public class Main extends Application {
     primaryStage.setTitle("Transit System Simulator");
     LoginPage loginPage = new LoginPage(primaryStage);
     primaryStage.setScene(loginPage.getScene());
+    Stage secondaryStage = new Stage();
+    secondaryStage.setTitle("Transit System Time Control");
+    secondaryStage.setScene(new TimeControlPage(secondaryStage).getScene());
     TransitTime.updateTimeLabel();
     primaryStage.show();
+    secondaryStage.show();
   }
 }

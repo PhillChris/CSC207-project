@@ -75,17 +75,6 @@ public class UserPage extends AuthenticatedPage {
         0,
         7);
 
-    placeButton("Pause time", () -> TransitTime.pauseTime(), 0, 15);
-
-    placeButton("Start time", () -> TransitTime.startTime(), 0, 16);
-
-    placeButton("Jump ahead 1 hour", () -> TransitTime.fastForward(), 0, 17);
-
-    placeButton("Jump ahead 1 day", () -> TransitTime.skipDay(), 0, 18);
-
-    placeButton("Jump ahead 1 month", () -> TransitTime.skipMonth(), 0, 18);
-
-
     if (user.getPermission() == "admin") {
       placeButton(
           "Toggle admin panel",

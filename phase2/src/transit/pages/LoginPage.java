@@ -103,12 +103,20 @@ public class LoginPage extends Page {
     return placeTextField(loginPane, "Email", 1, 1, "emailInput");
   }
 
+  /**
+   * @param loginPane the login pane being constructed in this LoginPage
+   * @return a label containing the appropriate error message
+   */
   private Label makeErrorMessage(GridPane loginPane) {
     Label errorMessage = placeLabel(loginPane, "", 1, 3, "errorMessage");
     GridPane.setHalignment(errorMessage, HPos.RIGHT);
     return errorMessage;
   }
 
+  /**
+   * @param primaryStage the stage on which this page is being served
+   * @param loginPane the the login pane being constructed in this LoginPage
+   */
   private void placeSignUpButton(Stage primaryStage, GridPane loginPane) {
     Button signUpButton = new Button("Sign Up");
     signUpButton.setId("signUpButton");
@@ -158,6 +166,11 @@ public class LoginPage extends Page {
     loginPane.add(loginButton, 0, 3, 2, 1);
   }
 
+  /**
+   * Places a horizontal separator on this page
+   *
+   * @param loginPane the second pane in this page used for styling
+   */
   private void placeSeparator(GridPane loginPane) {
     placeSeparator(loginPane, 0, 4, 2, "horizontalSeparator");
   }

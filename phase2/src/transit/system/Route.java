@@ -71,7 +71,8 @@ public class Route implements Serializable {
   public void setRouteStations(List<String> stationNames) {
     ArrayList<Station> stations = new ArrayList<>();
     for (String name : stationNames) {
-      stations.add(new Station(name, routeType));
+      Station newStation = checkStationExists(name, routeType);
+      stations.add(newStation);
     }
     this.routeStations = stations;
   }
@@ -104,5 +105,23 @@ public class Route implements Serializable {
   /** @return The number of this route */
   public int getRouteNum() {
     return this.routeNum;
+  }
+
+  /**
+   * Check if a station of given name and type has already been created. If it has not, it creates
+   * the station of given name and type and adds it to the allStations HashMap.
+   *
+   * @param name the name of the station.
+   * @param type the type of the station.
+   * @return a Station with name name and type type.
+   */
+  private Station checkStationExists(String name, String type) {
+    if (allStations.get(type).containsKey(name)) {
+      return allStations.get(type).get(name);
+    } else {
+      Station newStation = new Station(name, type);
+      allStations.get(type).put(name, newStation);
+      return newStation;
+    }
   }
 }

@@ -61,7 +61,7 @@ public class Station implements Serializable {
     if (permission == "student") {
       return this.initialStudentFee;
     }
-    return this.initialStudentFee;
+    return this.initialFee;
   }
 
   /** @return the fare charged by this station when a user travels by it */

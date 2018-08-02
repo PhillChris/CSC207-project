@@ -125,11 +125,7 @@ public class User implements Serializable {
 
   /** Add a card to this transit.system.User's list of cards. */
   public void addCard() {
-    if (this.permission == "student") {
-      this.cards.put(cardCounter, new StudentCard(cardCounter));
-    } else {
-      this.cards.put(cardCounter, new Card(cardCounter));
-    }
+    this.cards.put(cardCounter, new Card(cardCounter));
     cardCounter++;
   }
 
@@ -201,7 +197,11 @@ public class User implements Serializable {
       }
     }
     if (!foundContinuousTrip) {
-      card.setCurrentTrip(new Trip(station));
+      if (this.permission == "student") {
+        card.setCurrentTrip(new StudentTrip(station));
+      } else {
+        card.setCurrentTrip(new Trip(station));
+      }
     }
   }
 

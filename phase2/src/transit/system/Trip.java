@@ -8,23 +8,23 @@ import java.util.ArrayList;
 /** Represents an object of transit.system.Trip */
 public class Trip implements Serializable {
   /** The maximum duration between the start of two continuous trips */
-  private static final Duration MAX_TRIP_LENGTH = Duration.ofMinutes(120);
+  protected static final Duration MAX_TRIP_LENGTH = Duration.ofMinutes(120);
   /** The time started by this trip */
-  private LocalDateTime timeStarted;
+  protected LocalDateTime timeStarted;
   /** The time ended by this trip */
-  private LocalDateTime timeEnded;
+  protected LocalDateTime timeEnded;
   /** The stops made along the trip before reaching the final station */
-  private ArrayList<Station> priorStops = new ArrayList<>();
+  protected ArrayList<Station> priorStops = new ArrayList<>();
   /** The station ended by this trip */
-  private Station endStation;
+  protected Station endStation;
   /** The current fee of this trip */
-  private int tripFee;
+  protected int tripFee;
   /** The maximum fee charged by this trip */
-  private int maxFee = 600;
+  protected int maxFee = 600;
   /** The fee this trip charges itself per station travelled */
-  private int perStationFee;
+  protected int perStationFee;
   /** The length of the most recent leg of this trip */
-  private int tripLegLength;
+  protected int tripLegLength;
 
   /**
    * Construct a new instance of transit.system.Trip

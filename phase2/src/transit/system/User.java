@@ -125,7 +125,11 @@ public class User implements Serializable {
 
   /** Add a card to this transit.system.User's list of cards. */
   public void addCard() {
-    this.cards.put(cardCounter, new Card(cardCounter));
+    if (this.permission == "student") {
+      this.cards.put(cardCounter, new StudentCard(cardCounter));
+    } else {
+      this.cards.put(cardCounter, new Card(cardCounter));
+    }
     cardCounter++;
   }
 
@@ -155,7 +159,6 @@ public class User implements Serializable {
    * @param station The station which this transit.system.User taps at
    */
   public void tap(Card card, Station station) throws TransitException {
-
     if (card.isSuspended()) {
       throw new TransitException();
     }

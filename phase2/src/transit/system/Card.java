@@ -5,17 +5,17 @@ import java.io.Serializable;
 /** Represents a travel card in a transit system */
 public class Card implements Serializable {
   /** The starting balance for all cards, in cents */
-  private static final int CARD_INITIAL_BALANCE = 1900;
+  protected static final int CARD_INITIAL_BALANCE = 1900;
   /** Stores whether or not this card can be used (i.e. reported stolen) */
-  private boolean isActive;
+  protected boolean isActive;
   /** The current trip this card is on, being null when no active trip */
-  private Trip currentTrip;
+  protected Trip currentTrip;
   /** The last trip that this card has completed */
-  private Trip lastTrip;
+  protected Trip lastTrip;
   /** The balance of this card, in cents */
-  private int balance;
+  protected int balance;
   /** The id of this card (i.e. which # card it is in some transit.system.User's account) */
-  private int id;
+  protected int id;
   /**
    * Constructs a new card
    *

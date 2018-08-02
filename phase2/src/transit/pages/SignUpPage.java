@@ -22,7 +22,7 @@ public class SignUpPage extends Page {
   }
 
   /**
-   * Makes a scene for
+   * Makes a scene for this SignUpPage
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */

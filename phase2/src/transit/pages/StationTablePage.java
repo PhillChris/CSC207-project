@@ -1,9 +1,5 @@
 package transit.pages;
 
-import transit.system.User;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -12,9 +8,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import transit.system.Route;
 import transit.system.Station;
 import transit.system.StationRow;
-import transit.system.StatisticsMaker;
+import transit.system.User;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /** Represents a page displaying statistics collected about stations */
 public class StationTablePage extends TablePage {
@@ -97,15 +98,13 @@ public class StationTablePage extends TablePage {
   protected ArrayList generateData(LocalDate selectedDate, int tableOption) {
     ArrayList<StationRow> tempList = new ArrayList<>();
     if (tableOption == 0) {
-      HashMap<Station, ArrayList<Integer>> busStationStats =
-          StatisticsMaker.makeStationsMap("Bus", selectedDate);
-      for (Station busStation : busStationStats.keySet()) {
+      Collection<Station> busStations = Route.getAllStationsCopy().get(Station.POSSIBLE_TYPES[0]).values();
+      for (Station busStation : busStations) {
         tempList.add(new StationRow(busStation, selectedDate));
       }
     } else {
-      HashMap<Station, ArrayList<Integer>> subwayStationStats =
-          StatisticsMaker.makeStationsMap("Subway", selectedDate);
-      for (Station subwayStation : subwayStationStats.keySet()) {
+      Collection<Station> subwayStations = Route.getAllStationsCopy().get(Station.POSSIBLE_TYPES[1]).values();
+      for (Station subwayStation : subwayStations) {
         tempList.add(new StationRow(subwayStation, selectedDate));
       }
     }

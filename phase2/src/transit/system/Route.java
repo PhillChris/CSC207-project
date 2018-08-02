@@ -12,22 +12,15 @@ public class Route implements Serializable {
   private static int numRoutes = 0;
   /** A list of all routes in the transit system */
   private static HashMap<String, ArrayList<Route>> routes = new HashMap<>();
-  /** List containing all the stations of this route in travel order */
-  private List<Station> routeStations;
-
-  public static HashMap<String, HashMap<String, Station>> getAllStationsCopy() {
-    return allStations;
-  }
-
-  static void setAllStations(HashMap<String, HashMap<String, Station>> newAllStations) {
-    allStations = newAllStations;
-  }
-
   /**
    * HashMap containing HashMap of all stations of given types as values, where the keys of the
    * inner HashMap are the station names.
    */
-  private static HashMap<String, HashMap<String, Station>> allStations = new HashMap<>();
+  private static HashMap<String, HashMap<String, Station>> allStations = newNestedHashMap();
+  /**
+   * List containing all the stations of this route in travel order
+   */
+  private List<Station> routeStations;
   /** The type of this route */
   private String routeType;
   /** The number of this route. */
@@ -41,6 +34,14 @@ public class Route implements Serializable {
     this.routeType = type;
     this.routeStations = new ArrayList<>();
     this.routeNum = numRoutes + 1;
+  }
+
+  public static HashMap<String, HashMap<String, Station>> getAllStationsCopy() {
+    return allStations;
+  }
+
+  static void setAllStations(HashMap<String, HashMap<String, Station>> newAllStations) {
+    allStations = newAllStations;
   }
 
   /**
@@ -133,4 +134,18 @@ public class Route implements Serializable {
       return newStation;
     }
   }
+
+  /**
+   * helper method to construct the all stations method and prevent null pointers
+   *
+   * @return an empty allStaitons HashMap.
+   */
+  private static HashMap<String, HashMap<String, Station>> newNestedHashMap() {
+    HashMap<String, HashMap<String, Station>> map = new HashMap<>();
+    for (String type : Station.POSSIBLE_TYPES) {
+      map.put(type, new HashMap<String, Station>());
+    }
+    return map;
+  }
+
 }

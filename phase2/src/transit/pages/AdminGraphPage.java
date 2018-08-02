@@ -1,9 +1,9 @@
 package transit.pages;
 
+import transit.system.User;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-import transit.system.AdminUser;
 import transit.system.StatisticsMaker;
 import transit.system.TransitTime;
 
@@ -19,7 +19,7 @@ public class AdminGraphPage extends GraphPage {
    * @param primaryStage The stage for this page to be displayed
    * @param user The user associated with this page
    */
-  public AdminGraphPage(Stage primaryStage, AdminUser user) {
+  public AdminGraphPage(Stage primaryStage, User user) {
     super(primaryStage, user);
   }
 

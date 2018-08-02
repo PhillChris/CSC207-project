@@ -11,14 +11,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.AdminUser;
 import transit.system.User;
 import transit.system.UserRow;
 
 /** Represents a page displaying all stats regarding users in this TransitSystem */
 public class UserTablePage extends TablePage {
   /** The admin accessing this UserTablePage */
-  private AdminUser admin;
+  private User admin;
   /** The stats being displayed on this UserTablePage */
   private ArrayList<Label> userStats = new ArrayList<>();
 
@@ -28,7 +27,7 @@ public class UserTablePage extends TablePage {
    * @param primaryStage the stage on which this UserTablePage is shown
    * @param admin the adminUser tied to this
    */
-  public UserTablePage(Stage primaryStage, AdminUser admin) {
+  public UserTablePage(Stage primaryStage, User admin) {
     this.admin = admin;
     makeScene(primaryStage);
   }

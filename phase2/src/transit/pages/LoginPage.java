@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import transit.system.AdminUser;
 import transit.system.User;
 
 /** Represents a login page for this system */
@@ -150,8 +149,8 @@ public class LoginPage extends Page {
             }
             if (checkAuthorization(emailInput, passInput)) {
               Page userPage;
-              if (user instanceof AdminUser) {
-                userPage = new AdminUserPage(primaryStage, (AdminUser) user);
+              if (user.getPermission() == "admin") {
+                userPage = new AdminUserPage(primaryStage, user);
               } else {
                 userPage = new UserPage(primaryStage, user);
               }

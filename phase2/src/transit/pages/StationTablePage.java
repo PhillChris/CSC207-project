@@ -1,5 +1,6 @@
 package transit.pages;
 
+import transit.system.User;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.AdminUser;
 import transit.system.Station;
 import transit.system.StationRow;
 import transit.system.StatisticsMaker;
@@ -19,7 +19,7 @@ import transit.system.StatisticsMaker;
 /** Represents a page displaying statistics collected about stations */
 public class StationTablePage extends TablePage {
   /** The admin user accessing the current StationTablePage */
-  private AdminUser admin;
+  private User admin;
 
   /**
    * Constructs a new StationTablePage
@@ -27,7 +27,7 @@ public class StationTablePage extends TablePage {
    * @param primaryStage the stage on which this page is being served
    * @param admin the AdminUser accessing the given statistics
    */
-  public StationTablePage(Stage primaryStage, AdminUser admin) {
+  public StationTablePage(Stage primaryStage, User admin) {
     this.admin = admin;
     makeScene(primaryStage);
   }

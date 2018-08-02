@@ -146,7 +146,7 @@ public class SignUpPage extends Page {
    */
   private void add(String username, String email, String password, boolean isAdmin, boolean isStudent) throws MessageTransitException {
     if (isAdmin) {
-      new AdminUser(username, email, password);
+      new User(username, email, password, "admin");
     } else if (isStudent) {
       new User(username, email, password, "student");
     } else {

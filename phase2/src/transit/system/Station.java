@@ -9,14 +9,13 @@ public class Station implements Serializable {
   /** All acceptable possible route types in this transit system */
   public static final String[] POSSIBLE_TYPES = {"Bus", "Subway"};
   /** The fee charged when starting a bus trip to non-students */
-  public static final int BUS_INITIAL_FEE = 200;
+  private static final int BUS_INITIAL_FEE = 200;
   /** The fee charged when starting a bus trip to students */
-  public static final int STUDENT_BUS_INITIAL_FEE = 100;
+  private static final int STUDENT_BUS_INITIAL_FEE = 100;
   /** The fee charged when passing each subway station to non-students */
-  public static final int SUBWAY_PERSTATION_FEE = 50;
+  private static final int SUBWAY_PERSTATION_FEE = 50;
   /** The fee charged when passing each subway station to students */
-  public static final int STUDENT_SUBWAY_PERSTATION_FEE = 40;
-
+  private static final int STUDENT_SUBWAY_PERSTATION_FEE = 40;
   /** The fee charged per station travelled by this station */
   private int perStationFee;
   /** The initial fee charged by this station at the start of a trip */

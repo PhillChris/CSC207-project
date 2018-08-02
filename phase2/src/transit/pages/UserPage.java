@@ -4,7 +4,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.AdminUser;
 import transit.system.TransitTime;
 import transit.system.User;
 
@@ -87,10 +86,10 @@ public class UserPage extends AuthenticatedPage {
     placeButton("Jump ahead 1 month", () -> TransitTime.skipMonth(), 0, 18);
 
 
-    if (user instanceof AdminUser) {
+    if (user.getPermission() == "admin") {
       placeButton(
           "Toggle admin panel",
-          () -> primaryStage.setScene(new AdminUserPage(primaryStage, (AdminUser) user).getScene()),
+          () -> primaryStage.setScene(new AdminUserPage(primaryStage, user).getScene()),
           0,
           20);
     }

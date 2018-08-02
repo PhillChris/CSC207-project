@@ -1,17 +1,17 @@
 package transit.pages;
 
+import transit.system.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.AdminUser;
 import transit.system.StatisticsMaker;
 import transit.system.TransitTime;
 
 /** Represents the page seen by an AdminUser when logging into the transit system */
 public class AdminUserPage extends Page {
   /** The AdminUser whose page is being displayed */
-  private AdminUser adminUser;
+  private User adminUser;
 
   /**
    * Constructs an instance of AdminUserPage
@@ -19,7 +19,7 @@ public class AdminUserPage extends Page {
    * @param primaryStage the stage which this page is being served on, passed for button-action
    * @param adminUser the AdminUser whose page is to be constructed
    */
-  public AdminUserPage(Stage primaryStage, AdminUser adminUser) {
+  public AdminUserPage(Stage primaryStage, User adminUser) {
     super(primaryStage);
     this.adminUser = adminUser;
     makeScene(primaryStage);

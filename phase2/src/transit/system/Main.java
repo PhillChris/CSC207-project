@@ -29,6 +29,8 @@ public class Main extends Application {
     secondaryStage.setScene(new TimeControlPage(secondaryStage).getScene());
     TransitTime.updateTimeLabel();
     primaryStage.show();
+    secondaryStage.setX(primaryStage.getX() + primaryStage.getWidth());
+    secondaryStage.setY(primaryStage.getY() + 125);
     secondaryStage.show();
   }
 }

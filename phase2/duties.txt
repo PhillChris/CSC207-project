@@ -7,14 +7,18 @@ PHILLIP:
 - Page: implemented core functionality (i.e. no styling) inherited by all other pages
 - AuthenticatedPage: implemented core functionality (i.e. no styling) inherited by all other pages
   with a user attached to it
-- LoginPage: implemented core functionality (i.e. no styling)
-- SignupPage: implemented core functionality (i.e. no styling)
-- UserPage: implemented core functionality (i.e. no styling)
+- LoginPage: implemented core functionality (i.e. no styling), and handled proper action based on user authentication
+- SignupPage: implemented core functionality (i.e. no styling), including radio buttons determining user type
+- UserPage: implemented core functionality (i.e. no styling), and other page fetching
 - ChangeNamePage: implemented functionality (i.e. no styling)
-- CardPage: implemented core functionality (i.e. no styling)
-- TapPage: implemented core functionality (i.e. no styling), including Station buttons layout
+- CardPage: implemented core functionality (i.e. no styling), button list generation from backend,
+  and tap page fetching
+- TapPage: implemented core functionality (i.e. no styling), including Station buttons layout and
+  selection based on type of station
 - Added tap numbers for each station, recorded by stations and users, and displayed them in
-  UserStatsPage and StationStatsPage
+  StationTablePage and UserTablePage in Table form
+- TablePage: implemented core functionality (i.e. no styling) inherited by all other pages
+- Extended program to charge different station fees on user status (i.e. user vs. student)
 
 FARDIN:
 - Implemented live time update and added display

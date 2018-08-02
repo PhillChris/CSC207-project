@@ -42,6 +42,6 @@ public class ChangeNamePage extends AuthenticatedPage {
         2,
         0);
 
-    this.scene = new Scene(grid, 460, 65);
+    this.scene = new Scene(grid, 460, 60);
   }
 }

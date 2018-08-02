@@ -2,13 +2,11 @@ package transit.pages;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.User;
 
@@ -50,6 +48,7 @@ public abstract class AuthenticatedPage extends Page {
     newLogoutButton(primaryStage, 2, 0);
     newChangeUserButton(primaryStage, 0, 4);
     newRemoveAccountButton(primaryStage, 0, 6);
+    newChangePassButton(primaryStage, 0, 5);
     addClock();
     this.scene = new Scene(grid, 600, 375);
   }
@@ -125,6 +124,21 @@ public abstract class AuthenticatedPage extends Page {
         },
         col,
         row);
+  }
+
+  private void newChangePassButton(Stage primaryStage, int col, int row) {
+    placeButton(
+      "Change password",
+      () -> {
+        ChangePasswordPage passwordPage = new ChangePasswordPage(primaryStage, user);
+        Stage passWindow = new Stage();
+        passWindow.setTitle("Change password");
+        passWindow.setScene(passwordPage.getScene());
+        passWindow.show();
+      },
+      col,
+      row
+    );
   }
 
   /**

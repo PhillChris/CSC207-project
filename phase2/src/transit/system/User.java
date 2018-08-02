@@ -123,6 +123,17 @@ public class User implements Serializable {
     this.name = newName;
   }
 
+  public void changePassword(String currentPassword, String newPassword) throws IncorrectPasswordException, InvalidPasswordException {
+    if (!currentPassword.equals(password)) {
+      throw new IncorrectPasswordException();
+    } else if (newPassword.length() < 6) {
+      throw new InvalidPasswordException();
+    } else {
+      password = newPassword;
+    }
+
+  }
+
   /** Add a card to this transit.system.User's list of cards. */
   public void addCard() {
     this.cards.put(cardCounter, new Card(cardCounter));

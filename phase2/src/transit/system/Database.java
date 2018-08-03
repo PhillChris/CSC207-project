@@ -74,10 +74,6 @@ public class Database {
     if (users != null) {
       User.setAllUsers(users);
     }
-    LocalDateTime applicationTime = (LocalDateTime) readObject(TIME_LOCATION);
-    if (applicationTime != null) {
-      TransitTime.setCurrentTime(applicationTime);
-    }
     HashMap<YearMonth, Integer> monthlyRevenue = (HashMap<YearMonth, Integer>) Database.readObject(MONTHLY_REVENUE_LOCATION);
     if (monthlyRevenue != null) {
       StatisticsMaker.setMonthlyRevenue(monthlyRevenue);
@@ -108,7 +104,7 @@ public class Database {
    * @param fileLocation the file location to read the object from.
    * @return the object read from the file location.
    */
-  private static Object readObject(String fileLocation) {
+  static Object readObject(String fileLocation) {
     try {
       FileInputStream fileIn = new FileInputStream(fileLocation);
       ObjectInputStream in = new ObjectInputStream(fileIn);

@@ -7,73 +7,104 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static javafx.scene.paint.Color.BLACK;
 
-/** A class keeping track of universal time in the transit system */
-public class TransitTime {
+/** A class keeping track of universal timeLabel in the transit system */
+public class TransitTime implements Serializable {
+  /** The file in which system timeLabel is serialized */
+  public static final String TIME_LOCATION =
+      "." + File.separator + "tmp" + File.separator + "timeLabel.ser";
+  /** The clock used by the transit system */
+  private static TransitTime clock = setSystemClock();
+  /** A label designed to represent to current timeLabel of this simulation */
+  private Label timeLabel;
+  /** Whether the timeLabel is currently moving forward */
+  private boolean running = true;
+  /** The timeLabel of this TransitTime */
+  private LocalDateTime currentTime;
 
-  /** A label designed to represent to current time of this simulation */
-  private static Label time = new Label();
-  /** The current time of the transit system */
-  private static LocalDateTime currentTime = LocalDateTime.now();
-  /** Whether the time is currently moving forward */
-  private static boolean running = true;
-
-  /** @return The current time of the simulation */
-  public static LocalDateTime getCurrentTime() {
-    return TransitTime.currentTime;
+  /** Initialize a new instance of TransitTime */
+  private TransitTime() {
+    currentTime = LocalDateTime.now();
+    updateTimeLabel();
   }
 
-  /**
-   * Set the currentTime to the given parameter
-   *
-   * @param time the time to set the currentTime to.
-   */
-  static void setCurrentTime(LocalDateTime time) {
-    TransitTime.currentTime = time;
+  private static TransitTime setSystemClock() {
+    TransitTime systemClock = (TransitTime) Database.readObject(TIME_LOCATION);
+    if (systemClock != null) {
+      systemClock.updateTimeLabel();
+      return systemClock;
+    } else {
+      return new TransitTime();
+    }
+  }
+
+  /** @return The current timeLabel of the simulation */
+  public static LocalDateTime getCurrentTime() {
+    return TransitTime.clock.currentTime;
   }
 
   /** @return The current date in the transit system */
   public static LocalDate getCurrentDate() {
-    return currentTime.toLocalDate();
+    return clock.currentTime.toLocalDate();
   }
 
-  /** @return A label describing the current time of the simulation */
+  /** @return A label describing the current timeLabel of the simulation */
   public static Label getTimeLabel() {
-    return time;
+    return clock.timeLabel;
   }
 
-  /** Pauses the simulation time */
+  /** Pauses the simulation timeLabel */
   public static void pauseTime() {
-    running = false;
+    clock.running = false;
   }
 
-  /** Restarts the simulation time */
+  /** Restarts the simulation timeLabel */
   public static void startTime() {
-    running = true;
+    clock.running = true;
   }
 
-  /** Moves the simulation time forward one hour */
-  public static void fastForward() {
-    currentTime = currentTime.plusMinutes(60);
+  /** Moves the simulation timeLabel forward one hour */
+  public static void skipHours() {
+    clock.currentTime = clock.currentTime.plusMinutes(60);
   }
 
-  /** Moves the simulation time forward one day */
+  /** Moves the simulation timeLabel forward one day */
   public static void skipDay() {
-    currentTime = currentTime.plusDays(1);
+    clock.currentTime = clock.currentTime.plusDays(1);
   }
 
-  /** Moves the simulation time forward one month */
+  /** Moves the simulation timeLabel forward one month */
   public static void skipMonth() {
-    currentTime = currentTime.plusMonths(1);
+    clock.currentTime = clock.currentTime.plusMonths(1);
   }
 
-  /** Updates the time label as time progresses */
-  protected static void updateTimeLabel() {
+  /** @return Whether the system's clock is running */
+  public static boolean isRunning() {
+    return clock.running;
+  }
+
+  /** @return A string formatting of the current simulation timeLabel */
+  public static String getCurrentTimeString() {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    String time = formatter.format(clock.currentTime.toLocalTime());
+    LocalDate date = clock.currentTime.toLocalDate();
+    String currentTime =
+        String.format(
+            "Current Day: %s %s, %s", date.getMonth(), date.getDayOfMonth(), date.getYear());
+    currentTime += System.lineSeparator();
+    currentTime += String.format("Time: %s", time);
+    return currentTime;
+  }
+
+  /** Updates the timeLabel label as timeLabel progresses */
+  private void updateTimeLabel() {
     Timeline timeline = new Timeline();
     timeline.setCycleCount(Timeline.INDEFINITE);
 
@@ -83,36 +114,19 @@ public class TransitTime {
             new EventHandler<ActionEvent>() {
               @Override
               public void handle(ActionEvent event) {
-                TransitTime.updateTime();
-                time.setTextFill(BLACK);
-                time.setText(TransitTime.getCurrentTimeString());
+                updateTime();
+                timeLabel.setTextFill(BLACK);
+                timeLabel.setText(getCurrentTimeString());
               }
             });
     timeline.getKeyFrames().add(frame);
     timeline.playFromStart();
   }
 
-  /** Increments the time of the simulation */
-  private static void updateTime() {
+  /** Increments the timeLabel of the simulation */
+  private void updateTime() {
     if (running) {
       currentTime = currentTime.plusMinutes(1);
     }
-  }
-
-  /** @return A string formatting of the current simulation time */
-  public static String getCurrentTimeString() {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-    String time = formatter.format(currentTime.toLocalTime());
-    LocalDate date = currentTime.toLocalDate();
-    String currentTime =
-        String.format(
-            "Current Day: %s %s, %s", date.getMonth(), date.getDayOfMonth(), date.getYear());
-    currentTime += System.lineSeparator();
-    currentTime += String.format("Time: %s", time);
-    return currentTime;
-  }
-
-  public static boolean isRunning() {
-    return running;
   }
 }

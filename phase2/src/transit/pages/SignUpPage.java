@@ -56,7 +56,7 @@ public class SignUpPage extends Page {
 
     ComboBox<String> userType = new ComboBox<>();
     userType.getItems().addAll(
-      "Normal",
+      "Standard",
       "Admin",
       "Student"
     );

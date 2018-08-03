@@ -25,6 +25,10 @@
     -fx-padding: 10px;
 }
 
+.separator {
+    -fx-padding: 2px 0px 0px 0px;
+}
+
 #signUpLabel {
     -fx-color: #727272;
     -fx-font-size: 20px;
@@ -33,7 +37,7 @@
 
 #errorMessage {
     -fx-color: #727272;
-    -fx-font-size: 20px;
+    -fx-font-size: 14px;
     -fx-padding: 0px 0px 0px 2px;
 }
 

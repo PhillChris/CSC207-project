@@ -111,4 +111,8 @@ public class TransitTime {
     currentTime += String.format("Time: %s", time);
     return currentTime;
   }
+
+  public static boolean isRunning() {
+    return running;
+  }
 }

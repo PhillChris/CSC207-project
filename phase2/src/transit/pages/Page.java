@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import transit.system.Card;
@@ -140,6 +141,21 @@ public abstract class Page {
   }
 
   /**
+   * A general helper method to place a button running a custom function at the given coordinates
+   *
+   * @param text the text to be displayed on the given button
+   * @param function the function to be run upon, having return type void
+   * @param col the column in the grid where this button is displayed
+   * @param row the row in the grid where this button is displayed
+   */
+  protected Button placeButton(String text, Runnable function, GridPane grid, int col, int row) {
+    Button button = new Button(text);
+    button.setOnAction(data -> function.run());
+    grid.add(button, col, row);
+    return button;
+  }
+
+  /**
    * A general helper method to place a button running a custom function at the given coordinates and give it an id
    *
    * @param text the text to be displayed on the given button
@@ -152,6 +168,13 @@ public abstract class Page {
     button.setOnAction(data -> function.run());
     button.setId(id);
     grid.add(button, col, row);
+  }
+
+  protected Button placeButton(String text, Runnable function, int col, int row, int colSpan) {
+    Button button = new Button(text);
+    button.setOnAction(data -> function.run());
+    grid.add(button, col, row, colSpan, 1);
+    return button;
   }
 
   protected void placeSeparator(GridPane grid, int col, int row, int colSpan, String id) {

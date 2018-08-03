@@ -1,0 +1,9 @@
+.root {
+    -fx-background-color: #ececec;
+    -fx-font-family: Raleway;
+    -fx-font-size: 16px;
+}
+
+#control {
+    -fx-font-size: 20px;
+}

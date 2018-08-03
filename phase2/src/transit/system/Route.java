@@ -12,7 +12,14 @@ public class Route implements Serializable {
   private static int numRoutes = 0;
   /** A list of all routes in the transit system */
   private static HashMap<String, ArrayList<Route>> routes = new HashMap<>();
-  /** List containing all the stations of this route in travel order */
+  /**
+   * HashMap containing HashMap of all stations of given types as values, where the keys of the
+   * inner HashMap are the station names.
+   */
+  private static HashMap<String, HashMap<String, Station>> allStations = newNestedHashMap();
+  /**
+   * List containing all the stations of this route in travel order
+   */
   private List<Station> routeStations;
   /** The type of this route */
   private String routeType;
@@ -29,9 +36,17 @@ public class Route implements Serializable {
     this.routeNum = numRoutes + 1;
   }
 
+  public static HashMap<String, HashMap<String, Station>> getAllStationsCopy() {
+    return allStations;
+  }
+
+  static void setAllStations(HashMap<String, HashMap<String, Station>> newAllStations) {
+    allStations = newAllStations;
+  }
+
   /**
-   * Set the static routes attribute to the passed parameter. Note: this method should only be
-   * used for deserialization of Route objects when the program is first being loaded in.
+   * Set the static routes attribute to the passed parameter. Note: this method should only be used
+   * for deserialization of Route objects when the program is first being loaded in.
    *
    * @param routes the value to set the routes attribute to.
    */
@@ -66,7 +81,8 @@ public class Route implements Serializable {
   public void setRouteStations(List<String> stationNames) {
     ArrayList<Station> stations = new ArrayList<>();
     for (String name : stationNames) {
-      stations.add(new Station(name, routeType));
+      Station newStation = checkStationExists(name, routeType);
+      stations.add(newStation);
     }
     this.routeStations = stations;
   }
@@ -100,4 +116,36 @@ public class Route implements Serializable {
   public int getRouteNum() {
     return this.routeNum;
   }
+
+  /**
+   * Check if a station of given name and type has already been created. If it has not, it creates
+   * the station of given name and type and adds it to the allStations HashMap.
+   *
+   * @param name the name of the station.
+   * @param type the type of the station.
+   * @return a Station with name name and type type.
+   */
+  private Station checkStationExists(String name, String type) {
+    if (allStations.get(type).containsKey(name)) {
+      return allStations.get(type).get(name);
+    } else {
+      Station newStation = new Station(name, type);
+      allStations.get(type).put(name, newStation);
+      return newStation;
+    }
+  }
+
+  /**
+   * helper method to construct the all stations method and prevent null pointers
+   *
+   * @return an empty allStaitons HashMap.
+   */
+  private static HashMap<String, HashMap<String, Station>> newNestedHashMap() {
+    HashMap<String, HashMap<String, Station>> map = new HashMap<>();
+    for (String type : Station.POSSIBLE_TYPES) {
+      map.put(type, new HashMap<String, Station>());
+    }
+    return map;
+  }
+
 }

@@ -2,7 +2,6 @@ package transit.system;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.HashMap;
 
@@ -86,6 +85,7 @@ public class Statistics implements Serializable {
     LocalDate date = month.atEndOfMonth();
     while (date != month.minusMonths(1).atEndOfMonth()) {
       Integer value = dailyLogs.get(date);
+      sum += value;
       date = date.minusDays(1);
     }
     return sum;

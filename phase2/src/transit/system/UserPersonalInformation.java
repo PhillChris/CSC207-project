@@ -5,13 +5,13 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/** Records the previous Trips of a User */
-public class UserTripLog {
+/** Records all of the personal records associated to a user */
+public class UserPersonalInformation {
 
     private HashMap<LocalDate, ArrayList<Trip>> tripLog;
 
-  /** Instantiates a new instance of UserTripLog */
-  public UserTripLog() {
+  /** Instantiates a new instance of UserPersonalInformation */
+  public UserPersonalInformation() {
     tripLog = new HashMap<LocalDate, ArrayList<Trip>>();
   }
 

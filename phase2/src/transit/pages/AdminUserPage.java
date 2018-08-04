@@ -56,16 +56,6 @@ public class AdminUserPage extends Page {
         0,
         6);
     placeButton(
-        "Station QuantitativeStatistics",
-        () -> primaryStage.setScene(new StationTablePage(primaryStage, adminUser).getScene()),
-        0,
-        7);
-    placeButton(
-        "User QuantitativeStatistics",
-        () -> primaryStage.setScene(new UserTablePage(primaryStage, adminUser).getScene()),
-        0,
-        8);
-    placeButton(
         "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 0, 9);
   }
 

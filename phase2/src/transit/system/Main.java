@@ -20,7 +20,6 @@ public class Main extends Application {
   }
 
   public void start(Stage primaryStage) {
-    Database.readFromDatabase();
     primaryStage.setTitle("Transit System Simulator");
     LoginPage loginPage = new LoginPage(primaryStage);
     primaryStage.setScene(loginPage.getScene());

@@ -179,7 +179,7 @@ public class User implements Serializable {
   private void tapIn(Card card, Station station) throws TransitException {
     if (card.getBalance() <= 0) throw new TransitException(); // Not enough fund
     // Record tripStatistics
-    station.record("Tap In", 1.0);
+    station.record("Tap In", 1);
 
     // Check if this transit.system.User is continuing a transit.system.Trip
     boolean foundContinuousTrip = false;

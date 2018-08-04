@@ -76,7 +76,7 @@ public class Station implements Serializable {
   }
 
   /** Records the tapping in of a station */
-  void record(String statName, double quantity) {
+  void record(String statName, Integer quantity) {
     statistics.get(statName).update(quantity);
   }
 

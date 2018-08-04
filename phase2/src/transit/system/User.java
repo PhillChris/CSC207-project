@@ -51,6 +51,9 @@ public class User implements Serializable {
     this.cards = new HashMap<>();
     allUsers.put(email, this);
     cardCounter = 1;
+    statistics.put("Expenditure", new Statistics());
+    statistics.put("Taps In", new Statistics());
+    statistics.put("Taps Out", new Statistics());
   }
 
   public static void setAllUsers(HashMap<String, User> allUsers) {

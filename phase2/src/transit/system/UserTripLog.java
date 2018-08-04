@@ -13,13 +13,9 @@ import java.util.Observer;
 
 /** This class is designed to track all statistics related to a user */
 public class UserTripLog implements Serializable, Statistics<Integer> {
-  /** The user associated with these statistics */
-  private User user;
   /** Log of all tap ins for each day */
   private HashMap<LocalDate, Integer> tapInLog;
   /** A log of taps mapping a given date to the number of taps out recorded */
-  private HashMap<LocalDate, Integer> tapOutLog;
-  /** An ArrayList of this transit.system.User's last three trips */
   private ArrayList<Trip> previousTrips;
   /** HashMap linking each month to the total expenditure for that month */
   private StatisticsMaker calculator;
@@ -27,10 +23,8 @@ public class UserTripLog implements Serializable, Statistics<Integer> {
   /** Initializes a new instance of UserTripLog */
   UserTripLog(User user) {
     this.tapInLog = new HashMap<>();
-    this.tapOutLog = new HashMap<>();
     this.previousTrips = new ArrayList<>();
     this.calculator = new StatisticsMaker();
-    this.user = user;
   }
 
   /** @return The previousTrips of this user */
@@ -40,7 +34,7 @@ public class UserTripLog implements Serializable, Statistics<Integer> {
 
   /** @return A string representation of the last three trips travelled by the user */
   String lastThreeTripsMessage() {
-    String message = "Last 3 trips by user " + this.user + ":";
+    String message = "Last 3 trips by user ";
     for (int i = 0; i < Math.min(3, previousTrips.size()); i++) {
       Trip t = previousTrips.get(previousTrips.size() - 1 - i);
       message += "\n" + t.toString();
@@ -59,17 +53,6 @@ public class UserTripLog implements Serializable, Statistics<Integer> {
     return 0;
   }
 
-  /**
-   * @param date A given date in the simulation
-   * @return The number of TapOuts by the user on that given date
-   */
-  int totalTapOuts(LocalDate date) {
-    if (tapOutLog.get(date) != null) {
-      return tapOutLog.get(date);
-    }
-    return 0;
-  }
-
   /** Records a new Tap In for the current day */
   void recordTapIn() {
     LocalDate timeTapped = TransitTime.getCurrentDate();
@@ -77,16 +60,6 @@ public class UserTripLog implements Serializable, Statistics<Integer> {
       tapInLog.put(timeTapped, tapInLog.get(timeTapped) + 1);
     } else {
       tapInLog.put(timeTapped, 1);
-    }
-  }
-
-  /** Records a new Tap Out for the current day */
-  void recordTapOut() {
-    LocalDate timeTapped = TransitTime.getCurrentDate();
-    if (tapOutLog.get(timeTapped) != null) {
-      tapOutLog.put(timeTapped, tapOutLog.get(timeTapped) + 1);
-    } else {
-      tapOutLog.put(timeTapped, 1);
     }
   }
 

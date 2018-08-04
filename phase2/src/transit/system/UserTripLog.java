@@ -22,8 +22,6 @@ public class UserTripLog implements Serializable, Statistics<Integer> {
   /** An ArrayList of this transit.system.User's last three trips */
   private ArrayList<Trip> previousTrips;
   /** HashMap linking each month to the total expenditure for that month */
-  private HashMap<YearMonth, Integer> expenditureMonthly = new HashMap<>();
-  /** Calculates and sends the daily revenue recieved from this user to the system */
   private StatisticsMaker calculator;
 
   /** Initializes a new instance of UserTripLog */
@@ -38,27 +36,6 @@ public class UserTripLog implements Serializable, Statistics<Integer> {
   /** @return The previousTrips of this user */
   ArrayList<Trip> getPreviousTrips() {
     return previousTrips;
-  }
-
-  /** @return The monthly expenditure for this user */
-  HashMap<YearMonth, Integer> getMonthlyExpenditure() {
-    return expenditureMonthly;
-  }
-
-  /** @return A String detailing average expenditure per month of this transit.system.User. */
-  String avgMonthlyMessage() {
-    String message = "Cost per month for user: " + this.user.getUserName() + System.lineSeparator();
-    List<YearMonth> months = new ArrayList<>(this.expenditureMonthly.keySet());
-    for (YearMonth month : months) {
-      message +=
-          month.toString()
-              + " : "
-              + "$"
-              + String.format(
-                  "%.2f", expenditureMonthly.get(month) / (month.lengthOfMonth() * 100.0));
-      message += System.lineSeparator();
-    }
-    return message.trim();
   }
 
   /** @return A string representation of the last three trips travelled by the user */
@@ -111,26 +88,6 @@ public class UserTripLog implements Serializable, Statistics<Integer> {
     } else {
       tapOutLog.put(timeTapped, 1);
     }
-  }
-
-  /**
-   * Updates the spending history for this transit.system.User
-   *
-   * @param card The card most recently used by the transit.system.User
-   */
-  void updateSpendingHistory(Card card) {
-    LocalDate date = TransitTime.getCurrentDate();
-    YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
-    Trip lastTrip = card.getLastTrip();
-
-    // Update user's personal monthly expenditure History
-    if (expenditureMonthly.containsKey(month)) {
-      expenditureMonthly.put(month, expenditureMonthly.get(month) + lastTrip.getFee());
-    } else {
-      expenditureMonthly.put(month, lastTrip.getFee());
-    }
-    // Update system's expenditure history
-    calculator.updateSystemStats(lastTrip.getFee(), Math.max(lastTrip.getTripLegLength(), 0));
   }
 
   @Override

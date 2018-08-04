@@ -44,7 +44,7 @@ public class Station implements Serializable {
     this.name = name;
     this.stationType = stationType;
     this.setFees();
-    statistics.put("Taps On", new Statistics());
+    statistics.put("Taps In", new Statistics());
     statistics.put("Taps Out", new Statistics());
   }
 
@@ -76,23 +76,8 @@ public class Station implements Serializable {
   }
 
   /** Records the tapping in of a station */
-  void recordTapIn() {
-    LocalDate day = TransitTime.getCurrentDate();
-    if (tapsOn.containsKey(day)) {
-      tapsOn.put(TransitTime.getCurrentDate(), tapsOn.get(day) + 1);
-    } else {
-      tapsOn.put(day, 1);
-    }
-  }
-
-  /** Records the tapping out of a station */
-  void recordTapOut() {
-    LocalDate date = TransitTime.getCurrentDate();
-    if (tapsOff.containsKey(date)) {
-      tapsOff.put(date, tapsOff.get(date) + 1);
-    } else {
-      tapsOff.put(date, 1);
-    }
+  void record(String statName, double quantity) {
+    statistics.get(statName).update(quantity);
   }
 
   /**

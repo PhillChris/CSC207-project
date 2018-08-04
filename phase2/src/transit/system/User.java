@@ -171,7 +171,7 @@ public class User implements Serializable {
   private void tapIn(Card card, Station station) throws TransitException {
     if (card.getBalance() <= 0) throw new TransitException(); // Not enough fund
     // Record statistics
-    station.recordTapIn();
+    station.record("Tap In", 1.0);
 
     // Check if this transit.system.User is continuing a transit.system.Trip
     boolean foundContinuousTrip = false;
@@ -201,18 +201,16 @@ public class User implements Serializable {
     card.subtractBalance(trip.getFee()); // deducts the balance
     card.setLastTrip(trip);
     card.setCurrentTrip(null);
-
+    updateStatistic(Math.max(trip.getTripLegLength(), 0), trip.getFee());
     // Record various statistics
-    station.recordTapOut();
+    station.record("Tap Out", 1);
     if (!trip.isValidTrip()) {
       throw new TransitException();
     }
   }
 
-  /**
-   * Updates the statistics assoicated with this user and the system
-   */
-  private void updateStatistic(double tripLength, double expenditure){
+  /** Updates the statistics assoicated with this user and the system */
+  private void updateStatistic(double tripLength, double expenditure) {
     statistics.get("Taps").update(1.0);
     statistics.get("Expenditure").update(expenditure);
     Statistics.getSystemRevenue().update(expenditure);

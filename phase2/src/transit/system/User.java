@@ -1,6 +1,6 @@
 package transit.system;
 
-import java.io.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,19 +20,12 @@ public class User implements Serializable {
   private final String email;
   /** An ArrayList of this transit.system.User's cards */
   private HashMap<Integer, Card> cards;
-  /** This transit.system.User's name */
   /** The id given to the next card added by the user */
   private int cardCounter;
-  /** Determines the permissions and pricing of this user */
-  private String permission;
   /** Stores associated tripStatistics to this user */
   private HashMap<String, Statistics> tripStatistics = new HashMap<>();
-  /** Records the last three trips associated to this log */
-  private ArrayList<Trip> tripLog;
-  /** The name of the user associated with this log */
-  private String name;
-  /** This transit.system.User's password */
-  private String password;
+  /** Stores the personal information associated with this user */
+  private UserInfo personalInfo;
 
   private List<Trip> previousTrips = new ArrayList<>();
 
@@ -54,18 +47,15 @@ public class User implements Serializable {
     if (password.length() < 6) {
       throw new InvalidPasswordException();
     }
-    this.name = name;
     this.email = email;
-    this.password = password;
-    this.permission = permission;
     this.cards = new HashMap<>();
     allUsers.put(email, this);
-    cardCounter = 1;
+    personalInfo = new UserInfo(name, password, permission);
     tripStatistics.put("Expenditure", new Statistics());
     tripStatistics.put("Taps", new Statistics());
   }
 
-  private static HashMap<String, User> setAllUsers()   {
+  private static HashMap<String, User> setAllUsers() {
     HashMap<String, User> users = (HashMap<String, User>) readObject(Database.USERS_LOCATION);
     if (users != null) {
       return users;
@@ -82,23 +72,13 @@ public class User implements Serializable {
     return copy;
   }
 
-  public boolean correctAuthentification(String password) {
-    return this.password.equals(password);
+  public UserInfo getPersonalInfo() {
+    return personalInfo;
   }
 
   /** Removes this user from the system. */
   public void removeUser() {
     allUsers.remove(this.email);
-  }
-
-  /** @return The name associated with this user */
-  public String getUserName() {
-    return this.name;
-  }
-
-  /** @return The permission on this user */
-  public String getPermission() {
-    return this.permission;
   }
 
   /** @return This User's email */
@@ -114,25 +94,7 @@ public class User implements Serializable {
     }
     return tempMap;
   }
-  /**
-   * Change this transit.system.User's name.
-   *
-   * @param newName the new name of this transit.system.User.
-   */
-  public void changeName(String newName) {
-    this.name = newName;
-  }
 
-  public void changePassword(String currentPassword, String newPassword)
-      throws IncorrectPasswordException, InvalidPasswordException {
-    if (!currentPassword.equals(password)) {
-      throw new IncorrectPasswordException();
-    } else if (newPassword.length() < 6) {
-      throw new InvalidPasswordException();
-    } else {
-      password = newPassword;
-    }
-  }
 
   /** Add a card to this transit.system.User's list of cards. */
   public void addCard() {
@@ -189,12 +151,12 @@ public class User implements Serializable {
     if (lastTrip != null) {
       if (lastTrip.isContinuousTrip(station)) { // continue the last trip
         card.setCurrentTrip(lastTrip);
-        lastTrip.continueTrip(station, this.permission);
+        lastTrip.continueTrip(station, personalInfo.getPermission());
         foundContinuousTrip = true;
       }
     }
     if (!foundContinuousTrip) {
-      card.setCurrentTrip(new Trip(station, this.permission));
+      card.setCurrentTrip(new Trip(station, personalInfo.getPermission()));
     }
   }
 

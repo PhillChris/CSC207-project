@@ -10,18 +10,18 @@ public abstract class Statistics<T> {
   HashMap<LocalDate, ArrayList<T>> dailyLogs;
 
   /**
-   * Generates statistics for each day in the past week (the last 7 days)
+   * Generates a string representation of statistics for each day in the past week (the last 7 days)
    *
    * @return a HashMap of the statistics on each day of the past week
    */
-  abstract HashMap<LocalDate, T> generateWeeklyValues();
+  abstract String generateWeeklyValues();
 
   /**
-   * Generates statistics for each month in the past year (the last 7 days)
+   * Generates a string representation of statistics for each month in the past year (the last 7 days)
    *
    * @return a HashMap of the statistics on each day of the past week
    */
-  abstract HashMap<YearMonth, T> generateMonthlyValues();
+  abstract String generateMonthlyValues();
 
   /** Throws out old statistics */
   void clearLogs() {}

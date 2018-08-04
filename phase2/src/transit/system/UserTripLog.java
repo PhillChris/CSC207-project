@@ -19,12 +19,12 @@ public class UserTripLog extends Statistics<Trip> {
   }
 
   @Override
-  HashMap<LocalDate, Trip> generateWeeklyValues() {
+  String generateWeeklyValues() {
     return null;
   }
 
   @Override
-  HashMap<YearMonth, Trip> generateMonthlyValues() {
+  String generateMonthlyValues() {
     return null;
   }
 }

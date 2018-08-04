@@ -20,12 +20,12 @@ public class UserRevenue extends Statistics<Double> implements Serializable {
   }
 
   @Override
-  public HashMap<LocalDate, Double> generateWeeklyValues() {
-    return new HashMap<>();
+  public String generateWeeklyValues() {
+    return null;
   }
 
   @Override
-  HashMap<YearMonth, Double> generateMonthlyValues() {
+  String generateMonthlyValues() {
     return null;
   }
 }

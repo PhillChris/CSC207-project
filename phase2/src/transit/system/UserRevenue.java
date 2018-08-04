@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class UserRevenue implements Statistics<Double>, Serializable {
+public class UserRevenue extends Statistics<Double> implements Serializable {
 
   private HashMap<YearMonth, Double> expenditureMonthly = new HashMap<>();
   /** Calculates and sends the daily revenue recieved from this user to the system */

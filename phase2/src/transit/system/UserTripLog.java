@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Observer;
 
 /** This class is designed to track all statistics related to a user */
-public class UserTripLog implements Serializable, Statistics<Integer> {
+public class UserTripLog extends Statistics<Integer> implements Serializable{
   /** Log of all tap ins for each day */
   private HashMap<LocalDate, Integer> tapInLog;
   /** A log of taps mapping a given date to the number of taps out recorded */

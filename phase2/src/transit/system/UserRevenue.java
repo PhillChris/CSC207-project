@@ -9,18 +9,14 @@ import java.util.List;
 
 public class UserRevenue extends Statistics<Double> implements Serializable {
 
-  private HashMap<YearMonth, Double> expenditureMonthly = new HashMap<>();
-  /** Calculates and sends the daily revenue recieved from this user to the system */
-  private HashMap<LocalDate, Double> expenditureDaily = new HashMap<>();
-  /** Calculates and sends the daily revenue recieved from this user to the system */
   @Override
   public HashMap<LocalDate, Double> generateWeeklyValues() {
-    return expenditureDaily;
+    return dailyLogs;
   }
 
   @Override
   public HashMap<YearMonth, Double> generateMonthlyValues() {
-    return expenditureMonthly;
+    return monthlyLogs;
   }
 
   @Override
@@ -31,24 +27,24 @@ public class UserRevenue extends Statistics<Double> implements Serializable {
     LocalDate date = TransitTime.getCurrentDate();
     YearMonth month = YearMonth.of(date.getYear(), date.getMonth());
     // Update user's personal monthly expenditure History
-    if (expenditureMonthly.containsKey(month)) {
-      expenditureMonthly.put(month, expenditureMonthly.get(month) + data);
+    if (monthlyLogs.containsKey(month)) {
+      monthlyLogs.put(month, monthlyLogs.get(month) + data);
     } else {
-      expenditureMonthly.put(month, data);
+      monthlyLogs.put(month, data);
     }
   }
 
   /** @return A String detailing average expenditure per month of this transit.system.User. */
   String avgMonthlyMessage() {
     String message = "Cost per month for user: ";
-    List<YearMonth> months = new ArrayList<>(this.expenditureMonthly.keySet());
+    List<YearMonth> months = new ArrayList<>(this.monthlyLogs.keySet());
     for (YearMonth month : months) {
       message +=
           month.toString()
               + " : "
               + "$"
               + String.format(
-                  "%.2f", expenditureMonthly.get(month) / (month.lengthOfMonth() * 100.0));
+                  "%.2f", monthlyLogs.get(month) / (month.lengthOfMonth() * 100.0));
       message += System.lineSeparator();
     }
     return message.trim();

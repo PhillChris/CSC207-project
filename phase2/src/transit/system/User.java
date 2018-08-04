@@ -16,8 +16,6 @@ public class User implements Serializable {
   private static HashMap<String, User> allUsers = new HashMap<>();
   /** The transit.system.User's email */
   private final String email;
-  /** Tracks all related statistics associated with this User */
-  protected UserTripLog statistics;
   /** An ArrayList of this transit.system.User's cards */
   private HashMap<Integer, Card> cards;
   /** This transit.system.User's name */
@@ -52,7 +50,6 @@ public class User implements Serializable {
     this.cards = new HashMap<>();
     allUsers.put(email, this);
     cardCounter = 1;
-    this.statistics = new UserTripLog(this);
   }
 
   public static void setAllUsers(HashMap<String, User> allUsers) {
@@ -85,10 +82,6 @@ public class User implements Serializable {
   /** @return The permission on this user */
   public String getPermission() { return this.permission; }
 
-  /** @return The monthly expenditure of this User */
-  public HashMap<YearMonth, Integer> getExpenditureMonthly() {
-    return statistics.getMonthlyExpenditure();
-  }
 
   /** @return This User's email */
   String getEmail() {
@@ -103,17 +96,6 @@ public class User implements Serializable {
     }
     return tempMap;
   }
-
-  /** @return A String detailing average expenditure per month of this transit.system.User. */
-  public String getAvgMonthly() {
-    return statistics.avgMonthlyMessage();
-  }
-
-  /** @return String representation of the last 3 trips made be this user */
-  public String getLastThreeMessage() {
-    return statistics.lastThreeTripsMessage();
-  }
-
   /**
    * Change this transit.system.User's name.
    *
@@ -176,14 +158,6 @@ public class User implements Serializable {
     }
   }
 
-  public int getTapsIn(LocalDate date) {
-    return statistics.totalTapIns(date);
-  }
-
-  public int getTapsOut(LocalDate date) {
-    return statistics.totalTapOuts(date);
-  }
-
   /**
    * A helper method simulating this User starting a new trip.
    *
@@ -193,7 +167,6 @@ public class User implements Serializable {
   private void tapIn(Card card, Station station) throws TransitException {
     if (card.getBalance() <= 0) throw new TransitException(); // Not enough fund
     // Record statistics
-    statistics.recordTapIn();
     station.recordTapIn();
 
     // Check if this transit.system.User is continuing a transit.system.Trip
@@ -203,7 +176,6 @@ public class User implements Serializable {
       if (lastTrip.isContinuousTrip(station)) { // continue the last trip
         card.setCurrentTrip(lastTrip);
         lastTrip.continueTrip(station, this.permission);
-        statistics.getPreviousTrips().remove(lastTrip);
         foundContinuousTrip = true;
       }
     }
@@ -227,12 +199,7 @@ public class User implements Serializable {
     card.setCurrentTrip(null);
 
     // Record various statistics
-    statistics.recordTapOut();
     station.recordTapOut();
-    statistics.updateSpendingHistory(card);
-    if (!statistics.getPreviousTrips().contains(trip)) {
-      statistics.getPreviousTrips().add(trip);
-    }
     if (!trip.isValidTrip()) {
       throw new TransitException();
     }

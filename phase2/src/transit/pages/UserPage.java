@@ -72,7 +72,7 @@ public class UserPage extends AuthenticatedPage {
               makeAlert(
                   "Last 3 trips",
                   "Last 3 trips of user " + user,
-                  user.getLastThreeMessage(),
+                  "Nothing right now",
                   AlertType.INFORMATION);
           a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
           a.showAndWait();

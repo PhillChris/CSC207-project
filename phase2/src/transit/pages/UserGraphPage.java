@@ -40,7 +40,7 @@ public class UserGraphPage extends GraphPage {
 
     lineChart.setTitle(String.format("Monthly Expenditure for user (%s) in (%s)", user.getUserName(), TransitTime.getCurrentDate().getYear()));
     XYChart.Series series = new XYChart.Series();
-    HashMap<YearMonth, Integer> expenditureMonthly = user.getExpenditureMonthly();
+    HashMap<YearMonth, Integer> expenditureMonthly = new HashMap<>();
     for (YearMonth month : expenditureMonthly.keySet()) {
       if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
         double total = expenditureMonthly.get(month) / 100.0;

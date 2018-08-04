@@ -14,14 +14,14 @@ public abstract class Statistics<T> {
    *
    * @return a HashMap of the statistics on each day of the past week
    */
-  abstract String generateWeeklyValues();
+  abstract HashMap<LocalDate, T> generateWeeklyValues();
 
   /**
    * Generates a string representation of statistics for each month in the past year (the last 7 days)
    *
    * @return a HashMap of the statistics on each day of the past week
    */
-  abstract String generateMonthlyValues();
+  abstract HashMap<YearMonth, T> generateMonthlyValues();
 
   /** Throws out old statistics */
   void clearLogs() {}

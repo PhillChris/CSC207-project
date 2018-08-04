@@ -70,7 +70,11 @@ public class Route implements Serializable {
 
   /** @return A shallow copy of the arrayList of all RouteNames */
   public static HashMap<String, ArrayList<Route>> getRoutesCopy() {
-    return new HashMap<>(routes);
+    HashMap<String, ArrayList<Route>> copy = new HashMap<>();
+    for (String type: routes.keySet()){
+      copy.put(type, new ArrayList<>(routes.get(type)));
+    }
+    return copy;
   }
 
   /** @return A string representation of this route */

@@ -16,12 +16,13 @@ public class Database {
           "." + File.separator + "tmp" + File.separator + "time.ser";
 
   public static void writeToDatabase() {
-    HashMap<String, ArrayList<Route>> routes = Route.getRoutesCopy();
-    writeObject(ROUTE_LOCATION, routes);
-    HashMap<String, User> users = User.getAllUsersCopy();
-    writeObject(USERS_LOCATION, users);
+    HashMap<String, ArrayList<Route>> routes;
     LocalDateTime time = TransitTime.getCurrentTime();
     writeObject(TIME_LOCATION, time);
+    HashMap<String, User> users = User.getAllUsersCopy();
+    writeObject(USERS_LOCATION, users);
+    //routes = Route.getRoutesCopy();
+    //writeObject(ROUTE_LOCATION, routes);
   }
 
   /**

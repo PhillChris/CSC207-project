@@ -163,7 +163,7 @@ public class User implements Serializable {
     if (card.isSuspended()) {
       throw new TransitException();
     }
-    tripStatistics.get("Taps").update(1.0);
+    tripStatistics.get("Taps").update(1);
     if (card.getCurrentTrip() == null) {
       tapIn(card, station);
     } else {

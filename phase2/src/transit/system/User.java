@@ -1,8 +1,5 @@
 package transit.system;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -20,7 +17,7 @@ public class User implements Serializable {
   /** The transit.system.User's email */
   private final String email;
   /** Tracks all related statistics associated with this User */
-  protected UserInformation statistics;
+  protected UserTripLog statistics;
   /** An ArrayList of this transit.system.User's cards */
   private HashMap<Integer, Card> cards;
   /** This transit.system.User's name */
@@ -55,7 +52,7 @@ public class User implements Serializable {
     this.cards = new HashMap<>();
     allUsers.put(email, this);
     cardCounter = 1;
-    this.statistics = new UserInformation(this);
+    this.statistics = new UserTripLog(this);
   }
 
   public static void setAllUsers(HashMap<String, User> allUsers) {

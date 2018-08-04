@@ -20,9 +20,13 @@ public interface Statistics<T> {
    */
   HashMap<YearMonth, T> generateMonthlyValues();
 
-
   /**
    * Throws out old statistics
    */
   void clearLogs();
+
+  /**
+   * Updates the information stored by this statistic
+   */
+  void update(T data);
 }

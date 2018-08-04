@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Observer;
 
 /** This class is designed to track all statistics related to a user */
-public class UserInformation implements Serializable {
+public class UserTripLog implements Serializable, Statistics<Integer> {
   /** The user associated with these statistics */
   private User user;
   /** Log of all tap ins for each day */
@@ -26,8 +26,8 @@ public class UserInformation implements Serializable {
   /** Calculates and sends the daily revenue recieved from this user to the system */
   private StatisticsMaker calculator;
 
-  /** Initializes a new instance of UserInformation */
-  UserInformation(User user) {
+  /** Initializes a new instance of UserTripLog */
+  UserTripLog(User user) {
     this.tapInLog = new HashMap<>();
     this.tapOutLog = new HashMap<>();
     this.previousTrips = new ArrayList<>();
@@ -133,4 +133,23 @@ public class UserInformation implements Serializable {
     calculator.updateSystemStats(lastTrip.getFee(), Math.max(lastTrip.getTripLegLength(), 0));
   }
 
+  @Override
+  public HashMap<LocalDate, Integer> generateWeeklyValues() {
+    return null;
+  }
+
+  @Override
+  public HashMap<YearMonth, Integer> generateMonthlyValues() {
+    return null;
+  }
+
+  @Override
+  public void clearLogs() {
+
+  }
+
+  @Override
+  public void update(Integer data) {
+
+  }
 }

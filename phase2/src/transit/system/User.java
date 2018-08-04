@@ -58,6 +58,7 @@ public class User implements Serializable {
     this.cards = new HashMap<>();
     allUsers.put(email, this);
     cardCounter = 1;
+    tripStatistics = new HashMap<>();
     tripStatistics.put("Expenditure", new QuantitativeStatistics());
     tripStatistics.put("Taps", new QuantitativeStatistics());
     tripStatistics.put("Trip Logs", new QualitativeStatistics<Trip>());

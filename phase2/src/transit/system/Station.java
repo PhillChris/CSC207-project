@@ -96,26 +96,4 @@ public class Station implements Serializable {
       this.initialStudentFee = 0;
     }
   }
-
-  /**
-   * @param date A day of the simulation
-   * @return The numeber of taps on for this station at date
-   */
-  public int getTapsOn(LocalDate date) {
-    if (tapsOn.get(date) != null) {
-      return tapsOn.get(date);
-    }
-    return 0;
-  }
-
-  /**
-   * @param date A day of the simulation
-   * @return The numeber of taps off for this station at date
-   */
-  public int getTapsOff(LocalDate date) {
-    if (tapsOff.get(date) != null) {
-      return tapsOff.get(date);
-    }
-    return 0;
-  }
 }

@@ -25,9 +25,9 @@ public abstract class GraphPage extends Page {
     // Set the chart
     LineChart<String, Number> chart = makeChart("Days", "Week's Total");
     XYChart.Series series = new XYChart.Series();
-    HashMap<LocalDate, Integer> expenditureMonthly = data;
+    series.setName("Daily Totals");
     for (LocalDate date : data.keySet()) {
-      series.getData().add(new XYChart.Data(date.getDayOfMonth(), data.get(date)));
+      series.getData().add(new XYChart.Data(date.toString(), data.get(date)));
     }
     chart.getData().add(series);
     return chart;
@@ -57,12 +57,8 @@ public abstract class GraphPage extends Page {
 
     final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
-    lineChart.setTitle(String.format(title, TransitTime.getClock().getCurrentDate().getYear()));
+    lineChart.setTitle(String.format(title, TransitTime.getClock().getCurrentDate().getYear()));;
 
-    XYChart.Series series = new XYChart.Series();
-    series.setName(title);
-
-    lineChart.getData().add(series);
     return lineChart;
   }
 }

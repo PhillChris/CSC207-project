@@ -34,7 +34,6 @@ public class AdminGraphPage extends GraphPage {
     stage.setTitle("Transit System Simulator");
     this.chart = makeSystemRevenueChart();
     this.scene = new Scene(chart, 800, 600);
-    stage.setScene(this.scene);
   }
 
   /**

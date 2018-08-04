@@ -20,13 +20,21 @@ public class Database {
           "." + File.separator + "tmp" + File.separator + "SystemTripLog.ser";
 
   public static void writeToDatabase() {
-    HashMap<String, ArrayList<Route>> routes;
+    // Save the current time
     LocalDateTime time = TransitTime.getClock().getCurrentTime();
     writeObject(TIME_LOCATION, time);
+    // Save the system's Users
     HashMap<String, User> users = User.getAllUsersCopy();
     writeObject(USERS_LOCATION, users);
-    routes = Route.getRoutesCopy();
+    // Save the system's Routes
+    HashMap<String, ArrayList<Route>>  routes = Route.getRoutesCopy();
     writeObject(ROUTE_LOCATION, routes);
+    // Save the System's revenue
+    Statistics revenue = Statistics.getSystemRevenue();
+    writeObject(REVENUE_LOCATION, revenue);
+    // Save the System's Travel Distance statistic
+    Statistics tripLengths = Statistics.getSystemTripLength();
+    writeObject(TRIPLOG_LOCATION, tripLengths);
   }
 
   /**

@@ -43,7 +43,11 @@ public class Statistics implements Serializable {
     // Loop through the last seven days
     LocalDate endDate = date.minusDays(7);
     while (!date.equals(endDate)) {
-      expenditures.put(date, dailyLogs.get(date));
+      if (dailyLogs.get(date) == null) {
+        expenditures.put(date, 0);
+      } else {
+        expenditures.put(date, dailyLogs.get(date));
+      }
       date = date.minusDays(1);
     }
     return expenditures;
@@ -84,7 +88,12 @@ public class Statistics implements Serializable {
     int sum = 0;
     LocalDate date = month.atEndOfMonth();
     while (date != month.minusMonths(1).atEndOfMonth()) {
-      Integer value = dailyLogs.get(date);
+      Integer value;
+      if (dailyLogs.get(date) == null) {
+        value = 0;
+      } else {
+        value = dailyLogs.get(date);
+      }
       sum += value;
       date = date.minusDays(1);
     }

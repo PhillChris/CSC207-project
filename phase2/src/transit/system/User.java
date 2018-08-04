@@ -1,8 +1,6 @@
 package transit.system;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.HashMap;
 
 /** Represents a transit.system.User in a transit system. */
@@ -24,8 +22,10 @@ public class User implements Serializable {
   private String password;
   /** The id given to the next card added by the user */
   private int cardCounter;
-  /** Determines the permissions and pricing of this user*/
+  /** Determines the permissions and pricing of this user */
   private String permission;
+  /** Stores associated statistics to this user */
+  private HashMap<String, Statistics> statistics;
   /**
    * Construct a new instance of transit.system.User
    *
@@ -33,7 +33,8 @@ public class User implements Serializable {
    * @param email the email of this transit.system.User
    * @param password the password of ths transit.system.User
    */
-  public User(String name, String email, String password, String permission) throws MessageTransitException {
+  public User(String name, String email, String password, String permission)
+      throws MessageTransitException {
     if (!email.matches(EMAILREGEX)) {
       throw new InvalidEmailException();
     }
@@ -80,8 +81,9 @@ public class User implements Serializable {
   }
 
   /** @return The permission on this user */
-  public String getPermission() { return this.permission; }
-
+  public String getPermission() {
+    return this.permission;
+  }
 
   /** @return This User's email */
   String getEmail() {
@@ -105,7 +107,8 @@ public class User implements Serializable {
     this.name = newName;
   }
 
-  public void changePassword(String currentPassword, String newPassword) throws IncorrectPasswordException, InvalidPasswordException {
+  public void changePassword(String currentPassword, String newPassword)
+      throws IncorrectPasswordException, InvalidPasswordException {
     if (!currentPassword.equals(password)) {
       throw new IncorrectPasswordException();
     } else if (newPassword.length() < 6) {
@@ -113,7 +116,6 @@ public class User implements Serializable {
     } else {
       password = newPassword;
     }
-
   }
 
   /** Add a card to this transit.system.User's list of cards. */

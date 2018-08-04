@@ -32,6 +32,8 @@ public class Station implements Serializable {
   private HashMap<LocalDate, Integer> tapsOff = new HashMap<>();
   /** The stationType of this station */
   private String stationType;
+  /** Stores associated statistics to this user */
+  private HashMap<String, Statistics> statistics;
 
   /**
    * Create a new instance of transit.system.Station

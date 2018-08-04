@@ -21,7 +21,7 @@ public class Statistics {
    *
    * @return a HashMap of the statistics on each day of the past week
    */
-  HashMap<LocalDate, Double> generateWeeklyValues() {
+  public HashMap<LocalDate, Double> generateWeeklyValues() {
     HashMap<LocalDate, Double> expenditures = new HashMap<>();
     LocalDate date = TransitTime.getCurrentDate();
     // Loop through the last seven days
@@ -38,7 +38,7 @@ public class Statistics {
    *
    * @return a HashMap of the statistics on each day of the past week
    */
-  HashMap<YearMonth, Double> generateMonthlyValues() {
+  public HashMap<YearMonth, Double> generateMonthlyValues() {
     HashMap<YearMonth, Double> expenditures = new HashMap<>();
     YearMonth month = TransitTime.getCurrentMonth();
     // Loop through the past year
@@ -62,7 +62,7 @@ public class Statistics {
     refreshLogs();
   }
 
-  protected double calculateMonthlyCost(YearMonth month) {
+  private double calculateMonthlyCost(YearMonth month) {
     double sum = 0.0;
     LocalDate date = month.atEndOfMonth();
     while (date != month.minusMonths(1).atEndOfMonth()) {

@@ -27,7 +27,6 @@ public class Main extends Application {
     Stage secondaryStage = new Stage();
     secondaryStage.setTitle("Transit System Time Control");
     secondaryStage.setScene(new TimeControlPage(secondaryStage).getScene());
-    TransitTime.updateTimeLabel();
     primaryStage.show();
     secondaryStage.setX(primaryStage.getX() + primaryStage.getWidth());
     secondaryStage.setY(primaryStage.getY() + 125);

@@ -10,8 +10,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import transit.system.TransitTime;
 
-import java.sql.Time;
-
 /** Represents a time control window in this simulation */
 public class TimeControlPage extends Page {
   /** Constructs a new instance of TimeControlPage */
@@ -50,7 +48,7 @@ public class TimeControlPage extends Page {
 
     placeLabel("Jump ahead: ", 0, 1);
 
-    placeButton("1 hour", () -> TransitTime.fastForward(), 1, 1);
+    placeButton("1 hour", () -> TransitTime.skipHours(), 1, 1);
 
     placeButton("1 day", () -> TransitTime.skipDay(), 2, 1);
 

@@ -249,7 +249,7 @@ public abstract class Page {
 
   /** Adds a clock with live updating time on the user page */
   protected void addClock() {
-    Label tempLabel = TransitTime.getTimeLabel();
+    Label tempLabel = TransitTime.getClock().getTimeLabel();
     grid.add(tempLabel, 0, 0, 2, 1);
   }
 

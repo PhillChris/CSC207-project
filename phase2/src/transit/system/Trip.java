@@ -32,7 +32,7 @@ public class Trip implements Serializable {
    * @param station transit.system.Station which this trip is started
    */
   public Trip(Station station, String permission) {
-    timeStarted = TransitTime.getCurrentTime();
+    timeStarted = TransitTime.getClock().getCurrentTime();
     tripFee = station.getInitialFee(permission);
     perStationFee = station.getPerStationFee(permission);
     priorStops.add(station);
@@ -51,7 +51,7 @@ public class Trip implements Serializable {
    */
   void endTrip(Station station) {
     endStation = station;
-    timeEnded = TransitTime.getCurrentTime();
+    timeEnded = TransitTime.getClock().getCurrentTime();
     updateTripLegLength();
     tripFee += updateFinalFee();
   }
@@ -103,7 +103,7 @@ public class Trip implements Serializable {
    * @return true if continuous trip, false otherwise
    */
   boolean isContinuousTrip(Station newStation) {
-    LocalDateTime time = TransitTime.getCurrentTime();
+    LocalDateTime time = TransitTime.getClock().getCurrentTime();
     boolean withinTimeLimit =
         Duration.between(timeStarted, time).toMinutes() <= (MAX_TRIP_LENGTH.toMinutes());
     return (this.endStation.equals(newStation) && withinTimeLimit);

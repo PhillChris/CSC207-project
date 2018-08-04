@@ -74,7 +74,7 @@ public class AdminUserPage extends Page {
   private void createAdminGraphPage() {
     Stage secondaryStage = new Stage();
     AdminGraphPage graphPage = new AdminGraphPage(secondaryStage, this.adminUser);
-    secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getCurrentDate().getYear());
+    secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getClock().getCurrentDate().getYear());
     secondaryStage.setScene(graphPage.getScene());
     secondaryStage.show();
   }

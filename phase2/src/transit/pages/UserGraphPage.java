@@ -38,11 +38,12 @@ public class UserGraphPage extends GraphPage {
   public LineChart<String, Number> makeChart() {
     LineChart lineChart = super.makeChart();
 
-    lineChart.setTitle(String.format("Monthly Expenditure for user (%s) in (%s)", user.getUserName(), TransitTime.getCurrentDate().getYear()));
+    lineChart.setTitle(String.format("Monthly Expenditure for user (%s) in (%s)", user.getUserName(),
+            TransitTime.getClock().getCurrentDate().getYear()));
     XYChart.Series series = new XYChart.Series();
     HashMap<YearMonth, Integer> expenditureMonthly = new HashMap<>();
     for (YearMonth month : expenditureMonthly.keySet()) {
-      if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
+      if (month.getYear() == TransitTime.getClock().getCurrentDate().getYear()) {
         double total = expenditureMonthly.get(month) / 100.0;
         series.getData().add(new XYChart.Data(month.getMonth().toString(), total));
       }

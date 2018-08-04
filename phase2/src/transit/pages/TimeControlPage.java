@@ -34,11 +34,11 @@ public class TimeControlPage extends Page {
     control.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        if (TransitTime.isRunning()) {
-          TransitTime.pauseTime();
+        if (TransitTime.getClock().isRunning()) {
+          TransitTime.getClock().pauseTime();
           control.setText("Resume time");
         } else {
-          TransitTime.startTime();
+          TransitTime.getClock().startTime();
           control.setText("Pause time");
         }
       }
@@ -48,11 +48,11 @@ public class TimeControlPage extends Page {
 
     placeLabel("Jump ahead: ", 0, 1);
 
-    placeButton("1 hour", () -> TransitTime.skipHours(), 1, 1);
+    placeButton("1 hour", () -> TransitTime.getClock().skipHours(), 1, 1);
 
-    placeButton("1 day", () -> TransitTime.skipDay(), 2, 1);
+    placeButton("1 day", () -> TransitTime.getClock().skipDay(), 2, 1);
 
-    placeButton("1 month", () -> TransitTime.skipMonth(), 3, 1);
+    placeButton("1 month", () -> TransitTime.getClock().skipMonth(), 3, 1);
 
     grid.setAlignment(Pos.CENTER);
 

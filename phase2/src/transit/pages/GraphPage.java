@@ -47,7 +47,7 @@ public class GraphPage extends Page {
     final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
     lineChart.setTitle(
-        String.format("Monthly Totals (%s)", TransitTime.getCurrentDate().getYear()));
+        String.format("Monthly Totals (%s)", TransitTime.getClock().getCurrentDate().getYear()));
 
     XYChart.Series series = new XYChart.Series();
     series.setName("Monthly Total");

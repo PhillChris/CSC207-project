@@ -17,8 +17,8 @@ public class Database {
 
   public static void writeToDatabase() {
     HashMap<String, ArrayList<Route>> routes;
-    LocalDateTime time = TransitTime.getCurrentTime();
-    writeObject(TIME_LOCATION, time);
+    TransitTime clock = TransitTime.getClock();
+    writeObject(TIME_LOCATION, clock);
     HashMap<String, User> users = User.getAllUsersCopy();
     writeObject(USERS_LOCATION, users);
     //routes = Route.getRoutesCopy();

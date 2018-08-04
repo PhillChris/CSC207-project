@@ -115,7 +115,7 @@ public class TapPage extends Page {
                       "Tapped in",
                       String.format(
                           "Tap in at %s, at time %s",
-                          station.toString(), TransitTime.getCurrentTimeString()),
+                          station.toString(), TransitTime.getClock().getCurrentTimeString()),
                       AlertType.CONFIRMATION);
             } else {
               alert =
@@ -125,7 +125,7 @@ public class TapPage extends Page {
                       String.format(
                           "Tap out at %s, at time %s, with trip fee $%.2f.",
                           station.toString(),
-                          TransitTime.getCurrentTimeString(),
+                          TransitTime.getClock().getCurrentTimeString(),
                           (card.getLastTrip().getFee()) / 100.0),
                       AlertType.CONFIRMATION);
             }

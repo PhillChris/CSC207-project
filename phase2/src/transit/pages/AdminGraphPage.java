@@ -32,11 +32,11 @@ public class AdminGraphPage extends GraphPage {
     LineChart lineChart = super.makeChart();
 
     lineChart.setTitle(
-        String.format("Monthly Revenue (%s)", TransitTime.getCurrentDate().getYear()));
+        String.format("Monthly Revenue (%s)", TransitTime.getClock().getCurrentDate().getYear()));
     XYChart.Series series = new XYChart.Series();
     HashMap<YearMonth, Integer> monthlyRevenue = Statistics.getSystemRevenue().generateMonthlyValues();
     for (YearMonth month : monthlyRevenue.keySet()) {
-      if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
+      if (month.getYear() == TransitTime.getClock().getCurrentDate().getYear()) {
         double total = monthlyRevenue.get(month) / 100.0;
         series.getData().add(new XYChart.Data(month.getMonth().toString(), total));
       }

@@ -38,7 +38,7 @@ public class Statistics implements Serializable {
    */
   public HashMap<LocalDate, Integer> generateWeeklyValues() {
     HashMap<LocalDate, Integer> expenditures = new HashMap<>();
-    LocalDate date = TransitTime.getCurrentDate();
+    LocalDate date = TransitTime.getClock().getCurrentDate();
     // Loop through the last seven days
     while (!date.equals(date.minusDays(7))) {
       expenditures.put(date, dailyLogs.get(date));
@@ -55,7 +55,7 @@ public class Statistics implements Serializable {
    */
   public HashMap<YearMonth, Integer> generateMonthlyValues() {
     HashMap<YearMonth, Integer> expenditures = new HashMap<>();
-    YearMonth month = TransitTime.getCurrentMonth();
+    YearMonth month = TransitTime.getClock().getCurrentMonth();
     // Loop through the past year
     while (!month.equals(month.minusMonths(12))) {
       int cost = calculateMonthlyCost(month);
@@ -67,7 +67,7 @@ public class Statistics implements Serializable {
 
   /** Updates the information stored by this statistic */
   public void update(Integer data) {
-    LocalDate date = TransitTime.getCurrentDate();
+    LocalDate date = TransitTime.getClock().getCurrentDate();
     // Update user's personal monthly expenditure History
     if (!dailyLogs.containsKey(date)) {
       dailyLogs.put(date, data);
@@ -90,7 +90,7 @@ public class Statistics implements Serializable {
   /** Throws out data stored beyond the total capacity of days stored */
   private void refreshLogs() {
     if (dailyLogs.keySet().size() > STORAGELIMIT) {
-      LocalDate date = TransitTime.getCurrentDate().minusDays(STORAGELIMIT);
+      LocalDate date = TransitTime.getClock().getCurrentDate().minusDays(STORAGELIMIT);
       while (dailyLogs.keySet().size() > STORAGELIMIT) {
         dailyLogs.remove(date);
         date = date.minusDays(1);

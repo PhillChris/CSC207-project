@@ -32,16 +32,6 @@ public class Database {
     writeObject(USERS_LOCATION, users);
     LocalDateTime time = TransitTime.getCurrentTime();
     writeObject(TIME_LOCATION, time);
-    HashMap<YearMonth, Integer> monthlyRevenue = StatisticsMaker.getMonthlyRevenueCopy();
-    writeObject(MONTHLY_REVENUE_LOCATION, monthlyRevenue);
-    HashMap<LocalDate, Integer> dailyRevenue = StatisticsMaker.getDailyRevenueCopy();
-    writeObject(DAILY_REVENUE_LOCATION, dailyRevenue);
-    HashMap<LocalDate, Integer> dailyLog = StatisticsMaker.getDailyLogCopy();
-    writeObject(DAILY_LOG_LOCATION, dailyLog);
-    HashMap<LocalDate, Integer> dailyNumTrips = StatisticsMaker.getDailyNumTripsCopy();
-    writeObject(DAILY_NUM_TRIPS_LOCATION, dailyNumTrips);
-    ArrayList<LocalDate> dates = StatisticsMaker.getDatesCopy();
-    writeObject(DATES_LOCATION, dates);
   }
 
   /**
@@ -73,26 +63,6 @@ public class Database {
     HashMap<String, User> users = (HashMap<String, User>) readObject(USERS_LOCATION);
     if (users != null) {
       User.setAllUsers(users);
-    }
-    HashMap<YearMonth, Integer> monthlyRevenue = (HashMap<YearMonth, Integer>) Database.readObject(MONTHLY_REVENUE_LOCATION);
-    if (monthlyRevenue != null) {
-      StatisticsMaker.setMonthlyRevenue(monthlyRevenue);
-    }
-    HashMap<LocalDate, Integer> dailyRevenue = (HashMap<LocalDate, Integer>) Database.readObject(DAILY_REVENUE_LOCATION);
-    if (dailyRevenue != null) {
-      StatisticsMaker.setDailyRevenue(dailyRevenue);
-    }
-    HashMap<LocalDate, Integer> dailyLog = (HashMap<LocalDate, Integer>) Database.readObject(DAILY_LOG_LOCATION);
-    if (dailyLog != null) {
-      StatisticsMaker.setDailyLog(dailyLog);
-    }
-    HashMap<LocalDate, Integer> dailyNumTrips = (HashMap<LocalDate, Integer>) Database.readObject(DAILY_NUM_TRIPS_LOCATION);
-    if (dailyNumTrips != null) {
-      StatisticsMaker.setDailyNumTrips(dailyNumTrips);
-    }
-    ArrayList<LocalDate> dates = (ArrayList<LocalDate>) Database.readObject(DATES_LOCATION);
-    if (dates != null) {
-      StatisticsMaker.setDates(dates);
     }
   }
 

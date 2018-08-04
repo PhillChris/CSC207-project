@@ -1,11 +1,12 @@
 package transit.system;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.HashMap;
 
 /** A class for recording analytical information associated to another object */
-public class Statistics {
+public class Statistics implements Serializable {
   /** The maximum number of days for information to be stored in the system */
   public static final int STORAGELIMIT = 365;
   /** Records revenue for the entire System */

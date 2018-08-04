@@ -22,8 +22,8 @@ public class User implements Serializable {
   private int cardCounter;
   /** Determines the permissions and pricing of this user */
   private String permission;
-  /** Stores associated statistics to this user */
-  private HashMap<String, Statistics> statistics;
+  /** Stores associated tripStatistics to this user */
+  private HashMap<String, Statistics> tripStatistics;
   /** Records the last three trips associated to this log */
   private ArrayList<Trip> tripLog;
   /** The name of the user associated with this log */
@@ -56,9 +56,9 @@ public class User implements Serializable {
     this.cards = new HashMap<>();
     allUsers.put(email, this);
     cardCounter = 1;
-    statistics.put("Expenditure", new AnalyticStatistics());
-    statistics.put("Taps", new AnalyticStatistics());
-    statistics.put("Trip Logs", new NonAnalyticStatistics<Trip>());
+    tripStatistics.put("Expenditure", new QuantitativeStatistics());
+    tripStatistics.put("Taps", new QuantitativeStatistics());
+    tripStatistics.put("Trip Logs", new QualitativeStatistics<Trip>());
   }
 
   public static void setAllUsers(HashMap<String, User> allUsers) {
@@ -156,7 +156,7 @@ public class User implements Serializable {
     if (card.isSuspended()) {
       throw new TransitException();
     }
-    statistics.get("Taps").update(1.0);
+    tripStatistics.get("Taps").update(1.0);
     if (card.getCurrentTrip() == null) {
       tapIn(card, station);
     } else {
@@ -172,7 +172,7 @@ public class User implements Serializable {
    */
   private void tapIn(Card card, Station station) throws TransitException {
     if (card.getBalance() <= 0) throw new TransitException(); // Not enough fund
-    // Record statistics
+    // Record tripStatistics
     station.record("Tap In", 1.0);
 
     // Check if this transit.system.User is continuing a transit.system.Trip
@@ -204,17 +204,18 @@ public class User implements Serializable {
     card.setLastTrip(trip);
     card.setCurrentTrip(null);
     updateStatistic(trip);
-    // Record various statistics
+    // Record various tripStatistics
     station.record("Tap Out", 1);
     if (!trip.isValidTrip()) {
       throw new TransitException();
     }
   }
 
-  /** Updates the statistics assoicated with this user and the system */
+  /** Updates the tripStatistics assoicated with this user and the system */
   private void updateStatistic(Trip trip) {
-    statistics.get("Expenditure").update(trip.getFee() / 100.0);
-    AnalyticStatistics.getSystemRevenue().update(trip.getFee() / 100.0);
-    AnalyticStatistics.getSystemTripLength().update(Math.max(trip.getTripLegLength(), 0.0));
+    tripStatistics.get("Trip Logs").update(trip);
+    tripStatistics.get("Expenditure").update(trip.getFee());
+    QuantitativeStatistics.getSystemRevenue().update(trip.getFee());
+    QuantitativeStatistics.getSystemTripLength().update(Math.max(trip.getTripLegLength(), 0));
   }
 }

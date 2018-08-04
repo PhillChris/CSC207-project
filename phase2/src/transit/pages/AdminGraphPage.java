@@ -34,7 +34,7 @@ public class AdminGraphPage extends GraphPage {
     lineChart.setTitle(
         String.format("Monthly Revenue (%s)", TransitTime.getCurrentDate().getYear()));
     XYChart.Series series = new XYChart.Series();
-    HashMap<YearMonth, Double> monthlyRevenue = QuantitativeStatistics.getSystemRevenue().generateMonthlyValues();
+    HashMap<YearMonth, Integer> monthlyRevenue = QuantitativeStatistics.getSystemRevenue().generateMonthlyValues();
     for (YearMonth month : monthlyRevenue.keySet()) {
       if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
         double total = monthlyRevenue.get(month) / 100.0;

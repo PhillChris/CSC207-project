@@ -55,9 +55,4 @@ public class GraphPage extends Page {
     lineChart.getData().add(series);
     return lineChart;
   }
-
-  /** @return The user associated with this page */
-  public User getUser() {
-    return user;
-  }
 }

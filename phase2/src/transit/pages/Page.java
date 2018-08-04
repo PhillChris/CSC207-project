@@ -1,6 +1,5 @@
 package transit.pages;
 
-import java.time.LocalDate;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -14,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import transit.system.Database;
 import transit.system.TransitTime;
+
 import java.util.Optional;
 
 /** Represents a general page serving scenes to be represented in the transit system program */
@@ -23,25 +23,25 @@ public abstract class Page {
   /** Represents the grid where elements on the page are placed */
   protected GridPane grid = new GridPane();
 
-  public Page() {
-  }
+  /** The default constructor for this page */
+  public Page() {}
 
   /**
    * A constructor that sets the primary stages close action to end the program. As a result, this
-   * constructor should only be used by subclasses which create Pages on the primary stage, and
-   * want the application to terminate when the stage is closed.
+   * constructor should only be used by subclasses which create Pages on the primary stage, and want
+   * the application to terminate when the stage is closed.
    *
    * @param primaryStage the PRIMARY stage of this application.
    */
   public Page(Stage primaryStage) {
     primaryStage.setOnCloseRequest(
-            new EventHandler<WindowEvent>() {
-              @Override
-              public void handle(WindowEvent windowEvent) {
-                Database.writeToDatabase();
-                Platform.exit();
-              }
-            });
+        new EventHandler<WindowEvent>() {
+          @Override
+          public void handle(WindowEvent windowEvent) {
+            Database.writeToDatabase();
+            Platform.exit();
+          }
+        });
   }
   /** @return the scene to be represented in the program stage */
   public Scene getScene() {
@@ -59,7 +59,8 @@ public abstract class Page {
   abstract void makeScene(Stage primaryStage);
 
   /**
-   * A general helper method to place a label with the given text at the given coordinates and give it an id
+   * A general helper method to place a label with the given text at the given coordinates and give
+   * it an id
    *
    * @param text the message to be displayed by this label
    * @param col the column in the grid where this label is displayed
@@ -98,7 +99,8 @@ public abstract class Page {
    * @param row the row in the grid where this text field is displayed
    * @return the created text field object, for reference in accessing entered data
    */
-  protected TextField placeTextField(GridPane grid, String promptText, int col, int row, String id) {
+  protected TextField placeTextField(
+      GridPane grid, String promptText, int col, int row, String id) {
     TextField textField = new TextField();
     textField.setId(id);
     textField.setPromptText(promptText);
@@ -107,13 +109,15 @@ public abstract class Page {
   }
 
   /**
-   * A general helper method to place a password text field at the given coordinates and give it an id
+   * A general helper method to place a password text field at the given coordinates and give it an
+   * id
    *
    * @param col the column in the grid where this password field is displayed
    * @param row the row in the grid where this password is displayed
    * @return the created password field object, for reference in accessing entered data
    */
-  protected PasswordField placePasswordField(GridPane grid, String promptText, int col, int row, String id) {
+  protected PasswordField placePasswordField(
+      GridPane grid, String promptText, int col, int row, String id) {
     PasswordField passwordField = new PasswordField();
     passwordField.setId(id);
     passwordField.setPromptText(promptText);
@@ -152,7 +156,8 @@ public abstract class Page {
   }
 
   /**
-   * A general helper method to place a button running a custom function at the given coordinates and give it an id
+   * A general helper method to place a button running a custom function at the given coordinates
+   * and give it an id
    *
    * @param text the text to be displayed on the given button
    * @param function the function to be run upon, having return type void
@@ -248,6 +253,7 @@ public abstract class Page {
     grid.add(tempLabel, 0, 0, 2, 1);
   }
 
+  /** Adds the logo of a train to the page */
   protected void addTrain() {
     GridPane trainPane = new GridPane();
     ImageView train = new ImageView(new Image("transit/pages/assets/train.png"));

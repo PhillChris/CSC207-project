@@ -57,12 +57,11 @@ public class Route implements Serializable {
    * Set the static routes attribute to the passed parameter. Note: this method should only be used
    * for deserialization of Route objects when the program is first being loaded in.
    *
-   * @param routes the value to set the routes attribute to.
    */
   public static HashMap<String, ArrayList<Route>> setRoutes() {
     HashMap<String, ArrayList<Route>> storedRoutes =
         (HashMap<String, ArrayList<Route>>) Database.readObject(Database.ROUTE_LOCATION);
-    if (routes != null) {
+    if (storedRoutes != null) {
       return storedRoutes;
     }
     else{

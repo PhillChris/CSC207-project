@@ -14,6 +14,10 @@ public class Database {
           "." + File.separator + "tmp" + File.separator + "user.ser";
   public static final String TIME_LOCATION =
           "." + File.separator + "tmp" + File.separator + "time.ser";
+  public static final String REVENUE_LOCATION =
+          "." + File.separator + "tmp" + File.separator + "SystemRevenue.ser";
+  public static final String TRIPLOG_LOCATION =
+          "." + File.separator + "tmp" + File.separator + "SystemTripLog.ser";
 
   public static void writeToDatabase() {
     HashMap<String, ArrayList<Route>> routes;
@@ -21,8 +25,8 @@ public class Database {
     writeObject(TIME_LOCATION, time);
     HashMap<String, User> users = User.getAllUsersCopy();
     writeObject(USERS_LOCATION, users);
-    //routes = Route.getRoutesCopy();
-    //writeObject(ROUTE_LOCATION, routes);
+    routes = Route.getRoutesCopy();
+    writeObject(ROUTE_LOCATION, routes);
   }
 
   /**

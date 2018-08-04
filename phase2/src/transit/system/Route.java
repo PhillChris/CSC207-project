@@ -60,12 +60,18 @@ public class Route implements Serializable {
    * @param routes the value to set the routes attribute to.
    */
   public static HashMap<String, ArrayList<Route>> setRoutes() {
-    HashMap<String, ArrayList<Route>> routes =
+    HashMap<String, ArrayList<Route>> storedRoutes =
         (HashMap<String, ArrayList<Route>>) Database.readObject(Database.ROUTE_LOCATION);
     if (routes != null) {
+      return storedRoutes;
+    }
+    else{
+      HashMap<String, ArrayList<Route>> routes = new HashMap<>();
+      for (String type: Station.POSSIBLE_TYPES){
+        routes.put(type, new ArrayList<>());
+      }
       return routes;
     }
-    return new HashMap<>();
   }
 
   /** @return A shallow copy of the arrayList of all RouteNames */

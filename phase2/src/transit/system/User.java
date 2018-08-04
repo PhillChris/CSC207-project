@@ -27,8 +27,6 @@ public class User implements Serializable {
   /** Stores the personal information associated with this user */
   private UserInfo personalInfo;
 
-  private List<Trip> previousTrips = new ArrayList<>();
-
   /**
    * Construct a new instance of transit.system.User
    *
@@ -183,7 +181,7 @@ public class User implements Serializable {
 
   /** Updates the tripStatistics assoicated with this user and the system */
   private void updateStatistic(Trip trip) {
-    previousTrips.add(trip);
+    personalInfo.getPreviousTrips().add(trip);
     tripStatistics.get("Expenditure").update(trip.getFee());
     Statistics.getSystemRevenue().update(trip.getFee());
     Statistics.getSystemTripLength().update(Math.max(trip.getTripLegLength(), 0));

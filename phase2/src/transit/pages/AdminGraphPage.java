@@ -1,5 +1,6 @@
 package transit.pages;
 
+import transit.system.AnalyticStatistics;
 import transit.system.User;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -33,7 +34,7 @@ public class AdminGraphPage extends GraphPage {
     lineChart.setTitle(
         String.format("Monthly Revenue (%s)", TransitTime.getCurrentDate().getYear()));
     XYChart.Series series = new XYChart.Series();
-    HashMap<YearMonth, Integer> monthlyRevenue = StatisticsMaker.getMonthlyRevenueCopy();
+    HashMap<YearMonth, Double> monthlyRevenue = AnalyticStatistics.getSystemRevenue().generateMonthlyValues();
     for (YearMonth month : monthlyRevenue.keySet()) {
       if (month.getYear() == TransitTime.getCurrentDate().getYear()) {
         double total = monthlyRevenue.get(month) / 100.0;

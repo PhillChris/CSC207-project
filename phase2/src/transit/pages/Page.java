@@ -193,18 +193,6 @@ public abstract class Page {
     return checkBox;
   }
 
-  protected ChoiceBox<LocalDate> placeDateOptions(int col, int row) {
-    ChoiceBox<LocalDate> dates = new ChoiceBox<>();
-    if (StatisticsMaker.getDatesCopy().isEmpty()) {
-      dates.getItems().addAll(TransitTime.getCurrentDate());
-    } else {
-      dates.getItems().addAll(StatisticsMaker.getDatesCopy());
-    }
-    dates.getSelectionModel().select(0);
-    grid.add(dates, col, row);
-    return dates;
-  }
-
   protected void placeImage(GridPane grid, String url, int col, int row, String id) {
     ImageView image = new ImageView(new Image(url));
     image.setId(id);

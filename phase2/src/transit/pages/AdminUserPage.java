@@ -51,13 +51,6 @@ public class AdminUserPage extends Page {
 
     placeButton("Add/append route", () -> createRoutePage(), 0, 4);
     placeButton(
-        "Daily Report",
-        () ->
-            makeAlert("", "", StatisticsMaker.generateReportMessage(), AlertType.INFORMATION)
-                .showAndWait(),
-        0,
-        5);
-    placeButton(
         "Toggle User Panel",
         () -> primaryStage.setScene(new UserPage(primaryStage, this.adminUser).getScene()),
         0,

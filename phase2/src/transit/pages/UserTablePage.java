@@ -39,25 +39,25 @@ public class UserTablePage extends TablePage {
    */
   @Override
   void makeScene(Stage primaryStage) {
-    placeLabel("User statistics!", 0, 0);
-    ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
-    TableView t = makeTable(dateOptions.getItems().get(0), 0);
-    dateOptions.setOnAction(
-        e -> {
-          t.setItems(FXCollections.observableList(generateData(dateOptions.getValue(), 0)));
-        });
-    placeButton(
-        "Go back",
-        () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
-        0,
-        3);
-    grid.add(t, 0, 2);
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    //placeLabel("User statistics!", 0, 0);
+    //ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
+    //TableView t = makeTable(dateOptions.getItems().get(0), 0);
+    //dateOptions.setOnAction(
+     //   e -> {
+      //    t.setItems(FXCollections.observableList(generateData(dateOptions.getValue(), 0)));
+       // });
+    //placeButton(
+     //   "Go back",
+      //  () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
+       // 0,
+        //3);
+    //grid.add(t, 0, 2);
+    //this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
     // Associate CSS with this page
-    this.scene
-        .getStylesheets()
-        .add(UserTablePage.class.getResource("styling/TableRows.css").toExternalForm());
+    //this.scene
+      //  .getStylesheets()
+        //.add(UserTablePage.class.getResource("styling/TableRows.css").toExternalForm());
   }
 
   /**

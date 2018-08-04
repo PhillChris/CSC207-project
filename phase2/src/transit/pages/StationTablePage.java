@@ -40,25 +40,25 @@ public class StationTablePage extends TablePage {
    */
   @Override
   public void makeScene(Stage primaryStage) {
-    placeLabel("Station statistics!", 0, 0);
-    ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
-    placeLabel("Bus stations:", 0, 2);
-    TableView busTable = makeTable(dateOptions.getItems().get(0), 0);
-    TableView subwayTable = makeTable(dateOptions.getItems().get(0), 1);
-    dateOptions.setOnAction(
-        e -> {
-          busTable.setItems(FXCollections.observableList(generateData(dateOptions.getValue(), 0)));
-          subwayTable.setItems(FXCollections.observableList(generateData(dateOptions.getValue(), 1)));
-        });
-    grid.add(busTable, 0, 3);
-    placeLabel("Subway stations:", 0, 4);
-    grid.add(subwayTable, 0, 5);
-    placeButton(
-        "Go back",
-        () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
-        0,
-        6);
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    //placeLabel("Station statistics!", 0, 0);
+    //ChoiceBox<LocalDate> dateOptions = placeDateOptions(0, 1);
+    //placeLabel("Bus stations:", 0, 2);
+    //TableView busTable = makeTable(dateOptions.getItems().get(0), 0);
+    //TableView subwayTable = makeTable(dateOptions.getItems().get(0), 1);
+    //dateOptions.setOnAction(
+     //   e -> {
+      //    busTable.setItems(FXCollections.observableList(generateData(dateOptions.getValue(), 0)));
+       //   subwayTable.setItems(FXCollections.observableList(generateData(dateOptions.getValue(), 1)));
+       // });
+    //grid.add(busTable, 0, 3);
+    //placeLabel("Subway stations:", 0, 4);
+    //grid.add(subwayTable, 0, 5);
+    //placeButton(
+     //   "Go back",
+      //  () -> primaryStage.setScene(new AdminUserPage(primaryStage, admin).getScene()),
+       // 0,
+        //6);
+    //this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
   /**

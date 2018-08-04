@@ -2,15 +2,11 @@ package transit.pages;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Route;
 import transit.system.Station;
-import transit.system.StationRow;
 import transit.system.User;
 
 import java.time.LocalDate;

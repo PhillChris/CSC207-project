@@ -4,15 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.User;
-import transit.system.UserRow;
 
 /** Represents a page displaying all stats regarding users in this TransitSystem */
 public class UserTablePage extends TablePage {

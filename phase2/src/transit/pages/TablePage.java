@@ -2,13 +2,11 @@ package transit.pages;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
-import java.util.HashMap;
+
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import transit.system.Row;
-import transit.system.StationRow;
 
 public abstract class TablePage extends Page {
   /** To be implemented by child classes */

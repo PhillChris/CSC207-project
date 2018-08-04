@@ -2,13 +2,12 @@ package transit.system;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Statistics<T> {
   /** Log of the daily values stored by this statistic */
-  HashMap<LocalDate, T> dailyLogs;
-  /** Log of the monthly values stored by this statistic */
-  HashMap<YearMonth, T> monthlyLogs;
+  HashMap<LocalDate, ArrayList<T>> dailyLogs;
 
   /**
    * Generates statistics for each day in the past week (the last 7 days)
@@ -16,7 +15,7 @@ public abstract class Statistics<T> {
    * @return a HashMap of the statistics on each day of the past week
    */
   HashMap<LocalDate, T> generateWeeklyValues() {
-    return dailyLogs;
+    return new HashMap<>();
   }
 
   /**
@@ -25,12 +24,20 @@ public abstract class Statistics<T> {
    * @return a HashMap of the statistics on each day of the past week
    */
   HashMap<YearMonth, T> generateMonthlyValues() {
-    return monthlyLogs;
+    return new HashMap<>();
   }
 
   /** Throws out old statistics */
   void clearLogs() {}
 
   /** Updates the information stored by this statistic */
-  abstract void update(T data);
+  void update(T data) {
+    LocalDate date = TransitTime.getCurrentDate();
+    // Update user's personal monthly expenditure History
+    if (!dailyLogs.containsKey(date)) {
+      dailyLogs.put(date, new ArrayList<T>());
+      dailyLogs.get(date).add(data);
+    }
+    dailyLogs.get(date).add(data);
+  }
 }

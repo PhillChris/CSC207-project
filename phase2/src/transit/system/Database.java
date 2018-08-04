@@ -14,16 +14,6 @@ public class Database {
           "." + File.separator + "tmp" + File.separator + "user.ser";
   public static final String TIME_LOCATION =
           "." + File.separator + "tmp" + File.separator + "time.ser";
-  public static final String MONTHLY_REVENUE_LOCATION =
-      "." + File.separator + "tmp" + File.separator + "monthlyRevenue.ser";
-  public static final String DAILY_REVENUE_LOCATION =
-      "." + File.separator + "tmp" + File.separator + "dailyRevenue.ser";
-  public static final String DAILY_LOG_LOCATION =
-      "." + File.separator + "tmp" + File.separator + "dailyLog.ser";
-  public static final String DAILY_NUM_TRIPS_LOCATION =
-      "." + File.separator + "tmp" + File.separator + "dailyNumTrips.ser";
-  public static final String DATES_LOCATION =
-      "." + File.separator + "tmp" + File.separator + "dates.ser";
 
   public static void writeToDatabase() {
     HashMap<String, ArrayList<Route>> routes = Route.getRoutesCopy();

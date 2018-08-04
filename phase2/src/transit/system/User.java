@@ -13,8 +13,6 @@ public class User implements Serializable {
    */
   private static final String EMAILREGEX =
       "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-  public static final String USERS_LOCATION =
-          "." + File.separator + "tmp" + File.separator + "user.ser";
   /** HashMap linking each email to its transit.system.User */
   private static HashMap<String, User> allUsers = setAllUsers();
   /** The transit.system.User's email */
@@ -66,7 +64,7 @@ public class User implements Serializable {
   }
 
   private static HashMap<String, User> setAllUsers()   {
-    HashMap<String, User> users = (HashMap<String, User>) readObject(USERS_LOCATION);
+    HashMap<String, User> users = (HashMap<String, User>) readObject(Database.USERS_LOCATION);
     if (users != null) {
       return users;
     }

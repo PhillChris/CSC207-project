@@ -20,19 +20,9 @@ public interface Statistics<T> {
    */
   HashMap<YearMonth, T> generateMonthlyValues();
 
-  /**
-   * Create default values for the HashMap returned by the generateWeeklyMessage method. This makes
-   * the interface work easily when a week has not yet passed in the application.
-   *
-   * @return a HashMap containing default (dummy) values.
-   */
-  HashMap<LocalDate, T> defaultWeeklyValues();
 
   /**
-   * Create default values for the HashMap returned by the generateMonthlyMessage method. This makes
-   * the interface work easily when a year has not yet passed in the application.
-   *
-   * @return a HashMap containing default (dummy) values.
+   * Throws out old statistics
    */
-  HashMap<YearMonth, T> defaultMonthlyValues();
+  void clearLogs();
 }

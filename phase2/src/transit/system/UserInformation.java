@@ -1,11 +1,15 @@
 package transit.system;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import jdk.incubator.http.WebSocket;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Observer;
 
 /** This class is designed to track all statistics related to a user */
 public class UserInformation implements Serializable {
@@ -128,4 +132,5 @@ public class UserInformation implements Serializable {
     // Update system's expenditure history
     calculator.updateSystemStats(lastTrip.getFee(), Math.max(lastTrip.getTripLegLength(), 0));
   }
+
 }

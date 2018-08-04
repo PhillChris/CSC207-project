@@ -56,8 +56,9 @@ public class User implements Serializable {
     this.cards = new HashMap<>();
     allUsers.put(email, this);
     cardCounter = 1;
-    statistics.put("Expenditure", new Statistics());
-    statistics.put("Taps", new Statistics());
+    statistics.put("Expenditure", new AnalyticStatistics());
+    statistics.put("Taps", new AnalyticStatistics());
+    statistics.put("Trip Logs", new NonAnalyticStatistics<Trip>());
   }
 
   public static void setAllUsers(HashMap<String, User> allUsers) {
@@ -155,6 +156,7 @@ public class User implements Serializable {
     if (card.isSuspended()) {
       throw new TransitException();
     }
+    statistics.get("Taps").update(1.0);
     if (card.getCurrentTrip() == null) {
       tapIn(card, station);
     } else {
@@ -201,7 +203,7 @@ public class User implements Serializable {
     card.subtractBalance(trip.getFee()); // deducts the balance
     card.setLastTrip(trip);
     card.setCurrentTrip(null);
-    updateStatistic(Math.max(trip.getTripLegLength(), 0), trip.getFee());
+    updateStatistic(trip);
     // Record various statistics
     station.record("Tap Out", 1);
     if (!trip.isValidTrip()) {
@@ -210,10 +212,9 @@ public class User implements Serializable {
   }
 
   /** Updates the statistics assoicated with this user and the system */
-  private void updateStatistic(double tripLength, double expenditure) {
-    statistics.get("Taps").update(1.0);
-    statistics.get("Expenditure").update(expenditure);
-    Statistics.getSystemRevenue().update(expenditure);
-    Statistics.getSystemTripLength().update(tripLength);
+  private void updateStatistic(Trip trip) {
+    statistics.get("Expenditure").update(trip.getFee() / 100.0);
+    AnalyticStatistics.getSystemRevenue().update(trip.getFee() / 100.0);
+    AnalyticStatistics.getSystemTripLength().update(Math.max(trip.getTripLegLength(), 0.0));
   }
 }

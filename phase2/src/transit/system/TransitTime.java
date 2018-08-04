@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
 import static javafx.scene.paint.Color.BLACK;
@@ -53,6 +54,12 @@ public class TransitTime implements Serializable {
   /** @return The current date in the transit system */
   public static LocalDate getCurrentDate() {
     return clock.currentTime.toLocalDate();
+  }
+
+  /** @return The current month in the transit system */
+  public static YearMonth getCurrentMonth() {
+    YearMonth month = YearMonth.of(clock.currentTime.getYear(), clock.currentTime.getMonth());
+    return month;
   }
 
   /** @return A label describing the current timeLabel of the simulation */

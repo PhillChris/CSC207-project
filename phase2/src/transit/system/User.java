@@ -1,9 +1,7 @@
 package transit.system;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import static transit.system.Database.readObject;
 
@@ -70,6 +68,11 @@ public class User implements Serializable {
     return copy;
   }
 
+  /** @return HashMap of tripStatistics associated with this User */
+  public HashMap<String, Statistics> getTripStatistics() {
+    return tripStatistics;
+  }
+
   public UserInfo getPersonalInfo() {
     return personalInfo;
   }
@@ -92,7 +95,6 @@ public class User implements Serializable {
     }
     return tempMap;
   }
-
 
   /** Add a card to this transit.system.User's list of cards. */
   public void addCard() {

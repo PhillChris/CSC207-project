@@ -6,19 +6,24 @@ import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 import transit.system.TransitTime;
 import transit.system.User;
+
 import java.time.YearMonth;
 import java.util.HashMap;
 
-/** Represents a page displaying a User's expenditure trends*/
+/** Represents a page displaying a User's expenditure trends */
 public class UserGraphPage extends GraphPage {
+  /** The user associated with this page */
+  private User user;
 
-  /** Constructs a new UserGraphPage
+  /**
+   * Constructs a new UserGraphPage
    *
    * @param primaryStage the stage on which this page is being served
    * @param user the user whose information is being displayed
    */
   public UserGraphPage(Stage primaryStage, User user) {
-    super(primaryStage, user);
+    super(primaryStage);
+    this.user = user;
   }
 
   /**
@@ -30,16 +35,16 @@ public class UserGraphPage extends GraphPage {
   public void makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
     LineChart chart = makeChart();
-    Scene scene  = new Scene(chart,800,600);
+    Scene scene = new Scene(chart, 800, 600);
     this.scene = scene;
   }
 
   /** @return this user's monthly expenditure chart */
   public LineChart<String, Number> makeChart() {
-    LineChart lineChart = super.makeChart();
+    LineChart lineChart = super.makeYearChart(user.getTripStatistics().get("Expenditure").generateMonthlyValues());
 
-    lineChart.setTitle(String.format("Monthly Expenditure for user (%s) in (%s)", user.getPersonalInfo().getUserName(),
-            TransitTime.getClock().getCurrentDate().getYear()));
+    lineChart.setTitle(
+        String.format("Monthly Expenditure", TransitTime.getClock().getCurrentDate().getYear()));
     XYChart.Series series = new XYChart.Series();
     HashMap<YearMonth, Integer> expenditureMonthly = new HashMap<>();
     for (YearMonth month : expenditureMonthly.keySet()) {

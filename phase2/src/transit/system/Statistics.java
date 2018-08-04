@@ -19,6 +19,7 @@ public class Statistics implements Serializable {
   /** Creates a new instance of Statistics */
   public Statistics() {
     dailyLogs = new HashMap<>();
+    dailyLogs.put(TransitTime.getClock().getCurrentDate(), 0);
   }
 
   /** @return The statistics associated with system revenue */

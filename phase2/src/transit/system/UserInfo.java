@@ -1,10 +1,11 @@
 package transit.system;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /** Stores information related to a given user */
-public class UserInfo {
+public class UserInfo implements Serializable {
   /** Records the last three trips associated to this log */
   private ArrayList<Trip> tripLog;
   /** The name of the user associated with this log */

@@ -30,7 +30,7 @@ public class AdminGraphPage extends GraphPage {
   @Override
   void makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
-    LineChart chart = makeSystemRevenueChart();
+    this.chart = makeSystemRevenueChart();
     Scene scene = new Scene(chart, 800, 600);
     this.scene = scene;
   }

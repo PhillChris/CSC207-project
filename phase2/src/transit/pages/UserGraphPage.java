@@ -34,7 +34,7 @@ public class UserGraphPage extends GraphPage {
   @Override
   public void makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
-    LineChart chart = makeMonthlyChart();
+    this.chart = makeMonthlyChart();
     Scene scene = new Scene(chart, 800, 600);
     this.scene = scene;
   }

@@ -14,6 +14,9 @@ import java.util.HashMap;
 /** Represents a page used to show statistical information */
 public abstract class GraphPage extends Page {
 
+  /** The chart displayed by this page */
+  protected LineChart<String, Number> chart;
+
   /**
    * Initializes a new instance of GraphPage
    *
@@ -22,23 +25,6 @@ public abstract class GraphPage extends Page {
    */
   public GraphPage(Stage primaryStage) {
     makeScene(primaryStage);
-  }
-
-  /** @return A line chart containing monthly analytics */
-  private LineChart<String, Number> makeChart(String xAxixName, String title) {
-    final CategoryAxis xAxis = new CategoryAxis();
-    final NumberAxis yAxis = new NumberAxis();
-    xAxis.setLabel(xAxixName);
-
-    final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
-
-    lineChart.setTitle(String.format(title, TransitTime.getClock().getCurrentDate().getYear()));
-
-    XYChart.Series series = new XYChart.Series();
-    series.setName(title);
-
-    lineChart.getData().add(series);
-    return lineChart;
   }
 
   /**
@@ -71,5 +57,22 @@ public abstract class GraphPage extends Page {
     }
     chart.getData().add(series);
     return chart;
+  }
+
+  /** @return An empty chart */
+  private LineChart<String, Number> makeChart(String xAxixName, String title) {
+    final CategoryAxis xAxis = new CategoryAxis();
+    final NumberAxis yAxis = new NumberAxis();
+    xAxis.setLabel(xAxixName);
+
+    final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
+
+    lineChart.setTitle(String.format(title, TransitTime.getClock().getCurrentDate().getYear()));
+
+    XYChart.Series series = new XYChart.Series();
+    series.setName(title);
+
+    lineChart.getData().add(series);
+    return lineChart;
   }
 }

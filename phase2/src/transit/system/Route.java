@@ -11,15 +11,13 @@ public class Route implements Serializable {
   /** The total number of routes in this station */
   private static int numRoutes = 0;
   /** A list of all routes in the transit system */
-  private static HashMap<String, ArrayList<Route>> routes = new HashMap<>();
+  private static HashMap<String, ArrayList<Route>> routes = setRoutes();
   /**
    * HashMap containing HashMap of all stations of given types as values, where the keys of the
    * inner HashMap are the station names.
    */
-  private static HashMap<String, HashMap<String, Station>> allStations = newNestedHashMap();
-  /**
-   * List containing all the stations of this route in travel order
-   */
+  private static HashMap<String, HashMap<String, Station>> allStations = setAllStations();
+  /** List containing all the stations of this route in travel order */
   private List<Station> routeStations;
   /** The type of this route */
   private String routeType;
@@ -40,8 +38,19 @@ public class Route implements Serializable {
     return allStations;
   }
 
-  static void setAllStations(HashMap<String, HashMap<String, Station>> newAllStations) {
-    allStations = newAllStations;
+  static HashMap<String, HashMap<String, Station>> setAllStations() {
+    HashMap<String, HashMap<String, Station>> allStations = new HashMap<>();
+    for (String type : Station.POSSIBLE_TYPES) {
+      allStations.put(type, new HashMap<>());
+      for (Route route : routes.get(type)) {
+        for (Station station : route.getRouteStationsCopy()) {
+          if (!allStations.get(type).containsKey(station.toString())) {
+            allStations.get(type).put(station.toString(), station);
+          }
+        }
+      }
+    }
+    return allStations;
   }
 
   /**
@@ -50,8 +59,13 @@ public class Route implements Serializable {
    *
    * @param routes the value to set the routes attribute to.
    */
-  public static void setRoutes(HashMap<String, ArrayList<Route>> routes) {
-    Route.routes = routes;
+  public static HashMap<String, ArrayList<Route>> setRoutes() {
+    HashMap<String, ArrayList<Route>> routes =
+        (HashMap<String, ArrayList<Route>>) Database.readObject(Database.ROUTE_LOCATION);
+    if (routes != null) {
+      return routes;
+    }
+    return new HashMap<>();
   }
 
   /** @return A shallow copy of the arrayList of all RouteNames */
@@ -134,18 +148,4 @@ public class Route implements Serializable {
       return newStation;
     }
   }
-
-  /**
-   * helper method to construct the all stations method and prevent null pointers
-   *
-   * @return an empty allStaitons HashMap.
-   */
-  private static HashMap<String, HashMap<String, Station>> newNestedHashMap() {
-    HashMap<String, HashMap<String, Station>> map = new HashMap<>();
-    for (String type : Station.POSSIBLE_TYPES) {
-      map.put(type, new HashMap<String, Station>());
-    }
-    return map;
-  }
-
 }

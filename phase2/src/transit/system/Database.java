@@ -41,18 +41,6 @@ public class Database {
   }
 
   /**
-   * Read all objects stored in the .ser files used to store all data related to the transit system,
-   * then store the objects read in their relevant class to be used in the application.
-   */
-  public static void readFromDatabase() {
-    HashMap<String, ArrayList<Route>> routes =
-            (HashMap<String, ArrayList<Route>>) Database.readObject(ROUTE_LOCATION);
-    if (routes != null) {
-      Route.setRoutes(routes);
-    }
-  }
-
-  /**
    * Reads an object from the specified location and returns it. Note that this method should be
    * called only when you know what object is stored at the file location or you will be unable to
    * cast the returned Object to something useful.

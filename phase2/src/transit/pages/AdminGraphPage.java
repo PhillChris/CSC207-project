@@ -1,5 +1,6 @@
 package transit.pages;
 
+import javafx.scene.Scene;
 import transit.system.Statistics;
 import transit.system.User;
 import javafx.scene.chart.LineChart;
@@ -13,6 +14,8 @@ import java.util.HashMap;
 /** Represents a page used to show statistical data to admin users */
 public class AdminGraphPage extends GraphPage {
 
+  private User user;
+
   /**
    * Initialized a new instance of AdminUserPage
    *
@@ -20,16 +23,24 @@ public class AdminGraphPage extends GraphPage {
    * @param user The user associated with this page
    */
   public AdminGraphPage(Stage primaryStage, User user) {
-    super(primaryStage, user);
+    super(primaryStage);
+    this.user = user;
+  }
+
+  @Override
+  void makeScene(Stage stage) {
+    stage.setTitle("Transit System Simulator");
+    LineChart chart = makeSystemRevenueChart();
+    Scene scene = new Scene(chart, 800, 600);
+    this.scene = scene;
   }
 
   /**
    *
    * @return A line chart representing this system's monthly revenue
    */
-  @Override
-  public LineChart<String, Number> makeChart() {
-    LineChart lineChart = super.makeChart();
+  public LineChart<String, Number> makeSystemRevenueChart() {
+    LineChart lineChart = super.makeWeekChart(Statistics.getSystemRevenue().generateWeeklyValues());
 
     lineChart.setTitle(
         String.format("Monthly Revenue (%s)", TransitTime.getClock().getCurrentDate().getYear()));

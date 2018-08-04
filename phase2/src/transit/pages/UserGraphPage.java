@@ -34,13 +34,13 @@ public class UserGraphPage extends GraphPage {
   @Override
   public void makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
-    LineChart chart = makeChart();
+    LineChart chart = makeMonthlyChart();
     Scene scene = new Scene(chart, 800, 600);
     this.scene = scene;
   }
 
   /** @return this user's monthly expenditure chart */
-  public LineChart<String, Number> makeChart() {
+  public LineChart<String, Number> makeMonthlyChart() {
     LineChart lineChart = super.makeYearChart(user.getTripStatistics().get("Expenditure").generateMonthlyValues());
 
     lineChart.setTitle(

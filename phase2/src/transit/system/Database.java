@@ -60,10 +60,6 @@ public class Database {
     if (routes != null) {
       Route.setRoutes(routes);
     }
-    HashMap<String, User> users = (HashMap<String, User>) readObject(USERS_LOCATION);
-    if (users != null) {
-      User.setAllUsers(users);
-    }
   }
 
   /**

@@ -1,8 +1,10 @@
 package transit.system;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static transit.system.Database.readObject;
 
 /** Represents a transit.system.User in a transit system. */
 public class User implements Serializable {
@@ -11,8 +13,10 @@ public class User implements Serializable {
    */
   private static final String EMAILREGEX =
       "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+  public static final String USERS_LOCATION =
+          "." + File.separator + "tmp" + File.separator + "user.ser";
   /** HashMap linking each email to its transit.system.User */
-  private static HashMap<String, User> allUsers = new HashMap<>();
+  private static HashMap<String, User> allUsers = setAllUsers();
   /** The transit.system.User's email */
   private final String email;
   /** An ArrayList of this transit.system.User's cards */
@@ -61,8 +65,12 @@ public class User implements Serializable {
     tripStatistics.put("Trip Logs", new QualitativeStatistics<Trip>());
   }
 
-  public static void setAllUsers(HashMap<String, User> allUsers) {
-    User.allUsers = allUsers;
+  private static HashMap<String, User> setAllUsers()   {
+    HashMap<String, User> users = (HashMap<String, User>) readObject(USERS_LOCATION);
+    if (users != null) {
+      return users;
+    }
+    return new HashMap<String, User>();
   }
 
   /** @return a copy of the HashMap of all Users */

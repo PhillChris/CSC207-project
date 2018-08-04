@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -18,9 +19,6 @@ import static javafx.scene.paint.Color.BLACK;
 
 /** A class keeping track of universal timeLabel in the transit system */
 public class TransitTime implements Serializable {
-  /** The file in which system timeLabel is serialized */
-  public static final String TIME_LOCATION =
-      "." + File.separator + "tmp" + File.separator + "timeLabel.ser";
   /** The clock used by the transit system */
   private static TransitTime clock = setSystemClock();
   /** A label designed to represent to current timeLabel of this simulation */
@@ -31,19 +29,18 @@ public class TransitTime implements Serializable {
   private LocalDateTime currentTime;
 
   /** Initialize a new instance of TransitTime */
-  private TransitTime() {
-    currentTime = LocalDateTime.now();
+  private TransitTime(LocalDateTime time) {
+    currentTime = time;
     timeLabel = new Label();
     updateTimeLabel();
   }
 
   private static TransitTime setSystemClock() {
-    TransitTime systemClock = (TransitTime) Database.readObject(TIME_LOCATION);
-    if (systemClock != null) {
-      systemClock.updateTimeLabel();
-      return systemClock;
+    LocalDateTime time = (LocalDateTime) Database.readObject(Database.TIME_LOCATION);
+    if (time != null) {
+      return new TransitTime(time);
     } else {
-      return new TransitTime();
+      return new TransitTime(LocalDateTime.now());
     }
   }
 

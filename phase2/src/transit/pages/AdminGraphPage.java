@@ -4,7 +4,6 @@ import transit.system.User;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-import transit.system.StatisticsMaker;
 import transit.system.TransitTime;
 
 import java.time.YearMonth;

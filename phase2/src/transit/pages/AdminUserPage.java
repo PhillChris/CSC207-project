@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.StatisticsMaker;
 import transit.system.TransitTime;
 
 /** Represents the page seen by an AdminUser when logging into the transit system */

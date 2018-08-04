@@ -8,12 +8,15 @@ import java.util.HashMap;
 public class Statistics {
   /** The maximum number of days for information to be stored in the system */
   public static final int STORAGELIMIT = 365;
-  /** Records statistics for the entire System */
+  /** Records revenue for the entire System */
   private static Statistics SystemRevenue = new Statistics();
-  /** Creates a new instance of Statistics */
+  /** Records the total number of stations travelled by users for the System */
+  private static Statistics SystemTripLength = new Statistics();
+
   /** Log of the daily values stored by this statistic */
   HashMap<LocalDate, Double> dailyLogs;
 
+  /** Creates a new instance of Statistics */
   public Statistics() {
     dailyLogs = new HashMap<>();
   }

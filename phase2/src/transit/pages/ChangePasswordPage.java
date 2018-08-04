@@ -42,7 +42,7 @@ public class ChangePasswordPage extends AuthenticatedPage {
       "Change password!",
       () -> {
         try {
-          user.changePassword(currPassword.getText(), newPassword.getText());
+          user.getPersonalInfo().changePassword(currPassword.getText(), newPassword.getText());
         } catch (MessageTransitException e) {
           e.setMessage(changeSuccess);
         }

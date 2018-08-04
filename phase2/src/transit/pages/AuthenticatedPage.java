@@ -83,7 +83,8 @@ public abstract class AuthenticatedPage extends Page {
    * @return the user information to be displayed
    */
   private String getUserMessage(){
-    String temp = "Username: " + user + System.lineSeparator() + "Permission: " + user.getPermission();
+    String temp = "Username: " + user + System.lineSeparator() + "Permission: " +
+            user.getPersonalInfo().getPermission();
     for (Integer id: this.user.getCardsCopy().keySet()) {
       temp += System.lineSeparator();
       temp += user.getCardsCopy().get(id);

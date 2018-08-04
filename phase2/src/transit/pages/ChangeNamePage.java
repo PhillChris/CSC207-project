@@ -36,7 +36,7 @@ public class ChangeNamePage extends AuthenticatedPage {
     placeButton(
         "Change name!",
         () -> {
-          user.changeName(newName.getText());
+          user.getPersonalInfo().changeName(newName.getText());
           primaryStage.setScene(new UserPage(primaryStage, user).getScene());
         },
         2,

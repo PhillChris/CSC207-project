@@ -38,7 +38,7 @@ public class UserGraphPage extends GraphPage {
   public LineChart<String, Number> makeChart() {
     LineChart lineChart = super.makeChart();
 
-    lineChart.setTitle(String.format("Monthly Expenditure for user (%s) in (%s)", user.getUserName(),
+    lineChart.setTitle(String.format("Monthly Expenditure for user (%s) in (%s)", user.getPersonalInfo().getUserName(),
             TransitTime.getClock().getCurrentDate().getYear()));
     XYChart.Series series = new XYChart.Series();
     HashMap<YearMonth, Integer> expenditureMonthly = new HashMap<>();

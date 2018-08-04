@@ -39,7 +39,7 @@ public class UserPage extends AuthenticatedPage {
 
   /** Adds the user-specific data on this page */
   protected void addGreeting() {
-    placeLabel(grid, String.format("Hello %s", user.getUserName()), 0, 1, "greeting");
+    placeLabel(grid, String.format("Hello %s", user.getPersonalInfo().getUserName()), 0, 1, "greeting");
   }
 
   /**
@@ -80,7 +80,7 @@ public class UserPage extends AuthenticatedPage {
         0,
         7);
 
-    if (user.getPermission().equals("admin")) {
+    if (user.getPersonalInfo().getPermission().equals("admin")) {
       placeButton(
           "Toggle admin panel",
           () -> primaryStage.setScene(new AdminUserPage(primaryStage, user).getScene()),

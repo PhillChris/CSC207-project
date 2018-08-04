@@ -149,7 +149,7 @@ public class LoginPage extends Page {
             }
             if (checkAuthorization(emailInput, passInput)) {
               Page userPage;
-              if (user.getPermission().equals("admin")) {
+              if (user.getPersonalInfo().getPermission().equals("admin")) {
                 userPage = new AdminUserPage(primaryStage, user);
               } else {
                 userPage = new UserPage(primaryStage, user);
@@ -172,7 +172,8 @@ public class LoginPage extends Page {
    * @param loginPane the second pane in this page used for styling
    */
   private void placeSeparator(GridPane loginPane) {
-    placeSeparator(loginPane, 0, 4, 2, "horizontalSeparator");
+    placeSeparator(loginPane, 0, 4, 2,
+            "horizontalSeparator");
   }
 
   /**
@@ -184,6 +185,6 @@ public class LoginPage extends Page {
    */
   private boolean checkAuthorization(TextField email, TextField password) {
     return User.getAllUsersCopy().containsKey(email.getText())
-        && User.getAllUsersCopy().get(email.getText()).correctAuthentification(password.getText());
+        && User.getAllUsersCopy().get(email.getText()).getPersonalInfo().correctAuthentification(password.getText());
   }
 }

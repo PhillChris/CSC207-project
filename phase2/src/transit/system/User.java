@@ -3,6 +3,7 @@ package transit.system;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static transit.system.Database.readObject;
 
@@ -25,13 +26,15 @@ public class User implements Serializable {
   /** Determines the permissions and pricing of this user */
   private String permission;
   /** Stores associated tripStatistics to this user */
-  private HashMap<String, Statistics> tripStatistics;
+  private HashMap<String, Statistics> tripStatistics = new HashMap<>();
   /** Records the last three trips associated to this log */
   private ArrayList<Trip> tripLog;
   /** The name of the user associated with this log */
   private String name;
   /** This transit.system.User's password */
   private String password;
+
+  private List<Trip> previousTrips = new ArrayList<>();
 
   /**
    * Construct a new instance of transit.system.User
@@ -58,10 +61,8 @@ public class User implements Serializable {
     this.cards = new HashMap<>();
     allUsers.put(email, this);
     cardCounter = 1;
-    tripStatistics = new HashMap<>();
-    tripStatistics.put("Expenditure", new QuantitativeStatistics());
-    tripStatistics.put("Taps", new QuantitativeStatistics());
-    tripStatistics.put("Trip Logs", new QualitativeStatistics<Trip>());
+    tripStatistics.put("Expenditure", new Statistics());
+    tripStatistics.put("Taps", new Statistics());
   }
 
   private static HashMap<String, User> setAllUsers()   {
@@ -220,9 +221,9 @@ public class User implements Serializable {
 
   /** Updates the tripStatistics assoicated with this user and the system */
   private void updateStatistic(Trip trip) {
-    tripStatistics.get("Trip Logs").update(trip);
+    previousTrips.add(trip);
     tripStatistics.get("Expenditure").update(trip.getFee());
-    QuantitativeStatistics.getSystemRevenue().update(trip.getFee());
-    QuantitativeStatistics.getSystemTripLength().update(Math.max(trip.getTripLegLength(), 0));
+    Statistics.getSystemRevenue().update(trip.getFee());
+    Statistics.getSystemTripLength().update(Math.max(trip.getTripLegLength(), 0));
   }
 }

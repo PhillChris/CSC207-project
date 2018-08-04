@@ -33,7 +33,7 @@ public class Station implements Serializable {
   /** The stationType of this station */
   private String stationType;
   /** Stores associated statistics to this user */
-  private HashMap<String, QuantitativeStatistics> statistics;
+  private HashMap<String, Statistics> statistics;
 
   /**
    * Create a new instance of transit.system.Station
@@ -44,8 +44,8 @@ public class Station implements Serializable {
     this.name = name;
     this.stationType = stationType;
     this.setFees();
-    statistics.put("Taps In", new QuantitativeStatistics());
-    statistics.put("Taps Out", new QuantitativeStatistics());
+    statistics.put("Taps In", new Statistics());
+    statistics.put("Taps Out", new Statistics());
   }
 
   @Override

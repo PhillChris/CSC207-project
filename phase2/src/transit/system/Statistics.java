@@ -38,6 +38,20 @@ public class Statistics {
   }
 
   /**
+   * @return The statistics associated with system revenue
+   */
+  public static Statistics getSystemRevenue(){
+    return SystemRevenue;
+  }
+
+  /**
+   * @return The statistics associated with stations travelled accross the system
+   */
+  public static Statistics getSystemTripLength(){
+    return SystemTripLength;
+  }
+
+  /**
    * Generates a string representation of statistics for each month in the past year (the last 7
    * days)
    *

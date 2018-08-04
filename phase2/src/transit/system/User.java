@@ -1,6 +1,7 @@
 package transit.system;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /** Represents a transit.system.User in a transit system. */
@@ -17,15 +18,19 @@ public class User implements Serializable {
   /** An ArrayList of this transit.system.User's cards */
   private HashMap<Integer, Card> cards;
   /** This transit.system.User's name */
-  private String name;
-  /** This transit.system.User's password */
-  private String password;
   /** The id given to the next card added by the user */
   private int cardCounter;
   /** Determines the permissions and pricing of this user */
   private String permission;
   /** Stores associated statistics to this user */
   private HashMap<String, Statistics> statistics;
+  /** Records the last three trips associated to this log */
+  private ArrayList<Trip> tripLog;
+  /** The name of the user associated with this log */
+  private String name;
+  /** This transit.system.User's password */
+  private String password;
+
   /**
    * Construct a new instance of transit.system.User
    *
@@ -52,8 +57,7 @@ public class User implements Serializable {
     allUsers.put(email, this);
     cardCounter = 1;
     statistics.put("Expenditure", new Statistics());
-    statistics.put("Taps In", new Statistics());
-    statistics.put("Taps Out", new Statistics());
+    statistics.put("Taps", new Statistics());
   }
 
   public static void setAllUsers(HashMap<String, User> allUsers) {
@@ -141,11 +145,6 @@ public class User implements Serializable {
     }
   }
 
-  /** @return A string representation of a user */
-  public String toString() {
-    return this.name;
-  }
-
   /**
    * Updates card and user information after this transit.system.User taps their card
    *
@@ -208,5 +207,15 @@ public class User implements Serializable {
     if (!trip.isValidTrip()) {
       throw new TransitException();
     }
+  }
+
+  /**
+   * Updates the statistics assoicated with this user and the system
+   */
+  private void updateStatistic(double tripLength, double expenditure){
+    statistics.get("Taps").update(1.0);
+    statistics.get("Expenditure").update(expenditure);
+    Statistics.getSystemRevenue().update(expenditure);
+    Statistics.getSystemTripLength().update(tripLength);
   }
 }

@@ -32,6 +32,7 @@ public class TransitTime implements Serializable {
   /** Initialize a new instance of TransitTime */
   private TransitTime() {
     currentTime = LocalDateTime.now();
+    timeLabel = new Label();
     updateTimeLabel();
   }
 

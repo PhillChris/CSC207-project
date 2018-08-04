@@ -22,8 +22,8 @@ public class UserGraphPage extends GraphPage {
    * @param user the user whose information is being displayed
    */
   public UserGraphPage(Stage primaryStage, User user) {
-    super(primaryStage);
     this.user = user;
+    makeScene(primaryStage);
   }
 
   /**
@@ -37,24 +37,11 @@ public class UserGraphPage extends GraphPage {
     this.chart = makeMonthlyChart();
     Scene scene = new Scene(chart, 800, 600);
     this.scene = scene;
+    stage.setScene(this.scene);
   }
 
   /** @return this user's monthly expenditure chart */
   public LineChart<String, Number> makeMonthlyChart() {
-    LineChart lineChart = super.makeYearChart(user.getTripStatistics().get("Expenditure").generateMonthlyValues());
-
-    lineChart.setTitle(
-        String.format("Monthly Expenditure", TransitTime.getClock().getCurrentDate().getYear()));
-    XYChart.Series series = new XYChart.Series();
-    HashMap<YearMonth, Integer> expenditureMonthly = new HashMap<>();
-    for (YearMonth month : expenditureMonthly.keySet()) {
-      if (month.getYear() == TransitTime.getClock().getCurrentDate().getYear()) {
-        double total = expenditureMonthly.get(month) / 100.0;
-        series.getData().add(new XYChart.Data(month.getMonth().toString(), total));
-      }
-    }
-
-    lineChart.getData().add(series);
-    return lineChart;
+    return super.makeYearChart(user.getTripStatistics().get("Expenditure").generateMonthlyValues());
   }
 }

@@ -18,16 +18,6 @@ public abstract class GraphPage extends Page {
   protected LineChart<String, Number> chart;
 
   /**
-   * Initializes a new instance of GraphPage
-   *
-   * @param primaryStage The stage for this page to be displayed
-   * @param user The user associated with this page
-   */
-  public GraphPage(Stage primaryStage) {
-    makeScene(primaryStage);
-  }
-
-  /**
    * @param data The data to plot
    * @return A line chart of days to number values
    */

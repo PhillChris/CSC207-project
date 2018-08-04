@@ -2,6 +2,7 @@ package transit.system;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.HashMap;
 
@@ -41,7 +42,8 @@ public class Statistics implements Serializable {
     HashMap<LocalDate, Integer> expenditures = new HashMap<>();
     LocalDate date = TransitTime.getClock().getCurrentDate();
     // Loop through the last seven days
-    while (!date.equals(date.minusDays(7))) {
+    LocalDate endDate = date.minusDays(7);
+    while (!date.equals(endDate)) {
       expenditures.put(date, dailyLogs.get(date));
       date = date.minusDays(1);
     }
@@ -58,7 +60,8 @@ public class Statistics implements Serializable {
     HashMap<YearMonth, Integer> expenditures = new HashMap<>();
     YearMonth month = TransitTime.getClock().getCurrentMonth();
     // Loop through the past year
-    while (!month.equals(month.minusMonths(12))) {
+    YearMonth endMonth = month.minusMonths(12);
+    while (!month.equals(endMonth)) {
       int cost = calculateMonthlyCost(month);
       expenditures.put(month, cost);
       month = month.minusMonths(1);
@@ -82,7 +85,7 @@ public class Statistics implements Serializable {
     int sum = 0;
     LocalDate date = month.atEndOfMonth();
     while (date != month.minusMonths(1).atEndOfMonth()) {
-      int value = dailyLogs.get(date);
+      Integer value = dailyLogs.get(date);
       date = date.minusDays(1);
     }
     return sum;

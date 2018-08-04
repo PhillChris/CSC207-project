@@ -5,7 +5,7 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Statistics<T> {
+public abstract class Statistics<T extends Number> {
   /** Log of the daily values stored by this statistic */
   HashMap<LocalDate, ArrayList<T>> dailyLogs;
 

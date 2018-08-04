@@ -6,25 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /** Records the previous Trips of a User */
-public class UserTripLog extends Statistics<Trip> {
+public class UserTripLog {
+
+    private HashMap<LocalDate, ArrayList<Trip>> tripLog;
 
   /** Instantiates a new instance of UserTripLog */
   public UserTripLog() {
-    dailyLogs = new HashMap<LocalDate, ArrayList<Trip>>();
+    tripLog = new HashMap<LocalDate, ArrayList<Trip>>();
   }
 
-  /** Initializes a new instance of UserTapLog */
-  UserTripLog(User user) {
-    this.dailyLogs = new HashMap<>();
-  }
-
-  @Override
-  String generateWeeklyValues() {
-    return null;
-  }
-
-  @Override
-  String generateMonthlyValues() {
-    return null;
-  }
 }

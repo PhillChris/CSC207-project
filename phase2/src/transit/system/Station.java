@@ -1,7 +1,6 @@
 package transit.system;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.HashMap;
 
 /** A class for stations in this simulation */
@@ -23,7 +22,7 @@ public class Station implements Serializable {
   /** The stationType of this station */
   private String stationType;
   /** Stores associated statistics to this user */
-  private HashMap<String, Statistics> statistics;
+  private HashMap<String, Statistics> statistics = new HashMap<>();
 
   /**
    * Create a new instance of transit.system.Station

@@ -7,8 +7,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
-import javax.xml.crypto.Data;
-import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -44,10 +42,8 @@ public class TransitTime implements Serializable {
     }
   }
 
-  /**
-   * @return The clock used by the system
-   */
-  public static TransitTime getClock(){
+  /** @return The clock used by the system */
+  public static TransitTime getClock() {
     return clock;
   }
 

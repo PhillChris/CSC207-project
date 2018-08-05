@@ -2,7 +2,6 @@ package transit.pages;
 
 import transit.system.User;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.TransitTime;
@@ -41,7 +40,7 @@ public class AdminUserPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   private void makeSceneButtons(Stage primaryStage) {
-    placeButton(
+    makeButton(grid,
         "Monthly Revenue (Current Year)",
         () -> {
           createAdminGraphPage();
@@ -49,13 +48,13 @@ public class AdminUserPage extends Page {
         0,
         2);
 
-    placeButton("Add/append route", () -> createRoutePage(), 0, 4);
-    placeButton(
+    makeButton(grid,"Add/append route", () -> createRoutePage(), 0, 4);
+    makeButton(grid,
         "Toggle User Panel",
         () -> primaryStage.setScene(new UserPage(primaryStage, this.adminUser).getScene()),
         0,
         6);
-    placeButton(
+    makeButton(grid,
         "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 0, 9);
   }
 

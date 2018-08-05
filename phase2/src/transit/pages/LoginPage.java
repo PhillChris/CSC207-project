@@ -3,10 +3,7 @@ package transit.pages;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import transit.system.User;
@@ -36,14 +33,14 @@ public class LoginPage extends Page {
     grid.setVgap(10);
 
     makeLoginPane(primaryStage);
+
     addTrain();
-
     addClock();
-    this.scene = new Scene(grid, 600, 375);
 
+    scene = new Scene(grid, 600, 375);
     scene
         .getStylesheets()
-        .add(LoginPage.class.getResource("styling/LoginPage.css").toExternalForm());
+        .add(getClass().getResource("styling/LoginPage.css").toExternalForm());
   }
 
   /**
@@ -55,18 +52,18 @@ public class LoginPage extends Page {
     GridPane loginPane = new GridPane();
     loginPane.setHgap(10);
     loginPane.setVgap(12);
-    placeLabels(loginPane);
-    placeIcons(loginPane);
+    makeLabels(loginPane);
+    makeIcons(loginPane);
 
     TextField emailInput = makeEmailInput(loginPane);
     PasswordField passInput = makePassInput(loginPane);
 
     Label errorMessage = makeErrorMessage(loginPane);
 
-    placeSignUpButton(primaryStage, loginPane);
-    placeLoginButton(primaryStage, loginPane, emailInput, passInput, errorMessage);
+    makeSignUpButton(primaryStage, loginPane);
+    makeLoginButton(primaryStage, loginPane, emailInput, passInput, errorMessage);
 
-    placeSeparator(loginPane);
+    makeSeparator(loginPane);
 
     grid.add(loginPane, 0, 1);
   }
@@ -76,9 +73,9 @@ public class LoginPage extends Page {
    *
    * @param loginPane the login pane being constructed in this LoginPage
    */
-  private void placeIcons(GridPane loginPane) {
-    placeImage(loginPane, "transit/pages/assets/email.png", 0, 1, "emailIcon");
-    placeImage(loginPane, "transit/pages/assets/key.png", 0, 2, "keyIcon");
+  private void makeIcons(GridPane loginPane) {
+    makeImage(loginPane, "transit/pages/assets/email.png", 0, 1);
+    makeImage(loginPane, "transit/pages/assets/key.png", 0, 2);
   }
 
   /**
@@ -86,23 +83,25 @@ public class LoginPage extends Page {
    *
    * @param loginPane the login pane being constructed in this LoginPage
    */
-  private void placeLabels(GridPane loginPane) {
-    Label login = placeLabel(loginPane, "Login", 0, 0, "loginLabel");
+  private void makeLabels(GridPane loginPane) {
+    Label login = makeLabel(loginPane, "Login", 0, 0);
+    login.setId("loginLabel");
     GridPane.setColumnSpan(login, 2);
 
-    Label noAccount = placeLabel(loginPane, "No account?", 0, 5, "noAccount");
+    Label noAccount = makeLabel(loginPane, "No account?", 0, 5);
+    noAccount.setId("noAccount");
     GridPane.setColumnSpan(noAccount, 2);
     ;
   }
 
   /** @return the password input field for this LoginPage */
   private PasswordField makePassInput(GridPane loginPane) {
-    return placePasswordField(loginPane, "Password", 1, 2, "passInput");
+    return makePasswordField(loginPane, "Password", 1, 2);
   }
 
   /** @return the email input field for this LoginPage */
   private TextField makeEmailInput(GridPane loginPane) {
-    return placeTextField(loginPane, "Email", 1, 1, "emailInput");
+    return makeTextField(loginPane, "Email", 1, 1);
   }
 
   /**
@@ -110,7 +109,8 @@ public class LoginPage extends Page {
    * @return a label containing the appropriate error message
    */
   private Label makeErrorMessage(GridPane loginPane) {
-    Label errorMessage = placeLabel(loginPane, "", 1, 3, "errorMessage");
+    Label errorMessage = makeLabel(loginPane, "", 1, 3);
+    errorMessage.setId("errorMessage");
     GridPane.setHalignment(errorMessage, HPos.RIGHT);
     return errorMessage;
   }
@@ -119,7 +119,7 @@ public class LoginPage extends Page {
    * @param primaryStage the stage on which this page is being served
    * @param loginPane the the login pane being constructed in this LoginPage
    */
-  private void placeSignUpButton(Stage primaryStage, GridPane loginPane) {
+  private void makeSignUpButton(Stage primaryStage, GridPane loginPane) {
     Button signUpButton = new Button("Sign Up");
     signUpButton.setId("signUpButton");
     signUpButton.setOnAction(
@@ -136,7 +136,7 @@ public class LoginPage extends Page {
    * @param errorMessage the error message field on this LoginPage to be modified as needed
    * @param primaryStage the stage on which this LoginPage is being served
    */
-  private void placeLoginButton(
+  private void makeLoginButton(
       Stage primaryStage,
       GridPane loginPane,
       TextField emailInput,
@@ -178,8 +178,9 @@ public class LoginPage extends Page {
    *
    * @param loginPane the second pane in this page used for styling
    */
-  private void placeSeparator(GridPane loginPane) {
-    placeSeparator(loginPane, 0, 4, 2, "horizontalSeparator");
+  private void makeSeparator(GridPane loginPane) {
+    Separator horizontalSeparator = makeSeparator(loginPane, 0, 4);
+    GridPane.setColumnSpan(horizontalSeparator, 2);
   }
 
   /**

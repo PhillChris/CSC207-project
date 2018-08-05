@@ -63,48 +63,32 @@ public abstract class Page {
    * it an id
    *
    * @param text the message to be displayed by this label
-   * @param col the column in the grid where this label is displayed
-   * @param row the row in the grid where this label is displayed
+   * @param col the column in the gridPane where this label is displayed
+   * @param row the row in the gridPane where this label is displayed
    */
-  protected Label placeLabel(GridPane grid, String text, int col, int row, String id) {
-    Label tempLabel = new Label(text);
-    tempLabel.setId(id);
-    grid.add(tempLabel, col, row);
-    return tempLabel;
+  protected Label makeLabel(GridPane gridPane, String text, int col, int row) {
+    Label label = new Label(text);
+    gridPane.add(label, col, row);
+    return label;
   }
 
-  protected Label placeLabel(String text, int col, int row) {
-    Label tempLabel = new Label(text);
-    grid.add(tempLabel, col, row);
-    return tempLabel;
+  protected Separator makeSeparator(GridPane gridPane, int col, int row) {
+    Separator horizontalSeparator = new Separator();
+    gridPane.add(horizontalSeparator, col, row);
+    return horizontalSeparator;
   }
 
   /**
    * A general helper method to place a text field at the given coordinates
    *
-   * @param col the column in the grid where this text field is displayed
-   * @param row the row in the grid where this text field is displayed
+   * @param col the column in the gridPane where this text field is displayed
+   * @param row the row in the gridPane where this text field is displayed
    * @return the created text field object, for reference in accessing entered data
    */
-  protected TextField placeTextField(int col, int row) {
+  protected TextField makeTextField(GridPane gridPane, String promptText, int col, int row) {
     TextField textField = new TextField();
-    grid.add(textField, col, row);
-    return textField;
-  }
-
-  /**
-   * A general helper method to place a text field at the given coordinates and give it an id
-   *
-   * @param col the column in the grid where this text field is displayed
-   * @param row the row in the grid where this text field is displayed
-   * @return the created text field object, for reference in accessing entered data
-   */
-  protected TextField placeTextField(
-      GridPane grid, String promptText, int col, int row, String id) {
-    TextField textField = new TextField();
-    textField.setId(id);
     textField.setPromptText(promptText);
-    grid.add(textField, col, row);
+    gridPane.add(textField, col, row);
     return textField;
   }
 
@@ -112,16 +96,15 @@ public abstract class Page {
    * A general helper method to place a password text field at the given coordinates and give it an
    * id
    *
-   * @param col the column in the grid where this password field is displayed
-   * @param row the row in the grid where this password is displayed
+   * @param col the column in the gridPane where this password field is displayed
+   * @param row the row in the gridPane where this password is displayed
    * @return the created password field object, for reference in accessing entered data
    */
-  protected PasswordField placePasswordField(
-      GridPane grid, String promptText, int col, int row, String id) {
+  protected PasswordField makePasswordField(
+      GridPane gridPane, String promptText, int col, int row) {
     PasswordField passwordField = new PasswordField();
-    passwordField.setId(id);
     passwordField.setPromptText(promptText);
-    grid.add(passwordField, col, row);
+    gridPane.add(passwordField, col, row);
     return passwordField;
   }
 
@@ -133,62 +116,26 @@ public abstract class Page {
    * @param col the column in the grid where this button is displayed
    * @param row the row in the grid where this button is displayed
    */
-  protected Button placeButton(String text, Runnable function, int col, int row) {
+  protected Button makeButton(GridPane gridPane, String text, Runnable function, int col, int row) {
     Button button = new Button(text);
     button.setOnAction(data -> function.run());
-    grid.add(button, col, row);
+    gridPane.add(button, col, row);
     return button;
   }
 
-  /**
-   * A general helper method to place a button running a custom function at the given coordinates
-   *
-   * @param text the text to be displayed on the given button
-   * @param function the function to be run upon, having return type void
-   * @param col the column in the grid where this button is displayed
-   * @param row the row in the grid where this button is displayed
-   */
-  protected Button placeButton(String text, Runnable function, GridPane grid, int col, int row) {
-    Button button = new Button(text);
-    button.setOnAction(data -> function.run());
-    grid.add(button, col, row);
-    return button;
+  protected ComboBox<String> makeComboBox(GridPane grid, String[] choices, int col, int row) {
+    ComboBox<String> comboBox = new ComboBox<>();
+    comboBox.getItems().addAll(choices);
+    comboBox.getSelectionModel().selectFirst();
+    grid.add(comboBox, col, row);
+    return comboBox;
+
   }
 
-  /**
-   * A general helper method to place a button running a custom function at the given coordinates
-   * and give it an id
-   *
-   * @param text the text to be displayed on the given button
-   * @param function the function to be run upon, having return type void
-   * @param col the column in the grid where this button is displayed
-   * @param row the row in the grid where this button is displayed
-   */
-  protected void placeButton(String text, Runnable function, int col, int row, String id) {
-    Button button = new Button(text);
-    button.setOnAction(data -> function.run());
-    button.setId(id);
-    grid.add(button, col, row);
-  }
-
-  protected Button placeButton(String text, Runnable function, int col, int row, int colSpan) {
-    Button button = new Button(text);
-    button.setOnAction(data -> function.run());
-    grid.add(button, col, row, colSpan, 1);
-    return button;
-  }
-
-  protected void placeSeparator(GridPane grid, int col, int row, int colSpan, String id) {
-    Separator horizontalSeparator = new Separator();
-    horizontalSeparator.setId(id);
-    grid.add(horizontalSeparator, col, row, colSpan, 1);
-  }
-
-
-  protected void placeImage(GridPane grid, String url, int col, int row, String id) {
+  protected ImageView makeImage(GridPane gridPane, String url, int col, int row) {
     ImageView image = new ImageView(new Image(url));
-    image.setId(id);
-    grid.add(image, col, row);
+    gridPane.add(image, col, row);
+    return image;
   }
 
   /**

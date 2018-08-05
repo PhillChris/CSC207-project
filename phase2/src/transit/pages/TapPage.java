@@ -51,8 +51,8 @@ public class TapPage extends Page {
    */
   @Override
   public void makeScene(Stage secondaryStage) {
-    placeLabel("Choose route type!", 0, 0);
-    ChoiceBox<String> routeType = new ChoiceBox();
+    makeLabel(grid, "Choose route type!", 0, 0);
+    ChoiceBox<String> routeType = new ChoiceBox<>();
     setupRouteTypeBox(routeType, secondaryStage);
     grid.add(routeType, 1, 0);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -102,7 +102,7 @@ public class TapPage extends Page {
    * @return the button created at this place in the grid
    */
   private Button placeStationButton(Station station, int col, int row) {
-    return placeButton(
+    return makeButton(grid,
         station.toString(),
         () -> {
           Alert alert;

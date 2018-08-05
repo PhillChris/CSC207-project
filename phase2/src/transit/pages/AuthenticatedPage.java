@@ -60,7 +60,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this user info button is displayed
    */
   private void newUserInfoButton(int col, int row) {
-    Button info = placeButton(
+    Button info = makeButton(grid,
         "Info",
         () -> {
           Alert alert =
@@ -100,8 +100,8 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this logout button is displayed
    */
   public void newLogoutButton(Stage primaryStage, int col, int row) {
-    Button logout = placeButton(
-        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), grid, col, row);
+    Button logout = makeButton(grid,
+        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), col, row);
     GridPane.setHalignment(logout, HPos.RIGHT);
     GridPane.setHgrow(logout, Priority.ALWAYS);
   }
@@ -114,7 +114,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this change username button is displayed
    */
   private void newChangeUserButton(Stage primaryStage, int col, int row) {
-    placeButton(
+    makeButton(grid,
         "Change username",
         () -> {
           ChangeNamePage namePage = new ChangeNamePage(primaryStage, this.user);
@@ -128,7 +128,7 @@ public abstract class AuthenticatedPage extends Page {
   }
 
   private void newChangePassButton(Stage primaryStage, int col, int row) {
-    placeButton(
+    makeButton(grid,
       "Change password",
       () -> {
         ChangePasswordPage passwordPage = new ChangePasswordPage(primaryStage, user);
@@ -150,7 +150,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this remove account button is displayed
    */
   private void newRemoveAccountButton(Stage primaryStage, int col, int row) {
-    placeButton(
+    makeButton(grid,
         "Remove this account!",
         () ->
             makeConfirmationAlert(

@@ -32,7 +32,7 @@ public class CardPage extends Page {
    */
   @Override
   protected void makeScene(Stage primaryStage) {
-    placeButton(
+    makeButton(grid,
         "Add card",
         () -> {
           user.addCard();
@@ -51,7 +51,7 @@ public class CardPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   protected void addUserData(Stage primaryStage) {
-    this.currentTrips = placeLabel(generateCurrentTripMessage(user), 0, 1);
+    this.currentTrips = makeLabel(grid, generateCurrentTripMessage(user), 0, 1);
     int i = 0;
     for (Integer id : this.user.getCardsCopy().keySet()) {
       addCardButtons(primaryStage, id, i);
@@ -67,10 +67,10 @@ public class CardPage extends Page {
    * @param i the current iteration of the loop in CardPage.makeScene
    */
   private void addCardButtons(Stage primaryStage, int id, int i) {
-    placeButton(
+    makeButton(grid,
         "Tap Card #" + user.getCardsCopy().get(id).getId(), () -> makeTapPage(id, primaryStage), 0, 3 + i);
 
-    placeButton(
+    makeButton(grid,
         "Add funds",
         () ->
             primaryStage.setScene(
@@ -78,7 +78,7 @@ public class CardPage extends Page {
         1,
         3 + i);
 
-    placeButton(
+    makeButton(grid,
         "Remove This Card",
         () ->
             makeConfirmationAlert(
@@ -94,7 +94,7 @@ public class CardPage extends Page {
 
     // if the current card is suspended
     if (!user.getCardsCopy().get(id).isSuspended()) {
-      placeButton(
+      makeButton(grid,
           "Report card stolen",
           () -> {
             user.getCardsCopy().get(id).suspendCard();
@@ -103,7 +103,7 @@ public class CardPage extends Page {
           3,
           3 + i);
     } else {
-      placeButton(
+      makeButton(grid,
           "Activate this card",
           () -> {
             user.getCardsCopy().get(id).activateCard();

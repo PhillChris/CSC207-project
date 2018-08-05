@@ -50,20 +50,20 @@ public class AppendRoutePage extends Page {
   void makeScene(Stage primaryStage) {
     /** Set the grid of this page */
     grid.add(routeLabel, 0, 0, 20, 2);
-    placeLabel("Enter the name of the new station here", 8, 9);
+    makeLabel(grid, "Enter the name of the new station here", 8, 9);
     makeSceneButtons();
     this.scene = new Scene(grid, 1000, 1000);
   }
 
   /** Constructs all buttons in this scene */
   private void makeSceneButtons() {
-    TextField textField = placeTextField(10, 10);
+    TextField textField = makeTextField(grid, "", 10, 10);
 
-    placeButton("Add Station at Start", () -> addStationAtStart(textField), 10, 15);
+    makeButton(grid, "Add Station at Start", () -> addStationAtStart(textField), 10, 15);
 
-    placeButton("Add Station at End", () -> addStationAtEnd(textField), 10, 16);
+    makeButton(grid, "Add Station at End", () -> addStationAtEnd(textField), 10, 16);
 
-    placeButton(
+    makeButton(grid,
         "Confirm",
         () ->
             makeConfirmationAlert(

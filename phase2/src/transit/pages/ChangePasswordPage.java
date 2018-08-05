@@ -4,10 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import transit.system.IncorrectPasswordException;
-import transit.system.InvalidPasswordException;
 import transit.system.MessageTransitException;
 import transit.system.User;
 
@@ -33,12 +30,12 @@ public class ChangePasswordPage extends AuthenticatedPage {
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
-    placeLabel("Current password: ", 0, 0);
-    placeLabel("New password: ", 0, 1);
-    Label changeSuccess = placeLabel("", 2, 1);
-    PasswordField currPassword = placePasswordField(grid, "",1, 0, "currPassInput");
-    PasswordField newPassword = placePasswordField(grid, "", 1, 1, "newPassInput");
-    placeButton(
+    makeLabel(grid, "Current password: ", 0, 0);
+    makeLabel(grid, "New password: ", 0, 1);
+    Label changeSuccess = makeLabel(grid, "", 2, 1);
+    PasswordField currPassword = makePasswordField(grid, "",1, 0);
+    PasswordField newPassword = makePasswordField(grid, "", 1, 1);
+    makeButton(grid,
       "Change password!",
       () -> {
         try {
@@ -46,11 +43,11 @@ public class ChangePasswordPage extends AuthenticatedPage {
         } catch (MessageTransitException e) {
           e.setMessage(changeSuccess);
         }
-        primaryStage.setScene(new UserPage(primaryStage, user).getScene());
       },
       2,
       0);
 
-    this.scene = new Scene(grid, 500, 100);
+    scene = new Scene(grid, 600, 130);
+    scene.getStylesheets().add(getClass().getResource("styling/ChangeInfoPage.css").toExternalForm());
   }
 }

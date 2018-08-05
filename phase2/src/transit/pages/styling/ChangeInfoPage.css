@@ -5,3 +5,10 @@
     -fx-font-family: Raleway;
     -fx-font-size: 16px;
 }
+
+.text-field {
+    -fx-prompt-text-fill: #757575;
+    -fx-background-color: #fcfcfc;
+    -fx-color: #757575;
+    -fx-padding: 10px;
+}

@@ -3,7 +3,6 @@ package transit.pages;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.User;
 
@@ -31,9 +30,9 @@ public class ChangeNamePage extends AuthenticatedPage {
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
-    placeLabel("New Username: ", 0, 0);
-    TextField newName = placeTextField(1, 0);
-    placeButton(
+    makeLabel(grid, "New Username: ", 0, 0);
+    TextField newName = makeTextField(grid, "",1, 0);
+    makeButton(grid,
         "Change name!",
         () -> {
           user.getPersonalInfo().changeName(newName.getText());
@@ -42,6 +41,7 @@ public class ChangeNamePage extends AuthenticatedPage {
         2,
         0);
 
-    this.scene = new Scene(grid, 460, 60);
+    scene = new Scene(grid, 600, 80);
+    scene.getStylesheets().add(getClass().getResource("styling/ChangeInfoPage.css").toExternalForm());
   }
 }

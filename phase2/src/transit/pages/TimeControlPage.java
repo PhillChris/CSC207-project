@@ -26,8 +26,9 @@ public class TimeControlPage extends Page {
     grid.setHgap(10);
     grid.setVgap(10);
 
-    Button control = placeButton("Pause time", () -> {}, 0, 0, 4);
+    Button control = makeButton(grid, "Pause time", () -> {}, 0, 0);
     control.setId("control");
+    GridPane.setColumnSpan(control, 4);
     GridPane.setHalignment(control, HPos.CENTER);
 
 
@@ -46,13 +47,13 @@ public class TimeControlPage extends Page {
 
     control.setPrefWidth(250);
 
-    placeLabel("Jump ahead: ", 0, 1);
+    makeLabel(grid, "Jump ahead: ", 0, 1);
 
-    placeButton("1 hour", () -> TransitTime.getClock().skipHours(), 1, 1);
+    makeButton(grid, "1 hour", () -> TransitTime.getClock().skipHours(), 1, 1);
 
-    placeButton("1 day", () -> TransitTime.getClock().skipDay(), 2, 1);
+    makeButton(grid, "1 day", () -> TransitTime.getClock().skipDay(), 2, 1);
 
-    placeButton("1 month", () -> TransitTime.getClock().skipMonth(), 3, 1);
+    makeButton(grid, "1 month", () -> TransitTime.getClock().skipMonth(), 3, 1);
 
     grid.setAlignment(Pos.CENTER);
 

@@ -38,10 +38,8 @@ public class SignUpPage extends Page {
     addTrain();
     addClock();
 
-    this.scene = new Scene(grid, 600, 375);
-    scene
-        .getStylesheets()
-        .add(SignUpPage.class.getResource("styling/SignUpPage.css").toExternalForm());
+    scene = new Scene(grid, 600, 375);
+    scene.getStylesheets().add(getClass().getResource("styling/SignUpPage.css").toExternalForm());
   }
 
   /**
@@ -56,43 +54,43 @@ public class SignUpPage extends Page {
     signUpPane.setVgap(12);
 
     placeLabels(signUpPane);
-    placeIcons(signUpPane);
+    makeIcons(signUpPane);
 
     TextField userInput = makeUserInput(signUpPane);
     TextField emailInput = makeEmailInput(signUpPane);
     PasswordField passInput = makePassInput(signUpPane);
-
-    ComboBox<String> userType = new ComboBox<>();
-    userType.getItems().addAll("Standard", "Admin", "Student");
-
-    userType.getSelectionModel().selectFirst();
-
-    signUpPane.add(userType, 1, 4, 2, 1);
-    GridPane.setHalignment(userType, HPos.RIGHT);
-    GridPane.setMargin(userType, new Insets(0, 9, 0, 0));
+    ComboBox<String> userType = makeTypeCombo(signUpPane);
 
     Label errorMessage = makeErrorMessage(signUpPane);
 
-    placeSeparator(signUpPane);
+    makeSeparator(signUpPane);
 
-    placeSignUpButton(signUpPane, userInput, emailInput, passInput, userType, errorMessage);
-    placeBackButton(primaryStage, signUpPane);
+    makeSignUpButton(signUpPane, userInput, emailInput, passInput, userType, errorMessage);
+    makeBackButton(primaryStage, signUpPane);
 
     grid.add(signUpPane, 0, 1);
   }
 
   private TextField makeUserInput(GridPane signUpPane) {
-    return placeTextField(signUpPane, "Username", 1, 1, "userInput");
+    return makeTextField(signUpPane, "Username", 1, 1);
   }
 
   private TextField makeEmailInput(GridPane signUpPane) {
-    return placeTextField(signUpPane, "Email", 1, 2, "emailInput");
+    return makeTextField(signUpPane, "Email", 1, 2);
   }
 
   private PasswordField makePassInput(GridPane signUpPane) {
-    return placePasswordField(signUpPane, "Password (6+ chars)", 1, 3, "passInput");
+    return makePasswordField(signUpPane, "Password (6+ chars)", 1, 3);
   }
 
+  private ComboBox<String> makeTypeCombo(GridPane signUpPane) {
+    String[] choices = {"Standard", "Admin", "Student"};
+    ComboBox<String> userType = makeComboBox(signUpPane, choices, 1, 4);
+    GridPane.setColumnSpan(userType, 2);
+    GridPane.setHalignment(userType, HPos.RIGHT);
+    GridPane.setMargin(userType, new Insets(0, 9, 0, 0));
+    return userType;
+  }
   private void placeLabels(GridPane signUpPane) {
     Label signUp = new Label("Sign up");
     signUp.setId("signUpLabel");
@@ -104,23 +102,24 @@ public class SignUpPage extends Page {
   }
 
   private Label makeErrorMessage(GridPane signUpPane) {
-    Label errorMessage = placeLabel(signUpPane, "", 1, 0, "errorMessage");
+    Label errorMessage = makeLabel(signUpPane, "", 1, 0);
+    errorMessage.setId("errorMessage");
     GridPane.setHalignment(errorMessage, HPos.RIGHT);
     return errorMessage;
   }
 
-  private void placeSeparator(GridPane signUpPane) {
-    Separator horizontalSeparator = new Separator();
-    signUpPane.add(horizontalSeparator, 0, 5, 2, 1);
+  private void makeSeparator(GridPane signUpPane) {
+    Separator horizontalSeparator = makeSeparator(signUpPane, 0, 5);
+    GridPane.setColumnSpan(horizontalSeparator, 2);
   }
 
-  private void placeIcons(GridPane signUpPane) {
-    placeImage(signUpPane, "transit/pages/assets/face.png", 0, 1, "faceIcon");
-    placeImage(signUpPane, "transit/pages/assets/email.png", 0, 2, "emailIcon");
-    placeImage(signUpPane, "transit/pages/assets/key.png", 0, 3, "keyIcon");
+  private void makeIcons(GridPane signUpPane) {
+    makeImage(signUpPane, "transit/pages/assets/face.png", 0, 1);
+    makeImage(signUpPane, "transit/pages/assets/email.png", 0, 2);
+    makeImage(signUpPane, "transit/pages/assets/key.png", 0, 3);
   }
 
-  private void placeSignUpButton(
+  private void makeSignUpButton(
       GridPane signUpPane,
       TextField userInput,
       TextField emailInput,
@@ -147,13 +146,14 @@ public class SignUpPage extends Page {
     GridPane.setHalignment(signUpButton, HPos.LEFT);
   }
 
-  private void placeBackButton(Stage primaryStage, GridPane signUpPane) {
+  private void makeBackButton(Stage primaryStage, GridPane signUpPane) {
     Button backButton = new Button("Go Back");
     backButton.setOnAction((data) -> primaryStage.setScene(new LoginPage(primaryStage).getScene()));
     signUpPane.add(backButton, 1, 6, 2, 1);
     GridPane.setHalignment(backButton, HPos.RIGHT);
     GridPane.setMargin(backButton, new Insets(2, 10, 0, 0));
   }
+
   /**
    * @param username the proposed username of this new user
    * @param email the proposed email of this new user
@@ -163,12 +163,16 @@ public class SignUpPage extends Page {
    */
   private void add(String username, String email, String password, String userType)
       throws MessageTransitException {
-    if (userType.equals("Admin")) {
-      new User(username, email, password, "admin");
-    } else if (userType.equals("Student")) {
-      new User(username, email, password, "student");
-    } else {
-      new User(username, email, password, "user");
+    switch (userType) {
+      case "Admin":
+        new User(username, email, password, "admin");
+        break;
+      case "Student":
+        new User(username, email, password, "student");
+        break;
+      default:
+        new User(username, email, password, "user");
+        break;
     }
   }
 }

@@ -1,9 +1,8 @@
 package transit.pages;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.User;
@@ -39,7 +38,8 @@ public class UserPage extends AuthenticatedPage {
 
   /** Adds the user-specific data on this page */
   protected void addGreeting() {
-    placeLabel(grid, String.format("Hello %s", user.getPersonalInfo().getUserName()), 0, 1, "greeting");
+    Label greeting = makeLabel(grid, String.format("Hello %s", user.getPersonalInfo().getUserName()), 0, 1);
+    greeting.setId("greeting");
   }
 
   /**
@@ -48,7 +48,7 @@ public class UserPage extends AuthenticatedPage {
    * @param primaryStage the stage on which this page is served
    */
   private void placeUserButtons(Stage primaryStage) {
-    placeButton(
+    makeButton(grid,
         "Cards",
         () -> {
           Stage newStage = new Stage();
@@ -58,14 +58,14 @@ public class UserPage extends AuthenticatedPage {
         },
         0,
         2);
-    placeButton(
+    makeButton(grid,
         "Monthly Expenditure (Current Year)",
       this::makeMonthlyExpenditurePage,
         0,
         3);
     super.makeScene(primaryStage);
 
-    placeButton(
+    makeButton(grid,
         "Get last 3 trips",
         () -> {
           Alert a =
@@ -81,7 +81,7 @@ public class UserPage extends AuthenticatedPage {
         7);
 
     if (user.getPersonalInfo().getPermission().equals("admin")) {
-      placeButton(
+      makeButton(grid,
           "Toggle admin panel",
           () -> primaryStage.setScene(new AdminUserPage(primaryStage, user).getScene()),
           0,

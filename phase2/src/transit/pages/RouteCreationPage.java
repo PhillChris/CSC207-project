@@ -33,14 +33,14 @@ public class RouteCreationPage extends Page {
   @Override
   void makeScene(Stage primaryStage) {
     /** Set the buttons of this page */
-    placeButton("Add subway route", () -> createRoute("Subway"), 0, 0);
-    placeButton("Add bus route", () -> createRoute("Bus"), 0, 2);
-    placeLabel("Append to Existing Route:", 0, 4);
+    makeButton(grid, "Add subway route", () -> createRoute("Subway"), 0, 0);
+    makeButton(grid, "Add bus route", () -> createRoute("Bus"), 0, 2);
+    makeLabel(grid, "Append to Existing Route:", 0, 4);
     /** Create a button to append to each possible route */
     for (String type : Route.getRoutesCopy().keySet()) {
       for (int i = 0; i < Route.getRoutesCopy().get(type).size(); i++) {
         Route route = Route.getRoutesCopy().get(type).get(i);
-        placeButton(route.toString(), () -> appendExistingRoute(route), 0, 6 + 2 * i);
+        makeButton(grid, route.toString(), () -> appendExistingRoute(route), 0, 6 + 2 * i);
       }
     }
     this.scene = new Scene(grid, 600, 400);

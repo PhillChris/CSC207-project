@@ -3,7 +3,10 @@ package transit.pages;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import transit.system.User;
@@ -66,7 +69,6 @@ public class LoginPage extends Page {
     placeSeparator(loginPane);
 
     grid.add(loginPane, 0, 1);
-
   }
 
   /**
@@ -89,7 +91,8 @@ public class LoginPage extends Page {
     GridPane.setColumnSpan(login, 2);
 
     Label noAccount = placeLabel(loginPane, "No account?", 0, 5, "noAccount");
-    GridPane.setColumnSpan(noAccount, 2);;
+    GridPane.setColumnSpan(noAccount, 2);
+    ;
   }
 
   /** @return the password input field for this LoginPage */
@@ -133,8 +136,12 @@ public class LoginPage extends Page {
    * @param errorMessage the error message field on this LoginPage to be modified as needed
    * @param primaryStage the stage on which this LoginPage is being served
    */
-  private void placeLoginButton(Stage primaryStage, GridPane loginPane,
-                                 TextField emailInput, TextField passInput, Label errorMessage) {
+  private void placeLoginButton(
+      Stage primaryStage,
+      GridPane loginPane,
+      TextField emailInput,
+      TextField passInput,
+      Label errorMessage) {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
     loginButton.setOnAction(
@@ -172,8 +179,7 @@ public class LoginPage extends Page {
    * @param loginPane the second pane in this page used for styling
    */
   private void placeSeparator(GridPane loginPane) {
-    placeSeparator(loginPane, 0, 4, 2,
-            "horizontalSeparator");
+    placeSeparator(loginPane, 0, 4, 2, "horizontalSeparator");
   }
 
   /**
@@ -185,6 +191,9 @@ public class LoginPage extends Page {
    */
   private boolean checkAuthorization(TextField email, TextField password) {
     return User.getAllUsersCopy().containsKey(email.getText())
-        && User.getAllUsersCopy().get(email.getText()).getPersonalInfo().correctAuthentification(password.getText());
+        && User.getAllUsersCopy()
+            .get(email.getText())
+            .getPersonalInfo()
+            .correctAuthentification(password.getText());
   }
 }

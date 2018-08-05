@@ -33,8 +33,8 @@ public class Station implements Serializable {
     this.name = name;
     this.stationType = stationType;
     this.setFees();
-    statistics.put("Taps In", new Statistics());
-    statistics.put("Taps Out", new Statistics());
+    statistics.put("Tap In", new Statistics());
+    statistics.put("Tap Out", new Statistics());
   }
 
   @Override

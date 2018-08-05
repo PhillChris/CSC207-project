@@ -14,6 +14,8 @@ public class AnalyticsPage extends GraphPage {
   HBox dropDowns = new HBox();
   private BorderPane layout = new BorderPane();
   private HashMap<String, Statistics> statistics;
+  ComboBox<Statistics> statOptions = new ComboBox<>();
+  ComboBox<String> timeOptions = new ComboBox<>();
 
   /**
    * Initialized a new instance of AdminUserPage
@@ -29,30 +31,31 @@ public class AnalyticsPage extends GraphPage {
   void makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
     setupStatOptions();
+    dropDowns.getChildren().addAll(timeOptions, statOptions);
     layout.setTop(dropDowns);
+
+    // generate the Graph without having to click first
+    setUpStatGraph();
     this.scene = new Scene(layout, 800, 600);
   }
 
   public void setupStatOptions() {
     // setup the checkbox the statistics this page has access to
-    ComboBox<Statistics> statOptions = new ComboBox<>();
     statOptions.getItems().addAll(this.statistics.values());
     statOptions.getSelectionModel().select(0);
 
     // setup the checkbox for different time intervals
-    ComboBox<String> timeOptions = new ComboBox<>();
     timeOptions.getItems().addAll("Monthly", "Daily");
     timeOptions.getSelectionModel().select(0);
 
-    statOptions.setOnAction(actionEvent -> setUpStatGraph(timeOptions, statOptions));
-    timeOptions.setOnAction(actionEvent -> setUpStatGraph(timeOptions, statOptions));
-    dropDowns.getChildren().addAll(timeOptions, statOptions);
+    statOptions.setOnAction(actionEvent -> setUpStatGraph());
+    timeOptions.setOnAction(actionEvent -> setUpStatGraph());
 
     // generate the Graph without having to click first
-    setUpStatGraph(timeOptions, statOptions);
+    setUpStatGraph();
   }
 
-  private void setUpStatGraph(ComboBox<String> timeOptions, ComboBox<Statistics> statOptions) {
+  private void setUpStatGraph() {
     if (timeOptions.getValue().equals("Monthly")) {
       chart = makeYearChart(statOptions.getValue().generateMonthlyValues());
     } else {

@@ -2,8 +2,8 @@ package transit.system;
 
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
 import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -13,7 +13,7 @@ public class LogWriter {
 
   /** The LogWriter present in this TransitSystem, null if no LogWriters has yet been initialized */
   private static LogWriter thisLogWriter;
-  /** The logger attributed to this logWriter */
+  /** The logger which writes to this LogWriter */
   private Logger logger;
 
   /**
@@ -55,5 +55,16 @@ public class LogWriter {
    */
   public void logInfoMessage(String classThrown, String methodThrown, String message) {
     this.logger.logp(Level.INFO, classThrown, methodThrown, message);
+  }
+
+  /**
+   * Logs a message with level WARNING to log.txt, with the given message at the given location
+   *
+   * @param message the message to be recorded
+   * @param classThrown the class in which this log is recorded
+   * @param methodThrown the method in which this log is recorded
+   */
+  public void logWarningMessage(String classThrown, String methodThrown, String message) {
+    this.logger.logp(Level.WARNING, classThrown, methodThrown, message);
   }
 }

@@ -1,4 +1,4 @@
-Aug 05, 2018 6:34:34 AM transit.system.Main start
+Aug 05, 2018 7:07:59 AM transit.system.Main start
 INFO: Program initialization complete
-Aug 05, 2018 6:34:43 AM transit.pages.Page Page
-INFO: Program session terminated
+Aug 05, 2018 7:08:07 AM transit.system.UserInfo changePassword
+INFO: Invalid current password entered

@@ -47,16 +47,24 @@ public class UserInfo implements Serializable {
    */
   public void changeName(String newName) {
     this.name = newName;
+    LogWriter.getLogWriter()
+        .logInfoMessage(UserInfo.class.getName(), "changeName", "Username changed to " + newName);
   }
 
   public void changePassword(String currentPassword, String newPassword)
       throws IncorrectPasswordException, InvalidPasswordException {
     if (!currentPassword.equals(password)) {
+      LogWriter.getLogWriter()
+          .logInfoMessage(UserInfo.class.getName(), "changePassword", "Failed password change attempt: incorrect current password entered" );
       throw new IncorrectPasswordException();
     } else if (newPassword.length() < 6) {
+      LogWriter.getLogWriter()
+          .logInfoMessage(UserInfo.class.getName(), "changePassword", "Failed password change attempt: new password too long" );
       throw new InvalidPasswordException();
     } else {
       password = newPassword;
+      LogWriter.getLogWriter()
+          .logInfoMessage(UserInfo.class.getName(), "changePassword", "User " + this.getUserName() + " password changed" );
     }
   }
 

@@ -8,9 +8,7 @@ import transit.system.TransitTime;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /** Represents a page used to show statistical information */
 public abstract class GraphPage extends Page {
@@ -28,7 +26,7 @@ public abstract class GraphPage extends Page {
     XYChart.Series series = new XYChart.Series();
     series.setName("Daily Totals");
     LocalDate date = TransitTime.getClock().getCurrentDate();
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < data.keySet().size(); i++) {
       series.getData().add(0, new XYChart.Data(date.toString(), data.get(date)));
       date = date.minusDays(1);
     }
@@ -46,7 +44,7 @@ public abstract class GraphPage extends Page {
     XYChart.Series series = new XYChart.Series();
     series.setName("Monthly Totals");
     YearMonth month = TransitTime.getClock().getCurrentMonth();
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < data.keySet().size(); i++) {
       series.getData().add(0, new XYChart.Data(month.toString(), data.get(month)));
       month = month.minusMonths(1);
     }
@@ -62,7 +60,8 @@ public abstract class GraphPage extends Page {
 
     final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
-    lineChart.setTitle(String.format(title, TransitTime.getClock().getCurrentDate().getYear()));;
+    lineChart.setTitle(String.format(title, TransitTime.getClock().getCurrentDate().getYear()));
+    ;
 
     return lineChart;
   }

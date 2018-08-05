@@ -184,19 +184,6 @@ public abstract class Page {
     grid.add(horizontalSeparator, col, row, colSpan, 1);
   }
 
-  /**
-   * A general helper method to place a checkbox at the given coordinates
-   *
-   * @param text the text displayed next to the given text box
-   * @param col the column in the grid where this checkbox is displayed
-   * @param row the row in the grid where this checkbox is displayed
-   * @return the created checkbox object, to listen to the status of the checkbox
-   */
-  protected CheckBox placeCheckBox(String text, int col, int row) {
-    CheckBox checkBox = new CheckBox(text);
-    grid.add(checkBox, col, row);
-    return checkBox;
-  }
 
   protected void placeImage(GridPane grid, String url, int col, int row, String id) {
     ImageView image = new ImageView(new Image(url));

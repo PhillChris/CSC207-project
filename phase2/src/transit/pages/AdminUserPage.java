@@ -72,7 +72,7 @@ public class AdminUserPage extends Page {
   /** Makes the admin graph page popup when the appropriate button is pushed */
   private void createAdminGraphPage() {
     Stage secondaryStage = new Stage();
-    AdminGraphPage graphPage = new AdminGraphPage(secondaryStage);
+    SystemGraphPage graphPage = new SystemGraphPage(secondaryStage);
     secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getClock().getCurrentDate().getYear());
     secondaryStage.setScene(graphPage.getScene());
     secondaryStage.show();

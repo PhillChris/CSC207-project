@@ -1,6 +1,8 @@
 package transit.system;
 
 import java.io.IOException;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,10 +21,15 @@ public class LogWriter {
    *
    * @throws IOException if log.txt is not found in the file path
    */
-  private LogWriter() throws IOException {
+  private LogWriter() {
     this.logger = Logger.getLogger(LogWriter.class.getName());
     logger.setUseParentHandlers(false);
-    FileHandler handler = new FileHandler("log.txt", true);
+    Handler handler;
+    try {
+      handler = new FileHandler("log.txt", true);
+    } catch(IOException a) {
+      handler = new ConsoleHandler();
+    }
     handler.setFormatter(new SimpleFormatter());
     this.logger.addHandler(handler);
     thisLogWriter = this;
@@ -32,7 +39,7 @@ public class LogWriter {
    * @return a LogWriter if one has been initialized, or creates a new one if none exists
    * @throws IOException if log.txt is not found in the file path
    */
-  public static LogWriter getLogWriter() throws IOException {
+  public static LogWriter getLogWriter() {
     if (thisLogWriter != null) {
       return thisLogWriter;
     }
@@ -46,7 +53,7 @@ public class LogWriter {
    * @param classThrown the class in which this log is recorded
    * @param methodThrown the method in which this log is recorded
    */
-  public void logInfoMessage(String message, String classThrown, String methodThrown) {
+  public void logInfoMessage(String classThrown, String methodThrown, String message) {
     this.logger.logp(Level.INFO, classThrown, methodThrown, message);
   }
 }

@@ -1,6 +1,7 @@
 package transit.system;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import transit.pages.LoginPage;
@@ -19,6 +20,7 @@ public class Main extends Application {
   }
 
   public void start(Stage primaryStage) {
+    clearFile("log.txt");
     primaryStage.setTitle("Transit System Simulator");
     LoginPage loginPage = new LoginPage(primaryStage);
     primaryStage.setScene(loginPage.getScene());
@@ -29,11 +31,18 @@ public class Main extends Application {
     secondaryStage.setX(primaryStage.getX() + primaryStage.getWidth());
     secondaryStage.setY(primaryStage.getY() + 125);
     secondaryStage.show();
+    LogWriter.getLogWriter()
+          .logInfoMessage(Main.class.getName(), "start", "Program initialization complete");
+  }
+
+  private void clearFile(String fileName) {
     try {
-      LogWriter.getLogWriter()
-          .logInfoMessage("Completed program initialization", Main.class.getName(), "start");
+      PrintWriter fileClear = new PrintWriter(fileName);
+      fileClear.write("");
+      fileClear.close();
     } catch (IOException a) {
-      System.out.println("Output file not found");
+      System.out.println("File to be cleared not found");
     }
+
   }
 }

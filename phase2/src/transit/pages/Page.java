@@ -1,20 +1,27 @@
 package transit.pages;
 
+import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import transit.system.Database;
+import transit.system.LogWriter;
 import transit.system.TransitTime;
-
-import java.util.Optional;
 
 /** Represents a general page serving scenes to be represented in the transit system program */
 public abstract class Page {
@@ -40,6 +47,8 @@ public abstract class Page {
           public void handle(WindowEvent windowEvent) {
             Database.writeToDatabase();
             Platform.exit();
+            LogWriter.getLogWriter()
+                .logInfoMessage(Page.class.getName(), "Page", "Program session terminated");
           }
         });
   }

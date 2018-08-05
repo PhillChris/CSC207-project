@@ -1,8 +1,28 @@
-Aug 05, 2018 9:51:50 AM transit.system.Main start
+Aug 05, 2018 11:52:15 AM transit.system.Main start
 INFO: Program initialization complete
-Aug 05, 2018 9:51:55 AM transit.pages.LoginPage parseLoginAttempt
-INFO: Successfully logged in as + c
-Aug 05, 2018 9:52:02 AM transit.system.Database writeToDatabase
+Aug 05, 2018 11:52:21 AM transit.system.Database readObject
+WARNING: File not found when deserializing.
+Aug 05, 2018 11:52:21 AM transit.pages.LoginPage parseLoginAttempt
+WARNING: Login attempt failed, user is not registered in the system
+Aug 05, 2018 11:52:36 AM transit.pages.LoginPage parseLoginAttempt
+INFO: Successfully logged in as + a
+Aug 05, 2018 11:53:49 AM transit.system.Route saveRoute
+INFO: Route sucessfully saved to transit system
+Aug 05, 2018 11:53:54 AM transit.system.User addCard
+INFO: User a added new card with default balance
+Aug 05, 2018 11:54:00 AM transit.system.User tapIn
+INFO: User a tapped in at station 3 with card #0
+Aug 05, 2018 11:54:36 AM transit.system.User tapOut
+INFO: User a tapped out at station 3 with card #0, charged $0.00
+Aug 05, 2018 11:54:42 AM transit.system.User tapIn
+INFO: User a tapped in at station 1 with card #0
+Aug 05, 2018 11:54:49 AM transit.system.User tapOut
+INFO: User a tapped out at station 3 with card #0, charged $1.00
+Aug 05, 2018 11:54:54 AM transit.system.User tapIn
+INFO: User a tapped in at station 1 with card #0
+Aug 05, 2018 11:55:01 AM transit.system.User tapOut
+INFO: User a tapped out at station 3 with card #0, charged $1.00
+Aug 05, 2018 11:56:06 AM transit.system.Database writeToDatabase
 INFO: Serialized all system items
-Aug 05, 2018 9:52:02 AM transit.pages.Page Page
+Aug 05, 2018 11:56:06 AM transit.pages.Page Page
 INFO: Program session terminated

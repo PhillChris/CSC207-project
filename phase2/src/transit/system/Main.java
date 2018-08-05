@@ -43,6 +43,5 @@ public class Main extends Application {
     } catch (IOException a) {
       System.out.println("File to be cleared not found");
     }
-
   }
 }

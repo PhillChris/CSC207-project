@@ -33,7 +33,7 @@ public class AdminGraphPage extends GraphPage {
   void makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
     this.chart = makeSystemRevenueChart();
-    this.scene = new Scene(chart, 800, 600);
+    this.scene = new Scene(this.chart, 800, 600);
   }
 
   /**

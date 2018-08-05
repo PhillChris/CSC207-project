@@ -2,7 +2,6 @@ package transit.pages;
 
 import transit.system.User;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.TransitTime;
@@ -55,6 +54,7 @@ public class AdminUserPage extends Page {
         () -> primaryStage.setScene(new UserPage(primaryStage, this.adminUser).getScene()),
         0,
         6);
+    placeButton("Show system statistics", () -> primaryStage.setScene(new AdminGraphPage(primaryStage, adminUser).getScene()), 0, 7);
     placeButton(
         "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 0, 9);
   }

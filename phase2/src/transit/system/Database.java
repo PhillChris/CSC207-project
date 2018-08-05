@@ -7,15 +7,13 @@ import java.util.HashMap;
 
 public class Database {
   public static final String ROUTE_LOCATION =
-          "." + File.separator + "tmp" + File.separator + "routes.ser";
+      "." + File.separator + "tmp" + File.separator + "routes.ser";
   public static final String USERS_LOCATION =
-          "." + File.separator + "tmp" + File.separator + "user.ser";
+      "." + File.separator + "tmp" + File.separator + "user.ser";
   public static final String TIME_LOCATION =
-          "." + File.separator + "tmp" + File.separator + "time.ser";
-  public static final String REVENUE_LOCATION =
-          "." + File.separator + "tmp" + File.separator + "SystemRevenue.ser";
-  public static final String TRIPLOG_LOCATION =
-          "." + File.separator + "tmp" + File.separator + "SystemTripLog.ser";
+      "." + File.separator + "tmp" + File.separator + "time.ser";
+  public static final String SYSTEMSTATS_LOCATION =
+      "." + File.separator + "tmp" + File.separator + "SystemStats.ser";
 
   public static void writeToDatabase() {
     // Save the current time
@@ -25,15 +23,11 @@ public class Database {
     HashMap<String, User> users = User.getAllUsersCopy();
     writeObject(USERS_LOCATION, users);
     // Save the system's Routes
-    HashMap<String, ArrayList<Route>>  routes = Route.getRoutesCopy();
+    HashMap<String, ArrayList<Route>> routes = Route.getRoutesCopy();
     writeObject(ROUTE_LOCATION, routes);
-    // Save the System's revenue
-    Statistics revenue = Statistics.getSystemRevenue();
-    writeObject(REVENUE_LOCATION, revenue);
-    // Save the System's Travel Distance statistic
-    Statistics tripLengths = Statistics.getSystemTripLength();
-    writeObject(TRIPLOG_LOCATION, tripLengths);
-    LogWriter.getLogWriter().logInfoMessage(Database.class.getName(), "writeToDatabase", "Serialized all system items");
+    // Save the System's statistics
+    HashMap<String, Statistics> stats = Statistics.getSystemStatistics();
+    writeObject(SYSTEMSTATS_LOCATION, stats);
   }
 
   /**
@@ -66,9 +60,9 @@ public class Database {
       ObjectInputStream in = new ObjectInputStream(fileIn);
       return in.readObject();
     } catch (IOException e) {
-      LogWriter.getLogWriter().logWarningMessage(Database.class.getName(), "readObject","File not found when deserializing.");
+      System.out.println("File not found when deserializing.");
     } catch (ClassNotFoundException h) {
-      LogWriter.getLogWriter().logWarningMessage(Database.class.getName(), "readObject","Wrong class contained in serialization file.");
+      System.out.println("Wrong class contained in serialization file.");
     }
     return null;
   }

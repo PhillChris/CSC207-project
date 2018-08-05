@@ -83,7 +83,7 @@ public class UserPage extends AuthenticatedPage {
         0,
         7);
 
-    if (user.getPersonalInfo().getPermission().equals("admin")) {
+    if (user.getCardCommands().getPermission().equals("admin")) {
       makeButton(grid,
           "Toggle admin panel",
           () -> primaryStage.setScene(new AdminUserPage(primaryStage, user).getScene()),
@@ -95,7 +95,7 @@ public class UserPage extends AuthenticatedPage {
   /** Creates a popup window containing a monthly expenditure page*/
   private void makeMonthlyExpenditurePage() {
     Stage secondaryStage = new Stage();
-    HashMap<String, Statistics> tripStats = user.getTripStatistics();
+    HashMap<String, Statistics> tripStats = user.getCardCommands().getCardStatistics();
     AnalyticsPage graphPage = new UserGraphPage(secondaryStage, tripStats);
     secondaryStage.setTitle("Monthly Expenditure for user " + user);
     secondaryStage.setScene(graphPage.getScene());

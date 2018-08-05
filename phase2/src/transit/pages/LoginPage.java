@@ -193,7 +193,7 @@ public class LoginPage extends Page {
         }
         if (checkAuthorization(emailInput, passInput)) {
           Page userPage;
-          if (user.getPersonalInfo().getPermission().equals("admin")) {
+          if (user.getCardCommands().getPermission().equals("admin")) {
             userPage = new AdminUserPage(primaryStage, user);
           } else {
             userPage = new UserPage(primaryStage, user);

@@ -89,7 +89,7 @@ public abstract class AuthenticatedPage extends Page {
             + user
             + System.lineSeparator()
             + "Permission: "
-            + user.getPersonalInfo().getPermission();
+            + user.getCardCommands().getPermission();
     for (Integer id : this.user.getCardCommands().getCardsCopy().keySet()) {
       temp += System.lineSeparator();
       temp += user.getCardCommands().getCardsCopy().get(id);

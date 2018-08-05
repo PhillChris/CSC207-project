@@ -25,6 +25,11 @@ public class UserCardCommands implements Serializable {
     cardStatistics.put("Taps", new Statistics());
   }
 
+  /** @return The permission on this user */
+  public String getPermission() {
+    return this.permission;
+  }
+
   /** @return The previous trips made by this user */
   public List<Trip> getPreviousTrips() {
     return previousTrips;

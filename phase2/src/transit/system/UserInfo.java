@@ -12,13 +12,10 @@ public class UserInfo implements Serializable {
   private String name;
   /** This transit.system.User's password */
   private String password;
-  /** Determines the permissions and pricing of this user */
-  private String permission;
 
   public UserInfo(String name, String password, String permission) {
     this.name = name;
     this.password = password;
-    this.permission = permission;
   }
   /**
    * @param password A given password
@@ -31,11 +28,6 @@ public class UserInfo implements Serializable {
   /** @return The name associated with this user */
   public String getUserName() {
     return this.name;
-  }
-
-  /** @return The permission on this user */
-  public String getPermission() {
-    return this.permission;
   }
 
   /**

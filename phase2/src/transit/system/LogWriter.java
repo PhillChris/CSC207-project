@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /** Handles all logging responsibilities in this system */
 public class LogWriter {
@@ -21,6 +22,7 @@ public class LogWriter {
   private LogWriter() throws IOException {
     this.logger = Logger.getLogger(LogWriter.class.getName());
     FileHandler handler = new FileHandler("log.txt", true);
+    handler.setFormatter(new SimpleFormatter());
     this.logger.addHandler(handler);
     thisLogWriter = this;
   }

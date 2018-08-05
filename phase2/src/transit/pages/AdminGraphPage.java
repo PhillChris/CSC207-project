@@ -48,11 +48,7 @@ public class AdminGraphPage extends GraphPage {
 
   public ComboBox<Statistics> setupStatOptions(ComboBox<String> timeOption) {
     ComboBox<Statistics> statOptions = new ComboBox<>();
-    statOptions
-        .getItems()
-        .addAll(
-            Statistics.getSystemStatistics().get("SystemRevenue"),
-            Statistics.getSystemStatistics().get("SystemTripLengh"));
+    statOptions.getItems().addAll(Statistics.getSystemStatistics().values());
     statOptions.getSelectionModel().select(0);
     statOptions.setOnAction(
         actionEvent -> {

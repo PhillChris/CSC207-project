@@ -7,8 +7,8 @@ import java.util.HashMap;
 
 /** A class for recording analytical information associated to another object */
 public class Statistics implements Serializable {
+  /** The maximum number of days a stat will be recorded */
   public static final int STORAGELIMIT = 365;
-  /** Records revenue for the entire System */
 
   /** Records statistics associated to the entire system */
   private static HashMap<String, Statistics> SystemStatistics = setSystemStatistics();

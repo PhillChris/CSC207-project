@@ -1,10 +1,10 @@
 package transit.pages;
 
-import transit.system.User;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.TransitTime;
+import transit.system.User;
 
 /** Represents the page seen by an AdminUser when logging into the transit system */
 public class AdminUserPage extends Page {
@@ -72,7 +72,7 @@ public class AdminUserPage extends Page {
   /** Makes the admin graph page popup when the appropriate button is pushed */
   private void createAdminGraphPage() {
     Stage secondaryStage = new Stage();
-    AdminGraphPage graphPage = new AdminGraphPage(secondaryStage, this.adminUser);
+    AdminGraphPage graphPage = new AdminGraphPage(secondaryStage);
     secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getClock().getCurrentDate().getYear());
     secondaryStage.setScene(graphPage.getScene());
     secondaryStage.show();

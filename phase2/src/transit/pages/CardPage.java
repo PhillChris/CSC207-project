@@ -35,7 +35,7 @@ public class CardPage extends Page {
     makeButton(grid,
         "Add card",
         () -> {
-          user.addCard();
+          user.getCardCommands().addCard();
           primaryStage.setScene(new CardPage(primaryStage, this.user).getScene());
         },
         0,
@@ -53,7 +53,7 @@ public class CardPage extends Page {
   protected void addUserData(Stage primaryStage) {
     this.currentTrips = makeLabel(grid, generateCurrentTripMessage(user), 0, 1);
     int i = 0;
-    for (Integer id : this.user.getCardsCopy().keySet()) {
+    for (Integer id : this.user.getCardCommands().getCardsCopy().keySet()) {
       addCardButtons(primaryStage, id, i);
       i++;
     }
@@ -68,13 +68,14 @@ public class CardPage extends Page {
    */
   private void addCardButtons(Stage primaryStage, int id, int i) {
     makeButton(grid,
-        "Tap Card #" + user.getCardsCopy().get(id).getId(), () -> makeTapPage(id, primaryStage), 0, 3 + i);
+        "Tap Card #" + user.getCardCommands().getCardsCopy().get(id).getId(),
+            () -> makeTapPage(id, primaryStage), 0, 3 + i);
 
     makeButton(grid,
         "Add funds",
         () ->
             primaryStage.setScene(
-                new AddFundsPage(primaryStage, user, user.getCardsCopy().get(id)).getScene()),
+                new AddFundsPage(primaryStage, user, user.getCardCommands().getCardsCopy().get(id)).getScene()),
         1,
         3 + i);
 
@@ -86,18 +87,18 @@ public class CardPage extends Page {
                 "Confirm removal:",
                 "Are you sure that you want to remove this card?",
                 () -> {
-                  user.removeCard(user.getCardsCopy().get(id));
+                  user.getCardCommands().removeCard(user.getCardCommands().getCardsCopy().get(id));
                   primaryStage.setScene(new CardPage(primaryStage, this.user).getScene());
                 }),
         2,
         3 + i);
 
     // if the current card is suspended
-    if (!user.getCardsCopy().get(id).isSuspended()) {
+    if (!user.getCardCommands().getCardsCopy().get(id).isSuspended()) {
       makeButton(grid,
           "Report card stolen",
           () -> {
-            user.getCardsCopy().get(id).suspendCard();
+            user.getCardCommands().getCardsCopy().get(id).suspendCard();
             primaryStage.setScene(new CardPage(primaryStage, this.user).getScene());
           },
           3,
@@ -106,7 +107,7 @@ public class CardPage extends Page {
       makeButton(grid,
           "Activate this card",
           () -> {
-            user.getCardsCopy().get(id).activateCard();
+            user.getCardCommands().getCardsCopy().get(id).activateCard();
             primaryStage.setScene(new CardPage(primaryStage, this.user).getScene());
           },
           3,
@@ -121,16 +122,16 @@ public class CardPage extends Page {
    */
   private void makeTapPage(int id, Stage primaryStage) {
     Stage secondaryStage = new Stage();
-    secondaryStage.setTitle("Tap Card#" + user.getCardsCopy().get(id).getId());
+    secondaryStage.setTitle("Tap Card#" + user.getCardCommands().getCardsCopy().get(id).getId());
     secondaryStage.setScene(
-        new TapPage(secondaryStage, user, user.getCardsCopy().get(id), primaryStage, "Bus").getScene());
+        new TapPage(secondaryStage, user, user.getCardCommands().getCardsCopy().get(id), primaryStage, "Bus").getScene());
     secondaryStage.show();
   }
 
   /** @return the current trips message of this page */
   private String generateCurrentTripMessage(User user) {
     String message = "Current trips:" + System.lineSeparator();
-    for (Card card : user.getCardsCopy().values()) {
+    for (Card card : user.getCardCommands().getCardsCopy().values()) {
       if (card.getCurrentTrip() != null) {
         message +=
             "Trip started with card #"

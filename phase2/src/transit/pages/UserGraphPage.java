@@ -42,6 +42,6 @@ public class UserGraphPage extends GraphPage {
 
   /** @return this user's monthly expenditure chart */
   public LineChart<String, Number> makeMonthlyChart() {
-    return super.makeYearChart(user.getTripStatistics().get("Expenditure").generateMonthlyValues());
+    return super.makeYearChart(user.getCardCommands().getCardStatistics().get("Expenditure").generateMonthlyValues());
   }
 }

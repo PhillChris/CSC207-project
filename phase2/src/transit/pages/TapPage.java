@@ -107,7 +107,7 @@ public class TapPage extends Page {
         () -> {
           Alert alert;
           try {
-            user.tap(card, station);
+            user.getCardCommands().tap(card, station);
             if (card.getCurrentTrip() != null) {
               alert =
                   makeAlert(

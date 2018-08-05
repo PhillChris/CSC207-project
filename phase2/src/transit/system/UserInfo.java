@@ -14,8 +14,6 @@ public class UserInfo implements Serializable {
   private String password;
   /** Determines the permissions and pricing of this user */
   private String permission;
-  /** A list of the previous trips of the associated User */
-  private List<Trip> previousTrips = new ArrayList<>();
 
   public UserInfo(String name, String password, String permission) {
     this.name = name;
@@ -51,6 +49,12 @@ public class UserInfo implements Serializable {
         .logInfoMessage(UserInfo.class.getName(), "changeName", "Username changed to " + newName);
   }
 
+  /**
+   * @param currentPassword The current password of the user
+   * @param newPassword The new password of the user
+   * @throws IncorrectPasswordException
+   * @throws InvalidPasswordException
+   */
   public void changePassword(String currentPassword, String newPassword)
       throws IncorrectPasswordException, InvalidPasswordException {
     if (!currentPassword.equals(password)) {
@@ -66,10 +70,5 @@ public class UserInfo implements Serializable {
       LogWriter.getLogWriter()
           .logInfoMessage(UserInfo.class.getName(), "changePassword", "User " + this.getUserName() + " password changed" );
     }
-  }
-
-  /** @return The previous trips made by this user */
-  public List<Trip> getPreviousTrips() {
-    return previousTrips;
   }
 }

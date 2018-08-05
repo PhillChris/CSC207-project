@@ -1,9 +1,9 @@
 package transit.system;
 
-import static transit.system.Database.readObject;
-
 import java.io.Serializable;
 import java.util.HashMap;
+
+import static transit.system.Database.readObject;
 
 /** Represents a transit.system.User in a transit system. */
 public class User implements Serializable {
@@ -16,14 +16,10 @@ public class User implements Serializable {
   private static HashMap<String, User> allUsers = setAllUsers();
   /** The transit.system.User's email */
   private final String email;
-  /** An ArrayList of this transit.system.User's cards */
-  private HashMap<Integer, Card> cards;
-  /** The id given to the next card added by the user */
-  private int cardCounter;
-  /** Stores associated tripStatistics to this user */
-  private HashMap<String, Statistics> tripStatistics = new HashMap<>();
   /** Stores the personal information associated with this user */
   private UserInfo personalInfo;
+  /** The card commands associated with this user */
+  private UserCardCommands cardCommands;
 
   /**
    * Construct a new instance of transit.system.User
@@ -44,13 +40,12 @@ public class User implements Serializable {
       throw new InvalidPasswordException();
     }
     this.email = email;
-    this.cards = new HashMap<>();
     allUsers.put(email, this);
     personalInfo = new UserInfo(name, password, permission);
-    tripStatistics.put("Expenditure", new Statistics());
-    tripStatistics.put("Taps", new Statistics());
+    cardCommands = new UserCardCommands(permission);
   }
 
+  /** @return The set of all Users in the start of the program launch */
   private static HashMap<String, User> setAllUsers() {
     HashMap<String, User> users = (HashMap<String, User>) readObject(Database.USERS_LOCATION);
     if (users != null) {
@@ -68,9 +63,9 @@ public class User implements Serializable {
     return copy;
   }
 
-  /** @return HashMap of tripStatistics associated with this User */
-  public HashMap<String, Statistics> getTripStatistics() {
-    return tripStatistics;
+  /** @return The card commands associated with this User */
+  public UserCardCommands getCardCommands() {
+    return cardCommands;
   }
 
   public UserInfo getPersonalInfo() {
@@ -92,152 +87,7 @@ public class User implements Serializable {
     return this.email;
   }
 
-  /** @return A shallow copy of the cards this user holds */
-  public HashMap<Integer, Card> getCardsCopy() {
-    HashMap<Integer, Card> tempMap = new HashMap<>();
-    for (Integer i : this.cards.keySet()) {
-      tempMap.put(i, this.cards.get(i));
-    }
-    return tempMap;
-  }
-
-  /** Add a card to this transit.system.User's list of cards. */
-  public void addCard() {
-    this.cards.put(cardCounter, new Card(cardCounter));
-    cardCounter++;
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            User.class.getName(),
-            "addCard",
-            "User " + personalInfo.getUserName() + " added new card with default balance");
-  }
-
-  /**
-   * Remove a card from this transit.system.User's list of cards. If this user does not own the
-   * card, do nothing.
-   *
-   * @param card the card to be removed from this Users collection of cards.
-   */
-  public void removeCard(Card card) {
-    if (card != null) {
-      if (this.cards.get(card.getId()) == card) {
-        this.cards.remove(card.getId(), card);
-      }
-    }
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            User.class.getName(),
-            "removeCard",
-            "User " + personalInfo.getUserName() + " removed card #" + card.getId());
-  }
-
-  /**
-   * Updates card and user information after this transit.system.User taps their card
-   *
-   * @param card The card which this transit.system.User taps
-   * @param station The station which this transit.system.User taps at
-   */
-  public void tap(Card card, Station station) throws TransitException {
-    if (card.isSuspended()) {
-      throw new TransitException();
-    }
-    tripStatistics.get("Taps").update(1);
-    if (card.getCurrentTrip() == null) {
-      station.record("Tap In", 1);
-      tapIn(card, station);
-    } else {
-      station.record("Tap Out", 1);
-      tapOut(card, station);
-    }
-  }
-
   public String toString() {
     return personalInfo.getUserName();
-  }
-
-  /**
-   * A helper method simulating this User starting a new trip.
-   *
-   * @param card The card which this transit.system.User taps
-   * @param station The station which this transit.system.User taps at
-   */
-  private void tapIn(Card card, Station station) throws TransitException {
-    if (card.getBalance() <= 0) throw new TransitException(); // Not enough fund
-    // Record tripStatistics
-
-    // Check if this transit.system.User is continuing a transit.system.Trip
-    boolean foundContinuousTrip = false;
-    Trip lastTrip = card.getLastTrip();
-    if (lastTrip != null) {
-      if (lastTrip.isContinuousTrip(station)) { // continue the last trip
-        card.setCurrentTrip(lastTrip);
-        lastTrip.continueTrip(station, personalInfo.getPermission());
-        foundContinuousTrip = true;
-      }
-    }
-    if (!foundContinuousTrip) {
-      card.setCurrentTrip(new Trip(station, personalInfo.getPermission()));
-    }
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            User.class.getName(),
-            "tapIn",
-            "User "
-                + this.toString()
-                + " tapped in at station "
-                + station
-                + " with card #"
-                + card.getId());
-  }
-
-  /**
-   * Helper method which simulates this User ending a trip.
-   *
-   * @param card The card which this User taps
-   * @param station The station which this User taps at
-   */
-  private void tapOut(Card card, Station station) throws TransitException {
-    // Update Card and Trip information
-    Trip trip = card.getCurrentTrip();
-    trip.endTrip(station); // ends the trip
-    card.subtractBalance(trip.getFee()); // deducts the balance
-    card.setLastTrip(trip);
-    card.setCurrentTrip(null);
-    updateStatistic(trip);
-    // Record various tripStatistics
-    if (!trip.isValidTrip()) {
-      LogWriter.getLogWriter()
-          .logWarningMessage(
-              User.class.getName(),
-              "tapOut",
-              "User "
-                  + this.toString()
-                  + " tapped out improperly at station "
-                  + station
-                  + " with card #"
-                  + card.getId()
-                  + ", charged maximum possible fee.");
-      throw new TransitException();
-    }
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            User.class.getName(),
-            "tapOut",
-            "User "
-                + this.toString()
-                + " tapped out at station "
-                + station
-                + " with card #"
-                + card.getId()
-                + ", charged $"
-                + String.format("%.2f", trip.getFee() / 100.0));
-  }
-
-  /** Updates the tripStatistics associated with this user and the system */
-  private void updateStatistic(Trip trip) {
-    personalInfo.getPreviousTrips().add(trip);
-    tripStatistics.get("Expenditure").update(trip.getFee());
-    Statistics.getSystemStatistics().get("SystemRevenue").update(trip.getFee());
-    Statistics.getSystemStatistics().get("SystemTripLengh").update(Math.max(trip.getTripLegLength(), 0));
   }
 }

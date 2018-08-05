@@ -24,6 +24,9 @@ public abstract class Page {
   /** Represents the grid where elements on the page are placed */
   protected GridPane grid = new GridPane();
 
+  /** The title of any window of this page */
+  protected String title;
+
   /** The default constructor for this page */
   public Page() {}
 
@@ -200,6 +203,35 @@ public abstract class Page {
     if (result.get() == confirm) {
       function.run();
     }
+  }
+
+  /**
+   * Helper method for creating a button that launches a popup window
+   * @param gridPane The grid that this button will be added to
+   * @param page The type of page of the popup window
+   * @param col The column in the grid that this button will be added to
+   * @param row The row in the grid that this button will be added to
+   */
+  protected Button makePopupButton(GridPane gridPane, Page page, int col, int row) {
+    Stage window = new Stage();
+    window.setTitle(page.title);
+    window.setScene(page.getScene());
+
+    return makeButton(gridPane, page.title,
+      () -> {
+        if (window.isShowing()) {
+          window.toFront();
+        } else {
+          window.show();
+        }
+      }, col, row);
+  }
+
+  protected Button makeChangeViewButton(GridPane gridPane, Stage primaryStage, Page page, int col, int row) {
+    return makeButton(gridPane, page.title, () -> {
+      primaryStage.setScene(page.getScene());
+      primaryStage.setTitle(page.title);
+    }, col, row);
   }
 
   /** Adds a clock with live updating time on the user page */

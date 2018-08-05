@@ -7,15 +7,15 @@ import javafx.stage.Stage;
 import transit.system.User;
 
 /** Represents a page for user's to change their name */
-public class ChangeNamePage extends AuthenticatedPage {
+public class ChangeUsernamePage extends AuthenticatedPage {
 
   /**
-   * Initialized a new instance of ChangeNamePage
+   * Initialized a new instance of ChangeUsernamePage
    *
    * @param primaryStage The stage for this page to be displayed
    * @param user The user associated with this page
    */
-  public ChangeNamePage(Stage primaryStage, User user) {
+  public ChangeUsernamePage(Stage primaryStage, User user) {
     super(primaryStage, user);
     makeScene(primaryStage);
   }
@@ -41,7 +41,7 @@ public class ChangeNamePage extends AuthenticatedPage {
         2,
         0);
 
-    scene = new Scene(grid, 600, 80);
+    scene = new Scene(grid, 550, 80);
     scene.getStylesheets().add(getClass().getResource("styling/ChangeInfoPage.css").toExternalForm());
   }
 }

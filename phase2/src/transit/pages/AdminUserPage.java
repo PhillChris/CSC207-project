@@ -50,7 +50,7 @@ public class AdminUserPage extends Page {
 
     makeButton(grid,"Add/append route", () -> createRoutePage(), 0, 4);
     makeButton(grid,
-        "Toggle User Panel",
+        "User view",
         () -> primaryStage.setScene(new UserPage(primaryStage, this.adminUser).getScene()),
         0,
         6);

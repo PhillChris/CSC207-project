@@ -1,8 +1,12 @@
 package transit.pages;
 
+import javafx.geometry.HPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Statistics;
@@ -51,21 +55,9 @@ public class UserPage extends AuthenticatedPage {
    * @param primaryStage the stage on which this page is served
    */
   private void placeUserButtons(Stage primaryStage) {
-    makeButton(grid,
-        "Cards",
-        () -> {
-          Stage newStage = new Stage();
-          CardPage cardPage = new CardPage(newStage, this.user);
-          newStage.setScene(cardPage.getScene());
-          newStage.show();
-        },
-        0,
-        2);
-    makeButton(grid,
-            "Analytics",
-      this::makeMonthlyExpenditurePage,
-        0,
-        3);
+    makePopupButton(grid, new CardPage(primaryStage, user), 0, 2);
+
+    makePopupButton(grid, new UserGraphPage(primaryStage, user.getCardCommands().getCardStatistics()), 0, 3);
     super.makeScene(primaryStage);
 
     makeButton(grid,
@@ -84,11 +76,13 @@ public class UserPage extends AuthenticatedPage {
         7);
 
     if (user.getCardCommands().getPermission().equals("admin")) {
-      makeButton(grid,
-          "Toggle admin panel",
+      Button viewToggle = makeButton(grid,
+          "Admin view",
           () -> primaryStage.setScene(new AdminUserPage(primaryStage, user).getScene()),
-          0,
-          8);
+          2,
+          7);
+      GridPane.setHalignment(viewToggle, HPos.RIGHT);
+      GridPane.setHgrow(viewToggle, Priority.ALWAYS);
     }
   }
 

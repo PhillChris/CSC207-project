@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 import transit.system.LogWriter;
 import transit.system.User;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /** Represents a page with an associated user in this system, upon having logged in */
 public abstract class AuthenticatedPage extends Page {
   /** The user associated with this given authenticated page */
@@ -41,9 +44,10 @@ public abstract class AuthenticatedPage extends Page {
 
     newUserInfoButton(1, 0);
     newLogoutButton(primaryStage, 2, 0);
-    newChangeUserButton(primaryStage, 0, 4);
     newRemoveAccountButton(primaryStage, 0, 6);
-    newChangePassButton(primaryStage, 0, 5);
+
+    makePopupButton(grid, new ChangeNamePage(primaryStage, user), 0, 4);
+    makePopupButton(grid, new ChangePasswordPage(primaryStage, user), 0, 5);
     addClock();
     this.scene = new Scene(grid, 600, 375);
   }
@@ -104,41 +108,6 @@ public abstract class AuthenticatedPage extends Page {
     GridPane.setHgrow(logout, Priority.ALWAYS);
   }
 
-  /**
-   * A private helper method to add a change username button at the given coordinates
-   *
-   * @param primaryStage the stage which this button is being served on, passed for button-action
-   * @param col the column in the grid where this change username button is displayed
-   * @param row the row in the grid where this change username button is displayed
-   */
-  private void newChangeUserButton(Stage primaryStage, int col, int row) {
-    makeButton(grid,
-        "Change username",
-        () -> {
-          ChangeNamePage namePage = new ChangeNamePage(primaryStage, this.user);
-          Stage nameWindow = new Stage();
-          nameWindow.setTitle("Change username");
-          nameWindow.setScene(namePage.getScene());
-          nameWindow.show();
-        },
-        col,
-        row);
-  }
-
-  private void newChangePassButton(Stage primaryStage, int col, int row) {
-    makeButton(grid,
-      "Change password",
-      () -> {
-        ChangePasswordPage passwordPage = new ChangePasswordPage(primaryStage, user);
-        Stage passWindow = new Stage();
-        passWindow.setTitle("Change password");
-        passWindow.setScene(passwordPage.getScene());
-        passWindow.show();
-      },
-      col,
-      row
-    );
-  }
 
   /**
    * A private helper method to add a new remove account button at the given coordinates
@@ -171,4 +140,5 @@ public abstract class AuthenticatedPage extends Page {
             "logout",
             "User " + user.getPersonalInfo().getUserName() + " logged out of the transit system");
   }
+
 }

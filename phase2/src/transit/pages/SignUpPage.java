@@ -19,6 +19,7 @@ public class SignUpPage extends Page {
    * @param primaryStage the stage on which this SignUpPage is being served
    */
   public SignUpPage(Stage primaryStage) {
+    title = "Sign Up";
     makeScene(primaryStage);
   }
 
@@ -150,8 +151,13 @@ public class SignUpPage extends Page {
     Button backButton = new Button("Go Back");
     backButton.setOnAction((data) -> primaryStage.setScene(new LoginPage(primaryStage).getScene()));
     signUpPane.add(backButton, 1, 6, 2, 1);
-    GridPane.setHalignment(backButton, HPos.RIGHT);
-    GridPane.setMargin(backButton, new Insets(2, 10, 0, 0));
+
+//    Button backButton = makeChangeViewButton(grid, primaryStage, new LoginPage(primaryStage), 1, 6);
+//    backButton.setText("Go Back");
+//    GridPane.setColumnSpan(backButton, 2);
+//    GridPane.setHalignment(backButton, HPos.RIGHT);
+//    GridPane.setMargin(backButton, new Insets(2, 10, 0, 0));
+
   }
 
   /**

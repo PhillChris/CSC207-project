@@ -26,6 +26,7 @@ public class AnalyticsPage extends GraphPage {
   public AnalyticsPage(Stage primaryStage, HashMap<String, Statistics> statistics) {
     this.statistics = statistics;
     makeScene(primaryStage);
+    title = "Analytics";
   }
 
   @Override

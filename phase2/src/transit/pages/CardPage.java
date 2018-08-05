@@ -23,6 +23,7 @@ public class CardPage extends Page {
     this.user = user;
     addUserData(primaryStage);
     makeScene(primaryStage);
+    title = "Cards";
   }
 
   /**

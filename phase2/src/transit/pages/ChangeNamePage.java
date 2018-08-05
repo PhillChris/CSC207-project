@@ -7,16 +7,17 @@ import javafx.stage.Stage;
 import transit.system.User;
 
 /** Represents a page for user's to change their name */
-public class ChangeUsernamePage extends AuthenticatedPage {
+public class ChangeNamePage extends AuthenticatedPage {
 
   /**
-   * Initialized a new instance of ChangeUsernamePage
+   * Initialized a new instance of ChangeNamePage
    *
    * @param primaryStage The stage for this page to be displayed
    * @param user The user associated with this page
    */
-  public ChangeUsernamePage(Stage primaryStage, User user) {
+  public ChangeNamePage(Stage primaryStage, User user) {
     super(primaryStage, user);
+    title = "Change Username";
     makeScene(primaryStage);
   }
 

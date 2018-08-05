@@ -18,6 +18,7 @@ public class ChangePasswordPage extends AuthenticatedPage {
    */
   public ChangePasswordPage(Stage primaryStage, User user) {
     super(primaryStage, user);
+    title = "Change Password";
     makeScene(primaryStage);
   }
 

@@ -118,11 +118,9 @@ public class Statistics implements Serializable {
 
   /** Throws out data stored beyond the total capacity of days stored */
   private void refreshLogs() {
-    if (dailyLogs.keySet().size() > STORAGELIMIT) {
-      LocalDate date = TransitTime.getClock().getCurrentDate().minusDays(STORAGELIMIT);
-      while (dailyLogs.keySet().size() > STORAGELIMIT) {
+    for (LocalDate date : dailyLogs.keySet()) {
+      if (date.isBefore(TransitTime.getClock().getCurrentDate().minusDays(STORAGELIMIT))) {
         dailyLogs.remove(date);
-        date = date.minusDays(1);
       }
     }
   }

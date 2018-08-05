@@ -1,6 +1,5 @@
 package transit.pages;
 
-import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,6 +14,8 @@ import javafx.stage.WindowEvent;
 import transit.system.Database;
 import transit.system.LogWriter;
 import transit.system.TransitTime;
+
+import java.util.Optional;
 
 /** Represents a general page serving scenes to be represented in the transit system program */
 public abstract class Page {
@@ -126,15 +127,32 @@ public abstract class Page {
     return button;
   }
 
+  /**
+   * Adds a combo box to this page
+   *
+   * @param grid The grid to add the box
+   * @param choices The choices displayed by the combobox
+   * @param col The column in which the combo box will be placed on the grid
+   * @param row The row in which the combo box will be placed on the grid
+   * @return A combobox with the given specifications
+   */
   protected ComboBox<String> makeComboBox(GridPane grid, String[] choices, int col, int row) {
     ComboBox<String> comboBox = new ComboBox<>();
     comboBox.getItems().addAll(choices);
     comboBox.getSelectionModel().selectFirst();
     grid.add(comboBox, col, row);
     return comboBox;
-
   }
 
+  /**
+   * Adds an image to this page
+   *
+   * @param gridPane The grid to add the image
+   * @param url The source url for this image
+   * @param col The column in which this image will be placed in the grid
+   * @param row The row in which this image will be placed in the grid
+   * @return An image with the given specifications
+   */
   protected ImageView makeImage(GridPane gridPane, String url, int col, int row) {
     ImageView image = new ImageView(new Image(url));
     gridPane.add(image, col, row);

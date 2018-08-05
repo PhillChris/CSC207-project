@@ -11,12 +11,15 @@ import java.util.HashMap;
 
 public class AnalyticsPage extends GraphPage {
 
+  /** Drop down options for this page */
   HBox dropDowns = new HBox();
+  /** The layout for this page */
   private BorderPane layout = new BorderPane();
+  /** The statistics to be displayed by this page */
   private HashMap<String, Statistics> statistics;
 
   /**
-   * Initialized a new instance of AdminUserPage
+   * Initialize a new instance of AdminUserPage
    *
    * @param primaryStage The stage for this page to be displayed
    */
@@ -33,6 +36,7 @@ public class AnalyticsPage extends GraphPage {
     this.scene = new Scene(layout, 800, 600);
   }
 
+  /** Sets the stat options for the user to view */
   public void setupStatOptions() {
     // setup the checkbox the statistics this page has access to
     ComboBox<Statistics> statOptions = new ComboBox<>();
@@ -52,6 +56,12 @@ public class AnalyticsPage extends GraphPage {
     setUpStatGraph(timeOptions, statOptions);
   }
 
+  /**
+   * Sets up the graph to be displayed by this page
+   *
+   * @param timeOptions The time period options to be displayed
+   * @param statOptions The statistics options to be displayed
+   */
   private void setUpStatGraph(ComboBox<String> timeOptions, ComboBox<Statistics> statOptions) {
     if (timeOptions.getValue().equals("Monthly")) {
       chart = makeYearChart(statOptions.getValue().generateMonthlyValues());

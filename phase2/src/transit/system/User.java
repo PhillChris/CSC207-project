@@ -206,6 +206,17 @@ public class User implements Serializable {
     // Record various tripStatistics
     station.record("Taps Out", 1);
     if (!trip.isValidTrip()) {
+      LogWriter.getLogWriter()
+          .logWarningMessage(
+              User.class.getName(),
+              "tapOut",
+              "User "
+                  + this.toString()
+                  + " tapped out improperly at station "
+                  + station
+                  + " with card #"
+                  + card.getId()
+                  + ", charged maximum possible fee.");
       throw new TransitException();
     }
     LogWriter.getLogWriter()

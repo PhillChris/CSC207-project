@@ -66,9 +66,9 @@ public class Database {
       ObjectInputStream in = new ObjectInputStream(fileIn);
       return in.readObject();
     } catch (IOException e) {
-      System.out.println("File not found when deserializing.");
+      LogWriter.getLogWriter().logWarningMessage(Database.class.getName(), "readObject","File not found when deserializing.");
     } catch (ClassNotFoundException h) {
-      System.out.println("Wrong class contained in serialization file.");
+      LogWriter.getLogWriter().logWarningMessage(Database.class.getName(), "readObject","Wrong class contained in serialization file.");
     }
     return null;
   }

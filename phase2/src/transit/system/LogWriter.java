@@ -25,9 +25,11 @@ public class LogWriter {
     this.logger = Logger.getLogger(LogWriter.class.getName());
     logger.setUseParentHandlers(false);
     Handler handler;
+    // if you can't find the log file, write everything to console instead
     try {
       handler = new FileHandler("log.txt", true);
     } catch (IOException a) {
+      System.out.println("Console used as log, as log.txt was not found");
       handler = new ConsoleHandler();
     }
     handler.setFormatter(new SimpleFormatter());
@@ -61,11 +63,11 @@ public class LogWriter {
    * Logs a message with level WARNING to log.txt, with the given message at the given location
    *
    * @param message the message to be recorded
-   * @param classThrown the class in which this log is recorded
-   * @param methodThrown the method in which this log is recorded
+   * @param classLocation the class in which this log is recorded
+   * @param methodLocation the method in which this log is recorded
    */
-  public void logWarningMessage(String classThrown, String methodThrown, String message) {
-    this.logger.logp(Level.WARNING, classThrown, methodThrown, message);
+  public void logWarningMessage(String classLocation, String methodLocation, String message) {
+    this.logger.logp(Level.WARNING, classLocation, methodLocation, message);
   }
 
   /** Closes all active handlers for this LogWriter */

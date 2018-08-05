@@ -29,7 +29,7 @@ public abstract class GraphPage extends Page {
     series.setName("Daily Totals");
     LocalDate date = TransitTime.getClock().getCurrentDate();
     for (Integer value: data) {
-      series.getData().add(new XYChart.Data(date.toString(), value));
+      series.getData().add(0, new XYChart.Data(date.toString(), value));
       date = date.minusDays(1);
     }
     chart.getData().add(series);
@@ -47,7 +47,7 @@ public abstract class GraphPage extends Page {
     series.setName("Monthly Totals");
     YearMonth month = TransitTime.getClock().getCurrentMonth();
     for (Integer value: data) {
-      series.getData().add(new XYChart.Data(month.toString(), value));
+      series.getData().add(0, new XYChart.Data(month.toString(), value));
       month = month.minusMonths(1);
     }
     chart.getData().add(series);

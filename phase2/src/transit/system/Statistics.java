@@ -9,9 +9,9 @@ import java.util.HashMap;
 public class Statistics implements Serializable {
   public static final int STORAGELIMIT = 365;
   /** Records revenue for the entire System */
-  private static Statistics SystemRevenue = new Statistics();
+  private static Statistics SystemRevenue = setSystemRevenue();
   /** Records the total number of stations travelled by users for the System */
-  private static Statistics SystemTripLength = new Statistics();
+  private static Statistics SystemTripLength = setSystemTripLength();
 
   /** Log of the daily values stored by this statistic */
   HashMap<LocalDate, Integer> dailyLogs;
@@ -30,6 +30,22 @@ public class Statistics implements Serializable {
   /** @return The statistics associated with stations travelled accross the system */
   public static Statistics getSystemTripLength() {
     return SystemTripLength;
+  }
+
+  private static Statistics setSystemRevenue() {
+    Statistics revenue = (Statistics) Database.readObject(Database.REVENUE_LOCATION);
+    if (revenue != null) {
+      return revenue;
+    }
+    return new Statistics();
+  }
+
+  private static Statistics setSystemTripLength() {
+    Statistics tripLength = (Statistics) Database.readObject(Database.TRIPLOG_LOCATION);
+    if (tripLength != null) {
+      return tripLength;
+    }
+    return new Statistics();
   }
 
   /**

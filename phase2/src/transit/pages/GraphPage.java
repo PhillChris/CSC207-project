@@ -39,9 +39,9 @@ public abstract class GraphPage extends Page {
    */
   public LineChart<String, Number> makeYearChart(HashMap<YearMonth, Integer> data) {
     // Set the chart
-    LineChart<String, Number> chart = makeChart("Days", "Week's Total");
+    LineChart<String, Number> chart = makeChart("Days", "Month's Total");
     XYChart.Series series = new XYChart.Series();
-    HashMap<YearMonth, Integer> expenditureMonthly = data;
+    series.setName("Monthly Totals");
     for (YearMonth month : data.keySet()) {
       series.getData().add(new XYChart.Data(month.getMonth(), data.get(month)));
     }

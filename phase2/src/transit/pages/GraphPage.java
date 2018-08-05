@@ -22,14 +22,14 @@ public abstract class GraphPage extends Page {
    * @param data The data to plot
    * @return A line chart of days to number values
    */
-  public LineChart<String, Number> makeWeekChart(List<Integer> data) {
+  public LineChart<String, Number> makeWeekChart(HashMap<LocalDate, Integer> data) {
     // Set the chart
     LineChart<String, Number> chart = makeChart("Days", "Week's Total");
     XYChart.Series series = new XYChart.Series();
     series.setName("Daily Totals");
     LocalDate date = TransitTime.getClock().getCurrentDate();
-    for (Integer value: data) {
-      series.getData().add(0, new XYChart.Data(date.toString(), value));
+    for (int i = 0; i < 7; i++) {
+      series.getData().add(0, new XYChart.Data(date.toString(), data.get(date)));
       date = date.minusDays(1);
     }
     chart.getData().add(series);
@@ -40,14 +40,14 @@ public abstract class GraphPage extends Page {
    * @param data The data to plot
    * @return A line chart of days to number values
    */
-  public LineChart<String, Number> makeYearChart(List<Integer> data) {
+  public LineChart<String, Number> makeYearChart(HashMap<YearMonth, Integer> data) {
     // Set the chart
     LineChart<String, Number> chart = makeChart("Months", "Month's Total");
     XYChart.Series series = new XYChart.Series();
     series.setName("Monthly Totals");
     YearMonth month = TransitTime.getClock().getCurrentMonth();
-    for (Integer value: data) {
-      series.getData().add(0, new XYChart.Data(month.toString(), value));
+    for (int i = 0; i < 12; i++) {
+      series.getData().add(0, new XYChart.Data(month.toString(), data.get(month)));
       month = month.minusMonths(1);
     }
     chart.getData().add(series);

@@ -1,4 +1,14 @@
-Aug 05, 2018 12:44:21 PM transit.system.Main start
-INFO: Program initialization complete
-Aug 05, 2018 12:44:29 PM transit.pages.LoginPage parseLoginAttempt
+Aug 05, 2018 12:51:49 PM transit.pages.LoginPage parseLoginAttempt
+WARNING: Login attempt failed, user is not registered in the system
+Aug 05, 2018 12:52:11 PM transit.pages.LoginPage parseLoginAttempt
 INFO: Successfully logged in as + a@fake.com
+Aug 05, 2018 12:52:21 PM transit.system.Route saveRoute
+INFO: Route sucessfully saved to transit system
+Aug 05, 2018 12:52:25 PM transit.system.User addCard
+INFO: User a@fake.com added new card with default balance
+Aug 05, 2018 12:52:27 PM transit.system.User tapIn
+INFO: User a@fake.com tapped in at station 4 with card #0
+Aug 05, 2018 12:52:32 PM transit.system.User tapOut
+INFO: User a@fake.com tapped out at station 1 with card #0, charged $1.50
+Aug 05, 2018 12:53:06 PM transit.pages.Page Page
+INFO: Program session terminated

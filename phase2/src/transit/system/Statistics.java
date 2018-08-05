@@ -87,7 +87,7 @@ public class Statistics implements Serializable {
   private int calculateMonthlyCost(YearMonth month) {
     int sum = 0;
     LocalDate date = month.atEndOfMonth();
-    while (date != month.minusMonths(1).atEndOfMonth()) {
+    while (!date.equals(month.minusMonths(1).atEndOfMonth())) {
       Integer value;
       if (dailyLogs.get(date) == null) {
         value = 0;

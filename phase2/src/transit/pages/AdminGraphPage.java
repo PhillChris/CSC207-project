@@ -1,7 +1,6 @@
 package transit.pages;
 
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -38,15 +37,6 @@ public class AdminGraphPage extends GraphPage {
     this.scene = new Scene(layout, 800, 600);
   }
 
-  /**
-   *
-   * @return A line chart representing this system's monthly revenue
-   */
-  public LineChart<String, Number> makeSystemRevenueChart() {
-    return super.makeWeekChart(Statistics.getSystemRevenue().generateWeeklyValues());
-  }
-
-
   public ComboBox<String> setupTimeOptions() {
 
     ComboBox<String> timeOptions = new ComboBox<>();
@@ -60,14 +50,15 @@ public class AdminGraphPage extends GraphPage {
     ComboBox<Statistics> statOptions = new ComboBox<>();
     statOptions.getItems().addAll(Statistics.getSystemRevenue(), Statistics.getSystemTripLength());
     statOptions.getSelectionModel().select(0);
-    statOptions.setOnAction(actionEvent -> {
-      if (timeOption.getValue().equals("Monthly")) {
-        chart = makeWeekChart(statOptions.getValue().generateWeeklyValues());
-      } else {
-        chart = makeYearChart(statOptions.getValue().generateMonthlyValues());
-      }
-      layout.setCenter(chart);
-    });
+    statOptions.setOnAction(
+            actionEvent -> {
+              if (timeOption.getValue().equals("Monthly")) {
+                chart = makeWeekChart(statOptions.getValue().generateWeeklyValues());
+              } else {
+                chart = makeYearChart(statOptions.getValue().generateMonthlyValues());
+              }
+              layout.setCenter(chart);
+            });
     return statOptions;
   }
 }

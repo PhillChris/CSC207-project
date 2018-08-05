@@ -3,6 +3,7 @@ package transit.system;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /** A class for recording analytical information associated to another object */
@@ -45,16 +46,16 @@ public class Statistics implements Serializable {
    *
    * @return a HashMap of the statistics on each day of the past week
    */
-  public HashMap<LocalDate, Integer> generateWeeklyValues() {
-    HashMap<LocalDate, Integer> expenditures = new HashMap<>();
+  public ArrayList<Integer> generateWeeklyValues() {
+    ArrayList<Integer> expenditures = new ArrayList<>();
     LocalDate date = TransitTime.getClock().getCurrentDate();
     // Loop through the last seven days
     LocalDate endDate = date.minusDays(7);
     while (!date.equals(endDate)) {
       if (dailyLogs.get(date) == null) {
-        expenditures.put(date, 0);
+        expenditures.add(0);
       } else {
-        expenditures.put(date, dailyLogs.get(date));
+        expenditures.add(expenditures.size(), dailyLogs.get(date));
       }
       date = date.minusDays(1);
     }
@@ -65,16 +66,16 @@ public class Statistics implements Serializable {
    * Generates a string representation of statistics for each month in the past year (the last 7
    * days)
    *
-   * @return a HashMap of the statistics on each day of the past week
+   * @return an ArrayList of the statistics on each day of the past week
    */
-  public HashMap<YearMonth, Integer> generateMonthlyValues() {
-    HashMap<YearMonth, Integer> expenditures = new HashMap<>();
+  public ArrayList<Integer> generateMonthlyValues() {
+    ArrayList<Integer> expenditures = new ArrayList<>();
     YearMonth month = TransitTime.getClock().getCurrentMonth();
     // Loop through the past year
     YearMonth endMonth = month.minusMonths(12);
     while (!month.equals(endMonth)) {
       int cost = calculateMonthlyCost(month);
-      expenditures.put(month, cost);
+      expenditures.add(expenditures.size(), cost);
       month = month.minusMonths(1);
     }
     return expenditures;

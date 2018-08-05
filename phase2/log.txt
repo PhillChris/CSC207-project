@@ -1,4 +1,8 @@
-Aug 05, 2018 7:24:20 AM transit.system.Main start
+Aug 05, 2018 7:47:40 AM transit.system.Main start
 INFO: Program initialization complete
-Aug 05, 2018 7:24:30 AM transit.pages.Page Page
+Aug 05, 2018 7:47:42 AM transit.pages.LoginPage parseLoginAttempt
+WARNING: Login attempt failed, user is not registered in the system
+Aug 05, 2018 7:47:43 AM transit.system.Database writeToDatabase
+INFO: Serialized all system items
+Aug 05, 2018 7:47:43 AM transit.pages.Page Page
 INFO: Program session terminated

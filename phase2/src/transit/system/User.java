@@ -129,7 +129,6 @@ public class User implements Serializable {
             User.class.getName(),
             "removeCard",
             "User " + personalInfo.getUserName() + " removed card #" + card.getId());
-
   }
 
   /**
@@ -218,10 +217,12 @@ public class User implements Serializable {
                 + " tapped out at station "
                 + station
                 + " with card #"
-                + card.getId());
+                + card.getId()
+                + ", charged $"
+                + String.format("%.2f", trip.getFee() / 100.0));
   }
 
-  /** Updates the tripStatistics assoicated with this user and the system */
+  /** Updates the tripStatistics associated with this user and the system */
   private void updateStatistic(Trip trip) {
     personalInfo.getPreviousTrips().add(trip);
     tripStatistics.get("Expenditure").update(trip.getFee());

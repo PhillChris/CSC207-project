@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import transit.system.LogWriter;
 import transit.system.User;
 
 /** Represents a page with an associated user in this system, upon having logged in */
@@ -60,19 +61,20 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this user info button is displayed
    */
   private void newUserInfoButton(int col, int row) {
-    Button info = placeButton(
-        "Info",
-        () -> {
-          Alert alert =
-              makeAlert(
-                  "User Information",
-                  "Your user information:",
-                  getUserMessage(),
-                  Alert.AlertType.INFORMATION);
-          alert.showAndWait();
-        },
-        col,
-        row);
+    Button info =
+        placeButton(
+            "Info",
+            () -> {
+              Alert alert =
+                  makeAlert(
+                      "User Information",
+                      "Your user information:",
+                      getUserMessage(),
+                      Alert.AlertType.INFORMATION);
+              alert.showAndWait();
+            },
+            col,
+            row);
     GridPane.setHalignment(info, HPos.RIGHT);
     GridPane.setHgrow(info, Priority.ALWAYS);
   }
@@ -82,10 +84,14 @@ public abstract class AuthenticatedPage extends Page {
    *
    * @return the user information to be displayed
    */
-  private String getUserMessage(){
-    String temp = "Username: " + user + System.lineSeparator() + "Permission: " +
-            user.getPersonalInfo().getPermission();
-    for (Integer id: this.user.getCardsCopy().keySet()) {
+  private String getUserMessage() {
+    String temp =
+        "Username: "
+            + user
+            + System.lineSeparator()
+            + "Permission: "
+            + user.getPersonalInfo().getPermission();
+    for (Integer id : this.user.getCardsCopy().keySet()) {
       temp += System.lineSeparator();
       temp += user.getCardsCopy().get(id);
     }
@@ -100,8 +106,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this logout button is displayed
    */
   public void newLogoutButton(Stage primaryStage, int col, int row) {
-    Button logout = placeButton(
-        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), grid, col, row);
+    Button logout = placeButton("Logout", () -> logout(primaryStage), grid, col, row);
     GridPane.setHalignment(logout, HPos.RIGHT);
     GridPane.setHgrow(logout, Priority.ALWAYS);
   }
@@ -129,17 +134,16 @@ public abstract class AuthenticatedPage extends Page {
 
   private void newChangePassButton(Stage primaryStage, int col, int row) {
     placeButton(
-      "Change password",
-      () -> {
-        ChangePasswordPage passwordPage = new ChangePasswordPage(primaryStage, user);
-        Stage passWindow = new Stage();
-        passWindow.setTitle("Change password");
-        passWindow.setScene(passwordPage.getScene());
-        passWindow.show();
-      },
-      col,
-      row
-    );
+        "Change password",
+        () -> {
+          ChangePasswordPage passwordPage = new ChangePasswordPage(primaryStage, user);
+          Stage passWindow = new Stage();
+          passWindow.setTitle("Change password");
+          passWindow.setScene(passwordPage.getScene());
+          passWindow.show();
+        },
+        col,
+        row);
   }
 
   /**
@@ -163,5 +167,14 @@ public abstract class AuthenticatedPage extends Page {
                 }),
         0,
         6);
+  }
+
+  private void logout(Stage primaryStage) {
+    primaryStage.setScene(new LoginPage(primaryStage).getScene());
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            AuthenticatedPage.class.getName(),
+            "logout",
+            "User " + user.getPersonalInfo().getUserName() + " logged out of the transit system");
   }
 }

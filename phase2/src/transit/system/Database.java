@@ -4,8 +4,6 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.time.LocalDate;
-import java.time.YearMonth;
 
 public class Database {
   public static final String ROUTE_LOCATION =
@@ -35,6 +33,7 @@ public class Database {
     // Save the System's Travel Distance statistic
     Statistics tripLengths = Statistics.getSystemTripLength();
     writeObject(TRIPLOG_LOCATION, tripLengths);
+    LogWriter.getLogWriter().logInfoMessage(Database.class.getName(), "writeToDatabase", "Serialized all system items");
   }
 
   /**

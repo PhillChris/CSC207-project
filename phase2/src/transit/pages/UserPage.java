@@ -5,7 +5,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import transit.system.Statistics;
 import transit.system.User;
+
+import java.util.HashMap;
 
 /** Represents a page displayed when a user logs in in this transit system */
 public class UserPage extends AuthenticatedPage {
@@ -59,7 +62,7 @@ public class UserPage extends AuthenticatedPage {
         0,
         2);
     makeButton(grid,
-        "Monthly Expenditure (Current Year)",
+            "Analytics",
       this::makeMonthlyExpenditurePage,
         0,
         3);
@@ -92,7 +95,8 @@ public class UserPage extends AuthenticatedPage {
   /** Creates a popup window containing a monthly expenditure page*/
   private void makeMonthlyExpenditurePage() {
     Stage secondaryStage = new Stage();
-    UserGraphPage graphPage = new UserGraphPage(secondaryStage, this.user);
+    HashMap<String, Statistics> tripStats = user.getTripStatistics();
+    AnalyticsPage graphPage = new UserGraphPage(secondaryStage, tripStats);
     secondaryStage.setTitle("Monthly Expenditure for user " + user);
     secondaryStage.setScene(graphPage.getScene());
     secondaryStage.show();

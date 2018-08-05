@@ -1,8 +1,8 @@
-Aug 05, 2018 9:31:33 AM transit.system.Main start
+Aug 05, 2018 9:51:50 AM transit.system.Main start
 INFO: Program initialization complete
-Aug 05, 2018 9:31:37 AM transit.pages.LoginPage parseLoginAttempt
+Aug 05, 2018 9:51:55 AM transit.pages.LoginPage parseLoginAttempt
 INFO: Successfully logged in as + c
-Aug 05, 2018 9:31:42 AM transit.system.Database writeToDatabase
+Aug 05, 2018 9:52:02 AM transit.system.Database writeToDatabase
 INFO: Serialized all system items
-Aug 05, 2018 9:31:42 AM transit.pages.Page Page
+Aug 05, 2018 9:52:02 AM transit.pages.Page Page
 INFO: Program session terminated

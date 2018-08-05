@@ -11,15 +11,14 @@ import java.util.HashMap;
 
 public class AnalyticsPage extends GraphPage {
 
-  /** Drop down options for this page */
   HBox dropDowns = new HBox();
-  /** The layout for this page */
+  ComboBox<Statistics> statOptions = new ComboBox<>();
+  ComboBox<String> timeOptions = new ComboBox<>();
   private BorderPane layout = new BorderPane();
-  /** The statistics to be displayed by this page */
   private HashMap<String, Statistics> statistics;
 
   /**
-   * Initialize a new instance of AdminUserPage
+   * Initialize a new instance of an AnalyticsPage.
    *
    * @param primaryStage The stage for this page to be displayed
    */
@@ -33,37 +32,37 @@ public class AnalyticsPage extends GraphPage {
   void makeScene(Stage stage) {
     stage.setTitle("Transit System Simulator");
     setupStatOptions();
+    dropDowns.getChildren().addAll(timeOptions, statOptions);
     layout.setTop(dropDowns);
+
+    // generate the Graph without having to click first
+    setUpStatGraph();
     this.scene = new Scene(layout, 800, 600);
   }
 
-  /** Sets the stat options for the user to view */
+  /**
+   * Creates the drop down boxes to switch between statistics and different time frames.
+   */
   public void setupStatOptions() {
     // setup the checkbox the statistics this page has access to
-    ComboBox<Statistics> statOptions = new ComboBox<>();
     statOptions.getItems().addAll(this.statistics.values());
     statOptions.getSelectionModel().select(0);
 
     // setup the checkbox for different time intervals
-    ComboBox<String> timeOptions = new ComboBox<>();
     timeOptions.getItems().addAll("Monthly", "Daily");
     timeOptions.getSelectionModel().select(0);
 
-    statOptions.setOnAction(actionEvent -> setUpStatGraph(timeOptions, statOptions));
-    timeOptions.setOnAction(actionEvent -> setUpStatGraph(timeOptions, statOptions));
-    dropDowns.getChildren().addAll(timeOptions, statOptions);
+    statOptions.setOnAction(actionEvent -> setUpStatGraph());
+    timeOptions.setOnAction(actionEvent -> setUpStatGraph());
 
     // generate the Graph without having to click first
-    setUpStatGraph(timeOptions, statOptions);
+    setUpStatGraph();
   }
 
   /**
-   * Sets up the graph to be displayed by this page
-   *
-   * @param timeOptions The time period options to be displayed
-   * @param statOptions The statistics options to be displayed
+   * Sets up the graph for the user to view
    */
-  private void setUpStatGraph(ComboBox<String> timeOptions, ComboBox<Statistics> statOptions) {
+  private void setUpStatGraph() {
     if (timeOptions.getValue().equals("Monthly")) {
       chart = makeYearChart(statOptions.getValue().generateMonthlyValues());
     } else {

@@ -1,0 +1,4 @@
+Aug 05, 2018 6:41:16 PM transit.system.Main start
+INFO: Program initialization complete
+Aug 05, 2018 6:41:19 PM transit.pages.Page Page
+INFO: Program session terminated

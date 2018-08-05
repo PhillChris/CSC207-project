@@ -1,11 +1,10 @@
 package transit.system;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import transit.pages.LoginPage;
 import transit.pages.TimeControlPage;
-
-import java.io.IOException;
 
 /** A transit system simulation. */
 public class Main extends Application {
@@ -30,5 +29,11 @@ public class Main extends Application {
     secondaryStage.setX(primaryStage.getX() + primaryStage.getWidth());
     secondaryStage.setY(primaryStage.getY() + 125);
     secondaryStage.show();
+    try {
+      LogWriter.getLogWriter()
+          .logInfoMessage("Completed program initialization", Main.class.getName(), "start");
+    } catch (IOException a) {
+      System.out.println("Output file not found");
+    }
   }
 }

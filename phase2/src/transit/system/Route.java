@@ -58,7 +58,7 @@ public class Route implements Serializable {
    * for deserialization of Route objects when the program is first being loaded in.
    *
    */
-  public static HashMap<String, ArrayList<Route>> setRoutes() {
+  private static HashMap<String, ArrayList<Route>> setRoutes() {
     HashMap<String, ArrayList<Route>> storedRoutes =
         (HashMap<String, ArrayList<Route>>) Database.readObject(Database.ROUTE_LOCATION);
     if (storedRoutes != null) {

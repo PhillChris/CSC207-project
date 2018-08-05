@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import transit.system.MessageTransitException;
 import transit.system.User;
@@ -40,6 +41,8 @@ public class ChangePasswordPage extends AuthenticatedPage {
       () -> {
         try {
           user.getPersonalInfo().changePassword(currPassword.getText(), newPassword.getText());
+          changeSuccess.setTextFill(Color.web("#33AF54"));
+          changeSuccess.setText("Password changed");
         } catch (MessageTransitException e) {
           e.setMessage(changeSuccess);
         }

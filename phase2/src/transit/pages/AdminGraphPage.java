@@ -53,9 +53,9 @@ public class AdminGraphPage extends GraphPage {
     statOptions.setOnAction(
             actionEvent -> {
               if (timeOption.getValue().equals("Monthly")) {
-                chart = makeWeekChart(statOptions.getValue().generateWeeklyValues());
-              } else {
                 chart = makeYearChart(statOptions.getValue().generateMonthlyValues());
+              } else {
+                chart = makeWeekChart(statOptions.getValue().generateWeeklyValues());
               }
               layout.setCenter(chart);
             });

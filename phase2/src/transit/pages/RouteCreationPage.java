@@ -23,6 +23,7 @@ public class RouteCreationPage extends Page {
     grid.setHgap(10);
     grid.setVgap(10);
     makeScene(primaryStage);
+    title = "Create/Edit Routes";
   }
 
   /**

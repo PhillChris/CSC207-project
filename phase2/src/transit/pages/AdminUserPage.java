@@ -40,15 +40,10 @@ public class AdminUserPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   private void makeSceneButtons(Stage primaryStage) {
-    makeButton(grid,
-        "Monthly Revenue (Current Year)",
-        () -> {
-          createAdminGraphPage();
-        },
-        0,
-        2);
 
-    makeButton(grid,"Add/append route", () -> createRoutePage(), 0, 4);
+    makePopupButton(grid, new SystemGraphPage(primaryStage), 0, 2);
+    makePopupButton(grid, new RouteCreationPage(primaryStage), 0, 4);
+
     makeButton(grid,
         "User view",
         () -> primaryStage.setScene(new UserPage(primaryStage, this.adminUser).getScene()),
@@ -56,25 +51,5 @@ public class AdminUserPage extends Page {
         6);
     makeButton(grid,
         "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 0, 9);
-  }
-
-  /**
-   * Makes the route creation page popup when the appropriate button is pushed
-   */
-  private void createRoutePage() {
-    Stage secondaryStage = new Stage();
-    RouteCreationPage routepage = new RouteCreationPage(secondaryStage);
-    secondaryStage.setScene(routepage.getScene());
-    secondaryStage.setTitle("Route Creation Page");
-    secondaryStage.show();
-  }
-
-  /** Makes the admin graph page popup when the appropriate button is pushed */
-  private void createAdminGraphPage() {
-    Stage secondaryStage = new Stage();
-    SystemGraphPage graphPage = new SystemGraphPage(secondaryStage);
-    secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getClock().getCurrentDate().getYear());
-    secondaryStage.setScene(graphPage.getScene());
-    secondaryStage.show();
   }
 }

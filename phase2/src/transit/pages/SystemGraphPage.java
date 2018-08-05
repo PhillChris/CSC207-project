@@ -13,5 +13,6 @@ public class SystemGraphPage extends AnalyticsPage {
    */
   public SystemGraphPage(Stage primaryStage) {
     super(primaryStage, Statistics.getSystemStatistics());
+    title = "Monthly Revenue (Current Year)";
   }
 }

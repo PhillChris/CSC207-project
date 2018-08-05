@@ -55,11 +55,11 @@ public class UserInfo implements Serializable {
       throws IncorrectPasswordException, InvalidPasswordException {
     if (!currentPassword.equals(password)) {
       LogWriter.getLogWriter()
-          .logInfoMessage(UserInfo.class.getName(), "changePassword", "Failed password change attempt: incorrect current password entered" );
+          .logWarningMessage(UserInfo.class.getName(), "changePassword", "Failed password change attempt: incorrect current password entered" );
       throw new IncorrectPasswordException();
     } else if (newPassword.length() < 6) {
       LogWriter.getLogWriter()
-          .logInfoMessage(UserInfo.class.getName(), "changePassword", "Failed password change attempt: new password too long" );
+          .logWarningMessage(UserInfo.class.getName(), "changePassword", "Failed password change attempt: new password too long" );
       throw new InvalidPasswordException();
     } else {
       password = newPassword;

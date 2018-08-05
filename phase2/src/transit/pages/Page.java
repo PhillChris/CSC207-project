@@ -49,6 +49,7 @@ public abstract class Page {
             Platform.exit();
             LogWriter.getLogWriter()
                 .logInfoMessage(Page.class.getName(), "Page", "Program session terminated");
+            LogWriter.getLogWriter().closeHandlers();
           }
         });
   }

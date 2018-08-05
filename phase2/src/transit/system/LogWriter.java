@@ -27,7 +27,7 @@ public class LogWriter {
     Handler handler;
     try {
       handler = new FileHandler("log.txt", true);
-    } catch(IOException a) {
+    } catch (IOException a) {
       handler = new ConsoleHandler();
     }
     handler.setFormatter(new SimpleFormatter());
@@ -66,5 +66,12 @@ public class LogWriter {
    */
   public void logWarningMessage(String classThrown, String methodThrown, String message) {
     this.logger.logp(Level.WARNING, classThrown, methodThrown, message);
+  }
+
+  /** Closes all active handlers for this LogWriter */
+  public void closeHandlers() {
+    for (Handler h : this.logger.getHandlers()) {
+      h.close();
+    }
   }
 }

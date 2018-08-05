@@ -48,17 +48,21 @@ public class AdminGraphPage extends GraphPage {
 
   public ComboBox<Statistics> setupStatOptions(ComboBox<String> timeOption) {
     ComboBox<Statistics> statOptions = new ComboBox<>();
-    statOptions.getItems().addAll(Statistics.getSystemRevenue(), Statistics.getSystemTripLength());
+    statOptions
+        .getItems()
+        .addAll(
+            Statistics.getSystemStatistics().get("SystemRevenue"),
+            Statistics.getSystemStatistics().get("SystemTripLengh"));
     statOptions.getSelectionModel().select(0);
     statOptions.setOnAction(
-            actionEvent -> {
-              if (timeOption.getValue().equals("Monthly")) {
-                chart = makeYearChart(statOptions.getValue().generateMonthlyValues());
-              } else {
-                chart = makeWeekChart(statOptions.getValue().generateWeeklyValues());
-              }
-              layout.setCenter(chart);
-            });
+        actionEvent -> {
+          if (timeOption.getValue().equals("Monthly")) {
+            chart = makeYearChart(statOptions.getValue().generateMonthlyValues());
+          } else {
+            chart = makeWeekChart(statOptions.getValue().generateWeeklyValues());
+          }
+          layout.setCenter(chart);
+        });
     return statOptions;
   }
 }

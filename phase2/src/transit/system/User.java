@@ -185,7 +185,7 @@ public class User implements Serializable {
   private void updateStatistic(Trip trip) {
     personalInfo.getPreviousTrips().add(trip);
     tripStatistics.get("Expenditure").update(trip.getFee());
-    Statistics.getSystemRevenue().update(trip.getFee());
-    Statistics.getSystemTripLength().update(Math.max(trip.getTripLegLength(), 0));
+    Statistics.getSystemStatistics().get("SystemRevenue").update(trip.getFee());
+    Statistics.getSystemStatistics().get("SystemTripLengh").update(Math.max(trip.getTripLegLength(), 0));
   }
 }

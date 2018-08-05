@@ -9,9 +9,9 @@ import java.util.HashMap;
 public class Statistics implements Serializable {
   public static final int STORAGELIMIT = 365;
   /** Records revenue for the entire System */
-  private static Statistics SystemRevenue = setSystemRevenue();
-  /** Records the total number of stations travelled by users for the System */
-  private static Statistics SystemTripLength = setSystemTripLength();
+
+  /** Records statistics associated to the entire system */
+  private static HashMap<String, Statistics> SystemStatistics = setSystemStatistics();
 
   /** Log of the daily values stored by this statistic */
   HashMap<LocalDate, Integer> dailyLogs;
@@ -22,30 +22,22 @@ public class Statistics implements Serializable {
     dailyLogs.put(TransitTime.getClock().getCurrentDate(), 0);
   }
 
-  /** @return The statistics associated with system revenue */
-  public static Statistics getSystemRevenue() {
-    return SystemRevenue;
+  /** @return The statistics associated with the system */
+  public static HashMap<String, Statistics> getSystemStatistics() {
+    return SystemStatistics;
   }
 
-  /** @return The statistics associated with stations travelled accross the system */
-  public static Statistics getSystemTripLength() {
-    return SystemTripLength;
-  }
-
-  private static Statistics setSystemRevenue() {
-    Statistics revenue = (Statistics) Database.readObject(Database.REVENUE_LOCATION);
-    if (revenue != null) {
-      return revenue;
+  /** @return Hashmap of statistics associated to the system */
+  private static HashMap<String, Statistics> setSystemStatistics() {
+    HashMap<String, Statistics> stats =
+        (HashMap<String, Statistics>) Database.readObject(Database.SYSTEMSTATS_LOCATION);
+    if (stats != null) {
+      return stats;
     }
-    return new Statistics();
-  }
-
-  private static Statistics setSystemTripLength() {
-    Statistics tripLength = (Statistics) Database.readObject(Database.TRIPLOG_LOCATION);
-    if (tripLength != null) {
-      return tripLength;
-    }
-    return new Statistics();
+    HashMap<String, Statistics> newStats = new HashMap<>();
+    newStats.put("SystemTripLengh", new Statistics());
+    newStats.put("SystemRevenue", new Statistics());
+    return newStats;
   }
 
   /**

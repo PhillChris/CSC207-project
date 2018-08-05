@@ -14,10 +14,8 @@ public class Database {
           "." + File.separator + "tmp" + File.separator + "user.ser";
   public static final String TIME_LOCATION =
           "." + File.separator + "tmp" + File.separator + "time.ser";
-  public static final String REVENUE_LOCATION =
-          "." + File.separator + "tmp" + File.separator + "SystemRevenue.ser";
-  public static final String TRIPLOG_LOCATION =
-          "." + File.separator + "tmp" + File.separator + "SystemTripLog.ser";
+  public static final String SYSTEMSTATS_LOCATION =
+          "." + File.separator + "tmp" + File.separator + "SystemStats.ser";
 
   public static void writeToDatabase() {
     // Save the current time
@@ -29,12 +27,9 @@ public class Database {
     // Save the system's Routes
     HashMap<String, ArrayList<Route>>  routes = Route.getRoutesCopy();
     writeObject(ROUTE_LOCATION, routes);
-    // Save the System's revenue
-    Statistics revenue = Statistics.getSystemRevenue();
-    writeObject(REVENUE_LOCATION, revenue);
-    // Save the System's Travel Distance statistic
-    Statistics tripLengths = Statistics.getSystemTripLength();
-    writeObject(TRIPLOG_LOCATION, tripLengths);
+    // Save the System's statistics
+    HashMap<String, Statistics> stats = Statistics.getSystemStatistics();
+    writeObject(SYSTEMSTATS_LOCATION, stats);
   }
 
   /**

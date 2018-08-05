@@ -2,17 +2,16 @@ package transit.system;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.HashMap;
 
 /** A class for recording analytical information associated to another object */
 public class Statistics implements Serializable {
+  /** The maximum number of days a stat will be recorded */
   public static final int STORAGELIMIT = 365;
-  /** Records revenue for the entire System */
-  private static Statistics SystemRevenue = new Statistics();
-  /** Records the total number of stations travelled by users for the System */
-  private static Statistics SystemTripLength = new Statistics();
+
+  /** Records statistics associated to the entire system */
+  private static HashMap<String, Statistics> SystemStatistics = setSystemStatistics();
 
   /** Log of the daily values stored by this statistic */
   HashMap<LocalDate, Integer> dailyLogs;
@@ -23,14 +22,22 @@ public class Statistics implements Serializable {
     dailyLogs.put(TransitTime.getClock().getCurrentDate(), 0);
   }
 
-  /** @return The statistics associated with system revenue */
-  public static Statistics getSystemRevenue() {
-    return SystemRevenue;
+  /** @return The statistics associated with the system */
+  public static HashMap<String, Statistics> getSystemStatistics() {
+    return SystemStatistics;
   }
 
-  /** @return The statistics associated with stations travelled accross the system */
-  public static Statistics getSystemTripLength() {
-    return SystemTripLength;
+  /** @return Hashmap of statistics associated to the system */
+  private static HashMap<String, Statistics> setSystemStatistics() {
+    HashMap<String, Statistics> stats =
+            (HashMap<String, Statistics>) Database.readObject(Database.SYSTEMSTATS_LOCATION);
+    if (stats != null) {
+      return stats;
+    }
+    HashMap<String, Statistics> newStats = new HashMap<>();
+    newStats.put("SystemTripLengh", new Statistics());
+    newStats.put("SystemRevenue", new Statistics());
+    return newStats;
   }
 
   /**
@@ -44,10 +51,10 @@ public class Statistics implements Serializable {
     // Loop through the last seven days
     LocalDate endDate = date.minusDays(7);
     while (!date.equals(endDate)) {
-      if (dailyLogs.get(date) != null) {
-        expenditures.put(date, dailyLogs.get(date));
-      } else {
+      if (dailyLogs.get(date) == null) {
         expenditures.put(date, 0);
+      } else {
+        expenditures.put(date, dailyLogs.get(date));
       }
       date = date.minusDays(1);
     }
@@ -88,12 +95,12 @@ public class Statistics implements Serializable {
   private int calculateMonthlyCost(YearMonth month) {
     int sum = 0;
     LocalDate date = month.atEndOfMonth();
-    while (date != month.minusMonths(1).atEndOfMonth()) {
+    while (!date.equals(month.minusMonths(1).atEndOfMonth())) {
       Integer value;
-      if (dailyLogs.get(date) != null) {
-        value = dailyLogs.get(date);
-      } else {
+      if (dailyLogs.get(date) == null) {
         value = 0;
+      } else {
+        value = dailyLogs.get(date);
       }
       sum += value;
       date = date.minusDays(1);
@@ -103,11 +110,9 @@ public class Statistics implements Serializable {
 
   /** Throws out data stored beyond the total capacity of days stored */
   private void refreshLogs() {
-    if (dailyLogs.keySet().size() > STORAGELIMIT) {
-      LocalDate date = TransitTime.getClock().getCurrentDate().minusDays(STORAGELIMIT);
-      while (dailyLogs.keySet().size() > STORAGELIMIT) {
+    for (LocalDate date : dailyLogs.keySet()) {
+      if (date.isBefore(TransitTime.getClock().getCurrentDate().minusDays(STORAGELIMIT))) {
         dailyLogs.remove(date);
-        date = date.minusDays(1);
       }
     }
   }

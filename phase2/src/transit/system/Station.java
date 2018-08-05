@@ -37,6 +37,10 @@ public class Station implements Serializable {
     statistics.put("Tap Out", new Statistics());
   }
 
+  public HashMap<String, Statistics> getStatistics() {
+    return statistics;
+  }
+
   @Override
   /** @return whether or not these two stations are logically equivalent */
   public boolean equals(Object o) {

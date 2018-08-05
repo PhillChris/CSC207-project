@@ -21,6 +21,7 @@ public class LogWriter {
    */
   private LogWriter() throws IOException {
     this.logger = Logger.getLogger(LogWriter.class.getName());
+    logger.setUseParentHandlers(false);
     FileHandler handler = new FileHandler("log.txt", true);
     handler.setFormatter(new SimpleFormatter());
     this.logger.addHandler(handler);

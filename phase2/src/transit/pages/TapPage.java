@@ -41,6 +41,7 @@ public class TapPage extends Page {
     this.card = card;
     this.cardPageStage = cardPageStage;
     this.selectedType = selectedType;
+    title = "Tap " + card;
     makeScene(secondaryStage);
   }
 

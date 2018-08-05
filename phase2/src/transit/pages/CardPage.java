@@ -1,6 +1,7 @@
 package transit.pages;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -68,9 +69,8 @@ public class CardPage extends Page {
    * @param i the current iteration of the loop in CardPage.makeScene
    */
   private void addCardButtons(Stage primaryStage, int id, int i) {
-    makeButton(grid,
-        "Tap Card #" + user.getCardCommands().getCardsCopy().get(id).getId(),
-            () -> makeTapPage(id, primaryStage), 0, 3 + i);
+    makePopupButton(grid, new TapPage(new Stage(), user, user.getCardCommands().getCardsCopy().get(id),
+      primaryStage, "Bus"), 0, 3 + i);
 
     makeButton(grid,
         "Add funds",
@@ -114,19 +114,6 @@ public class CardPage extends Page {
           3,
           3 + i);
     }
-  }
-
-  /**
-   * Makes a new popup window containing only a tap page
-   *
-   * @param id The id of the card whose tap page is to be displayed
-   */
-  private void makeTapPage(int id, Stage primaryStage) {
-    Stage secondaryStage = new Stage();
-    secondaryStage.setTitle("Tap Card#" + user.getCardCommands().getCardsCopy().get(id).getId());
-    secondaryStage.setScene(
-        new TapPage(secondaryStage, user, user.getCardCommands().getCardsCopy().get(id), primaryStage, "Bus").getScene());
-    secondaryStage.show();
   }
 
   /** @return the current trips message of this page */

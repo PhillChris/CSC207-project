@@ -101,9 +101,9 @@ public class Card implements Serializable {
   public String toString() {
     return "Card #"
         + this.id
-        + " has $"
+        + " ($"
         + String.format("%.2f", this.balance / 100.0)
-        + " remaining";
+        + " remaining)";
   }
 
   /**

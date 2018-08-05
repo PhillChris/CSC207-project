@@ -29,12 +29,6 @@ public abstract class AuthenticatedPage extends Page {
   }
 
   /**
-   * Adds the user data in the given authenticated page
-   *
-   * @param primaryStage the stage on which this authenticated page is served
-   */
-
-  /**
    * Makes the core implementation of UserPage, to be overriden by other authenticated pages
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action

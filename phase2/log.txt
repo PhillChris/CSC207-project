@@ -1,6 +1,6 @@
-Aug 05, 2018 2:45:37 PM transit.system.Main start
+Aug 05, 2018 4:05:46 PM transit.system.Main start
 INFO: Program initialization complete
-Aug 05, 2018 2:45:44 PM transit.pages.LoginPage parseLoginAttempt
-INFO: Successfully logged in as + s
-Aug 05, 2018 2:45:46 PM transit.pages.Page Page
+Aug 05, 2018 4:05:53 PM transit.pages.LoginPage parseLoginAttempt
+INFO: Successfully logged in as + a
+Aug 05, 2018 4:06:09 PM transit.pages.Page Page
 INFO: Program session terminated

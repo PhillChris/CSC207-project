@@ -4,7 +4,6 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.stage.Stage;
 import transit.system.TransitTime;
 
 import java.time.LocalDate;
@@ -43,7 +42,7 @@ public abstract class GraphPage extends Page {
     XYChart.Series series = new XYChart.Series();
     series.setName("Monthly Totals");
     for (YearMonth month : data.keySet()) {
-      series.getData().add(new XYChart.Data(month.getMonth(), data.get(month)));
+      series.getData().add(new XYChart.Data(month.toString(), data.get(month)));
     }
     chart.getData().add(series);
     return chart;

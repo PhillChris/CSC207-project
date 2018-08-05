@@ -23,6 +23,7 @@ public class UserCardCommands implements Serializable {
     this.cards = new HashMap<>();
     cardStatistics.put("Expenditure", new Statistics());
     cardStatistics.put("Taps", new Statistics());
+    this.permission = permission;
   }
 
   /** @return The permission on this user */

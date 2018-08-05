@@ -52,7 +52,7 @@ public class AppendRoutePage extends Page {
     grid.add(routeLabel, 0, 0, 20, 2);
     makeLabel(grid, "Enter the name of the new station here", 8, 9);
     makeSceneButtons();
-    this.scene = new Scene(grid, 1000, 1000);
+    this.scene = new Scene(grid, 1000, 200);
   }
 
   /** Constructs all buttons in this scene */

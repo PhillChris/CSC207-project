@@ -59,9 +59,15 @@ public class AppendRoutePage extends Page {
   private void makeSceneButtons() {
     TextField textField = makeTextField(grid, "", 10, 10);
 
-    makeButton(grid, "Add Station at Start", () -> addStationAtStart(textField), 10, 15);
+    makeButton(grid, "Add Station at Start", () -> {
+      addStationAtStart(textField);
+      textField.clear();
+    }, 10, 15);
 
-    makeButton(grid, "Add Station at End", () -> addStationAtEnd(textField), 10, 16);
+    makeButton(grid, "Add Station at End", () -> {
+      addStationAtEnd(textField);
+      textField.clear();
+    }, 10, 16);
 
     makeButton(grid,
         "Confirm",

@@ -74,11 +74,13 @@ public class Card implements Serializable {
   /** Activates this card, after having been found */
   public void activateCard() {
     isActive = true;
+    LogWriter.getLogWriter().logInfoMessage(Card.class.getName(), "activateCard", "Card activated");
   }
 
   /** Suspends this card, after having been reported stolen */
   public void suspendCard() {
     isActive = false;
+    LogWriter.getLogWriter().logInfoMessage(Card.class.getName(), "suspendCard", "Card suspended");
   }
 
   /**
@@ -88,6 +90,11 @@ public class Card implements Serializable {
    */
   public void addBalance(int toAdd) {
     this.balance += toAdd;
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            Card.class.getName(),
+            "addBalance",
+            "Added $" + String.format("%.2f", toAdd / 100.0) + " to card #" + this.getId());
   }
 
   /** @return a string representation of this card */
@@ -104,5 +111,7 @@ public class Card implements Serializable {
    *
    * @param toSubtract the amount of money to subtract to this transit.system.Card's balance
    */
-  void subtractBalance(int toSubtract) { this.balance -= toSubtract; }
+  void subtractBalance(int toSubtract) {
+    this.balance -= toSubtract;
+  }
 }

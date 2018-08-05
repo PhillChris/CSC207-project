@@ -4,14 +4,12 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.time.LocalDate;
-import java.time.YearMonth;
 
 public class Database {
   public static final String ROUTE_LOCATION =
-          "." + File.separator + "tmp" + File.separator + "routes.ser";
+      "." + File.separator + "tmp" + File.separator + "routes.ser";
   public static final String USERS_LOCATION =
-          "." + File.separator + "tmp" + File.separator + "user.ser";
+      "." + File.separator + "tmp" + File.separator + "user.ser";
   public static final String TIME_LOCATION =
           "." + File.separator + "tmp" + File.separator + "time.ser";
   public static final String SYSTEMSTATS_LOCATION =
@@ -25,7 +23,7 @@ public class Database {
     HashMap<String, User> users = User.getAllUsersCopy();
     writeObject(USERS_LOCATION, users);
     // Save the system's Routes
-    HashMap<String, ArrayList<Route>>  routes = Route.getRoutesCopy();
+    HashMap<String, ArrayList<Route>> routes = Route.getRoutesCopy();
     writeObject(ROUTE_LOCATION, routes);
     // Save the System's statistics
     HashMap<String, Statistics> stats = Statistics.getSystemStatistics();

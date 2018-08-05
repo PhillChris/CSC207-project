@@ -1,5 +1,6 @@
 package transit.pages;
 
+import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,9 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import transit.system.Database;
+import transit.system.LogWriter;
 import transit.system.TransitTime;
-
-import java.util.Optional;
 
 /** Represents a general page serving scenes to be represented in the transit system program */
 public abstract class Page {
@@ -40,6 +40,9 @@ public abstract class Page {
           public void handle(WindowEvent windowEvent) {
             Database.writeToDatabase();
             Platform.exit();
+            LogWriter.getLogWriter()
+                .logInfoMessage(Page.class.getName(), "Page", "Program session terminated");
+            LogWriter.getLogWriter().closeHandlers();
           }
         });
   }

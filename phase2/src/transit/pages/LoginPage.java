@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import transit.system.LogWriter;
 import transit.system.User;
 
 /** Represents a login page for this system */
@@ -87,7 +88,6 @@ public class LoginPage extends Page {
     Label login = makeLabel(loginPane, "Login", 0, 0);
     login.setId("loginLabel");
     GridPane.setColumnSpan(login, 2);
-
     Label noAccount = makeLabel(loginPane, "No account?", 0, 5);
     noAccount.setId("noAccount");
     GridPane.setColumnSpan(noAccount, 2);
@@ -145,30 +145,7 @@ public class LoginPage extends Page {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
     loginButton.setOnAction(
-        (data) -> {
-          try {
-            User user;
-            if (User.getAllUsersCopy().containsKey(emailInput.getText())) {
-              user = User.getAllUsersCopy().get(emailInput.getText());
-            } else {
-              errorMessage.setText("User email not found.");
-              throw new Exception();
-            }
-            if (checkAuthorization(emailInput, passInput)) {
-              Page userPage;
-              if (user.getPersonalInfo().getPermission().equals("admin")) {
-                userPage = new AdminUserPage(primaryStage, user);
-              } else {
-                userPage = new UserPage(primaryStage, user);
-              }
-              primaryStage.setScene(userPage.getScene());
-            } else {
-              errorMessage.setText("Incorrect password.");
-              throw new Exception();
-            }
-          } catch (Exception ignored) {
-          }
-        });
+        (data) -> parseLoginAttempt(primaryStage, emailInput, passInput, errorMessage));
     loginPane.add(loginButton, 0, 3, 2, 1);
     GridPane.setMargin(loginButton, new Insets(3, 0, 0, 0));
   }
@@ -196,5 +173,48 @@ public class LoginPage extends Page {
             .get(email.getText())
             .getPersonalInfo()
             .correctAuthentification(password.getText());
+  }
+
+  private void parseLoginAttempt(
+      Stage primaryStage, TextField emailInput, TextField passInput, Label errorMessage) {
+    {
+      try {
+        User user;
+        if (User.getAllUsersCopy().containsKey(emailInput.getText())) {
+          user = User.getAllUsersCopy().get(emailInput.getText());
+        } else {
+          errorMessage.setText("User email not found.");
+          LogWriter.getLogWriter()
+              .logWarningMessage(
+                  LoginPage.class.getName(),
+                  "parseLoginAttempt",
+                  "Login attempt failed, user is not registered in the system");
+          throw new Exception();
+        }
+        if (checkAuthorization(emailInput, passInput)) {
+          Page userPage;
+          if (user.getPersonalInfo().getPermission().equals("admin")) {
+            userPage = new AdminUserPage(primaryStage, user);
+          } else {
+            userPage = new UserPage(primaryStage, user);
+          }
+          primaryStage.setScene(userPage.getScene());
+          LogWriter.getLogWriter()
+              .logInfoMessage(
+                  LoginPage.class.getName(),
+                  "parseLoginAttempt",
+                  "Successfully logged in as + " + user.getPersonalInfo().getUserName());
+        } else {
+          errorMessage.setText("Incorrect password.");
+          LogWriter.getLogWriter()
+              .logWarningMessage(
+                  LoginPage.class.getName(),
+                  "parseLoginAttempt",
+                  "Login attempt failed, incorrect password");
+          throw new Exception();
+        }
+      } catch (Exception ignored) {
+      }
+    }
   }
 }

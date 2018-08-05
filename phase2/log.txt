@@ -1,0 +1,14 @@
+Aug 05, 2018 12:10:33 PM transit.system.Main start
+INFO: Program initialization complete
+Aug 05, 2018 12:10:38 PM transit.pages.LoginPage parseLoginAttempt
+INFO: Successfully logged in as + a@fake.com
+Aug 05, 2018 12:10:47 PM transit.system.User tapIn
+INFO: User a@fake.com tapped in at station 5 with card #0
+Aug 05, 2018 12:10:54 PM transit.system.User tapOut
+INFO: User a@fake.com tapped out at station 1 with card #0, charged $2.00
+Aug 05, 2018 12:11:01 PM transit.system.User tapIn
+INFO: User a@fake.com tapped in at station 2 with card #0
+Aug 05, 2018 12:11:04 PM transit.system.User tapOut
+INFO: User a@fake.com tapped out at station 3 with card #0, charged $0.50
+Aug 05, 2018 12:11:32 PM transit.pages.Page Page
+INFO: Program session terminated

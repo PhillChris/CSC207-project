@@ -1,9 +1,9 @@
 package transit.system;
 
+import static transit.system.Database.readObject;
+
 import java.io.Serializable;
 import java.util.HashMap;
-
-import static transit.system.Database.readObject;
 
 /** Represents a transit.system.User in a transit system. */
 public class User implements Serializable {
@@ -80,6 +80,11 @@ public class User implements Serializable {
   /** Removes this user from the system. */
   public void removeUser() {
     allUsers.remove(this.email);
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            User.class.getName(),
+            "removeUser",
+            "Removed user " + personalInfo.getUserName() + " from transit system");
   }
 
   /** @return This User's email */
@@ -100,6 +105,11 @@ public class User implements Serializable {
   public void addCard() {
     this.cards.put(cardCounter, new Card(cardCounter));
     cardCounter++;
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            User.class.getName(),
+            "addCard",
+            "User " + personalInfo.getUserName() + " added new card with default balance");
   }
 
   /**
@@ -114,6 +124,11 @@ public class User implements Serializable {
         this.cards.remove(card.getId(), card);
       }
     }
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            User.class.getName(),
+            "removeCard",
+            "User " + personalInfo.getUserName() + " removed card #" + card.getId());
   }
 
   /**
@@ -128,10 +143,16 @@ public class User implements Serializable {
     }
     tripStatistics.get("Taps").update(1);
     if (card.getCurrentTrip() == null) {
+      station.record("Tap In", 1);
       tapIn(card, station);
     } else {
+      station.record("Tap Out", 1);
       tapOut(card, station);
     }
+  }
+
+  public String toString() {
+    return personalInfo.getUserName();
   }
 
   /**
@@ -143,7 +164,6 @@ public class User implements Serializable {
   private void tapIn(Card card, Station station) throws TransitException {
     if (card.getBalance() <= 0) throw new TransitException(); // Not enough fund
     // Record tripStatistics
-    station.record("Tap In", 1);
 
     // Check if this transit.system.User is continuing a transit.system.Trip
     boolean foundContinuousTrip = false;
@@ -158,6 +178,16 @@ public class User implements Serializable {
     if (!foundContinuousTrip) {
       card.setCurrentTrip(new Trip(station, personalInfo.getPermission()));
     }
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            User.class.getName(),
+            "tapIn",
+            "User "
+                + this.toString()
+                + " tapped in at station "
+                + station
+                + " with card #"
+                + card.getId());
   }
 
   /**
@@ -175,13 +205,35 @@ public class User implements Serializable {
     card.setCurrentTrip(null);
     updateStatistic(trip);
     // Record various tripStatistics
-    station.record("Tap Out", 1);
     if (!trip.isValidTrip()) {
+      LogWriter.getLogWriter()
+          .logWarningMessage(
+              User.class.getName(),
+              "tapOut",
+              "User "
+                  + this.toString()
+                  + " tapped out improperly at station "
+                  + station
+                  + " with card #"
+                  + card.getId()
+                  + ", charged maximum possible fee.");
       throw new TransitException();
     }
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            User.class.getName(),
+            "tapOut",
+            "User "
+                + this.toString()
+                + " tapped out at station "
+                + station
+                + " with card #"
+                + card.getId()
+                + ", charged $"
+                + String.format("%.2f", trip.getFee() / 100.0));
   }
 
-  /** Updates the tripStatistics assoicated with this user and the system */
+  /** Updates the tripStatistics associated with this user and the system */
   private void updateStatistic(Trip trip) {
     personalInfo.getPreviousTrips().add(trip);
     tripStatistics.get("Expenditure").update(trip.getFee());

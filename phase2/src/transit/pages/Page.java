@@ -6,6 +6,8 @@ import javafx.stage.Stage;
 
 /** Represents a general page serving scenes to be represented in the transit system program */
 public abstract class Page {
+  /** A page creator factory */
+  protected PageCreator pageCreator = new PageCreator();
   /** The stage which the */
   protected Stage stage;
   /** Represents the scene which this page serves */

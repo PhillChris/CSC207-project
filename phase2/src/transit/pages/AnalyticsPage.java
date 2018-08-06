@@ -32,8 +32,7 @@ public class AnalyticsPage {
    *
    * @param primaryStage The stage for this page to be displayed
    */
-  public AnalyticsPage(HashMap<String, Statistics> statistics) {
-    Stage stage = new Stage();
+  public AnalyticsPage(Stage stage, HashMap<String, Statistics> statistics) {
     this.statistics = statistics;
     setLayout();
     Scene scene = new Scene(layout, 800, 600);

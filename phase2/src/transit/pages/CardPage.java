@@ -6,11 +6,12 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Card;
 import transit.system.User;
+import transit.system.UserCardCommands;
 
 /** Represents a page containing all functionality associated with a user's set of cards */
 public class CardPage extends Page {
   /** The user associated with this CardPage */
-  private User user;
+  private UserCardCommands cards;
   /** The label of current trips associated with the */
   private Label currentTrips;
   /**
@@ -19,9 +20,9 @@ public class CardPage extends Page {
    * @param primaryStage The stage for this page to be displaced
    * @param user The user associated with this page
    */
-  public CardPage(User user) {
-    super(new Stage());
-    this.user = user;
+  public CardPage(Stage stage, UserCardCommands cards) {
+    super(stage);
+    this.cards = cards;
     addUserData();
     makeScene();
     stage.setTitle("Cards");
@@ -40,8 +41,8 @@ public class CardPage extends Page {
         grid,
         "Add card",
         () -> {
-          user.getCardCommands().addCard();
-          new CardPage(this.user);
+          cards.addCard();
+          new CardPage(stage, cards);
         },
         0,
         0);
@@ -56,9 +57,9 @@ public class CardPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   protected void addUserData() {
-    this.currentTrips = factory.makeLabel(grid, generateCurrentTripMessage(user), 0, 1);
+    this.currentTrips = factory.makeLabel(grid, generateCurrentTripMessage(), 0, 1);
     int i = 0;
-    for (Integer id : this.user.getCardCommands().getCardsCopy().keySet()) {
+    for (Integer id : cards.getCardsCopy().keySet()) {
       addCardButtons(id, i);
       i++;
     }
@@ -75,7 +76,7 @@ public class CardPage extends Page {
     factory.makeButton(
         grid,
         "Tap",
-        () -> new TapPage(new Stage(), user, user.getCardCommands().getCardsCopy().get(id), "Bus"),
+        () -> new TapPage(stage, cards, cards.getCardsCopy().get(id), "Bus"),
         0,
         3 + i);
 
@@ -83,7 +84,7 @@ public class CardPage extends Page {
         grid,
         "Add funds",
         () ->
-                new AddFundsPage(stage, user, user.getCardCommands().getCardsCopy().get(id)),
+                new AddFundsPage(stage, cards.getCardsCopy().get(id)),
         1,
         3 + i);
 
@@ -96,20 +97,20 @@ public class CardPage extends Page {
                 "Confirm removal:",
                 "Are you sure that you want to remove this card?",
                 () -> {
-                  user.getCardCommands().removeCard(user.getCardCommands().getCardsCopy().get(id));
-                  new CardPage(this.user);
+                  cards.removeCard(cards.getCardsCopy().get(id));
+                  new CardPage(stage, cards);
                 }),
         2,
         3 + i);
 
     // if the current card is suspended
-    if (!user.getCardCommands().getCardsCopy().get(id).isSuspended()) {
+    if (!cards.getCardsCopy().get(id).isSuspended()) {
       factory.makeButton(
           grid,
           "Report card stolen",
           () -> {
-            user.getCardCommands().getCardsCopy().get(id).suspendCard();
-            new CardPage(this.user);
+            cards.getCardsCopy().get(id).suspendCard();
+            new CardPage(stage, cards);
           },
           3,
           3 + i);
@@ -118,8 +119,8 @@ public class CardPage extends Page {
           grid,
           "Activate this card",
           () -> {
-            user.getCardCommands().getCardsCopy().get(id).activateCard();
-            new CardPage(this.user);
+            cards.getCardsCopy().get(id).activateCard();
+            new CardPage(stage, cards);
           },
           3,
           3 + i);
@@ -127,9 +128,9 @@ public class CardPage extends Page {
   }
 
   /** @return the current trips message of this page */
-  private String generateCurrentTripMessage(User user) {
+  private String generateCurrentTripMessage() {
     String message = "Current trips:" + System.lineSeparator();
-    for (Card card : user.getCardCommands().getCardsCopy().values()) {
+    for (Card card : cards.getCardsCopy().values()) {
       if (card.getCurrentTrip() != null) {
         message +=
             "Trip started with card #"

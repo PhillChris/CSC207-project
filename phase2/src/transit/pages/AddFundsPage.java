@@ -7,7 +7,7 @@ import transit.system.Card;
 import transit.system.User;
 
 /** Represents a page used by a user to add funds to a card */
-public class AddFundsPage extends AuthenticatedPage {
+public class AddFundsPage extends Page {
   /** The card associated with this page */
   private Card card;
 
@@ -18,8 +18,12 @@ public class AddFundsPage extends AuthenticatedPage {
    * @param user The user associated with this page
    * @param card The card associated with this page
    */
-  public AddFundsPage(Stage primaryStage, User user, Card card) {
-    super(primaryStage, user);
+  public AddFundsPage(Stage primaryStage, Card card) {
+    super(primaryStage);
+    this.card = card;
+    makeScene();
+    stage.setScene(scene);
+    stage.show();
   }
 
   /**
@@ -49,7 +53,7 @@ public class AddFundsPage extends AuthenticatedPage {
         "$" + cost,
         () -> {
           card.addBalance(cost * 100);
-          new CardPage(user);
+          stage.close();
         },
         col,
         row);

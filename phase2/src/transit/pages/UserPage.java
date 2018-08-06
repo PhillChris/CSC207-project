@@ -58,7 +58,7 @@ public class UserPage extends AuthenticatedPage {
     newRemoveAccountButton(0, 6);
     factory.makeButton(grid, "Change name", () -> new ChangeNamePage(stage, user), 0, 4);
     factory.makeButton(grid, "Change password", () -> new ChangePasswordPage(user), 0, 5);
-    factory.makeButton(grid, "Cards", () -> new CardPage(user), 0, 2);
+    factory.makeButton(grid, "Cards", () -> new CardPage(new Stage(), user.getCardCommands()), 0, 2);
 
     factory.makeButton(
         grid,

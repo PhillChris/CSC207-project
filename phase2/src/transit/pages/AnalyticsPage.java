@@ -18,11 +18,11 @@ public class AnalyticsPage extends GraphPage {
    */
   public AnalyticsPage(HashMap<String, Statistics> statistics) {
     super(statistics);
+    stage.setTitle("Transit System Simulator");
   }
 
   @Override
   void makeScene() {
-    stage.setTitle("Transit System Simulator");
     setupStatOptions();
     dropDowns.getChildren().addAll(timeOptions, statOptions);
     layout.setTop(dropDowns);

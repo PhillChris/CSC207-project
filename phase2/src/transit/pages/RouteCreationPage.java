@@ -16,7 +16,7 @@ public class RouteCreationPage extends Page {
    * @param primaryStage The stage for this page to be displayed
    */
   public RouteCreationPage() {
-    super(new Stage(), true);
+    super(new Stage());
     this.grid = new GridPane();
     grid.setPadding(new Insets(30, 20, 20, 40));
     grid.setHgap(10);

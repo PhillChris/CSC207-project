@@ -24,14 +24,6 @@ public abstract class Page {
   /** The title of any window of this page */
   protected String title;
 
-  /** The default constructor for this page */
-  public Page() {
-    stage = new Stage();
-    makeScene();
-    stage.setScene(scene);
-    stage.show();
-  }
-
   /**
    * A constructor that sets the primary stages close action to end the program.
    *
@@ -39,19 +31,8 @@ public abstract class Page {
    */
   public Page(Stage primaryStage) {
     this.stage = primaryStage;
-    makeScene();
-    stage.setScene(scene);
-    stage.show();
   }
 
-  /**
-   * A constructor that sets the primary stages close action to end the program.
-   *
-   * @param primaryStage the PRIMARY stage of this application.
-   */
-  public Page(Stage primaryStage, Boolean delayStageCreation) {
-    this.stage = primaryStage;
-  }
   /** @return the scene to be represented in the program stage */
   public Scene getScene() {
     return this.scene;

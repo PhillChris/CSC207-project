@@ -27,7 +27,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param user the user associated with this authenticated page
    */
   public AuthenticatedPage(Stage primaryStage, User user) {
-    super(primaryStage, true);
+    super(primaryStage);
     this.user = user;
     makeScene();
     stage.setTitle(user.toString());
@@ -51,7 +51,7 @@ public abstract class AuthenticatedPage extends Page {
     newRemoveAccountButton(0, 6);
 
     makeButton(grid, "Change name", ()->new ChangeNamePage(stage, user), 0, 4);
-    makeButton(grid, "Change password", ()-> new ChangePasswordPage(stage, user), 0, 5);
+    makeButton(grid, "Change password", ()-> new ChangePasswordPage(user), 0, 5);
     addClock();
     this.scene = new Scene(grid, 600, 375);
   }

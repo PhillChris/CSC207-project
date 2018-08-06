@@ -14,10 +14,12 @@ import transit.system.TransitTime;
 public class TimeControlPage extends Page {
   /** Constructs a new instance of TimeControlPage */
   public TimeControlPage() {
+    super(new Stage());
     makeScene();
     stage.setX(700);
     stage.setY(200);
     stage.setScene(this.scene);
+    stage.setTitle("Time Control Page");
     stage.show();
   }
 

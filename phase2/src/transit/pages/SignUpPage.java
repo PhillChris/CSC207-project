@@ -20,6 +20,9 @@ public class SignUpPage extends Page {
    */
   public SignUpPage(Stage primaryStage) {
     super(primaryStage);
+    stage.setTitle("Sign Up Page");
+    makeScene();
+    stage.setScene(scene);
   }
 
   /**

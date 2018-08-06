@@ -27,9 +27,8 @@ public abstract class GraphPage extends Page {
   protected HashMap<String, Statistics> statistics;
 
   public GraphPage(HashMap<String, Statistics> statistics){
-    super(new Stage(), true);
+    super(new Stage());
     this.statistics = statistics;
-    stage = new Stage();
     makeScene();
     stage.setScene(scene);
     stage.show();

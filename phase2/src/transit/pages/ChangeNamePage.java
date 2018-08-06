@@ -18,7 +18,7 @@ public class ChangeNamePage extends Page {
    * @param user The user associated with this page
    */
   public ChangeNamePage(Stage primaryStage, User user) {
-    super(new Stage(), true);
+    super(new Stage());
     this.user = user;
     makeScene();
     stage.setTitle("Change Name Page");

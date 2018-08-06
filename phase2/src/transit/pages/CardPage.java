@@ -20,11 +20,11 @@ public class CardPage extends Page {
    * @param user The user associated with this page
    */
   public CardPage(User user) {
-    super(new Stage(), true);
+    super(new Stage());
     this.user = user;
     addUserData();
     makeScene();
-    title = "Cards";
+    stage.setTitle("Cards");
     stage.setScene(scene);
     stage.show();
   }

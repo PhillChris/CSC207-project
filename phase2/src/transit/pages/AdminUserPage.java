@@ -22,7 +22,7 @@ public class AdminUserPage extends Page {
    * @param adminUser the AdminUser whose page is to be constructed
    */
   public AdminUserPage(Stage primaryStage, User adminUser) {
-    super(primaryStage, true);
+    super(primaryStage);
     this.adminUser = adminUser;
     makeScene();
     stage.setScene(this.scene);

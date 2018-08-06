@@ -18,10 +18,10 @@ public class ChangePasswordPage extends Page {
    * @param primaryStage The stage for this page to be displayed
    * @param user The user associated with this page
    */
-  public ChangePasswordPage(Stage primaryStage, User user) {
-    super(primaryStage, true);
+  public ChangePasswordPage(User user) {
+    super(new Stage());
     this.user = user;
-    title = "Change Password";
+    stage.setTitle("Change Password");
     makeScene();
     stage.setTitle("Change Password Page");
     stage.setScene(scene);

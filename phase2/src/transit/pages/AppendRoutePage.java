@@ -44,7 +44,6 @@ public class AppendRoutePage extends Page {
   /**
    * Sets the scene of this page
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
   void makeScene() {

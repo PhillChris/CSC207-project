@@ -25,10 +25,7 @@ public class TapPage extends Page {
   /**
    * Constructs a new TapPage
    *
-   * @param secondaryStage the stage on which this page is being served
-   * @param user the user whose card is currently tapping
    * @param card the card which is currently tapping
-   * @param cardPageStage the label to update when this page
    */
   public TapPage(Stage stage, UserCardCommands cards, Card card, String selectedType) {
     super(stage);
@@ -44,7 +41,6 @@ public class TapPage extends Page {
   /**
    * Makes the scene which displays this page
    *
-   * @param secondaryStage the popup stage on which this page is served
    */
   @Override
   public void makeScene() {
@@ -150,7 +146,7 @@ public class TapPage extends Page {
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     refreshRouteOptionItems(this.selectedType); /* Loads the first round of buttons*/
     routeType.getSelectionModel().select(this.selectedType);
-    routeType.setOnAction(e -> new TapPage(stage, cards, card, routeType.getValue()));
+    routeType.setOnAction(e -> pageCreator.makeTapPage(cards, card, routeType.getValue()));
     refreshRouteOptionItems(routeType.getValue());
   }
 }

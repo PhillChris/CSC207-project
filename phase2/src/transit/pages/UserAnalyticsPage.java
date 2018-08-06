@@ -10,7 +10,6 @@ import transit.system.Statistics;
 public class UserAnalyticsPage extends AnalyticsPage {
   private User user;
   private VBox content = new VBox();
-  private NodeFactory nodeFactory = new NodeFactory();
 
   public UserAnalyticsPage(Stage stage, HashMap<String, Statistics> statistics, User user) {
     super(stage, statistics);

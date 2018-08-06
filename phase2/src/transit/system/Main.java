@@ -41,7 +41,7 @@ public class Main extends Application {
     primaryStage.setTitle("Transit System Simulator");
     new LoginPage(primaryStage);
     primaryStage.show();
-    new TimeControlPage();
+    new TimeControlPage(new Stage());
     LogWriter.getLogWriter()
         .logInfoMessage(Main.class.getName(), "start", "Program initialization complete");
   }

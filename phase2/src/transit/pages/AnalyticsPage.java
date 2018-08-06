@@ -7,9 +7,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import transit.system.Statistics;
-
 import java.util.HashMap;
 
+/** A page designed to display analytical information */
 public class AnalyticsPage {
 
   /** The chart displayed by this page */

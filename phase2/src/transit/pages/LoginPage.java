@@ -11,6 +11,10 @@ import transit.system.User;
 
 /** Represents a login page for this system */
 public class LoginPage extends Page {
+  GridPane loginPane;
+  TextField emailInput;
+  TextField passInput;
+  Label errorMessage;
 
   /**
    * Initialized a new instance of LoginPace
@@ -26,7 +30,6 @@ public class LoginPage extends Page {
 
   /**
    * Sets the scene for this page
-   *
    */
   @Override
   protected void makeScene() {
@@ -45,25 +48,23 @@ public class LoginPage extends Page {
 
   /**
    * Makes the login GridPane for styling purposes
-   *
-   * @param primaryStage the stage on which this LoginPage is being represented
    */
   private void makeLoginPane() {
-    GridPane loginPane = new GridPane();
+    this.loginPane = new GridPane();
     loginPane.setHgap(10);
     loginPane.setVgap(12);
-    makeLabels(loginPane);
-    makeIcons(loginPane);
+    makeLabels();
+    makeIcons();
 
-    TextField emailInput = makeEmailInput(loginPane);
-    PasswordField passInput = makePassInput(loginPane);
+    this.emailInput = makeEmailInput();
+    this.passInput = makePassInput();
 
-    Label errorMessage = makeErrorMessage(loginPane);
+    this.errorMessage = makeErrorMessage();
 
-    makeSignUpButton(stage, loginPane);
-    makeLoginButton(stage, loginPane, emailInput, passInput, errorMessage);
+    makeSignUpButton();
+    makeLoginButton();
 
-    makeSeparator(loginPane);
+    makeSeparator();
 
     grid.add(loginPane, 0, 1);
   }
@@ -71,19 +72,16 @@ public class LoginPage extends Page {
   /**
    * Makes all icons in the login pane
    *
-   * @param loginPane the login pane being constructed in this LoginPage
    */
-  private void makeIcons(GridPane loginPane) {
+  private void makeIcons() {
     factory.makeImage(loginPane, "transit/pages/assets/email.png", 0, 1);
     factory.makeImage(loginPane, "transit/pages/assets/key.png", 0, 2);
   }
 
   /**
    * Makes all labels in the login pane
-   *
-   * @param loginPane the login pane being constructed in this LoginPage
    */
-  private void makeLabels(GridPane loginPane) {
+  private void makeLabels() {
     Label login = factory.makeLabel(loginPane, "Login", 0, 0);
     login.setId("loginLabel");
     GridPane.setColumnSpan(login, 2);
@@ -94,66 +92,47 @@ public class LoginPage extends Page {
   }
 
   /** @return the password input field for this LoginPage */
-  private PasswordField makePassInput(GridPane loginPane) {
+  private PasswordField makePassInput() {
     return factory.makePasswordField(loginPane, "Password", 1, 2);
   }
 
   /** @return the email input field for this LoginPage */
-  private TextField makeEmailInput(GridPane loginPane) {
+  private TextField makeEmailInput() {
     return factory.makeTextField(loginPane, "Email", 1, 1);
   }
 
   /**
-   * @param loginPane the login pane being constructed in this LoginPage
    * @return a label containing the appropriate error message
    */
-  private Label makeErrorMessage(GridPane loginPane) {
+  private Label makeErrorMessage() {
     Label errorMessage = factory.makeLabel(loginPane, "", 1, 3);
     errorMessage.setId("errorMessage");
     GridPane.setHalignment(errorMessage, HPos.RIGHT);
     return errorMessage;
   }
 
-  /**
-   * @param primaryStage the stage on which this page is being served
-   * @param loginPane the the login pane being constructed in this LoginPage
-   */
-  private void makeSignUpButton(Stage primaryStage, GridPane loginPane) {
+  private void makeSignUpButton() {
     Button signUpButton = new Button("Sign Up");
     signUpButton.setId("signUpButton");
     signUpButton.setOnAction(
-        (data) -> {
-          pageCreator.makeSignUpPage();
-        });
+        (data) -> pageCreator.makeSignUpPage());
     loginPane.add(signUpButton, 0, 6, 2, 1);
   }
 
-  /**
-   * @param emailInput the email input field in this LoginPage
-   * @param passInput the password input field in this LoginPage
-   * @param errorMessage the error message field on this LoginPage to be modified as needed
-   * @param primaryStage the stage on which this LoginPage is being served
-   */
-  private void makeLoginButton(
-      Stage primaryStage,
-      GridPane loginPane,
-      TextField emailInput,
-      TextField passInput,
-      Label errorMessage) {
+  /** Makes the login button for this stage */
+  private void makeLoginButton() {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
     loginButton.setOnAction(
-        (data) -> parseLoginAttempt(primaryStage, emailInput, passInput, errorMessage));
+        (data) -> parseLoginAttempt());
     loginPane.add(loginButton, 0, 3, 2, 1);
     GridPane.setMargin(loginButton, new Insets(3, 0, 0, 0));
   }
 
   /**
    * Places a horizontal separator on this page
-   *
-   * @param loginPane the second pane in this page used for styling
    */
-  private void makeSeparator(GridPane loginPane) {
+  private void makeSeparator() {
     Separator horizontalSeparator = factory.makeSeparator(loginPane, 0, 4);
     GridPane.setColumnSpan(horizontalSeparator, 2);
   }
@@ -161,20 +140,17 @@ public class LoginPage extends Page {
   /**
    * Checks the input values provided by the user
    *
-   * @param email The entry into the email box
-   * @param password The entry into the password box
    * @return true if the given email and password correspond to a specific user, false otherwise
    */
-  private boolean checkAuthorization(TextField email, TextField password) {
-    return User.getAllUsersCopy().containsKey(email.getText())
+  private boolean checkAuthorization() {
+    return User.getAllUsersCopy().containsKey(emailInput.getText())
         && User.getAllUsersCopy()
-            .get(email.getText())
+            .get(emailInput.getText())
             .getPersonalInfo()
-            .correctAuthentification(password.getText());
+            .correctAuthentification(passInput.getText());
   }
 
-  private void parseLoginAttempt(
-      Stage primaryStage, TextField emailInput, TextField passInput, Label errorMessage) {
+  private void parseLoginAttempt() {
     {
       try {
         User user;
@@ -189,12 +165,12 @@ public class LoginPage extends Page {
                   "Login attempt failed, user is not registered in the system");
           throw new Exception();
         }
-        if (checkAuthorization(emailInput, passInput)) {
+        if (checkAuthorization()) {
           if (user.getCardCommands().getPermission().equals("admin")) {
             pageCreator.makeAdminUserPage(user);
           } else {
             pageCreator.makeUserPage(user);
-          };
+          }
           LogWriter.getLogWriter()
               .logInfoMessage(
                   LoginPage.class.getName(),

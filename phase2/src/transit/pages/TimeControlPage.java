@@ -29,7 +29,6 @@ public class TimeControlPage extends Page {
    * @param secondaryStage the alternate window on which this popup is served
    */
   void makeScene() {
-    grid = new GridPane();
     grid.setHgap(10);
     grid.setVgap(10);
 

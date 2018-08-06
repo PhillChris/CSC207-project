@@ -27,7 +27,7 @@ public class PageCreator {
 
     void makeRouteCreationPage(){new RouteCreationPage(Main.secondaryStage);}
 
-    void makeSignUpPage(){new SignUpPage(Main.secogindaryStage);}
+    void makeSignUpPage(){new SignUpPage(Main.secondaryStage);}
 
     void makeTapPage(UserCardCommands cards, Card card, String selectedType){
         new TapPage(Main.secondaryStage, cards, card, selectedType);

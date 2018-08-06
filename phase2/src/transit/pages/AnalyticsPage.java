@@ -37,7 +37,7 @@ public class AnalyticsPage {
     this.statistics = statistics;
     setLayout();
     Scene scene = new Scene(layout, 800, 600);
-    stage.setScene(sceneg);
+    stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");
   }

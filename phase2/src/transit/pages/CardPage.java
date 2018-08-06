@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Card;
-import transit.system.User;
 import transit.system.UserCardCommands;
 
 /** Represents a page containing all functionality associated with a user's set of cards */
@@ -72,7 +71,7 @@ public class CardPage extends Page {
     factory.makeButton(
         grid,
         "Tap",
-        () -> pageCreator.makeTapPage(cards, cards.getCardsCopy().get(id)), "Bus"),
+            () -> pageCreator.makeTapPage(cards, cards.getCardsCopy().get(id), "Bus"),
         0,
         3 + i;
 

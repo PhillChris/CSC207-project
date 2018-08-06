@@ -12,6 +12,12 @@ import transit.system.User;
 
 /** Represents a page opened when making a new account in this transit system */
 public class SignUpPage extends Page {
+  GridPane signUpPane;
+  TextField userInput;
+  TextField emailInput;
+  PasswordField passInput;
+  ComboBox<String> userType;
+  Label errorMessage;
 
   /**
    * Constructs a new SignUpPage
@@ -49,42 +55,42 @@ public class SignUpPage extends Page {
    *
    */
   private void makeSignUpPane() {
-    GridPane signUpPane = new GridPane();
+    this.signUpPane = new GridPane();
     signUpPane.setPadding(new Insets(0, 0, 0, 0));
     signUpPane.setHgap(10);
     signUpPane.setVgap(12);
 
-    placeLabels(signUpPane);
-    makeIcons(signUpPane);
+    placeLabels();
+    makeIcons();
 
-    TextField userInput = makeUserInput(signUpPane);
-    TextField emailInput = makeEmailInput(signUpPane);
-    PasswordField passInput = makePassInput(signUpPane);
-    ComboBox<String> userType = makeTypeCombo(signUpPane);
+    this.userInput = makeUserInput();
+    this.emailInput = makeEmailInput();
+    this.passInput = makePassInput();
+    this.userType = makeTypeCombo();
 
-    Label errorMessage = makeErrorMessage(signUpPane);
+    this.errorMessage = makeErrorMessage();
 
-    makeSeparator(signUpPane);
+    makeSeparator();
 
-    makeSignUpButton(signUpPane, userInput, emailInput, passInput, userType, errorMessage);
-    makeBackButton(stage, signUpPane);
+    makeSignUpButton();
+    makeBackButton();
 
     grid.add(signUpPane, 0, 1);
   }
 
-  private TextField makeUserInput(GridPane signUpPane) {
+  private TextField makeUserInput() {
     return factory.makeTextField(signUpPane, "Username", 1, 1);
   }
 
-  private TextField makeEmailInput(GridPane signUpPane) {
+  private TextField makeEmailInput() {
     return factory.makeTextField(signUpPane, "Email", 1, 2);
   }
 
-  private PasswordField makePassInput(GridPane signUpPane) {
+  private PasswordField makePassInput() {
     return factory.makePasswordField(signUpPane, "Password (6+ chars)", 1, 3);
   }
 
-  private ComboBox<String> makeTypeCombo(GridPane signUpPane) {
+  private ComboBox<String> makeTypeCombo() {
     String[] choices = {"Standard", "Admin", "Student"};
     ComboBox<String> userType = factory.makeComboBox(signUpPane, choices, 1, 4);
     GridPane.setColumnSpan(userType, 2);
@@ -92,7 +98,7 @@ public class SignUpPage extends Page {
     GridPane.setMargin(userType, new Insets(0, 9, 0, 0));
     return userType;
   }
-  private void placeLabels(GridPane signUpPane) {
+  private void placeLabels() {
     Label signUp = new Label("Sign up");
     signUp.setId("signUpLabel");
     signUpPane.add(signUp, 0, 0, 2, 1);
@@ -102,31 +108,25 @@ public class SignUpPage extends Page {
     signUpPane.add(userType, 0, 4, 2, 1);
   }
 
-  private Label makeErrorMessage(GridPane signUpPane) {
+  private Label makeErrorMessage() {
     Label errorMessage = factory.makeLabel(signUpPane, "", 1, 0);
     errorMessage.setId("errorMessage");
     GridPane.setHalignment(errorMessage, HPos.RIGHT);
     return errorMessage;
   }
 
-  private void makeSeparator(GridPane signUpPane) {
+  private void makeSeparator() {
     Separator horizontalSeparator = factory.makeSeparator(signUpPane, 0, 5);
     GridPane.setColumnSpan(horizontalSeparator, 2);
   }
 
-  private void makeIcons(GridPane signUpPane) {
+  private void makeIcons() {
     factory.makeImage(signUpPane, "transit/pages/assets/face.png", 0, 1);
     factory.makeImage(signUpPane, "transit/pages/assets/email.png", 0, 2);
     factory.makeImage(signUpPane, "transit/pages/assets/key.png", 0, 3);
   }
 
-  private void makeSignUpButton(
-      GridPane signUpPane,
-      TextField userInput,
-      TextField emailInput,
-      PasswordField passInput,
-      ComboBox<String> userType,
-      Label errorMessage) {
+  private void makeSignUpButton() {
     Button signUpButton = new Button("Sign Up");
     signUpButton.setOnAction(
         (data) -> {
@@ -147,7 +147,7 @@ public class SignUpPage extends Page {
     GridPane.setHalignment(signUpButton, HPos.LEFT);
   }
 
-  private void makeBackButton(Stage primaryStage, GridPane signUpPane) {
+  private void makeBackButton() {
     Button backButton = new Button("Go Back");
     backButton.setOnAction((data) -> pageCreator.makeLoginPage());
     signUpPane.add(backButton, 1, 6, 2, 1);

@@ -23,6 +23,7 @@ public class AdminUserPage extends AuthenticatedPage {
     super(primaryStage, adminUser);
     makeScene();
     stage.setScene(this.scene);
+    stage.setTitle("Admin Control Panel");
     stage.show();
   }
 
@@ -62,7 +63,5 @@ public class AdminUserPage extends AuthenticatedPage {
     Button toggle =
         factory.makeButton(grid, "User view", () -> new UserPage(stage, this.user), 1, 2);
     GridPane.setHalignment(toggle, HPos.RIGHT);
-    Button logout = factory.makeButton(grid, "Logout", () -> new LoginPage(stage), 1, 1);
-    GridPane.setHalignment(logout, HPos.RIGHT);
   }
 }

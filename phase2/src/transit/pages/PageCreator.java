@@ -12,7 +12,7 @@ public class PageCreator {
 
     void makeAdminUserPage(User adminUser){new AdminUserPage(Main.primaryStage, adminUser);}
 
-    void makeAnalyticsPage(Stage stage, HashMap<String, Statistics> statistics){
+    void makeAnalyticsPage(HashMap<String, Statistics> statistics){
         new AnalyticsPage(Main.secondaryStage, statistics);}
 
     void makeAppendRoutePage(Route route){new AppendRoutePage(Main.secondaryStage, route);}

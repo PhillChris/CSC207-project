@@ -1,9 +1,12 @@
 package transit.pages;
 
+import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.stage.Stage;
+import transit.system.Statistics;
 import transit.system.TransitTime;
 
 import java.time.LocalDate;
@@ -11,7 +14,24 @@ import java.time.YearMonth;
 import java.util.HashMap;
 
 /** Represents a page used to show statistical information */
-public abstract class GraphPage extends Page {
+public abstract class GraphPage {
+
+  Stage stage;
+
+  Scene scene;
+
+  protected HashMap<String, Statistics> statistics;
+
+  public GraphPage(HashMap<String, Statistics> statistics){
+    statistics = statistics;
+    stage = new Stage();
+    makeScene();
+    stage.setScene(scene);
+    stage.show();
+
+  }
+
+  abstract void makeScene();
 
   /** The chart displayed by this page */
   protected LineChart<String, Number> chart;

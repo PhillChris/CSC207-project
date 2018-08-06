@@ -15,7 +15,6 @@ public class AnalyticsPage extends GraphPage {
   ComboBox<Statistics> statOptions = new ComboBox<>();
   ComboBox<String> timeOptions = new ComboBox<>();
   private BorderPane layout = new BorderPane();
-  private HashMap<String, Statistics> statistics;
 
   /**
    * Initialize a new instance of an AnalyticsPage.
@@ -23,14 +22,12 @@ public class AnalyticsPage extends GraphPage {
    * @param primaryStage The stage for this page to be displayed
    */
   public AnalyticsPage(HashMap<String, Statistics> statistics) {
-    this.statistics = statistics;
-    makeScene();
-    title = "Analytics";
-    stage.show();
+    super(statistics);
   }
 
   @Override
   void makeScene() {
+    this.statistics = statistics;
     stage.setTitle("Transit System Simulator");
     setupStatOptions();
     dropDowns.getChildren().addAll(timeOptions, statOptions);

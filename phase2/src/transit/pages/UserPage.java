@@ -25,7 +25,6 @@ public class UserPage extends AuthenticatedPage {
    */
   public UserPage(Stage primaryStage, User user) {
     super(primaryStage, user);
-    makeScene();
   }
 
   /**

@@ -41,8 +41,8 @@ public class Main extends Application {
     primaryStage.setTitle("Transit System Simulator");
     LoginPage loginPage = new LoginPage(primaryStage);
     primaryStage.setScene(loginPage.getScene());
-    new TimeControlPage();
     primaryStage.show();
+    new TimeControlPage();
     LogWriter.getLogWriter()
         .logInfoMessage(Main.class.getName(), "start", "Program initialization complete");
   }

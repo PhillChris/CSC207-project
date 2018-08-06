@@ -27,8 +27,12 @@ public abstract class AuthenticatedPage extends Page {
    * @param user the user associated with this authenticated page
    */
   public AuthenticatedPage(Stage primaryStage, User user) {
-    super(primaryStage);
+    super(primaryStage, true);
     this.user = user;
+    makeScene();
+    stage.setTitle(user.toString());
+    stage.setScene(scene);
+    stage.show();
   }
 
   /**

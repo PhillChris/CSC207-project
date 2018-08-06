@@ -20,7 +20,6 @@ public class LoginPage extends Page {
   public LoginPage(Stage primaryStage) {
     super(primaryStage);
     title = "Login";
-    makeScene();
   }
 
   /**

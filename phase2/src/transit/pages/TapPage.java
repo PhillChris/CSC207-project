@@ -34,6 +34,7 @@ public class TapPage extends Page {
    * @param cardPageStage the label to update when this page
    */
   public TapPage(User user, Card card, String selectedType) {
+    super(new Stage(), true);
     this.user = user;
     this.card = card;
     this.selectedType = selectedType;

@@ -13,6 +13,5 @@ public class SystemGraphPage extends AnalyticsPage {
    */
   public SystemGraphPage() {
     super(Statistics.getSystemStatistics());
-    title = "Monthly Revenue (Current Year)";
   }
 }

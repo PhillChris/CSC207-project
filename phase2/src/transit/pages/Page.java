@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import transit.system.TransitTime;
+import transit.system.User;
 
 import java.util.Optional;
 
@@ -26,6 +27,9 @@ public abstract class Page {
   /** The default constructor for this page */
   public Page() {
     stage = new Stage();
+    makeScene();
+    stage.setScene(scene);
+    stage.show();
   }
 
   /**
@@ -34,6 +38,18 @@ public abstract class Page {
    * @param primaryStage the PRIMARY stage of this application.
    */
   public Page(Stage primaryStage) {
+    this.stage = primaryStage;
+    makeScene();
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  /**
+   * A constructor that sets the primary stages close action to end the program.
+   *
+   * @param primaryStage the PRIMARY stage of this application.
+   */
+  public Page(Stage primaryStage, Boolean delayStageCreation) {
     this.stage = primaryStage;
   }
   /** @return the scene to be represented in the program stage */

@@ -20,8 +20,6 @@ public class AddFundsPage extends AuthenticatedPage {
    */
   public AddFundsPage(Stage primaryStage, User user, Card card) {
     super(primaryStage, user);
-    this.card = card;
-    makeScene();
   }
 
   /**
@@ -30,6 +28,7 @@ public class AddFundsPage extends AuthenticatedPage {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   public void makeScene() {
+    this.card = card;
     makeLabel(grid, "Add the following amount: ", 0, 0);
     placeCostButton(10, 0, 1);
     placeCostButton(20, 0, 2);

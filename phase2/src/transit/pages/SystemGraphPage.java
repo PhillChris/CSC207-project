@@ -11,8 +11,8 @@ public class SystemGraphPage extends AnalyticsPage {
    *
    * @param primaryStage The stage for this page to be displayed
    */
-  public SystemGraphPage(Stage primaryStage) {
-    super(primaryStage, Statistics.getSystemStatistics());
+  public SystemGraphPage() {
+    super(Statistics.getSystemStatistics());
     title = "Monthly Revenue (Current Year)";
   }
 }

@@ -198,33 +198,6 @@ public abstract class Page {
     }
   }
 
-  /**
-   * Helper method for creating a button that launches a popup window
-   *
-   * @param gridPane The grid that this button will be added to
-   * @param page The type of page of the popup window
-   * @param col The column in the grid that this button will be added to
-   * @param row The row in the grid that this button will be added to
-   */
-  protected Button makePopupButton(GridPane gridPane, Page page, int col, int row) {
-    Stage window = new Stage();
-    window.setTitle(page.title);
-    window.setScene(page.getScene());
-
-    return makeButton(
-        gridPane,
-        page.title,
-        () -> {
-          if (window.isShowing()) {
-            window.toFront();
-          } else {
-            window.show();
-          }
-        },
-        col,
-        row);
-  }
-
   protected Button makeChangeViewButton(
       GridPane gridPane, Stage primaryStage, Page page, int col, int row) {
     return makeButton(

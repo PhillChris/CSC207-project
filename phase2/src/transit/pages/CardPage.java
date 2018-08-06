@@ -19,11 +19,12 @@ public class CardPage extends Page {
    * @param primaryStage The stage for this page to be displaced
    * @param user The user associated with this page
    */
-  public CardPage(Stage primaryStage, User user) {
+  public CardPage(User user) {
     this.user = user;
-    addUserData(primaryStage);
+    addUserData();
     makeScene();
     title = "Cards";
+    stage.show();
   }
 
   /**
@@ -38,7 +39,7 @@ public class CardPage extends Page {
         "Add card",
         () -> {
           user.getCardCommands().addCard();
-          stage.setScene(new CardPage(stage, this.user).getScene());
+          stage.setScene(new CardPage(this.user).getScene());
         },
         0,
         0);
@@ -52,7 +53,7 @@ public class CardPage extends Page {
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
-  protected void addUserData(Stage primaryStage) {
+  protected void addUserData() {
     this.currentTrips = makeLabel(grid, generateCurrentTripMessage(user), 0, 1);
     int i = 0;
     for (Integer id : this.user.getCardCommands().getCardsCopy().keySet()) {
@@ -69,9 +70,10 @@ public class CardPage extends Page {
    * @param i the current iteration of the loop in CardPage.makeScene
    */
   private void addCardButtons(int id, int i) {
-    makePopupButton(
+    makeButton(
         grid,
-        new TapPage(user, user.getCardCommands().getCardsCopy().get(id), new Stage(), "Bus"),
+        "Tap",
+        () -> new TapPage(user, user.getCardCommands().getCardsCopy().get(id), "Bus"),
         0,
         3 + i);
 
@@ -95,7 +97,7 @@ public class CardPage extends Page {
                 "Are you sure that you want to remove this card?",
                 () -> {
                   user.getCardCommands().removeCard(user.getCardCommands().getCardsCopy().get(id));
-                  stage.setScene(new CardPage(stage, this.user).getScene());
+                  stage.setScene(new CardPage(this.user).getScene());
                 }),
         2,
         3 + i);
@@ -107,7 +109,7 @@ public class CardPage extends Page {
           "Report card stolen",
           () -> {
             user.getCardCommands().getCardsCopy().get(id).suspendCard();
-            stage.setScene(new CardPage(stage, this.user).getScene());
+            stage.setScene(new CardPage(this.user).getScene());
           },
           3,
           3 + i);
@@ -117,7 +119,7 @@ public class CardPage extends Page {
           "Activate this card",
           () -> {
             user.getCardCommands().getCardsCopy().get(id).activateCard();
-            stage.setScene(new CardPage(stage, this.user).getScene());
+            stage.setScene(new CardPage(this.user).getScene());
           },
           3,
           3 + i);

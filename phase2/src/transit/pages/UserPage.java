@@ -39,13 +39,14 @@ public class UserPage extends AuthenticatedPage {
     addGreeting();
 
     scene
-      .getStylesheets()
-      .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());
+        .getStylesheets()
+        .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());
   }
 
   /** Adds the user-specific data on this page */
   protected void addGreeting() {
-    Label greeting = makeLabel(grid, String.format("Hello %s", user.getPersonalInfo().getUserName()), 0, 1);
+    Label greeting =
+        makeLabel(grid, String.format("Hello %s", user.getPersonalInfo().getUserName()), 0, 1);
     greeting.setId("greeting");
   }
 
@@ -55,12 +56,14 @@ public class UserPage extends AuthenticatedPage {
    * @param primaryStage the stage on which this page is served
    */
   private void placeUserButtons() {
-    makePopupButton(grid, new CardPage(stage, user), 0, 2);
+    makeButton(grid, "Cards", () -> new CardPage(user), 0, 2);
 
-    makePopupButton(grid, new UserGraphPage(stage, user.getCardCommands().getCardStatistics()), 0, 3);
+    makeButton(
+        grid, "Get Stats", ()->new UserGraphPage(user.getCardCommands().getCardStatistics()), 0, 3);
     super.makeScene();
 
-    makeButton(grid,
+    makeButton(
+        grid,
         "Get last 3 trips",
         () -> {
           Alert a =
@@ -76,23 +79,21 @@ public class UserPage extends AuthenticatedPage {
         7);
 
     if (user.getCardCommands().getPermission().equals("admin")) {
-      Button viewToggle = makeButton(grid,
-          "Admin view",
-          () -> stage.setScene(new AdminUserPage(stage, user).getScene()),
-          2,
-          7);
+      Button viewToggle =
+          makeButton(
+              grid,
+              "Admin view",
+              () -> stage.setScene(new AdminUserPage(stage, user).getScene()),
+              2,
+              7);
       GridPane.setHalignment(viewToggle, HPos.RIGHT);
       GridPane.setHgrow(viewToggle, Priority.ALWAYS);
     }
   }
 
-  /** Creates a popup window containing a monthly expenditure page*/
+  /** Creates a popup window containing a monthly expenditure page */
   private void makeMonthlyExpenditurePage() {
-    Stage secondaryStage = new Stage();
     HashMap<String, Statistics> tripStats = user.getCardCommands().getCardStatistics();
-    AnalyticsPage graphPage = new UserGraphPage(secondaryStage, tripStats);
-    secondaryStage.setTitle("Monthly Expenditure for user " + user);
-    secondaryStage.setScene(graphPage.getScene());
-    secondaryStage.show();
+    AnalyticsPage graphPage = new UserGraphPage(tripStats);
   }
 }

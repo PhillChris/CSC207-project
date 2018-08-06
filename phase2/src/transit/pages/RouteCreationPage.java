@@ -15,11 +15,11 @@ public class RouteCreationPage extends Page {
 
   /**
    * Construct a new instance of RouteCreationPage
+   *
    * @param primaryStage The stage for this page to be displayed
    */
-  public RouteCreationPage(Stage primaryStage) {
+  public RouteCreationPage() {
     this.grid = new GridPane();
-    stage = primaryStage;
     grid.setPadding(new Insets(30, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
@@ -35,23 +35,30 @@ public class RouteCreationPage extends Page {
   @Override
   void makeScene() {
     /** Set the buttons of this page */
-
-    Button createSubway = makePopupButton(grid, new AppendRoutePage(new Stage(), new Route("Subway")), 0, 0);
-    createSubway.setText("Create Subway Route");
-    Button createBus = makePopupButton(grid, new AppendRoutePage(new Stage(), new Route("Bus")), 0, 2);
-    createBus.setText("Create Bus Route");
+    Button createSubway =
+        makeButton(
+            grid,
+            "Create Subway Route",
+            () -> new AppendRoutePage(new Route("Subway")),
+            0,
+            0);
+    Button createBus =
+        makeButton(
+            grid,
+            "Create Bus Route",
+            () -> new AppendRoutePage(new Route("Bus")),
+            0,
+            2);
     makeLabel(grid, "Append to Existing Route:", 0, 4);
     /** Create a button to append to each possible route */
     for (String type : Route.getRoutesCopy().keySet()) {
       for (int i = 0; i < Route.getRoutesCopy().get(type).size(); i++) {
         Route route = Route.getRoutesCopy().get(type).get(i);
-        Button routeButton = makePopupButton(grid, new AppendRoutePage(new Stage(), route), 0, 6 + 2 * i);
-        routeButton.setText(route.toString());
-//        makeButton(grid, route.toString(), () -> appendExistingRoute(route), 0, 6 + 2 * i);
+        Button routeButton =
+            makeButton(
+                grid, route.toString(), () -> new AppendRoutePage(route), 0, 6 + 2 * i);
       }
     }
     this.scene = new Scene(grid, 600, 400);
   }
-
-
 }

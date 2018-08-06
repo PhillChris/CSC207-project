@@ -22,10 +22,11 @@ public class AnalyticsPage extends GraphPage {
    *
    * @param primaryStage The stage for this page to be displayed
    */
-  public AnalyticsPage(Stage primaryStage, HashMap<String, Statistics> statistics) {
+  public AnalyticsPage(HashMap<String, Statistics> statistics) {
     this.statistics = statistics;
     makeScene();
     title = "Analytics";
+    stage.show();
   }
 
   @Override

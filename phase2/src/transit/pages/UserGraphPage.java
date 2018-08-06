@@ -14,7 +14,7 @@ public class UserGraphPage extends AnalyticsPage {
    *
    * @param primaryStage the stage on which this page is being served
    */
-  public UserGraphPage(Stage primaryStage, HashMap<String, Statistics> statistics) {
-    super(primaryStage, statistics);
+  public UserGraphPage(HashMap<String, Statistics> statistics) {
+    super(statistics);
   }
 }

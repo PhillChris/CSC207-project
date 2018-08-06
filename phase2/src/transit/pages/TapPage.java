@@ -22,8 +22,6 @@ public class TapPage extends Page {
   private User user;
   /** The card which is currently tapping */
   private Card card;
-  /** The label outlining current trips this user is taking */
-  private Stage cardPageStage;
   /** The type selected in the selection bar upon creation of this TapPage */
   private String selectedType;
 
@@ -35,10 +33,9 @@ public class TapPage extends Page {
    * @param card the card which is currently tapping
    * @param cardPageStage the label to update when this page
    */
-  public TapPage(User user, Card card, Stage cardPageStage, String selectedType) {
+  public TapPage(User user, Card card, String selectedType) {
     this.user = user;
     this.card = card;
-    this.cardPageStage = cardPageStage;
     this.selectedType = selectedType;
     title = "Tap " + card;
     makeScene();
@@ -138,7 +135,7 @@ public class TapPage extends Page {
                     AlertType.ERROR);
           }
           alert.showAndWait();
-          this.cardPageStage.setScene(new CardPage(cardPageStage, user).getScene());
+          stage.setScene(new CardPage(user).getScene());
         },
         col,
         row);
@@ -156,7 +153,7 @@ public class TapPage extends Page {
     routeType.setOnAction(
         e ->
             stage.setScene(
-                new TapPage(user, card, cardPageStage, routeType.getValue()).getScene()));
+                new TapPage(user, card, routeType.getValue()).getScene()));
     refreshRouteOptionItems(routeType.getValue());
   }
 }

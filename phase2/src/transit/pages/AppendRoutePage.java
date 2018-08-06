@@ -29,8 +29,7 @@ public class AppendRoutePage extends Page {
    * @param stage
    * @param route
    */
-  public AppendRoutePage(Stage stage,Route route) {
-    this.stage = stage;
+  public AppendRoutePage(Route route) {
     this.route = route;
     stationNames = new ArrayList<>();
     for (Station station : route.getRouteStationsCopy()) {
@@ -40,6 +39,7 @@ public class AppendRoutePage extends Page {
     setRouteLabel();
     makeScene();
     title = String.format("Append %s Route", route.getRouteType());
+    stage.show();
   }
 
   /**

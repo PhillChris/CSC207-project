@@ -54,8 +54,8 @@ public class AdminUserPage extends Page {
    */
   private void makeSceneButtons() {
 
-    makePopupButton(grid, new SystemGraphPage(stage), 0, 2);
-    makePopupButton(grid, new RouteCreationPage(stage), 0, 1);
+    makeButton(grid,"System Stats", () -> new SystemGraphPage(), 0, 2);
+    makeButton(grid, "Update Routes", () -> new RouteCreationPage(), 0, 1);
 
     Button toggle = makeButton(grid,
         "User view",

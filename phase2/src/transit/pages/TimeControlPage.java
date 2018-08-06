@@ -18,6 +18,7 @@ public class TimeControlPage extends Page {
     makeScene();
     stage.setX(700);
     stage.setY(200);
+    stage.show();
   }
 
   /**

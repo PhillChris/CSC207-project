@@ -46,8 +46,8 @@ public abstract class AuthenticatedPage extends Page {
     newLogoutButton(2, 0);
     newRemoveAccountButton(0, 6);
 
-    makePopupButton(grid, new ChangeNamePage(stage, user), 0, 4);
-    makePopupButton(grid, new ChangePasswordPage(stage, user), 0, 5);
+    makeButton(grid, "Change name", ()->new ChangeNamePage(stage, user), 0, 4);
+    makeButton(grid, "Change password", ()-> new ChangePasswordPage(stage, user), 0, 5);
     addClock();
     this.scene = new Scene(grid, 600, 375);
   }

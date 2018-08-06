@@ -35,19 +35,7 @@ public abstract class Page {
    *
    * @param primaryStage the PRIMARY stage of this application.
    */
-  public Page(Stage primaryStage) {
-    primaryStage.setOnCloseRequest(
-        new EventHandler<WindowEvent>() {
-          @Override
-          public void handle(WindowEvent windowEvent) {
-            Database.writeToDatabase();
-            Platform.exit();
-            LogWriter.getLogWriter()
-                .logInfoMessage(Page.class.getName(), "Page", "Program session terminated");
-            LogWriter.getLogWriter().closeHandlers();
-          }
-        });
-  }
+  public Page(Stage primaryStage) {}
   /** @return the scene to be represented in the program stage */
   public Scene getScene() {
     return this.scene;

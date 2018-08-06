@@ -1,11 +1,16 @@
 package transit.system;
 
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import transit.pages.LoginPage;
+import transit.pages.Page;
+import transit.pages.TimeControlPage;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import javafx.application.Application;
-import javafx.stage.Stage;
-import transit.pages.LoginPage;
-import transit.pages.TimeControlPage;
 
 /** A transit system simulation. */
 public class Main extends Application {
@@ -20,6 +25,18 @@ public class Main extends Application {
   }
 
   public void start(Stage primaryStage) {
+    primaryStage.setOnCloseRequest(
+        new EventHandler<WindowEvent>() {
+          @Override
+          public void handle(WindowEvent windowEvent) {
+            Database.writeToDatabase();
+            Platform.exit();
+            LogWriter.getLogWriter()
+                .logInfoMessage(Page.class.getName(), "Page", "Program session terminated");
+            LogWriter.getLogWriter().closeHandlers();
+          }
+        });
+
     clearFile("log.txt");
     primaryStage.setTitle("Transit System Simulator");
     LoginPage loginPage = new LoginPage(primaryStage);
@@ -32,7 +49,7 @@ public class Main extends Application {
     secondaryStage.setY(primaryStage.getY() + 125);
     secondaryStage.show();
     LogWriter.getLogWriter()
-          .logInfoMessage(Main.class.getName(), "start", "Program initialization complete");
+        .logInfoMessage(Main.class.getName(), "start", "Program initialization complete");
   }
 
   private void clearFile(String fileName) {

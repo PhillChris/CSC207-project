@@ -20,7 +20,7 @@ public class LoginPage extends Page {
   public LoginPage(Stage primaryStage) {
     super(primaryStage);
     title = "Login";
-    makeScene(primaryStage);
+    makeScene();
   }
 
   /**
@@ -29,12 +29,12 @@ public class LoginPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  protected void makeScene(Stage primaryStage) {
+  protected void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
 
-    makeLoginPane(primaryStage);
+    makeLoginPane();
 
     addTrain();
     addClock();
@@ -50,7 +50,7 @@ public class LoginPage extends Page {
    *
    * @param primaryStage the stage on which this LoginPage is being represented
    */
-  private void makeLoginPane(Stage primaryStage) {
+  private void makeLoginPane() {
     GridPane loginPane = new GridPane();
     loginPane.setHgap(10);
     loginPane.setVgap(12);
@@ -62,8 +62,8 @@ public class LoginPage extends Page {
 
     Label errorMessage = makeErrorMessage(loginPane);
 
-    makeSignUpButton(primaryStage, loginPane);
-    makeLoginButton(primaryStage, loginPane, emailInput, passInput, errorMessage);
+    makeSignUpButton(stage, loginPane);
+    makeLoginButton(stage, loginPane, emailInput, passInput, errorMessage);
 
     makeSeparator(loginPane);
 

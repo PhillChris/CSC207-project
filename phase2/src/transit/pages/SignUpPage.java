@@ -19,8 +19,9 @@ public class SignUpPage extends Page {
    * @param primaryStage the stage on which this SignUpPage is being served
    */
   public SignUpPage(Stage primaryStage) {
+    super(primaryStage);
     title = "Sign Up";
-    makeScene(primaryStage);
+    makeScene();
   }
 
   /**
@@ -29,12 +30,12 @@ public class SignUpPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  protected void makeScene(Stage primaryStage) {
+  protected void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
 
-    makeSignUpPane(primaryStage);
+    makeSignUpPane();
 
     addTrain();
     addClock();
@@ -48,7 +49,7 @@ public class SignUpPage extends Page {
    *
    * @param primaryStage The stage for this page to be viewed
    */
-  private void makeSignUpPane(Stage primaryStage) {
+  private void makeSignUpPane() {
     GridPane signUpPane = new GridPane();
     signUpPane.setPadding(new Insets(0, 0, 0, 0));
     signUpPane.setHgap(10);
@@ -67,7 +68,7 @@ public class SignUpPage extends Page {
     makeSeparator(signUpPane);
 
     makeSignUpButton(signUpPane, userInput, emailInput, passInput, userType, errorMessage);
-    makeBackButton(primaryStage, signUpPane);
+    makeBackButton(stage, signUpPane);
 
     grid.add(signUpPane, 0, 1);
   }

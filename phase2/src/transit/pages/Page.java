@@ -1,7 +1,5 @@
 package transit.pages;
 
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,32 +8,38 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import transit.system.Database;
-import transit.system.LogWriter;
 import transit.system.TransitTime;
 
 import java.util.Optional;
 
 /** Represents a general page serving scenes to be represented in the transit system program */
 public abstract class Page {
+  /** The stage which the */
+  protected Stage stage;
   /** Represents the scene which this page serves */
   protected Scene scene;
   /** Represents the grid where elements on the page are placed */
   protected GridPane grid = new GridPane();
-
   /** The title of any window of this page */
   protected String title;
 
   /** The default constructor for this page */
-  public Page() {}
+  public Page() {
+    stage = new Stage();
+    grid = new GridPane();
+    makeScene();
+    stage.setScene(scene);
+    stage.show();
+  }
 
   /**
    * A constructor that sets the primary stages close action to end the program.
    *
    * @param primaryStage the PRIMARY stage of this application.
    */
-  public Page(Stage primaryStage) {}
+  public Page(Stage primaryStage) {
+    this.stage = primaryStage;
+  }
   /** @return the scene to be represented in the program stage */
   public Scene getScene() {
     return this.scene;
@@ -47,7 +51,7 @@ public abstract class Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    *     purposes
    */
-  abstract void makeScene(Stage primaryStage);
+  abstract void makeScene();
 
   /**
    * A general helper method to place a label with the given text at the given coordinates and grid

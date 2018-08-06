@@ -19,7 +19,7 @@ public class ChangePasswordPage extends AuthenticatedPage {
   public ChangePasswordPage(Stage primaryStage, User user) {
     super(primaryStage, user);
     title = "Change Password";
-    makeScene(primaryStage);
+    makeScene();
   }
 
   /**
@@ -28,7 +28,7 @@ public class ChangePasswordPage extends AuthenticatedPage {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  public void makeScene(Stage primaryStage) {
+  public void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);

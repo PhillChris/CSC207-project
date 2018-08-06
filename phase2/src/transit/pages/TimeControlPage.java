@@ -13,8 +13,11 @@ import transit.system.TransitTime;
 /** Represents a time control window in this simulation */
 public class TimeControlPage extends Page {
   /** Constructs a new instance of TimeControlPage */
-  public TimeControlPage(Stage secondaryStage) {
-    makeScene(secondaryStage);
+  public TimeControlPage() {
+    super();
+    makeScene();
+    stage.setX(700);
+    stage.setY(200);
   }
 
   /**
@@ -22,7 +25,8 @@ public class TimeControlPage extends Page {
    *
    * @param secondaryStage the alternate window on which this popup is served
    */
-  void makeScene(Stage secondaryStage) {
+  void makeScene() {
+    grid = new GridPane();
     grid.setHgap(10);
     grid.setVgap(10);
 

@@ -18,7 +18,7 @@ public class ChangeNamePage extends AuthenticatedPage {
   public ChangeNamePage(Stage primaryStage, User user) {
     super(primaryStage, user);
     title = "Change Username";
-    makeScene(primaryStage);
+    makeScene();
   }
 
   /**
@@ -27,7 +27,7 @@ public class ChangeNamePage extends AuthenticatedPage {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  public void makeScene(Stage primaryStage) {
+  public void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
@@ -37,7 +37,7 @@ public class ChangeNamePage extends AuthenticatedPage {
         "Change name!",
         () -> {
           user.getPersonalInfo().changeName(newName.getText());
-          primaryStage.setScene(new UserPage(primaryStage, user).getScene());
+          stage.setScene(new UserPage(stage, user).getScene());
         },
         2,
         0);

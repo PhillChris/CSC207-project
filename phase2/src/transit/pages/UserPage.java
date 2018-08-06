@@ -25,7 +25,7 @@ public class UserPage extends AuthenticatedPage {
    */
   public UserPage(Stage primaryStage, User user) {
     super(primaryStage, user);
-    makeScene(primaryStage);
+    makeScene();
   }
 
   /**
@@ -34,8 +34,8 @@ public class UserPage extends AuthenticatedPage {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  protected void makeScene(Stage primaryStage) {
-    placeUserButtons(primaryStage);
+  protected void makeScene() {
+    placeUserButtons();
     addGreeting();
 
     scene
@@ -54,11 +54,11 @@ public class UserPage extends AuthenticatedPage {
    *
    * @param primaryStage the stage on which this page is served
    */
-  private void placeUserButtons(Stage primaryStage) {
-    makePopupButton(grid, new CardPage(primaryStage, user), 0, 2);
+  private void placeUserButtons() {
+    makePopupButton(grid, new CardPage(stage, user), 0, 2);
 
-    makePopupButton(grid, new UserGraphPage(primaryStage, user.getCardCommands().getCardStatistics()), 0, 3);
-    super.makeScene(primaryStage);
+    makePopupButton(grid, new UserGraphPage(stage, user.getCardCommands().getCardStatistics()), 0, 3);
+    super.makeScene();
 
     makeButton(grid,
         "Get last 3 trips",
@@ -78,7 +78,7 @@ public class UserPage extends AuthenticatedPage {
     if (user.getCardCommands().getPermission().equals("admin")) {
       Button viewToggle = makeButton(grid,
           "Admin view",
-          () -> primaryStage.setScene(new AdminUserPage(primaryStage, user).getScene()),
+          () -> stage.setScene(new AdminUserPage(stage, user).getScene()),
           2,
           7);
       GridPane.setHalignment(viewToggle, HPos.RIGHT);

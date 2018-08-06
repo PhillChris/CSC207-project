@@ -24,12 +24,12 @@ public class AnalyticsPage extends GraphPage {
    */
   public AnalyticsPage(Stage primaryStage, HashMap<String, Statistics> statistics) {
     this.statistics = statistics;
-    makeScene(primaryStage);
+    makeScene();
     title = "Analytics";
   }
 
   @Override
-  void makeScene(Stage stage) {
+  void makeScene() {
     stage.setTitle("Transit System Simulator");
     setupStatOptions();
     dropDowns.getChildren().addAll(timeOptions, statOptions);

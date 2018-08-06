@@ -38,7 +38,7 @@ public class AppendRoutePage extends Page {
     }
     routeLabel = new Label();
     setRouteLabel();
-    makeScene(stage);
+    makeScene();
     title = String.format("Append %s Route", route.getRouteType());
   }
 
@@ -48,7 +48,7 @@ public class AppendRoutePage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  void makeScene(Stage primaryStage) {
+  void makeScene() {
     /** Set the grid of this page */
     grid.add(routeLabel, 0, 0, 20, 2);
     makeLabel(grid, "Enter the name of the new station here", 8, 9);

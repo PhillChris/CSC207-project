@@ -24,7 +24,7 @@ public class AdminUserPage extends Page {
   public AdminUserPage(Stage primaryStage, User adminUser) {
     super(primaryStage);
     this.adminUser = adminUser;
-    makeScene(primaryStage);
+    makeScene();
   }
 
   /**
@@ -33,12 +33,12 @@ public class AdminUserPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  protected void makeScene(Stage primaryStage) {
+  protected void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
     addClock();
-    makeSceneButtons(primaryStage);
+    makeSceneButtons();
 
     scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene
@@ -52,19 +52,19 @@ public class AdminUserPage extends Page {
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
-  private void makeSceneButtons(Stage primaryStage) {
+  private void makeSceneButtons() {
 
-    makePopupButton(grid, new SystemGraphPage(primaryStage), 0, 2);
-    makePopupButton(grid, new RouteCreationPage(primaryStage), 0, 1);
+    makePopupButton(grid, new SystemGraphPage(stage), 0, 2);
+    makePopupButton(grid, new RouteCreationPage(stage), 0, 1);
 
     Button toggle = makeButton(grid,
         "User view",
-        () -> primaryStage.setScene(new UserPage(primaryStage, this.adminUser).getScene()),
+        () -> stage.setScene(new UserPage(stage, this.adminUser).getScene()),
         1,
         2);
     GridPane.setHalignment(toggle, HPos.RIGHT);
     Button logout = makeButton(grid,
-        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 1, 1);
+        "Logout", () -> stage.setScene(new LoginPage(stage).getScene()), 1, 1);
     GridPane.setHalignment(logout, HPos.RIGHT);
   }
 }

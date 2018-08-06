@@ -21,7 +21,7 @@ public class AddFundsPage extends AuthenticatedPage {
   public AddFundsPage(Stage primaryStage, User user, Card card) {
     super(primaryStage, user);
     this.card = card;
-    makeScene(primaryStage);
+    makeScene();
   }
 
   /**
@@ -29,11 +29,11 @@ public class AddFundsPage extends AuthenticatedPage {
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
-  public void makeScene(Stage primaryStage) {
+  public void makeScene() {
     makeLabel(grid, "Add the following amount: ", 0, 0);
-    placeCostButton(primaryStage, 10, 0, 1);
-    placeCostButton(primaryStage, 20, 0, 2);
-    placeCostButton(primaryStage, 50, 0, 3);
+    placeCostButton(10, 0, 1);
+    placeCostButton(20, 0, 2);
+    placeCostButton(50, 0, 3);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
 
@@ -45,12 +45,12 @@ public class AddFundsPage extends AuthenticatedPage {
    * @param col The column number of the button
    * @param row The row number of the button
    */
-  private void placeCostButton(Stage primaryStage, int cost, int col, int row) {
+  private void placeCostButton(int cost, int col, int row) {
     makeButton(grid,
         "$" + cost,
         () -> {
           card.addBalance(cost * 100);
-          primaryStage.setScene(new CardPage(primaryStage, user).getScene());
+          stage.setScene(new CardPage(stage, user).getScene());
         },
         col,
         row);

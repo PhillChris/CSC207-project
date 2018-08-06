@@ -37,17 +37,17 @@ public abstract class AuthenticatedPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  protected void makeScene(Stage primaryStage) {
+  protected void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
 
     newUserInfoButton(1, 0);
-    newLogoutButton(primaryStage, 2, 0);
-    newRemoveAccountButton(primaryStage, 0, 6);
+    newLogoutButton(2, 0);
+    newRemoveAccountButton(0, 6);
 
-    makePopupButton(grid, new ChangeNamePage(primaryStage, user), 0, 4);
-    makePopupButton(grid, new ChangePasswordPage(primaryStage, user), 0, 5);
+    makePopupButton(grid, new ChangeNamePage(stage, user), 0, 4);
+    makePopupButton(grid, new ChangePasswordPage(stage, user), 0, 5);
     addClock();
     this.scene = new Scene(grid, 600, 375);
   }
@@ -102,8 +102,8 @@ public abstract class AuthenticatedPage extends Page {
    * @param col the column in the grid where this logout button is displayed
    * @param row the row in the grid where this logout button is displayed
    */
-  public void newLogoutButton(Stage primaryStage, int col, int row) { Button logout = makeButton(grid,
-        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), col, row);
+  public void newLogoutButton(int col, int row) { Button logout = makeButton(grid,
+        "Logout", () -> stage.setScene(new LoginPage(stage).getScene()), col, row);
     GridPane.setHalignment(logout, HPos.RIGHT);
     GridPane.setHgrow(logout, Priority.ALWAYS);
   }
@@ -116,7 +116,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param col the column in the grid where this remove account button is displayed
    * @param row the row in the grid where this remove account button is displayed
    */
-  private void newRemoveAccountButton(Stage primaryStage, int col, int row) {
+  private void newRemoveAccountButton(int col, int row) {
     makeButton(grid,
         "Remove this account!",
         () ->
@@ -126,7 +126,7 @@ public abstract class AuthenticatedPage extends Page {
                 "Are you sure you want this account to be removed?",
                 () -> {
                   user.removeUser();
-                  primaryStage.setScene(new LoginPage(primaryStage).getScene());
+                  stage.setScene(new LoginPage(stage).getScene());
                 }),
         0,
         6);

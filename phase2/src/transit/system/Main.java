@@ -41,13 +41,8 @@ public class Main extends Application {
     primaryStage.setTitle("Transit System Simulator");
     LoginPage loginPage = new LoginPage(primaryStage);
     primaryStage.setScene(loginPage.getScene());
-    Stage secondaryStage = new Stage();
-    secondaryStage.setTitle("Transit System Time Control");
-    secondaryStage.setScene(new TimeControlPage(secondaryStage).getScene());
+    new TimeControlPage();
     primaryStage.show();
-    secondaryStage.setX(primaryStage.getX() + primaryStage.getWidth());
-    secondaryStage.setY(primaryStage.getY() + 125);
-    secondaryStage.show();
     LogWriter.getLogWriter()
         .logInfoMessage(Main.class.getName(), "start", "Program initialization complete");
   }

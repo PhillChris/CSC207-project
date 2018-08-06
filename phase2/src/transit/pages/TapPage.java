@@ -35,14 +35,13 @@ public class TapPage extends Page {
    * @param card the card which is currently tapping
    * @param cardPageStage the label to update when this page
    */
-  public TapPage(
-      Stage secondaryStage, User user, Card card, Stage cardPageStage, String selectedType) {
+  public TapPage(User user, Card card, Stage cardPageStage, String selectedType) {
     this.user = user;
     this.card = card;
     this.cardPageStage = cardPageStage;
     this.selectedType = selectedType;
     title = "Tap " + card;
-    makeScene(secondaryStage);
+    makeScene();
   }
 
   /**
@@ -51,10 +50,10 @@ public class TapPage extends Page {
    * @param secondaryStage the popup stage on which this page is served
    */
   @Override
-  public void makeScene(Stage secondaryStage) {
+  public void makeScene() {
     makeLabel(grid, "Choose route type!", 0, 0);
     ChoiceBox<String> routeType = new ChoiceBox<>();
-    setupRouteTypeBox(routeType, secondaryStage);
+    setupRouteTypeBox(routeType);
     grid.add(routeType, 1, 0);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
@@ -150,14 +149,14 @@ public class TapPage extends Page {
    *
    * @param routeType the checkbox selecting route type
    */
-  private void setupRouteTypeBox(ChoiceBox<String> routeType, Stage secondaryStage) {
+  private void setupRouteTypeBox(ChoiceBox<String> routeType) {
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     refreshRouteOptionItems(this.selectedType); /* Loads the first round of buttons*/
     routeType.getSelectionModel().select(this.selectedType);
     routeType.setOnAction(
         e ->
-            secondaryStage.setScene(
-                new TapPage(secondaryStage, user, card, cardPageStage, routeType.getValue()).getScene()));
+            stage.setScene(
+                new TapPage(user, card, cardPageStage, routeType.getValue()).getScene()));
     refreshRouteOptionItems(routeType.getValue());
   }
 }

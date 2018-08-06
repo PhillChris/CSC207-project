@@ -1,7 +1,6 @@
 package transit.pages;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -23,7 +22,7 @@ public class CardPage extends Page {
   public CardPage(Stage primaryStage, User user) {
     this.user = user;
     addUserData(primaryStage);
-    makeScene(primaryStage);
+    makeScene();
     title = "Cards";
   }
 
@@ -33,12 +32,13 @@ public class CardPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  protected void makeScene(Stage primaryStage) {
-    makeButton(grid,
+  protected void makeScene() {
+    makeButton(
+        grid,
         "Add card",
         () -> {
           user.getCardCommands().addCard();
-          primaryStage.setScene(new CardPage(primaryStage, this.user).getScene());
+          stage.setScene(new CardPage(stage, this.user).getScene());
         },
         0,
         0);
@@ -56,7 +56,7 @@ public class CardPage extends Page {
     this.currentTrips = makeLabel(grid, generateCurrentTripMessage(user), 0, 1);
     int i = 0;
     for (Integer id : this.user.getCardCommands().getCardsCopy().keySet()) {
-      addCardButtons(primaryStage, id, i);
+      addCardButtons(id, i);
       i++;
     }
   }
@@ -68,19 +68,25 @@ public class CardPage extends Page {
    * @param id the id of the current card being represented
    * @param i the current iteration of the loop in CardPage.makeScene
    */
-  private void addCardButtons(Stage primaryStage, int id, int i) {
-    makePopupButton(grid, new TapPage(new Stage(), user, user.getCardCommands().getCardsCopy().get(id),
-      primaryStage, "Bus"), 0, 3 + i);
+  private void addCardButtons(int id, int i) {
+    makePopupButton(
+        grid,
+        new TapPage(user, user.getCardCommands().getCardsCopy().get(id), new Stage(), "Bus"),
+        0,
+        3 + i);
 
-    makeButton(grid,
+    makeButton(
+        grid,
         "Add funds",
         () ->
-            primaryStage.setScene(
-                new AddFundsPage(primaryStage, user, user.getCardCommands().getCardsCopy().get(id)).getScene()),
+            stage.setScene(
+                new AddFundsPage(stage, user, user.getCardCommands().getCardsCopy().get(id))
+                    .getScene()),
         1,
         3 + i);
 
-    makeButton(grid,
+    makeButton(
+        grid,
         "Remove This Card",
         () ->
             makeConfirmationAlert(
@@ -89,27 +95,29 @@ public class CardPage extends Page {
                 "Are you sure that you want to remove this card?",
                 () -> {
                   user.getCardCommands().removeCard(user.getCardCommands().getCardsCopy().get(id));
-                  primaryStage.setScene(new CardPage(primaryStage, this.user).getScene());
+                  stage.setScene(new CardPage(stage, this.user).getScene());
                 }),
         2,
         3 + i);
 
     // if the current card is suspended
     if (!user.getCardCommands().getCardsCopy().get(id).isSuspended()) {
-      makeButton(grid,
+      makeButton(
+          grid,
           "Report card stolen",
           () -> {
             user.getCardCommands().getCardsCopy().get(id).suspendCard();
-            primaryStage.setScene(new CardPage(primaryStage, this.user).getScene());
+            stage.setScene(new CardPage(stage, this.user).getScene());
           },
           3,
           3 + i);
     } else {
-      makeButton(grid,
+      makeButton(
+          grid,
           "Activate this card",
           () -> {
             user.getCardCommands().getCardsCopy().get(id).activateCard();
-            primaryStage.setScene(new CardPage(primaryStage, this.user).getScene());
+            stage.setScene(new CardPage(stage, this.user).getScene());
           },
           3,
           3 + i);
@@ -131,5 +139,4 @@ public class CardPage extends Page {
     }
     return message;
   }
-
 }

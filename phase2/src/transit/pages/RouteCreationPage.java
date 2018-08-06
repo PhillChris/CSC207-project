@@ -23,7 +23,7 @@ public class RouteCreationPage extends Page {
     grid.setPadding(new Insets(30, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
-    makeScene(primaryStage);
+    makeScene();
     title = "Create/Edit Routes";
   }
 
@@ -33,7 +33,7 @@ public class RouteCreationPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  void makeScene(Stage primaryStage) {
+  void makeScene() {
     /** Set the buttons of this page */
 
     Button createSubway = makePopupButton(grid, new AppendRoutePage(new Stage(), new Route("Subway")), 0, 0);

@@ -57,7 +57,12 @@ public class AdminUserPage extends AuthenticatedPage {
     newLogoutButton(2, 1);
     newRemoveAccountButton(2, 2);
 
-    factory.makeButton(grid, "System Stats", () -> new AnalyticsPage(Statistics.getSystemStatistics()), 0, 2);
+    factory.makeButton(
+        grid,
+        "System Stats",
+        () -> pageCreator.makeAnalyticsPage(Statistics.getSystemStatistics()),
+        0,
+        2);
     factory.makeButton(grid, "Update Routes", () -> new RouteCreationPage(new Stage()), 0, 1);
 
     Button toggle =

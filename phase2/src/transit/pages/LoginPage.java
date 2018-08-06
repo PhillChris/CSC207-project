@@ -11,6 +11,10 @@ import transit.system.User;
 
 /** Represents a login page for this system */
 public class LoginPage extends Page {
+  GridPane loginPane;
+  TextField emailInput;
+  TextField passInput;
+  Label errorMessage;
 
   /**
    * Initialized a new instance of LoginPace
@@ -26,7 +30,6 @@ public class LoginPage extends Page {
 
   /**
    * Sets the scene for this page
-   *
    */
   @Override
   protected void makeScene() {
@@ -46,22 +49,21 @@ public class LoginPage extends Page {
   /**
    * Makes the login GridPane for styling purposes
    *
-   * @param primaryStage the stage on which this LoginPage is being represented
    */
   private void makeLoginPane() {
-    GridPane loginPane = new GridPane();
+    this.loginPane = new GridPane();
     loginPane.setHgap(10);
     loginPane.setVgap(12);
     makeLabels(loginPane);
     makeIcons(loginPane);
 
-    TextField emailInput = makeEmailInput(loginPane);
-    PasswordField passInput = makePassInput(loginPane);
+    this.emailInput = makeEmailInput(loginPane);
+    this.passInput = makePassInput(loginPane);
 
-    Label errorMessage = makeErrorMessage(loginPane);
+    this.errorMessage = makeErrorMessage(loginPane);
 
-    makeSignUpButton(stage, loginPane);
-    makeLoginButton(stage, loginPane, emailInput, passInput, errorMessage);
+    makeSignUpButton(loginPane);
+    makeLoginButton();
 
     makeSeparator(loginPane);
 
@@ -118,32 +120,20 @@ public class LoginPage extends Page {
    * @param primaryStage the stage on which this page is being served
    * @param loginPane the the login pane being constructed in this LoginPage
    */
-  private void makeSignUpButton(Stage primaryStage, GridPane loginPane) {
+  private void makeSignUpButton(GridPane loginPane) {
     Button signUpButton = new Button("Sign Up");
     signUpButton.setId("signUpButton");
     signUpButton.setOnAction(
-        (data) -> {
-          pageCreator.makeSignUpPage();
-        });
+        (data) -> pageCreator.makeSignUpPage());
     loginPane.add(signUpButton, 0, 6, 2, 1);
   }
 
-  /**
-   * @param emailInput the email input field in this LoginPage
-   * @param passInput the password input field in this LoginPage
-   * @param errorMessage the error message field on this LoginPage to be modified as needed
-   * @param primaryStage the stage on which this LoginPage is being served
-   */
-  private void makeLoginButton(
-      Stage primaryStage,
-      GridPane loginPane,
-      TextField emailInput,
-      TextField passInput,
-      Label errorMessage) {
+  /** Makes the login button for this stage */
+  private void makeLoginButton() {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
     loginButton.setOnAction(
-        (data) -> parseLoginAttempt(primaryStage, emailInput, passInput, errorMessage));
+        (data) -> parseLoginAttempt(stage, emailInput, passInput, errorMessage));
     loginPane.add(loginButton, 0, 3, 2, 1);
     GridPane.setMargin(loginButton, new Insets(3, 0, 0, 0));
   }

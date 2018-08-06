@@ -158,4 +158,8 @@ public class Route implements Serializable {
       return newStation;
     }
   }
+
+  public String getRouteType() {
+    return routeType;
+  }
 }

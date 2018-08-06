@@ -5,8 +5,8 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import transit.pages.LoginPage;
 import transit.pages.Page;
+import transit.pages.PageCreator;
 import transit.pages.TimeControlPage;
 
 import java.io.IOException;
@@ -17,9 +17,8 @@ public class Main extends Application {
 
   public static Stage primaryStage;
 
-  public static Stage secondaryStage;
+  public static Stage secondaryStage = new Stage();
 
-  public static Stage timeControlStage;
   /**
    * Runs the transit system simulation, with event input from events.txt
    *
@@ -44,8 +43,10 @@ public class Main extends Application {
         });
 
     clearFile("log.txt");
+    this.primaryStage = primaryStage;
     primaryStage.setTitle("Transit System Simulator");
-    new LoginPage(primaryStage);
+    PageCreator pageCreator = new PageCreator();
+    pageCreator.makeLoginPage();
     primaryStage.show();
     new TimeControlPage(new Stage());
     LogWriter.getLogWriter()

@@ -38,7 +38,7 @@ public class PageCreator {
     new ChangeNamePage(secondaryStage, user);
   }
 
-  void makeLoginPage() {
+  public void makeLoginPage() {
     new LoginPage(primaryStage);
   }
 

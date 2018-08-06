@@ -107,7 +107,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this logout button is displayed
    */
   public void newLogoutButton(int col, int row) { Button logout = makeButton(grid,
-        "Logout", () -> stage.setScene(new LoginPage(stage).getScene()), col, row);
+        "Logout", () -> new LoginPage(stage), col, row);
     GridPane.setHalignment(logout, HPos.RIGHT);
     GridPane.setHgrow(logout, Priority.ALWAYS);
   }
@@ -130,14 +130,14 @@ public abstract class AuthenticatedPage extends Page {
                 "Are you sure you want this account to be removed?",
                 () -> {
                   user.removeUser();
-                  stage.setScene(new LoginPage(stage).getScene());
+                  new LoginPage(stage);
                 }),
         0,
         6);
   }
 
   private void logout(Stage primaryStage) {
-    primaryStage.setScene(new LoginPage(primaryStage).getScene());
+    new LoginPage(primaryStage);
     LogWriter.getLogWriter()
         .logInfoMessage(
             AuthenticatedPage.class.getName(),

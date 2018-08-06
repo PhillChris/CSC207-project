@@ -39,8 +39,7 @@ public class Main extends Application {
 
     clearFile("log.txt");
     primaryStage.setTitle("Transit System Simulator");
-    LoginPage loginPage = new LoginPage(primaryStage);
-    primaryStage.setScene(loginPage.getScene());
+    new LoginPage(primaryStage);
     primaryStage.show();
     new TimeControlPage();
     LogWriter.getLogWriter()

@@ -22,7 +22,6 @@ public class LoginPage extends Page {
     stage.setTitle("Login");
     makeScene();
     stage.setScene(scene);
-
   }
 
   /**
@@ -42,9 +41,7 @@ public class LoginPage extends Page {
     addClock();
 
     scene = new Scene(grid, 600, 375);
-    scene
-        .getStylesheets()
-        .add(getClass().getResource("styling/LoginPage.css").toExternalForm());
+    scene.getStylesheets().add(getClass().getResource("styling/LoginPage.css").toExternalForm());
   }
 
   /**
@@ -127,8 +124,7 @@ public class LoginPage extends Page {
     signUpButton.setId("signUpButton");
     signUpButton.setOnAction(
         (data) -> {
-          SignUpPage signupPage = new SignUpPage(primaryStage);
-          primaryStage.setScene(signupPage.getScene());
+          new SignUpPage(primaryStage);
         });
     loginPane.add(signUpButton, 0, 6, 2, 1);
   }
@@ -197,11 +193,10 @@ public class LoginPage extends Page {
         if (checkAuthorization(emailInput, passInput)) {
           Page userPage;
           if (user.getCardCommands().getPermission().equals("admin")) {
-            userPage = new AdminUserPage(primaryStage, user);
+            new AdminUserPage(primaryStage, user);
           } else {
-            userPage = new UserPage(primaryStage, user);
-          }
-          primaryStage.setScene(userPage.getScene());
+            new UserPage(primaryStage, user);
+          };
           LogWriter.getLogWriter()
               .logInfoMessage(
                   LoginPage.class.getName(),

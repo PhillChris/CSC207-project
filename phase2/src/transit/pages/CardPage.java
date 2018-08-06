@@ -41,7 +41,7 @@ public class CardPage extends Page {
         "Add card",
         () -> {
           user.getCardCommands().addCard();
-          stage.setScene(new CardPage(this.user).getScene());
+          new CardPage(this.user);
         },
         0,
         0);
@@ -83,9 +83,7 @@ public class CardPage extends Page {
         grid,
         "Add funds",
         () ->
-            stage.setScene(
-                new AddFundsPage(stage, user, user.getCardCommands().getCardsCopy().get(id))
-                    .getScene()),
+                new AddFundsPage(stage, user, user.getCardCommands().getCardsCopy().get(id)),
         1,
         3 + i);
 
@@ -99,7 +97,7 @@ public class CardPage extends Page {
                 "Are you sure that you want to remove this card?",
                 () -> {
                   user.getCardCommands().removeCard(user.getCardCommands().getCardsCopy().get(id));
-                  stage.setScene(new CardPage(this.user).getScene());
+                  new CardPage(this.user);
                 }),
         2,
         3 + i);
@@ -111,7 +109,7 @@ public class CardPage extends Page {
           "Report card stolen",
           () -> {
             user.getCardCommands().getCardsCopy().get(id).suspendCard();
-            stage.setScene(new CardPage(this.user).getScene());
+            new CardPage(this.user);
           },
           3,
           3 + i);
@@ -121,7 +119,7 @@ public class CardPage extends Page {
           "Activate this card",
           () -> {
             user.getCardCommands().getCardsCopy().get(id).activateCard();
-            stage.setScene(new CardPage(this.user).getScene());
+            new CardPage(this.user);
           },
           3,
           3 + i);

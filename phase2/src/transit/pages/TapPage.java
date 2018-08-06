@@ -1,6 +1,5 @@
 package transit.pages;
 
-import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -8,11 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.Card;
-import transit.system.Route;
-import transit.system.Station;
-import transit.system.TransitTime;
-import transit.system.User;
+import transit.system.*;
+
+import java.util.ArrayList;
 
 /** Represents a page displaying all possibilities for tapping in this transit system */
 public class TapPage extends Page {
@@ -102,7 +99,8 @@ public class TapPage extends Page {
    * @return the button created at this place in the grid
    */
   private Button placeStationButton(Station station, int col, int row) {
-    return makeButton(grid,
+    return makeButton(
+        grid,
         station.toString(),
         () -> {
           Alert alert;
@@ -138,7 +136,7 @@ public class TapPage extends Page {
                     AlertType.ERROR);
           }
           alert.showAndWait();
-          stage.setScene(new CardPage(user).getScene());
+          new CardPage(user);
         },
         col,
         row);
@@ -153,10 +151,7 @@ public class TapPage extends Page {
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     refreshRouteOptionItems(this.selectedType); /* Loads the first round of buttons*/
     routeType.getSelectionModel().select(this.selectedType);
-    routeType.setOnAction(
-        e ->
-            stage.setScene(
-                new TapPage(user, card, routeType.getValue()).getScene()));
+    routeType.setOnAction(e -> new TapPage(user, card, routeType.getValue()));
     refreshRouteOptionItems(routeType.getValue());
   }
 }

@@ -151,17 +151,10 @@ public class SignUpPage extends Page {
 
   private void makeBackButton(Stage primaryStage, GridPane signUpPane) {
     Button backButton = new Button("Go Back");
-    backButton.setOnAction((data) -> primaryStage.setScene(new LoginPage(primaryStage).getScene()));
+    backButton.setOnAction((data) -> new LoginPage(primaryStage));
     signUpPane.add(backButton, 1, 6, 2, 1);
     GridPane.setHalignment(backButton, HPos.RIGHT);
     GridPane.setMargin(backButton, new Insets(2, 10, 0, 0));
-
-//    Button backButton = makeChangeViewButton(grid, primaryStage, new LoginPage(primaryStage), 1, 6);
-//    backButton.setText("Go Back");
-//    GridPane.setColumnSpan(backButton, 2);
-//    GridPane.setHalignment(backButton, HPos.RIGHT);
-//    GridPane.setMargin(backButton, new Insets(2, 10, 0, 0));
-
   }
 
   /**

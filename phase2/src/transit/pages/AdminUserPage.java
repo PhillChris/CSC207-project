@@ -61,12 +61,12 @@ public class AdminUserPage extends Page {
 
     Button toggle = makeButton(grid,
         "User view",
-        () -> stage.setScene(new UserPage(stage, this.adminUser).getScene()),
+        () -> new UserPage(stage, this.adminUser),
         1,
         2);
     GridPane.setHalignment(toggle, HPos.RIGHT);
     Button logout = makeButton(grid,
-        "Logout", () -> stage.setScene(new LoginPage(stage).getScene()), 1, 1);
+        "Logout", () -> new LoginPage(stage), 1, 1);
     GridPane.setHalignment(logout, HPos.RIGHT);
   }
 }

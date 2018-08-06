@@ -42,7 +42,7 @@ public class ChangeNamePage extends Page {
         "Change name!",
         () -> {
           user.getPersonalInfo().changeName(newName.getText());
-          stage.setScene(new UserPage(stage, user).getScene());
+          new UserPage(stage, user);
         },
         2,
         0);

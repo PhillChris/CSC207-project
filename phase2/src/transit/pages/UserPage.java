@@ -82,7 +82,7 @@ public class UserPage extends AuthenticatedPage {
           makeButton(
               grid,
               "Admin view",
-              () -> stage.setScene(new AdminUserPage(stage, user).getScene()),
+              () -> new AdminUserPage(stage, user),
               2,
               7);
       GridPane.setHalignment(viewToggle, HPos.RIGHT);

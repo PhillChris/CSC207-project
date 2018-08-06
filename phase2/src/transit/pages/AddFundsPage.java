@@ -49,7 +49,7 @@ public class AddFundsPage extends AuthenticatedPage {
         "$" + cost,
         () -> {
           card.addBalance(cost * 100);
-          stage.setScene(new CardPage(user).getScene());
+          new CardPage(user);
         },
         col,
         row);

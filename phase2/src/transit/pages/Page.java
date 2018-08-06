@@ -33,11 +33,6 @@ public abstract class Page {
     this.stage = primaryStage;
   }
 
-  /** @return the scene to be represented in the program stage */
-  public Scene getScene() {
-    return this.scene;
-  }
-
   /**
    * Places the the necessary elements to this page's scene
    *
@@ -193,19 +188,6 @@ public abstract class Page {
     if (result.get() == confirm) {
       function.run();
     }
-  }
-
-  protected Button makeChangeViewButton(
-      GridPane gridPane, Stage primaryStage, Page page, int col, int row) {
-    return makeButton(
-        gridPane,
-        page.title,
-        () -> {
-          primaryStage.setScene(page.getScene());
-          primaryStage.setTitle(page.title);
-        },
-        col,
-        row);
   }
 
   /** Adds a clock with live updating time on the user page */

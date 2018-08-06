@@ -158,11 +158,7 @@ public class LoginPage extends Page {
           user = User.getAllUsersCopy().get(emailInput.getText());
         } else {
           errorMessage.setText("User email not found.");
-          LogWriter.getLogWriter()
-              .logWarningMessage(
-                  LoginPage.class.getName(),
-                  "parseLoginAttempt",
-                  "Login attempt failed, user is not registered in the system");
+          logUserNotFound();
           throw new Exception();
         }
         if (checkAuthorization()) {
@@ -171,22 +167,39 @@ public class LoginPage extends Page {
           } else {
             pageCreator.makeUserPage(user);
           }
-          LogWriter.getLogWriter()
-              .logInfoMessage(
-                  LoginPage.class.getName(),
-                  "parseLoginAttempt",
-                  "Successfully logged in as + " + user.getPersonalInfo().getUserName());
+          logUserLogin(user);
         } else {
           errorMessage.setText("Incorrect password.");
-          LogWriter.getLogWriter()
-              .logWarningMessage(
-                  LoginPage.class.getName(),
-                  "parseLoginAttempt",
-                  "Login attempt failed, incorrect password");
+          logInvalidAuth();
           throw new Exception();
         }
       } catch (Exception ignored) {
       }
     }
+  }
+
+  private void logUserNotFound() {
+    LogWriter.getLogWriter()
+        .logWarningMessage(
+            LoginPage.class.getName(),
+            "parseLoginAttempt",
+            "Login attempt failed, user is not registered in the system");
+  }
+
+  private void logUserLogin(User user) {
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            LoginPage.class.getName(),
+            "parseLoginAttempt",
+            "Successfully logged in as + " + user.getPersonalInfo().getUserName());
+
+  }
+
+  private void logInvalidAuth() {
+    LogWriter.getLogWriter()
+        .logWarningMessage(
+            LoginPage.class.getName(),
+            "parseLoginAttempt",
+            "Login attempt failed, incorrect password");
   }
 }

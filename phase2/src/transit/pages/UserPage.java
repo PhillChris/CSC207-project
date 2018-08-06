@@ -49,8 +49,6 @@ public class UserPage extends AuthenticatedPage {
 
   /**
    * Places the buttons on this UserPage
-   *
-   * @param primaryStage the stage on which this page is served
    */
   private void placeUserButtons() {
     newUserInfoButton(1, 0);

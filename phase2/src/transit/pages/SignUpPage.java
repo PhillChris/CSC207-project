@@ -16,19 +16,18 @@ public class SignUpPage extends Page {
   /**
    * Constructs a new SignUpPage
    *
-   * @param primaryStage the stage on which this SignUpPage is being served
+   * @param stage the stage on which this SignUpPage is being served
    */
-  public SignUpPage(Stage primaryStage) {
-    super(primaryStage);
-    stage.setTitle("Sign Up Page");
+  public SignUpPage(Stage stage) {
+    super(stage);
+    this.stage.setTitle("Sign Up Page");
     makeScene();
-    stage.setScene(scene);
+    this.stage.setScene(scene);
   }
 
   /**
    * Makes a scene for this SignUpPage
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
   protected void makeScene() {
@@ -48,7 +47,6 @@ public class SignUpPage extends Page {
   /**
    * Makes the pane for this page
    *
-   * @param primaryStage The stage for this page to be viewed
    */
   private void makeSignUpPane() {
     GridPane signUpPane = new GridPane();
@@ -151,7 +149,7 @@ public class SignUpPage extends Page {
 
   private void makeBackButton(Stage primaryStage, GridPane signUpPane) {
     Button backButton = new Button("Go Back");
-    backButton.setOnAction((data) -> new LoginPage(primaryStage));
+    backButton.setOnAction((data) -> pageCreator.makeLoginPage());
     signUpPane.add(backButton, 1, 6, 2, 1);
     GridPane.setHalignment(backButton, HPos.RIGHT);
     GridPane.setMargin(backButton, new Insets(2, 10, 0, 0));

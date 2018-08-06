@@ -12,6 +12,8 @@ public class RouteCreationPage extends Page {
 
   /**
    * Construct a new instance of RouteCreationPage
+   *
+   * @param stage The stage for this page to be displayed
    */
   public RouteCreationPage(Stage stage) {
     super(stage);

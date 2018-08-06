@@ -14,12 +14,10 @@ public class AddFundsPage extends Page {
   /**
    * Initialize a new AddFundsPage
    *
-   * @param primaryStage The stage for this page to be launched
-   * @param user The user associated with this page
    * @param card The card associated with this page
    */
-  public AddFundsPage(Stage primaryStage, Card card) {
-    super(primaryStage);
+  public AddFundsPage(Stage stage, Card card) {
+    super(stage);
     this.card = card;
     makeScene();
     stage.setScene(scene);
@@ -29,10 +27,8 @@ public class AddFundsPage extends Page {
   /**
    * Sets the scene for this page
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   public void makeScene() {
-    this.card = card;
     factory.makeLabel(grid, "Add the following amount: ", 0, 0);
     placeCostButton(10, 0, 1);
     placeCostButton(20, 0, 2);
@@ -43,7 +39,6 @@ public class AddFundsPage extends Page {
   /**
    * Places the CostButton on this page
    *
-   * @param primaryStage The stage for this page to be displayed
    * @param cost The cost the button will add to the card when clicked
    * @param col The column number of the button
    * @param row The row number of the button

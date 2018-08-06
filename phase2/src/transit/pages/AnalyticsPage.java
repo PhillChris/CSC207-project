@@ -17,7 +17,7 @@ public class AnalyticsPage extends GraphPage {
   /**
    * Initialize a new instance of an AnalyticsPage.
    *
-   * @param primaryStage The stage for this page to be displayed
+   * @param stage The stage for this page to be displayed
    */
   public AnalyticsPage(Stage stage, HashMap<String, Statistics> statistics) {
     this.statistics = statistics;

@@ -5,6 +5,9 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import transit.system.Statistics;
 import transit.system.TransitTime;
@@ -14,16 +17,18 @@ import java.time.YearMonth;
 import java.util.HashMap;
 
 /** Represents a page used to show statistical information */
-public abstract class GraphPage {
+public abstract class GraphPage extends Page {
 
-  Stage stage;
-
-  Scene scene;
+  HBox dropDowns = new HBox();
+  ComboBox<Statistics> statOptions = new ComboBox<>();
+  ComboBox<String> timeOptions = new ComboBox<>();
+  protected BorderPane layout = new BorderPane();
 
   protected HashMap<String, Statistics> statistics;
 
   public GraphPage(HashMap<String, Statistics> statistics){
-    statistics = statistics;
+    super(new Stage(), true);
+    this.statistics = statistics;
     stage = new Stage();
     makeScene();
     stage.setScene(scene);

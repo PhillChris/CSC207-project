@@ -11,11 +11,6 @@ import java.util.HashMap;
 
 public class AnalyticsPage extends GraphPage {
 
-  HBox dropDowns = new HBox();
-  ComboBox<Statistics> statOptions = new ComboBox<>();
-  ComboBox<String> timeOptions = new ComboBox<>();
-  private BorderPane layout = new BorderPane();
-
   /**
    * Initialize a new instance of an AnalyticsPage.
    *
@@ -27,7 +22,6 @@ public class AnalyticsPage extends GraphPage {
 
   @Override
   void makeScene() {
-    this.statistics = statistics;
     stage.setTitle("Transit System Simulator");
     setupStatOptions();
     dropDowns.getChildren().addAll(timeOptions, statOptions);

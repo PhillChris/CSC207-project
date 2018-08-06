@@ -13,8 +13,8 @@ import transit.system.TransitTime;
 /** Represents a time control window in this simulation */
 public class TimeControlPage extends Page {
   /** Constructs a new instance of TimeControlPage */
-  public TimeControlPage() {
-    super(new Stage());
+  public TimeControlPage(Stage stage) {
+    super(stage);
     makeScene();
     stage.setX(1000);
     stage.setY(200);

@@ -17,9 +17,6 @@ public class AppendRoutePage extends Page {
   /** A Label designed to represent the route associated with this page */
   private Label routeLabel;
 
-  /** The stage used by this page */
-  private Stage stage;
-
   /** The list of stations added and viewed by the user */
   private ArrayList<String> stationNames;
 
@@ -40,6 +37,7 @@ public class AppendRoutePage extends Page {
     setRouteLabel();
     makeScene();
     title = String.format("Append %s Route", route.getRouteType());
+    stage.setScene(scene);
     stage.show();
   }
 

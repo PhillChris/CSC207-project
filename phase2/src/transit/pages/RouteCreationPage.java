@@ -10,9 +10,6 @@ import transit.system.Route;
 /** Represents a page used to make maintenance changes to this system */
 public class RouteCreationPage extends Page {
 
-  /** The stage used by this page */
-  private Stage stage;
-
   /**
    * Construct a new instance of RouteCreationPage
    *

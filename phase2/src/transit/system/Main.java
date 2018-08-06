@@ -14,6 +14,12 @@ import java.io.PrintWriter;
 
 /** A transit system simulation. */
 public class Main extends Application {
+
+  public static Stage primaryStage;
+
+  public static Stage secondaryStage;
+
+  public static Stage timeControlStage;
   /**
    * Runs the transit system simulation, with event input from events.txt
    *

@@ -11,8 +11,6 @@ import java.util.HashMap;
 
 /** A page designed to display analytical information */
 public class AnalyticsPage extends GraphPage {
-  /** The statistics displayed by this analytics page */
-  protected HashMap<String, Statistics> statistics;;
 
   /**
    * Initialize a new instance of an AnalyticsPage.
@@ -42,10 +40,6 @@ public class AnalyticsPage extends GraphPage {
     // setup the checkbox the statistics this page has access to
     statOptions.getItems().addAll(this.statistics.values());
     statOptions.getSelectionModel().select(0);
-
-    // setup the checkbox for different time intervals
-    timeOptions.getItems().addAll("Monthly", "Daily");
-    timeOptions.getSelectionModel().select(0);
 
     statOptions.setOnAction(actionEvent -> setUpStatGraph());
     timeOptions.setOnAction(actionEvent -> setUpStatGraph());

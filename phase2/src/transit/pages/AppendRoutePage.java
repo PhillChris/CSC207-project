@@ -26,8 +26,8 @@ public class AppendRoutePage extends Page {
    * @param stage
    * @param route
    */
-  public AppendRoutePage(Route route) {
-    super(new Stage());
+  public AppendRoutePage(Stage stage, Route route) {
+    super(stage);
     this.route = route;
     stationNames = new ArrayList<>();
     for (Station station : route.getRouteStationsCopy()) {

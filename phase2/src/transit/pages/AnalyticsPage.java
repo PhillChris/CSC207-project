@@ -54,9 +54,6 @@ public class AnalyticsPage extends GraphPage {
 
     statOptions.setOnAction(actionEvent -> setUpStatGraph());
     timeOptions.setOnAction(actionEvent -> setUpStatGraph());
-
-    // generate the Graph without having to click first
-    setUpStatGraph();
   }
 
   /**

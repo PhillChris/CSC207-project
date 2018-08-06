@@ -25,6 +25,7 @@ public class CardPage extends Page {
     addUserData();
     makeScene();
     title = "Cards";
+    stage.setScene(scene);
     stage.show();
   }
 

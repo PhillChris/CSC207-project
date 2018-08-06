@@ -9,7 +9,9 @@ import javafx.stage.Stage;
 import transit.system.MessageTransitException;
 import transit.system.User;
 
-public class ChangePasswordPage extends AuthenticatedPage {
+public class ChangePasswordPage extends Page {
+
+  private User user;
   /**
    * Initialized a new instance of ChangeNamePage
    *
@@ -17,9 +19,13 @@ public class ChangePasswordPage extends AuthenticatedPage {
    * @param user The user associated with this page
    */
   public ChangePasswordPage(Stage primaryStage, User user) {
-    super(primaryStage, user);
+    super(primaryStage, true);
+    this.user = user;
     title = "Change Password";
     makeScene();
+    stage.setTitle("Change Password Page");
+    stage.setScene(scene);
+    stage.show();
   }
 
   /**
@@ -35,23 +41,26 @@ public class ChangePasswordPage extends AuthenticatedPage {
     makeLabel(grid, "Current password: ", 0, 0);
     makeLabel(grid, "New password: ", 0, 1);
     Label changeSuccess = makeLabel(grid, "", 2, 1);
-    PasswordField currPassword = makePasswordField(grid, "",1, 0);
+    PasswordField currPassword = makePasswordField(grid, "", 1, 0);
     PasswordField newPassword = makePasswordField(grid, "", 1, 1);
-    makeButton(grid,
-      "Change password!",
-      () -> {
-        try {
-          user.getPersonalInfo().changePassword(currPassword.getText(), newPassword.getText());
-          changeSuccess.setTextFill(Color.web("#33AF54"));
-          changeSuccess.setText("Password changed");
-        } catch (MessageTransitException e) {
-          e.setMessage(changeSuccess);
-        }
-      },
-      2,
-      0);
+    makeButton(
+        grid,
+        "Change password!",
+        () -> {
+          try {
+            user.getPersonalInfo().changePassword(currPassword.getText(), newPassword.getText());
+            changeSuccess.setTextFill(Color.web("#33AF54"));
+            changeSuccess.setText("Password changed");
+          } catch (MessageTransitException e) {
+            e.setMessage(changeSuccess);
+          }
+        },
+        2,
+        0);
 
     scene = new Scene(grid, 600, 110);
-    scene.getStylesheets().add(getClass().getResource("styling/ChangeInfoPage.css").toExternalForm());
+    scene
+        .getStylesheets()
+        .add(getClass().getResource("styling/ChangeInfoPage.css").toExternalForm());
   }
 }

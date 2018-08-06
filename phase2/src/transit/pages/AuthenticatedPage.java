@@ -19,16 +19,16 @@ public abstract class AuthenticatedPage extends Page {
    * Abstract constructor: not to be called directly, associating the given user with this
    * authenticated page
    *
-   * @param primaryStage the stage on which this authenticated page is served
+   * @param stage the stage on which this authenticated page is served
    * @param user the user associated with this authenticated page
    */
-  public AuthenticatedPage(Stage primaryStage, User user) {
-    super(primaryStage);
+  public AuthenticatedPage(Stage stage, User user) {
+    super(stage);
     this.user = user;
     makeScene();
-    stage.setTitle(user.toString());
-    stage.setScene(scene);
-    stage.show();
+    this.stage.setTitle(user.toString());
+    this.stage.setScene(scene);
+    this.stage.show();
   }
 
   /** Adds the user-specific data on this page */

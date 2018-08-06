@@ -15,11 +15,11 @@ public class ChangePasswordPage extends Page {
   /**
    * Initialized a new instance of ChangeNamePage
    *
-   * @param primaryStage The stage for this page to be displayed
+   * @param stage The stage for this page to be displayed
    * @param user The user associated with this page
    */
-  public ChangePasswordPage(User user) {
-    super(new Stage());
+  public ChangePasswordPage(Stage stage, User user) {
+    super(stage);
     this.user = user;
     stage.setTitle("Change Password");
     makeScene();
@@ -31,7 +31,6 @@ public class ChangePasswordPage extends Page {
   /**
    * Sets the scene for this page
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
   public void makeScene() {

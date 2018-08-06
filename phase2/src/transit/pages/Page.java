@@ -26,10 +26,6 @@ public abstract class Page {
   /** The default constructor for this page */
   public Page() {
     stage = new Stage();
-    grid = new GridPane();
-    makeScene();
-    stage.setScene(scene);
-    stage.show();
   }
 
   /**

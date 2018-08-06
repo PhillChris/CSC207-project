@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 /** The commands stores and processes all user-card related commands */
 public class UserCardCommands implements Serializable {
   /** An ArrayList of this transit.system.User's cards */
@@ -34,6 +37,15 @@ public class UserCardCommands implements Serializable {
   /** @return The previous trips made by this user */
   public List<Trip> getPreviousTrips() {
     return previousTrips;
+  }
+
+  public String lastThreeTripsString() {
+    String stringRep = "";
+
+    for (int i = 0; i < min(previousTrips.size(), 3); i++) {
+      stringRep += previousTrips.get(previousTrips.size() - (1 + i)).toString() + "\n";
+    }
+    return stringRep;
   }
 
   /** @return HashMap of cardStatistics associated with this User */
@@ -180,6 +192,6 @@ public class UserCardCommands implements Serializable {
     Statistics.getSystemStatistics().get("SystemRevenue").update(trip.getFee());
     Statistics.getSystemStatistics()
         .get("SystemTripLengh")
-        .update(Math.max(trip.getTripLegLength(), 0));
+            .update(max(trip.getTripLegLength(), 0));
   }
 }

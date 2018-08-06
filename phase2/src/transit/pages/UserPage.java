@@ -75,7 +75,8 @@ public class UserPage extends AuthenticatedPage {
               factory.makeAlert(
                   "Last 3 trips",
                   "Last 3 trips of user " + user,
-                  "Nothing right now",
+//                  "Nothing right now",
+                      user.getCardCommands().lastThreeTripsString(),
                   AlertType.INFORMATION);
           a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
           a.showAndWait();
@@ -90,4 +91,5 @@ public class UserPage extends AuthenticatedPage {
       GridPane.setHgrow(viewToggle, Priority.ALWAYS);
     }
   }
+
 }

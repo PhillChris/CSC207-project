@@ -70,6 +70,10 @@ public class Trip implements Serializable {
     return priorStops.get(0).toString();
   }
 
+  public ArrayList<Station> getPriorStops() {
+    return priorStops;
+  }
+
   /** @return A string representation of a trip */
   public String toString() {
     String endTime;

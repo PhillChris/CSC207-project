@@ -14,11 +14,11 @@ public class ChangeNamePage extends Page {
   /**
    * Initialized a new instance of ChangeNamePage
    *
-   * @param primaryStage The stage for this page to be displayed
+   * @param stage The stage for this page to be displayed
    * @param user The user associated with this page
    */
-  public ChangeNamePage(Stage primaryStage, User user) {
-    super(new Stage());
+  public ChangeNamePage(Stage stage, User user) {
+    super(stage);
     this.user = user;
     makeScene();
     stage.setTitle("Change Name Page");
@@ -29,7 +29,6 @@ public class ChangeNamePage extends Page {
   /**
    * Sets the scene for this page
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
   public void makeScene() {
@@ -42,7 +41,7 @@ public class ChangeNamePage extends Page {
         "Change name!",
         () -> {
           user.getPersonalInfo().changeName(newName.getText());
-          new UserPage(stage, user);
+          pageCreator.makeUserPage(user);
         },
         2,
         0);

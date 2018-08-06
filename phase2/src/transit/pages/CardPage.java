@@ -17,8 +17,7 @@ public class CardPage extends Page {
   /**
    * Initialize a new instance of CardPage
    *
-   * @param primaryStage The stage for this page to be displaced
-   * @param user The user associated with this page
+   * @param stage The stage for this page to be displaced
    */
   public CardPage(Stage stage, UserCardCommands cards) {
     super(stage);
@@ -33,7 +32,6 @@ public class CardPage extends Page {
   /**
    * Constructs the scene for this page
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
   protected void makeScene() {
@@ -54,7 +52,6 @@ public class CardPage extends Page {
   /**
    * Adds personalized user data to this page
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   protected void addUserData() {
     this.currentTrips = factory.makeLabel(grid, generateCurrentTripMessage(), 0, 1);
@@ -68,7 +65,6 @@ public class CardPage extends Page {
   /**
    * Adds the buttons specific to each card in this simulation
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    * @param id the id of the current card being represented
    * @param i the current iteration of the loop in CardPage.makeScene
    */
@@ -76,7 +72,7 @@ public class CardPage extends Page {
     factory.makeButton(
         grid,
         "Tap",
-        () -> new TapPage(stage, cards, cards.getCardsCopy().get(id), "Bus"),
+        () -> pageCreator.makeTapPage(cards, cards.getCardsCopy().get(id)), "Bus"),
         0,
         3 + i);
 
@@ -84,7 +80,7 @@ public class CardPage extends Page {
         grid,
         "Add funds",
         () ->
-                new AddFundsPage(stage, cards.getCardsCopy().get(id)),
+                pageCreator.makeAddFundsPage(cards.getCardsCopy().get(id)),
         1,
         3 + i);
 
@@ -98,7 +94,7 @@ public class CardPage extends Page {
                 "Are you sure that you want to remove this card?",
                 () -> {
                   cards.removeCard(cards.getCardsCopy().get(id));
-                  new CardPage(stage, cards);
+                  pageCreator.makeCardPage(cards);
                 }),
         2,
         3 + i);
@@ -110,7 +106,7 @@ public class CardPage extends Page {
           "Report card stolen",
           () -> {
             cards.getCardsCopy().get(id).suspendCard();
-            new CardPage(stage, cards);
+            pageCreator.makeCardPage(cards);
           },
           3,
           3 + i);
@@ -120,7 +116,7 @@ public class CardPage extends Page {
           "Activate this card",
           () -> {
             cards.getCardsCopy().get(id).activateCard();
-            new CardPage(stage, cards);
+            pageCreator.makeCardPage(cards);
           },
           3,
           3 + i);

@@ -7,15 +7,37 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import transit.system.Statistics;
+
 import java.util.HashMap;
 
 /** A page designed to display analytical information */
-public class AnalyticsPage extends GraphPage {
+public class AnalyticsPage {
+  /** The statistics displayed by this analytics page */
+  protected HashMap<String, Statistics> statistics;
+  protected LineChart<String, Number> chart;
+
+  protected BorderPane layout = new BorderPane();
+  /**
+   * A factory to construct graphs
+   */
+  protected GraphFactory graphFactory = new GraphFactory();
+  /**
+   * The drop down options displayed by this page
+   */
+  HBox dropDowns = new HBox();
+  /**
+   * A combo box if the different statistics options for this page
+   */
+  ComboBox<Statistics> statOptions = new ComboBox<>();
+  /**
+   * The time options displayed by this page
+   */
+  ComboBox<String> timeOptions = new ComboBox<>();
 
   /**
    * Initialize a new instance of an AnalyticsPage.
    *
-   * @param primaryStage The stage for this page to be displayed
+   * @param stage The stage for this page to be displayed
    */
   public AnalyticsPage(Stage stage, HashMap<String, Statistics> statistics) {
     this.statistics = statistics;
@@ -24,6 +46,12 @@ public class AnalyticsPage extends GraphPage {
     stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");
+  }
+
+  public void setStatistics(HashMap<String, Statistics> statistics) {
+    this.statistics = statistics;
+    statOptions.getItems().clear();
+    statOptions.getItems().addAll(statistics.values());
   }
 
   void setLayout() {

@@ -28,7 +28,6 @@ public class UserPage extends AuthenticatedPage {
   /**
    * Makes the scene in which this UserPage is being displayed
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
   protected void makeScene() {
@@ -49,21 +48,19 @@ public class UserPage extends AuthenticatedPage {
 
   /**
    * Places the buttons on this UserPage
-   *
-   * @param primaryStage the stage on which this page is served
    */
   private void placeUserButtons() {
     newUserInfoButton(1, 0);
     newLogoutButton(2, 0);
     newRemoveAccountButton(0, 6);
-    factory.makeButton(grid, "Change name", () -> new ChangeNamePage(stage, user), 0, 4);
-    factory.makeButton(grid, "Change password", () -> new ChangePasswordPage(user), 0, 5);
-    factory.makeButton(grid, "Cards", () -> new CardPage(new Stage(), user.getCardCommands()), 0, 2);
+    factory.makeButton(grid, "Change name", () -> pageCreator.makeChangeNamePage(user), 0, 4);
+    factory.makeButton(grid, "Change password", () -> pageCreator.makeChangePasswordPage(user), 0, 5);
+    factory.makeButton(grid, "Cards", () -> pageCreator.makeCardPage(user.getCardCommands()), 0, 2);
 
     factory.makeButton(
         grid,
         "Get Stats",
-        () -> new AnalyticsPage(user.getCardCommands().getCardStatistics()),
+        () ->  pageCreator.makeUserAnalyticsPage(user.getCardCommands().getCardStatistics(), user),
         0,
         3);
 

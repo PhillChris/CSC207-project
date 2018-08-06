@@ -51,7 +51,7 @@ public class ChangePasswordPage extends AuthenticatedPage {
       2,
       0);
 
-    scene = new Scene(grid, 600, 130);
+    scene = new Scene(grid, 600, 110);
     scene.getStylesheets().add(getClass().getResource("styling/ChangeInfoPage.css").toExternalForm());
   }
 }

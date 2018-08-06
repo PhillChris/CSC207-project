@@ -42,7 +42,7 @@ public class ChangeNamePage extends AuthenticatedPage {
         2,
         0);
 
-    scene = new Scene(grid, 550, 80);
+    scene = new Scene(grid, 550, 70);
     scene.getStylesheets().add(getClass().getResource("styling/ChangeInfoPage.css").toExternalForm());
   }
 }

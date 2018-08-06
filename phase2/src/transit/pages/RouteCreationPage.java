@@ -30,7 +30,6 @@ public class RouteCreationPage extends Page {
   /**
    * Sets the scene of this page
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
   void makeScene() {
@@ -39,14 +38,14 @@ public class RouteCreationPage extends Page {
         factory.makeButton(
             grid,
             "Create Subway Route",
-            () -> new AppendRoutePage(new Route("Subway")),
+                () -> pageCreator.makeAppendRoutePage(new Route("Subway")),
             0,
             0);
     Button createBus =
         factory.makeButton(
             grid,
             "Create Bus Route",
-            () -> new AppendRoutePage(new Route("Bus")),
+                () -> pageCreator.makeAppendRoutePage(new Route("Bus")),
             0,
             2);
     factory.makeLabel(grid, "Append to Existing Route:", 0, 4);
@@ -56,7 +55,7 @@ public class RouteCreationPage extends Page {
         Route route = Route.getRoutesCopy().get(type).get(i);
         Button routeButton =
             factory.makeButton(
-                grid, route.toString(), () -> new AppendRoutePage(route), 0, 6 + 2 * i);
+                    grid, route.toString(), () -> pageCreator.makeAppendRoutePage(route), 0, 6 + 2 * i);
       }
     }
     this.scene = new Scene(grid, 600, 400);

@@ -60,7 +60,7 @@ public class UserPage extends AuthenticatedPage {
     factory.makeButton(
         grid,
         "Get Stats",
-        () ->  pageCreator.makeUserAnalyticsPage(user.getCardCommands().getCardStatistics(), user),
+            () -> pageCreator.makeUserAnalyticsPage(user),
         0,
         3);
 

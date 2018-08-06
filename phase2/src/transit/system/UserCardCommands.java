@@ -21,8 +21,8 @@ public class UserCardCommands implements Serializable {
   /** Initialized a new instance of UserCardCommands */
   UserCardCommands(String permission) {
     this.cards = new HashMap<>();
-    cardStatistics.put("Expenditure", new Statistics());
-    cardStatistics.put("Taps", new Statistics());
+    cardStatistics.put("Expenditure", new Statistics("Expenditure"));
+    cardStatistics.put("Taps", new Statistics("Taps"));
     this.permission = permission;
   }
 

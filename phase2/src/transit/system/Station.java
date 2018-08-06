@@ -33,8 +33,8 @@ public class Station implements Serializable {
     this.name = name;
     this.stationType = stationType;
     this.setFees();
-    statistics.put("Tap In", new Statistics());
-    statistics.put("Tap Out", new Statistics());
+    statistics.put("Tap In", new Statistics("Taps In"));
+    statistics.put("Tap Out", new Statistics("Taps Out"));
   }
 
   public HashMap<String, Statistics> getStatistics() {

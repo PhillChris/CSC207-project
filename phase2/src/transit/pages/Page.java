@@ -31,9 +31,7 @@ public abstract class Page {
   public Page() {}
 
   /**
-   * A constructor that sets the primary stages close action to end the program. As a result, this
-   * constructor should only be used by subclasses which create Pages on the primary stage, and want
-   * the application to terminate when the stage is closed.
+   * A constructor that sets the primary stages close action to end the program.
    *
    * @param primaryStage the PRIMARY stage of this application.
    */
@@ -56,9 +54,7 @@ public abstract class Page {
   }
 
   /**
-   * Called upon Page construction to build the scene, placing the necessary elements to a given
-   * page. NOTE: ALL CHILD IMPLEMENTATIONS MUST SET THE SCENE ATTRIBUTE, OTHERWISE NO SCREEN IS
-   * PASSED WHEN GETSCENE IS CALLED
+   * Places the the necessary elements to this page's scene
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    *     purposes
@@ -66,9 +62,9 @@ public abstract class Page {
   abstract void makeScene(Stage primaryStage);
 
   /**
-   * A general helper method to place a label with the given text at the given coordinates and give
-   * it an id
+   * A general helper method to place a label with the given text at the given coordinates and grid
    *
+   * @param gridPane the grid for the label to be displayed
    * @param text the message to be displayed by this label
    * @param col the column in the gridPane where this label is displayed
    * @param row the row in the gridPane where this label is displayed
@@ -79,6 +75,12 @@ public abstract class Page {
     return label;
   }
 
+  /**
+   * @param gridPane The grid for the separator to be placed
+   * @param col The column for the separator to be placed
+   * @param row The row for the seperator to be placed
+   * @return The seperated which has been placed
+   */
   protected Separator makeSeparator(GridPane gridPane, int col, int row) {
     Separator horizontalSeparator = new Separator();
     gridPane.add(horizontalSeparator, col, row);
@@ -88,6 +90,7 @@ public abstract class Page {
   /**
    * A general helper method to place a text field at the given coordinates
    *
+   * @param gridPane The grid for the text field to be placed
    * @param col the column in the gridPane where this text field is displayed
    * @param row the row in the gridPane where this text field is displayed
    * @return the created text field object, for reference in accessing entered data
@@ -103,6 +106,8 @@ public abstract class Page {
    * A general helper method to place a password text field at the given coordinates and give it an
    * id
    *
+   * @param gridPane The grid for the password text field to be placed
+   * @param promptText The prompt text for this password field
    * @param col the column in the gridPane where this password field is displayed
    * @param row the row in the gridPane where this password is displayed
    * @return the created password field object, for reference in accessing entered data
@@ -207,6 +212,7 @@ public abstract class Page {
 
   /**
    * Helper method for creating a button that launches a popup window
+   *
    * @param gridPane The grid that this button will be added to
    * @param page The type of page of the popup window
    * @param col The column in the grid that this button will be added to
@@ -217,21 +223,31 @@ public abstract class Page {
     window.setTitle(page.title);
     window.setScene(page.getScene());
 
-    return makeButton(gridPane, page.title,
-      () -> {
-        if (window.isShowing()) {
-          window.toFront();
-        } else {
-          window.show();
-        }
-      }, col, row);
+    return makeButton(
+        gridPane,
+        page.title,
+        () -> {
+          if (window.isShowing()) {
+            window.toFront();
+          } else {
+            window.show();
+          }
+        },
+        col,
+        row);
   }
 
-  protected Button makeChangeViewButton(GridPane gridPane, Stage primaryStage, Page page, int col, int row) {
-    return makeButton(gridPane, page.title, () -> {
-      primaryStage.setScene(page.getScene());
-      primaryStage.setTitle(page.title);
-    }, col, row);
+  protected Button makeChangeViewButton(
+      GridPane gridPane, Stage primaryStage, Page page, int col, int row) {
+    return makeButton(
+        gridPane,
+        page.title,
+        () -> {
+          primaryStage.setScene(page.getScene());
+          primaryStage.setTitle(page.title);
+        },
+        col,
+        row);
   }
 
   /** Adds a clock with live updating time on the user page */

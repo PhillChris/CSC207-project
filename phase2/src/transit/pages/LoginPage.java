@@ -129,11 +129,6 @@ public class LoginPage extends Page {
           primaryStage.setScene(signupPage.getScene());
         });
     loginPane.add(signUpButton, 0, 6, 2, 1);
-
-//    Button signUpButton = makeChangeViewButton(loginPane, primaryStage, new SignUpPage(primaryStage), 0, 6);
-//    signUpButton.setId("signUpButton");
-//    GridPane.setColumnSpan(signUpButton, 2);
-
   }
 
   /**

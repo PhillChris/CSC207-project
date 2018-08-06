@@ -10,7 +10,7 @@ import transit.system.Statistics;
 
 import java.util.HashMap;
 
-public class AnalyticsPage extends Page {
+public class AnalyticsPage {
 
   /** The chart displayed by this page */
   protected LineChart<String, Number> chart;
@@ -33,23 +33,22 @@ public class AnalyticsPage extends Page {
    * @param primaryStage The stage for this page to be displayed
    */
   public AnalyticsPage(HashMap<String, Statistics> statistics) {
-    super(new Stage());
+    Stage stage = new Stage();
     this.statistics = statistics;
-    makeScene();
-    stage.setScene(scene);
+    setLayout();
+    Scene scene = new Scene(layout, 800, 600);
+    stage.setScene(sceneg);
     stage.show();
     stage.setTitle("Transit System Simulator");
   }
 
-  @Override
-  void makeScene() {
+  void setLayout() {
     setupStatOptions();
     dropDowns.getChildren().addAll(timeOptions, statOptions);
     layout.setTop(dropDowns);
 
     // generate the Graph without having to click first
     setUpStatGraph();
-    this.scene = new Scene(layout, 800, 600);
   }
 
   /** Creates the drop down boxes to switch between statistics and different time frames. */

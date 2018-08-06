@@ -1,18 +1,16 @@
 package transit.pages;
 
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.Statistics;
 import transit.system.User;
-
-import java.util.HashMap;
 
 /** Represents a page displayed when a user logs in in this transit system */
 public class UserPage extends AuthenticatedPage {
@@ -34,19 +32,19 @@ public class UserPage extends AuthenticatedPage {
    */
   @Override
   protected void makeScene() {
+    // Set layout of grid
+    grid.setPadding(new Insets(20, 20, 20, 40));
+    grid.setHgap(10);
+    grid.setVgap(10);
+    // Add content to scene
+    factory.addClock(grid);
     placeUserButtons();
     addGreeting();
-
+    scene = new Scene(grid, 600, 375);
+    // Style the scene
     scene
         .getStylesheets()
         .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());
-  }
-
-  /** Adds the user-specific data on this page */
-  protected void addGreeting() {
-    Label greeting =
-        factory.makeLabel(grid, String.format("Hello %s", user.getPersonalInfo().getUserName()), 0, 1);
-    greeting.setId("greeting");
   }
 
   /**
@@ -55,11 +53,19 @@ public class UserPage extends AuthenticatedPage {
    * @param primaryStage the stage on which this page is served
    */
   private void placeUserButtons() {
+    newUserInfoButton(1, 0);
+    newLogoutButton(2, 0);
+    newRemoveAccountButton(0, 6);
+    factory.makeButton(grid, "Change name", () -> new ChangeNamePage(stage, user), 0, 4);
+    factory.makeButton(grid, "Change password", () -> new ChangePasswordPage(user), 0, 5);
     factory.makeButton(grid, "Cards", () -> new CardPage(user), 0, 2);
 
     factory.makeButton(
-        grid, "Get Stats", ()->new UserGraphPage(user.getCardCommands().getCardStatistics()), 0, 3);
-    super.makeScene();
+        grid,
+        "Get Stats",
+        () -> new UserGraphPage(user.getCardCommands().getCardStatistics()),
+        0,
+        3);
 
     factory.makeButton(
         grid,
@@ -79,20 +85,9 @@ public class UserPage extends AuthenticatedPage {
 
     if (user.getCardCommands().getPermission().equals("admin")) {
       Button viewToggle =
-          factory.makeButton(
-              grid,
-              "Admin view",
-              () -> new AdminUserPage(stage, user),
-              2,
-              7);
+          factory.makeButton(grid, "Admin view", () -> new AdminUserPage(stage, user), 2, 7);
       GridPane.setHalignment(viewToggle, HPos.RIGHT);
       GridPane.setHgrow(viewToggle, Priority.ALWAYS);
     }
-  }
-
-  /** Creates a popup window containing a monthly expenditure page */
-  private void makeMonthlyExpenditurePage() {
-    HashMap<String, Statistics> tripStats = user.getCardCommands().getCardStatistics();
-    AnalyticsPage graphPage = new UserGraphPage(tripStats);
   }
 }

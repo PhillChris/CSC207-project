@@ -7,13 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.TransitTime;
 import transit.system.User;
 
 /** Represents the page seen by an AdminUser when logging into the transit system */
-public class AdminUserPage extends Page {
-  /** The AdminUser whose page is being displayed */
-  private User adminUser;
+public class AdminUserPage extends AuthenticatedPage {
 
   /**
    * Constructs an instance of AdminUserPage
@@ -22,8 +19,7 @@ public class AdminUserPage extends Page {
    * @param adminUser the AdminUser whose page is to be constructed
    */
   public AdminUserPage(Stage primaryStage, User adminUser) {
-    super(primaryStage);
-    this.adminUser = adminUser;
+    super(primaryStage, adminUser);
     makeScene();
     stage.setScene(this.scene);
     stage.show();
@@ -36,7 +32,7 @@ public class AdminUserPage extends Page {
    */
   @Override
   protected void makeScene() {
-    grid.setPadding(new Insets(20, 20, 20, 20));
+    grid.setPadding(new Insets(30, 30, 30, 30));
     grid.setHgap(10);
     grid.setVgap(10);
     factory.addClock(grid);
@@ -44,9 +40,8 @@ public class AdminUserPage extends Page {
 
     scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene
-      .getStylesheets()
-      .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());
-
+        .getStylesheets()
+        .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());
   }
 
   /**
@@ -55,18 +50,18 @@ public class AdminUserPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   private void makeSceneButtons() {
+    factory.makeLabel(grid, getUserMessage(), 1, 0);
+    newUserInfoButton(2, 0);
+    newLogoutButton(2, 1);
+    newRemoveAccountButton(2, 2);
 
-    factory.makeButton(grid,"System Stats", () -> new SystemGraphPage(), 0, 2);
+    factory.makeButton(grid, "System Stats", () -> new SystemGraphPage(), 0, 2);
     factory.makeButton(grid, "Update Routes", () -> new RouteCreationPage(), 0, 1);
 
-    Button toggle = factory.makeButton(grid,
-        "User view",
-        () -> new UserPage(stage, this.adminUser),
-        1,
-        2);
+    Button toggle =
+        factory.makeButton(grid, "User view", () -> new UserPage(stage, this.user), 1, 2);
     GridPane.setHalignment(toggle, HPos.RIGHT);
-    Button logout = factory.makeButton(grid,
-        "Logout", () -> new LoginPage(stage), 1, 1);
+    Button logout = factory.makeButton(grid, "Logout", () -> new LoginPage(stage), 1, 1);
     GridPane.setHalignment(logout, HPos.RIGHT);
   }
 }

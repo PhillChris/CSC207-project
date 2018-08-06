@@ -1,18 +1,14 @@
 package transit.pages;
 
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import transit.system.LogWriter;
 import transit.system.User;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /** Represents a page with an associated user in this system, upon having logged in */
 public abstract class AuthenticatedPage extends Page {
@@ -35,25 +31,12 @@ public abstract class AuthenticatedPage extends Page {
     stage.show();
   }
 
-  /**
-   * Makes the core implementation of UserPage, to be overriden by other authenticated pages
-   *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
-   */
-  @Override
-  protected void makeScene() {
-    grid.setPadding(new Insets(20, 20, 20, 40));
-    grid.setHgap(10);
-    grid.setVgap(10);
-
-    newUserInfoButton(1, 0);
-    newLogoutButton(2, 0);
-    newRemoveAccountButton(0, 6);
-
-    factory.makeButton(grid, "Change name", ()->new ChangeNamePage(stage, user), 0, 4);
-    factory.makeButton(grid, "Change password", ()-> new ChangePasswordPage(user), 0, 5);
-    factory.addClock(grid);
-    this.scene = new Scene(grid, 600, 375);
+  /** Adds the user-specific data on this page */
+  protected void addGreeting() {
+    Label greeting =
+        factory.makeLabel(
+            grid, String.format("Hello %s", user.getPersonalInfo().getUserName()), 0, 1);
+    greeting.setId("greeting");
   }
 
   /**
@@ -62,20 +45,22 @@ public abstract class AuthenticatedPage extends Page {
    * @param col the column in the grid where this user info button is displayed
    * @param row the row in the grid where this user info button is displayed
    */
-  private void newUserInfoButton(int col, int row) {
-    Button info = factory.makeButton(grid,
-        "Info",
-        () -> {
-          Alert alert =
-              factory.makeAlert(
-                  "User Information",
-                  "Your user information:",
-                  getUserMessage(),
-                  Alert.AlertType.INFORMATION);
-          alert.showAndWait();
-        },
-        col,
-        row);
+  protected void newUserInfoButton(int col, int row) {
+    Button info =
+        factory.makeButton(
+            grid,
+            "Info",
+            () -> {
+              Alert alert =
+                  factory.makeAlert(
+                      "User Information",
+                      "Your user information:",
+                      getUserMessage(),
+                      Alert.AlertType.INFORMATION);
+              alert.showAndWait();
+            },
+            col,
+            row);
     GridPane.setHalignment(info, HPos.RIGHT);
     GridPane.setHgrow(info, Priority.ALWAYS);
   }
@@ -85,17 +70,13 @@ public abstract class AuthenticatedPage extends Page {
    *
    * @return the user information to be displayed
    */
-  private String getUserMessage() {
+  protected String getUserMessage() {
     String temp =
         "Username: "
             + user
             + System.lineSeparator()
             + "Permission: "
             + user.getCardCommands().getPermission();
-    for (Integer id : this.user.getCardCommands().getCardsCopy().keySet()) {
-      temp += System.lineSeparator();
-      temp += user.getCardCommands().getCardsCopy().get(id);
-    }
     return temp;
   }
 
@@ -106,12 +87,11 @@ public abstract class AuthenticatedPage extends Page {
    * @param col the column in the grid where this logout button is displayed
    * @param row the row in the grid where this logout button is displayed
    */
-  public void newLogoutButton(int col, int row) { Button logout = factory.makeButton(grid,
-        "Logout", () -> new LoginPage(stage), col, row);
+  protected void newLogoutButton(int col, int row) {
+    Button logout = factory.makeButton(grid, "Logout", () -> new LoginPage(stage), col, row);
     GridPane.setHalignment(logout, HPos.RIGHT);
     GridPane.setHgrow(logout, Priority.ALWAYS);
   }
-
 
   /**
    * A private helper method to add a new remove account button at the given coordinates
@@ -120,8 +100,9 @@ public abstract class AuthenticatedPage extends Page {
    * @param col the column in the grid where this remove account button is displayed
    * @param row the row in the grid where this remove account button is displayed
    */
-  private void newRemoveAccountButton(int col, int row) {
-    factory.makeButton(grid,
+  protected void newRemoveAccountButton(int col, int row) {
+    factory.makeButton(
+        grid,
         "Remove this account!",
         () ->
             factory.makeConfirmationAlert(
@@ -136,13 +117,12 @@ public abstract class AuthenticatedPage extends Page {
         6);
   }
 
-  private void logout(Stage primaryStage) {
-    new LoginPage(primaryStage);
+  protected void logout() {
+    new LoginPage(stage);
     LogWriter.getLogWriter()
         .logInfoMessage(
             AuthenticatedPage.class.getName(),
             "logout",
             "User " + user.getPersonalInfo().getUserName() + " logged out of the transit system");
   }
-
 }

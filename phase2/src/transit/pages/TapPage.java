@@ -1,6 +1,5 @@
 package transit.pages;
 
-import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -8,22 +7,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.Card;
-import transit.system.Route;
-import transit.system.Station;
-import transit.system.TransitTime;
-import transit.system.User;
+import transit.system.*;
+
+import java.util.ArrayList;
 
 /** Represents a page displaying all possibilities for tapping in this transit system */
 public class TapPage extends Page {
   /** The tap options of a given card */
   private ArrayList<Button> stationButtons = new ArrayList<>();
   /** The user whose card is currently tapping */
-  private User user;
+  private UserCardCommands cards;
   /** The card which is currently tapping */
   private Card card;
-  /** The label outlining current trips this user is taking */
-  private Stage cardPageStage;
   /** The type selected in the selection bar upon creation of this TapPage */
   private String selectedType;
 
@@ -35,13 +30,15 @@ public class TapPage extends Page {
    * @param card the card which is currently tapping
    * @param cardPageStage the label to update when this page
    */
-  public TapPage(
-      Stage secondaryStage, User user, Card card, Stage cardPageStage, String selectedType) {
-    this.user = user;
+  public TapPage(Stage stage, UserCardCommands cards, Card card, String selectedType) {
+    super(stage);
+    this.cards = cards;
     this.card = card;
-    this.cardPageStage = cardPageStage;
     this.selectedType = selectedType;
-    makeScene(secondaryStage);
+    makeScene();
+    stage.setTitle("Tap " + card);
+    stage.setScene(scene);
+    stage.show();
   }
 
   /**
@@ -50,10 +47,10 @@ public class TapPage extends Page {
    * @param secondaryStage the popup stage on which this page is served
    */
   @Override
-  public void makeScene(Stage secondaryStage) {
-    placeLabel("Choose route type!", 0, 0);
-    ChoiceBox<String> routeType = new ChoiceBox();
-    setupRouteTypeBox(routeType, secondaryStage);
+  public void makeScene() {
+    factory.makeLabel(grid, "Choose route type!", 0, 0);
+    ChoiceBox<String> routeType = new ChoiceBox<>();
+    setupRouteTypeBox(routeType);
     grid.add(routeType, 1, 0);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
   }
@@ -102,43 +99,43 @@ public class TapPage extends Page {
    * @return the button created at this place in the grid
    */
   private Button placeStationButton(Station station, int col, int row) {
-    return placeButton(
+    return factory.makeButton(
+        grid,
         station.toString(),
         () -> {
           Alert alert;
           try {
-            user.tap(card, station);
+            cards.tap(card, station);
             if (card.getCurrentTrip() != null) {
               alert =
-                  makeAlert(
+                  factory.makeAlert(
                       "Tapped In",
                       "Tapped in",
                       String.format(
                           "Tap in at %s, at time %s",
-                          station.toString(), TransitTime.getCurrentTimeString()),
+                          station.toString(), TransitTime.getClock().getCurrentTimeString()),
                       AlertType.CONFIRMATION);
             } else {
               alert =
-                  makeAlert(
+                  factory.makeAlert(
                       "Tapped Out",
                       "Tapped Out",
                       String.format(
                           "Tap out at %s, at time %s, with trip fee $%.2f.",
                           station.toString(),
-                          TransitTime.getCurrentTimeString(),
+                          TransitTime.getClock().getCurrentTimeString(),
                           (card.getLastTrip().getFee()) / 100.0),
                       AlertType.CONFIRMATION);
             }
           } catch (Exception b) {
             alert =
-                makeAlert(
+                factory.makeAlert(
                     "Tap error",
                     "Tap error",
                     "There was a problem in tapping at this point, no tap request could be processed",
                     AlertType.ERROR);
           }
           alert.showAndWait();
-          this.cardPageStage.setScene(new CardPage(cardPageStage, user).getScene());
         },
         col,
         row);
@@ -149,14 +146,11 @@ public class TapPage extends Page {
    *
    * @param routeType the checkbox selecting route type
    */
-  private void setupRouteTypeBox(ChoiceBox<String> routeType, Stage secondaryStage) {
+  private void setupRouteTypeBox(ChoiceBox<String> routeType) {
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     refreshRouteOptionItems(this.selectedType); /* Loads the first round of buttons*/
     routeType.getSelectionModel().select(this.selectedType);
-    routeType.setOnAction(
-        e ->
-            secondaryStage.setScene(
-                new TapPage(secondaryStage, user, card, cardPageStage, routeType.getValue()).getScene()));
+    routeType.setOnAction(e -> new TapPage(stage, cards, card, routeType.getValue()));
     refreshRouteOptionItems(routeType.getValue());
   }
 }

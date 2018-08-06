@@ -3,12 +3,13 @@ package transit.pages;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.User;
 
 /** Represents a page for user's to change their name */
-public class ChangeNamePage extends AuthenticatedPage {
+public class ChangeNamePage extends Page {
+
+  private User user;
 
   /**
    * Initialized a new instance of ChangeNamePage
@@ -17,8 +18,12 @@ public class ChangeNamePage extends AuthenticatedPage {
    * @param user The user associated with this page
    */
   public ChangeNamePage(Stage primaryStage, User user) {
-    super(primaryStage, user);
-    makeScene(primaryStage);
+    super(new Stage());
+    this.user = user;
+    makeScene();
+    stage.setTitle("Change Name Page");
+    stage.setScene(scene);
+    stage.show();
   }
 
   /**
@@ -27,21 +32,22 @@ public class ChangeNamePage extends AuthenticatedPage {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  public void makeScene(Stage primaryStage) {
+  public void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
-    placeLabel("New Username: ", 0, 0);
-    TextField newName = placeTextField(1, 0);
-    placeButton(
+    factory.makeLabel(grid, "New Username: ", 0, 0);
+    TextField newName = factory.makeTextField(grid, "",1, 0);
+    factory.makeButton(grid,
         "Change name!",
         () -> {
-          user.changeName(newName.getText());
-          primaryStage.setScene(new UserPage(primaryStage, user).getScene());
+          user.getPersonalInfo().changeName(newName.getText());
+          new UserPage(stage, user);
         },
         2,
         0);
 
-    this.scene = new Scene(grid, 460, 60);
+    scene = new Scene(grid, 550, 70);
+    scene.getStylesheets().add(getClass().getResource("styling/ChangeInfoPage.css").toExternalForm());
   }
 }

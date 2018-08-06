@@ -1,17 +1,17 @@
 package transit.pages;
 
-import transit.system.User;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.StatisticsMaker;
-import transit.system.TransitTime;
+import transit.system.Statistics;
+import transit.system.User;
 
 /** Represents the page seen by an AdminUser when logging into the transit system */
-public class AdminUserPage extends Page {
-  /** The AdminUser whose page is being displayed */
-  private User adminUser;
+public class AdminUserPage extends AuthenticatedPage {
 
   /**
    * Constructs an instance of AdminUserPage
@@ -20,9 +20,10 @@ public class AdminUserPage extends Page {
    * @param adminUser the AdminUser whose page is to be constructed
    */
   public AdminUserPage(Stage primaryStage, User adminUser) {
-    super(primaryStage);
-    this.adminUser = adminUser;
-    makeScene(primaryStage);
+    super(primaryStage, adminUser);
+    makeScene();
+    stage.setScene(this.scene);
+    stage.show();
   }
 
   /**
@@ -31,9 +32,17 @@ public class AdminUserPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  protected void makeScene(Stage primaryStage) {
-    makeSceneButtons(primaryStage);
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+  protected void makeScene() {
+    grid.setPadding(new Insets(30, 30, 30, 30));
+    grid.setHgap(10);
+    grid.setVgap(10);
+    factory.addClock(grid);
+    makeSceneButtons();
+
+    scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    scene
+        .getStylesheets()
+        .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());
   }
 
   /**
@@ -41,59 +50,19 @@ public class AdminUserPage extends Page {
    *
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
-  private void makeSceneButtons(Stage primaryStage) {
-    placeButton(
-        "Monthly Revenue (Current Year)",
-        () -> {
-          createAdminGraphPage();
-        },
-        0,
-        2);
+  private void makeSceneButtons() {
+    factory.makeLabel(grid, getUserMessage(), 1, 0);
+    newUserInfoButton(2, 0);
+    newLogoutButton(2, 1);
+    newRemoveAccountButton(2, 2);
 
-    placeButton("Add/append route", () -> createRoutePage(), 0, 4);
-    placeButton(
-        "Daily Report",
-        () ->
-            makeAlert("", "", StatisticsMaker.generateReportMessage(), AlertType.INFORMATION)
-                .showAndWait(),
-        0,
-        5);
-    placeButton(
-        "Toggle User Panel",
-        () -> primaryStage.setScene(new UserPage(primaryStage, this.adminUser).getScene()),
-        0,
-        6);
-    placeButton(
-        "Station Statistics",
-        () -> primaryStage.setScene(new StationTablePage(primaryStage, adminUser).getScene()),
-        0,
-        7);
-    placeButton(
-        "User Statistics",
-        () -> primaryStage.setScene(new UserTablePage(primaryStage, adminUser).getScene()),
-        0,
-        8);
-    placeButton(
-        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 0, 9);
-  }
+    factory.makeButton(grid, "System Stats", () -> new AnalyticsPage(Statistics.getSystemStatistics()), 0, 2);
+    factory.makeButton(grid, "Update Routes", () -> new RouteCreationPage(), 0, 1);
 
-  /**
-   * Makes the route creation page popup when the appropriate button is pushed
-   */
-  private void createRoutePage() {
-    Stage secondaryStage = new Stage();
-    RouteCreationPage routepage = new RouteCreationPage(secondaryStage);
-    secondaryStage.setScene(routepage.getScene());
-    secondaryStage.setTitle("Route Creation Page");
-    secondaryStage.show();
-  }
-
-  /** Makes the admin graph page popup when the appropriate button is pushed */
-  private void createAdminGraphPage() {
-    Stage secondaryStage = new Stage();
-    AdminGraphPage graphPage = new AdminGraphPage(secondaryStage, this.adminUser);
-    secondaryStage.setTitle("Monthly Revenue for " + TransitTime.getCurrentDate().getYear());
-    secondaryStage.setScene(graphPage.getScene());
-    secondaryStage.show();
+    Button toggle =
+        factory.makeButton(grid, "User view", () -> new UserPage(stage, this.user), 1, 2);
+    GridPane.setHalignment(toggle, HPos.RIGHT);
+    Button logout = factory.makeButton(grid, "Logout", () -> new LoginPage(stage), 1, 1);
+    GridPane.setHalignment(logout, HPos.RIGHT);
   }
 }

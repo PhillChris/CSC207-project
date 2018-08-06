@@ -1,9 +1,13 @@
 package transit.pages;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.User;
@@ -19,7 +23,6 @@ public class UserPage extends AuthenticatedPage {
    */
   public UserPage(Stage primaryStage, User user) {
     super(primaryStage, user);
-    makeScene(primaryStage);
   }
 
   /**
@@ -28,18 +31,20 @@ public class UserPage extends AuthenticatedPage {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  protected void makeScene(Stage primaryStage) {
-    placeUserButtons(primaryStage);
+  protected void makeScene() {
+    // Set layout of grid
+    grid.setPadding(new Insets(20, 20, 20, 40));
+    grid.setHgap(10);
+    grid.setVgap(10);
+    // Add content to scene
+    factory.addClock(grid);
+    placeUserButtons();
     addGreeting();
-
+    scene = new Scene(grid, 600, 375);
+    // Style the scene
     scene
-      .getStylesheets()
-      .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());
-  }
-
-  /** Adds the user-specific data on this page */
-  protected void addGreeting() {
-    placeLabel(grid, String.format("Hello %s", user.getUserName()), 0, 1, "greeting");
+        .getStylesheets()
+        .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());
   }
 
   /**
@@ -47,32 +52,30 @@ public class UserPage extends AuthenticatedPage {
    *
    * @param primaryStage the stage on which this page is served
    */
-  private void placeUserButtons(Stage primaryStage) {
-    placeButton(
-        "Cards",
-        () -> {
-          Stage newStage = new Stage();
-          CardPage cardPage = new CardPage(newStage, this.user);
-          newStage.setScene(cardPage.getScene());
-          newStage.show();
-        },
-        0,
-        2);
-    placeButton(
-        "Monthly Expenditure (Current Year)",
-      this::makeMonthlyExpenditurePage,
+  private void placeUserButtons() {
+    newUserInfoButton(1, 0);
+    newLogoutButton(2, 0);
+    newRemoveAccountButton(0, 6);
+    factory.makeButton(grid, "Change name", () -> new ChangeNamePage(stage, user), 0, 4);
+    factory.makeButton(grid, "Change password", () -> new ChangePasswordPage(user), 0, 5);
+    factory.makeButton(grid, "Cards", () -> new CardPage(new Stage(), user.getCardCommands()), 0, 2);
+
+    factory.makeButton(
+        grid,
+        "Get Stats",
+        () -> new AnalyticsPage(user.getCardCommands().getCardStatistics()),
         0,
         3);
-    super.makeScene(primaryStage);
 
-    placeButton(
+    factory.makeButton(
+        grid,
         "Get last 3 trips",
         () -> {
           Alert a =
-              makeAlert(
+              factory.makeAlert(
                   "Last 3 trips",
                   "Last 3 trips of user " + user,
-                  user.getLastThreeMessage(),
+                  "Nothing right now",
                   AlertType.INFORMATION);
           a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
           a.showAndWait();
@@ -80,21 +83,11 @@ public class UserPage extends AuthenticatedPage {
         0,
         7);
 
-    if (user.getPermission().equals("admin")) {
-      placeButton(
-          "Toggle admin panel",
-          () -> primaryStage.setScene(new AdminUserPage(primaryStage, user).getScene()),
-          0,
-          8);
+    if (user.getCardCommands().getPermission().equals("admin")) {
+      Button viewToggle =
+          factory.makeButton(grid, "Admin view", () -> new AdminUserPage(stage, user), 2, 7);
+      GridPane.setHalignment(viewToggle, HPos.RIGHT);
+      GridPane.setHgrow(viewToggle, Priority.ALWAYS);
     }
-  }
-
-  /** Creates a popup window containing a monthly expenditure page*/
-  private void makeMonthlyExpenditurePage() {
-    Stage secondaryStage = new Stage();
-    UserGraphPage graphPage = new UserGraphPage(secondaryStage, this.user);
-    secondaryStage.setTitle("Monthly Expenditure for user " + user);
-    secondaryStage.setScene(graphPage.getScene());
-    secondaryStage.show();
   }
 }

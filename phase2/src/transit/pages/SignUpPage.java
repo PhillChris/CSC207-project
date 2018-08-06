@@ -7,7 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import transit.system.*;
+import transit.system.MessageTransitException;
+import transit.system.User;
 
 /** Represents a page opened when making a new account in this transit system */
 public class SignUpPage extends Page {
@@ -18,7 +19,10 @@ public class SignUpPage extends Page {
    * @param primaryStage the stage on which this SignUpPage is being served
    */
   public SignUpPage(Stage primaryStage) {
-    makeScene(primaryStage);
+    super(primaryStage);
+    stage.setTitle("Sign Up Page");
+    makeScene();
+    stage.setScene(scene);
   }
 
   /**
@@ -27,87 +31,69 @@ public class SignUpPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  protected void makeScene(Stage primaryStage) {
+  protected void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
 
-    makeSignUpPane(primaryStage);
+    makeSignUpPane();
 
-    addTrain();
-    addClock();
+    factory.addTrain(grid);
+    factory.addClock(grid);
 
-    this.scene = new Scene(grid, 600, 375);
-    scene.getStylesheets().add(SignUpPage.class.getResource("styling/SignUpPage.css").toExternalForm());
+    scene = new Scene(grid, 600, 375);
+    scene.getStylesheets().add(getClass().getResource("styling/SignUpPage.css").toExternalForm());
   }
 
-  private void makeSignUpPane(Stage primaryStage) {
+  /**
+   * Makes the pane for this page
+   *
+   * @param primaryStage The stage for this page to be viewed
+   */
+  private void makeSignUpPane() {
     GridPane signUpPane = new GridPane();
     signUpPane.setPadding(new Insets(0, 0, 0, 0));
     signUpPane.setHgap(10);
     signUpPane.setVgap(12);
 
     placeLabels(signUpPane);
-    placeIcons(signUpPane);
+    makeIcons(signUpPane);
 
     TextField userInput = makeUserInput(signUpPane);
     TextField emailInput = makeEmailInput(signUpPane);
     PasswordField passInput = makePassInput(signUpPane);
-
-    ComboBox<String> userType = new ComboBox<>();
-    userType.getItems().addAll(
-      "Standard",
-      "Admin",
-      "Student"
-    );
-
-
-
-    userType.getSelectionModel().selectFirst();
-
-
-
-    signUpPane.add(userType, 1, 4, 2, 1);
-    GridPane.setHalignment(userType, HPos.RIGHT);
-    GridPane.setMargin(userType, new Insets(0, 9, 0, 0));
-
-//    ToggleGroup group = new ToggleGroup();
-//
-//    RadioButton userBox = new RadioButton("Normal User?");
-//    signUpPane.add(userBox, 0, 4, 2, 1);
-//
-//    RadioButton adminBox = new RadioButton("Admin?");
-//    signUpPane.add(adminBox, 0, 5, 2, 1);
-//
-//    RadioButton studentBox = new RadioButton("Student?");
-//    signUpPane.add(studentBox, 0, 6, 2, 1);
-
-
-//    group.getToggles().setAll(userBox, adminBox, studentBox);
+    ComboBox<String> userType = makeTypeCombo(signUpPane);
 
     Label errorMessage = makeErrorMessage(signUpPane);
 
-    placeSeparator(signUpPane);
+    makeSeparator(signUpPane);
 
-    placeSignUpButton(signUpPane, userInput, emailInput, passInput, userType, errorMessage);
-    placeBackButton(primaryStage, signUpPane);
+    makeSignUpButton(signUpPane, userInput, emailInput, passInput, userType, errorMessage);
+    makeBackButton(stage, signUpPane);
 
     grid.add(signUpPane, 0, 1);
-
   }
 
   private TextField makeUserInput(GridPane signUpPane) {
-    return placeTextField(signUpPane, "Username", 1, 1, "userInput");
+    return factory.makeTextField(signUpPane, "Username", 1, 1);
   }
 
   private TextField makeEmailInput(GridPane signUpPane) {
-    return placeTextField(signUpPane, "Email", 1, 2, "emailInput");
+    return factory.makeTextField(signUpPane, "Email", 1, 2);
   }
 
   private PasswordField makePassInput(GridPane signUpPane) {
-    return placePasswordField(signUpPane, "Password (6+ chars)", 1, 3, "passInput");
+    return factory.makePasswordField(signUpPane, "Password (6+ chars)", 1, 3);
   }
 
+  private ComboBox<String> makeTypeCombo(GridPane signUpPane) {
+    String[] choices = {"Standard", "Admin", "Student"};
+    ComboBox<String> userType = factory.makeComboBox(signUpPane, choices, 1, 4);
+    GridPane.setColumnSpan(userType, 2);
+    GridPane.setHalignment(userType, HPos.RIGHT);
+    GridPane.setMargin(userType, new Insets(0, 9, 0, 0));
+    return userType;
+  }
   private void placeLabels(GridPane signUpPane) {
     Label signUp = new Label("Sign up");
     signUp.setId("signUpLabel");
@@ -116,63 +102,80 @@ public class SignUpPage extends Page {
     Label userType = new Label("User type:");
     userType.setId("typeLabel");
     signUpPane.add(userType, 0, 4, 2, 1);
-
   }
 
   private Label makeErrorMessage(GridPane signUpPane) {
-    Label errorMessage = placeLabel(signUpPane, "", 1, 0, "errorMessage");
+    Label errorMessage = factory.makeLabel(signUpPane, "", 1, 0);
+    errorMessage.setId("errorMessage");
     GridPane.setHalignment(errorMessage, HPos.RIGHT);
     return errorMessage;
   }
 
-  private void placeSeparator(GridPane signUpPane) {
-    Separator horizontalSeparator = new Separator();
-    signUpPane.add(horizontalSeparator, 0, 5, 2, 1);
+  private void makeSeparator(GridPane signUpPane) {
+    Separator horizontalSeparator = factory.makeSeparator(signUpPane, 0, 5);
+    GridPane.setColumnSpan(horizontalSeparator, 2);
   }
 
-  private void placeIcons(GridPane signUpPane) {
-    placeImage(signUpPane, "transit/pages/assets/face.png", 0, 1, "faceIcon");
-    placeImage(signUpPane, "transit/pages/assets/email.png", 0, 2, "emailIcon");
-    placeImage(signUpPane, "transit/pages/assets/key.png", 0, 3, "keyIcon");
+  private void makeIcons(GridPane signUpPane) {
+    factory.makeImage(signUpPane, "transit/pages/assets/face.png", 0, 1);
+    factory.makeImage(signUpPane, "transit/pages/assets/email.png", 0, 2);
+    factory.makeImage(signUpPane, "transit/pages/assets/key.png", 0, 3);
   }
 
-  private void placeSignUpButton(GridPane signUpPane, TextField userInput, TextField emailInput,
-                                 PasswordField passInput, ComboBox<String> userType, Label errorMessage) {
+  private void makeSignUpButton(
+      GridPane signUpPane,
+      TextField userInput,
+      TextField emailInput,
+      PasswordField passInput,
+      ComboBox<String> userType,
+      Label errorMessage) {
     Button signUpButton = new Button("Sign Up");
-    signUpButton.setOnAction((data) -> {
-      try {
-        add(userInput.getText(), emailInput.getText(), passInput.getText(), userType.getValue());
-        errorMessage.setText("Account created");
-        errorMessage.setTextFill(Color.web("#33AF54"));
-      } catch (MessageTransitException e) {
-        e.setMessage(errorMessage);
-      }
-    });
+    signUpButton.setOnAction(
+        (data) -> {
+          try {
+            add(
+                userInput.getText(),
+                emailInput.getText(),
+                passInput.getText(),
+                userType.getValue());
+            errorMessage.setText("Account created");
+            errorMessage.setTextFill(Color.web("#33AF54"));
+          } catch (MessageTransitException e) {
+            e.setMessage(errorMessage);
+          }
+        });
     signUpPane.add(signUpButton, 0, 6, 2, 1);
     GridPane.setMargin(signUpButton, new Insets(2, 0, 0, 0));
     GridPane.setHalignment(signUpButton, HPos.LEFT);
   }
 
-  private void placeBackButton(Stage primaryStage, GridPane signUpPane) {
+  private void makeBackButton(Stage primaryStage, GridPane signUpPane) {
     Button backButton = new Button("Go Back");
-    backButton.setOnAction((data) -> primaryStage.setScene(new LoginPage(primaryStage).getScene()));
+    backButton.setOnAction((data) -> new LoginPage(primaryStage));
     signUpPane.add(backButton, 1, 6, 2, 1);
     GridPane.setHalignment(backButton, HPos.RIGHT);
     GridPane.setMargin(backButton, new Insets(2, 10, 0, 0));
   }
+
   /**
    * @param username the proposed username of this new user
    * @param email the proposed email of this new user
    * @param password the proposed password of this new user
-   * @throws MessageTransitException if there is a problem in constructing a user with these given parameters
+   * @throws MessageTransitException if there is a problem in constructing a user with these given
+   *     parameters
    */
-  private void add(String username, String email, String password, String userType) throws MessageTransitException {
-    if (userType.equals("Admin")) {
-      new User(username, email, password, "admin");
-    } else if (userType.equals("Student")) {
-      new User(username, email, password, "student");
-    } else {
-      new User(username, email, password, "user");
+  private void add(String username, String email, String password, String userType)
+      throws MessageTransitException {
+    switch (userType) {
+      case "Admin":
+        new User(username, email, password, "admin");
+        break;
+      case "Student":
+        new User(username, email, password, "student");
+        break;
+      default:
+        new User(username, email, password, "user");
+        break;
     }
   }
 }

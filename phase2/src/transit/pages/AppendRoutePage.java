@@ -17,9 +17,6 @@ public class AppendRoutePage extends Page {
   /** A Label designed to represent the route associated with this page */
   private Label routeLabel;
 
-  /** The stage used by this page */
-  private Stage stage;
-
   /** The list of stations added and viewed by the user */
   private ArrayList<String> stationNames;
 
@@ -29,8 +26,8 @@ public class AppendRoutePage extends Page {
    * @param stage
    * @param route
    */
-  public AppendRoutePage(Stage stage, Route route) {
-    this.stage = stage;
+  public AppendRoutePage(Route route) {
+    super(new Stage());
     this.route = route;
     stationNames = new ArrayList<>();
     for (Station station : route.getRouteStationsCopy()) {
@@ -38,7 +35,10 @@ public class AppendRoutePage extends Page {
     }
     routeLabel = new Label();
     setRouteLabel();
-    makeScene(stage);
+    makeScene();
+    stage.setTitle(String.format("Append %s Route", route.getRouteType()));
+    stage.setScene(scene);
+    stage.show();
   }
 
   /**
@@ -47,34 +47,42 @@ public class AppendRoutePage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
-  void makeScene(Stage primaryStage) {
+  void makeScene() {
     /** Set the grid of this page */
     grid.add(routeLabel, 0, 0, 20, 2);
-    placeLabel("Enter the name of the new station here", 8, 9);
+    factory.makeLabel(grid, "Enter the name of the new station here", 8, 9);
     makeSceneButtons();
-    this.scene = new Scene(grid, 1000, 1000);
+    this.scene = new Scene(grid, 1000, 200);
   }
 
   /** Constructs all buttons in this scene */
   private void makeSceneButtons() {
-    TextField textField = placeTextField(10, 10);
+    TextField textField = factory.makeTextField(grid, "", 10, 10);
 
-    placeButton("Add Station at Start", () -> addStationAtStart(textField), 10, 15);
+    factory.makeButton(grid, "Add Station at Start", () -> {
+      addStationAtStart(textField);
+      textField.clear();
+    }, 10, 15);
 
-    placeButton("Add Station at End", () -> addStationAtEnd(textField), 10, 16);
+    factory.makeButton(grid, "Add Station at End", () -> {
+      addStationAtEnd(textField);
+      textField.clear();
+    }, 10, 16);
 
-    placeButton(
+    factory.makeButton(grid,
         "Confirm",
         () ->
-            makeConfirmationAlert(
-                "Confirm Route?",
-                "",
-                "Would you like to confirm the creation of this route?",
-                () -> {
-                  this.route.setRouteStations(stationNames);
-                  this.route.saveRoute();
-                  stage.close();
-                }),
+        {
+          factory.makeConfirmationAlert(
+            "Confirm Route?",
+            "",
+            "Would you like to confirm the creation of this route?",
+            () -> {
+              this.route.setRouteStations(stationNames);
+              this.route.saveRoute();
+              stage.close();
+            });
+        },
         20,
         20);
   }
@@ -90,7 +98,7 @@ public class AppendRoutePage extends Page {
       if (!stationNames.contains(textField.getText())) {
         stationNames.add(0, textField.getText());
       } else {
-        makeAlert(
+        factory.makeAlert(
                 "Station Name In Use",
                 "Station Name In Use:",
                 "This station name is used in this route",
@@ -112,7 +120,7 @@ public class AppendRoutePage extends Page {
       if (!stationNames.contains(textField.getText())) {
         stationNames.add(textField.getText());
       } else {
-        makeAlert(
+        factory.makeAlert(
                 "Station Name In Use",
                 "Station Name In Use:",
                 "This station name is used in this route",

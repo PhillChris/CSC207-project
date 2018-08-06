@@ -7,19 +7,16 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
 import static javafx.scene.paint.Color.BLACK;
 
 /** A class keeping track of universal timeLabel in the transit system */
 public class TransitTime implements Serializable {
-  /** The file in which system timeLabel is serialized */
-  public static final String TIME_LOCATION =
-      "." + File.separator + "tmp" + File.separator + "timeLabel.ser";
   /** The clock used by the transit system */
   private static TransitTime clock = setSystemClock();
   /** A label designed to represent to current timeLabel of this simulation */
@@ -30,69 +27,79 @@ public class TransitTime implements Serializable {
   private LocalDateTime currentTime;
 
   /** Initialize a new instance of TransitTime */
-  private TransitTime() {
-    currentTime = LocalDateTime.now();
+  private TransitTime(LocalDateTime time) {
+    currentTime = time;
     timeLabel = new Label();
     updateTimeLabel();
   }
 
   private static TransitTime setSystemClock() {
-    TransitTime systemClock = (TransitTime) Database.readObject(TIME_LOCATION);
-    if (systemClock != null) {
-      systemClock.updateTimeLabel();
-      return systemClock;
+    LocalDateTime time = (LocalDateTime) Database.readObject(Database.TIME_LOCATION);
+    if (time != null) {
+      return new TransitTime(time);
     } else {
-      return new TransitTime();
+      return new TransitTime(LocalDateTime.now());
     }
   }
 
+  /** @return The clock used by the system */
+  public static TransitTime getClock() {
+    return clock;
+  }
+
   /** @return The current timeLabel of the simulation */
-  public static LocalDateTime getCurrentTime() {
+  public LocalDateTime getCurrentTime() {
     return TransitTime.clock.currentTime;
   }
 
   /** @return The current date in the transit system */
-  public static LocalDate getCurrentDate() {
+  public LocalDate getCurrentDate() {
     return clock.currentTime.toLocalDate();
   }
 
+  /** @return The current month in the transit system */
+  public YearMonth getCurrentMonth() {
+    YearMonth month = YearMonth.of(clock.currentTime.getYear(), clock.currentTime.getMonth());
+    return month;
+  }
+
   /** @return A label describing the current timeLabel of the simulation */
-  public static Label getTimeLabel() {
+  public Label getTimeLabel() {
     return clock.timeLabel;
   }
 
   /** Pauses the simulation timeLabel */
-  public static void pauseTime() {
+  public void pauseTime() {
     clock.running = false;
   }
 
   /** Restarts the simulation timeLabel */
-  public static void startTime() {
+  public void startTime() {
     clock.running = true;
   }
 
   /** Moves the simulation timeLabel forward one hour */
-  public static void skipHours() {
+  public void skipHours() {
     clock.currentTime = clock.currentTime.plusMinutes(60);
   }
 
   /** Moves the simulation timeLabel forward one day */
-  public static void skipDay() {
+  public void skipDay() {
     clock.currentTime = clock.currentTime.plusDays(1);
   }
 
   /** Moves the simulation timeLabel forward one month */
-  public static void skipMonth() {
+  public void skipMonth() {
     clock.currentTime = clock.currentTime.plusMonths(1);
   }
 
   /** @return Whether the system's clock is running */
-  public static boolean isRunning() {
+  public boolean isRunning() {
     return clock.running;
   }
 
   /** @return A string formatting of the current simulation timeLabel */
-  public static String getCurrentTimeString() {
+  public String getCurrentTimeString() {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     String time = formatter.format(clock.currentTime.toLocalTime());
     LocalDate date = clock.currentTime.toLocalDate();

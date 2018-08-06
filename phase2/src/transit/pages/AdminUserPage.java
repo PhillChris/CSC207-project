@@ -1,6 +1,10 @@
 package transit.pages;
 
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.TransitTime;
@@ -30,8 +34,17 @@ public class AdminUserPage extends Page {
    */
   @Override
   protected void makeScene(Stage primaryStage) {
+    grid.setPadding(new Insets(20, 20, 20, 20));
+    grid.setHgap(10);
+    grid.setVgap(10);
+    addClock();
     makeSceneButtons(primaryStage);
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+
+    scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    scene
+      .getStylesheets()
+      .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());
+
   }
 
   /**
@@ -42,14 +55,16 @@ public class AdminUserPage extends Page {
   private void makeSceneButtons(Stage primaryStage) {
 
     makePopupButton(grid, new SystemGraphPage(primaryStage), 0, 2);
-    makePopupButton(grid, new RouteCreationPage(primaryStage), 0, 4);
+    makePopupButton(grid, new RouteCreationPage(primaryStage), 0, 1);
 
-    makeButton(grid,
+    Button toggle = makeButton(grid,
         "User view",
         () -> primaryStage.setScene(new UserPage(primaryStage, this.adminUser).getScene()),
-        0,
-        6);
-    makeButton(grid,
-        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 0, 9);
+        1,
+        2);
+    GridPane.setHalignment(toggle, HPos.RIGHT);
+    Button logout = makeButton(grid,
+        "Logout", () -> primaryStage.setScene(new LoginPage(primaryStage).getScene()), 1, 1);
+    GridPane.setHalignment(logout, HPos.RIGHT);
   }
 }

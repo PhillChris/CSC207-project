@@ -1,5 +1,6 @@
 package transit.pages;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -39,13 +40,15 @@ public class TapPage extends Page {
   /** Makes the scene which displays this page */
   @Override
   public void makeScene() {
+    stationLayout.setVgap(10);
+    stationLayout.setHgap(20);
     factory.makeLabel(grid, "Choose route type!", 0, 0);
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     routeType.getSelectionModel().select(0);
     routeType.setOnAction(e -> refreshRouteOptionItems());
     grid.add(routeType, 1, 0);
-    grid.add(stationLayout, 1, 1);
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    grid.add(stationLayout, 0, 1, 50, 30);
+    this.scene = new Scene(grid, 500, 300);
   }
 
   /**
@@ -62,7 +65,9 @@ public class TapPage extends Page {
       int j = 0;
       for (Station station : route.getRouteStationsCopy()) {
         placeStationButton(stationLayout, station, j, i);
+        j++;
       }
+      i++;
     }
   }
 

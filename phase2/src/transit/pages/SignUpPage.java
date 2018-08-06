@@ -3,10 +3,16 @@ package transit.pages;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import transit.system.LogWriter;
 import transit.system.MessageTransitException;
 import transit.system.User;
 
@@ -31,10 +37,7 @@ public class SignUpPage extends Page {
     this.stage.setScene(scene);
   }
 
-  /**
-   * Makes a scene for this SignUpPage
-   *
-   */
+  /** Makes a scene for this SignUpPage */
   @Override
   protected void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 40));
@@ -50,10 +53,7 @@ public class SignUpPage extends Page {
     scene.getStylesheets().add(getClass().getResource("styling/SignUpPage.css").toExternalForm());
   }
 
-  /**
-   * Makes the pane for this page
-   *
-   */
+  /** Makes the pane for this page */
   private void makeSignUpPane() {
     this.signUpPane = new GridPane();
     signUpPane.setPadding(new Insets(0, 0, 0, 0));
@@ -67,11 +67,9 @@ public class SignUpPage extends Page {
     this.emailInput = makeEmailInput();
     this.passInput = makePassInput();
     this.userType = makeTypeCombo();
-
     this.errorMessage = makeErrorMessage();
 
     makeSeparator();
-
     makeSignUpButton();
     makeBackButton();
 
@@ -98,6 +96,7 @@ public class SignUpPage extends Page {
     GridPane.setMargin(userType, new Insets(0, 9, 0, 0));
     return userType;
   }
+
   private void placeLabels() {
     Label signUp = new Label("Sign up");
     signUp.setId("signUpLabel");
@@ -138,8 +137,10 @@ public class SignUpPage extends Page {
                 userType.getValue());
             errorMessage.setText("Account created");
             errorMessage.setTextFill(Color.web("#33AF54"));
+            logCorrectSignup();
           } catch (MessageTransitException e) {
             e.setMessage(errorMessage);
+            logIncorrectSignup(e);
           }
         });
     signUpPane.add(signUpButton, 0, 6, 2, 1);
@@ -175,5 +176,16 @@ public class SignUpPage extends Page {
         new User(username, email, password, "user");
         break;
     }
+  }
+
+  private void logIncorrectSignup(MessageTransitException e) {
+    LogWriter.getLogWriter()
+        .logWarningMessage(SignUpPage.class.getName(), "logIncorrectSignup", e.getMessage());
+  }
+
+  private void logCorrectSignup() {
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            SignUpPage.class.getName(), "logCorrectSignup", "Account created successfully");
   }
 }

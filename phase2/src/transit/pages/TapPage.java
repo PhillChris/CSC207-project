@@ -30,14 +30,15 @@ public class TapPage extends Page {
    * @param card the card which is currently tapping
    * @param cardPageStage the label to update when this page
    */
-  public TapPage(User user, Card card, String selectedType) {
-    super(new Stage());
+  public TapPage(Stage stage, User user, Card card, String selectedType) {
+    super(stage);
     this.user = user;
     this.card = card;
     this.selectedType = selectedType;
     makeScene();
     stage.setTitle("Tap " + card);
     stage.setScene(scene);
+    stage.setX(-100);
     stage.show();
   }
 
@@ -151,7 +152,7 @@ public class TapPage extends Page {
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     refreshRouteOptionItems(this.selectedType); /* Loads the first round of buttons*/
     routeType.getSelectionModel().select(this.selectedType);
-    routeType.setOnAction(e -> new TapPage(user, card, routeType.getValue()));
+    routeType.setOnAction(e -> new TapPage(stage, user, card, routeType.getValue()));
     refreshRouteOptionItems(routeType.getValue());
   }
 }

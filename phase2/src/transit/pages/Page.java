@@ -14,9 +14,7 @@ public abstract class Page {
   protected GridPane grid = new GridPane();
   /** The title of any window of this page */
   protected String title;
-  /**
-   * A factory to produce Nodes
-   */
+  /** A factory to produce Nodes */
   protected NodeFactory factory = new NodeFactory();
 
   /**
@@ -35,5 +33,4 @@ public abstract class Page {
    *     purposes
    */
   abstract void makeScene();
-
 }

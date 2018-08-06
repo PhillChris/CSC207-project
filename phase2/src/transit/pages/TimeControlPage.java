@@ -16,7 +16,7 @@ public class TimeControlPage extends Page {
   public TimeControlPage() {
     super(new Stage());
     makeScene();
-    stage.setX(700);
+    stage.setX(1000);
     stage.setY(200);
     stage.setScene(this.scene);
     stage.setTitle("Time Control Page");

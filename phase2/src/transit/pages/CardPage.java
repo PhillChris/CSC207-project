@@ -75,7 +75,7 @@ public class CardPage extends Page {
     factory.makeButton(
         grid,
         "Tap",
-        () -> new TapPage(user, user.getCardCommands().getCardsCopy().get(id), "Bus"),
+        () -> new TapPage(new Stage(), user, user.getCardCommands().getCardsCopy().get(id), "Bus"),
         0,
         3 + i);
 

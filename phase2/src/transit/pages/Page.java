@@ -12,8 +12,6 @@ public abstract class Page {
   protected Scene scene;
   /** Represents the grid where elements on the page are placed */
   protected GridPane grid = new GridPane();
-  /** The title of any window of this page */
-  protected String title;
   /** A factory to produce Nodes */
   protected NodeFactory factory = new NodeFactory();
 

@@ -29,7 +29,7 @@ public class AppendRoutePage extends Page {
    * @param stage
    * @param route
    */
-  public AppendRoutePage(Stage stage, Route route) {
+  public AppendRoutePage(Stage stage,Route route) {
     this.stage = stage;
     this.route = route;
     stationNames = new ArrayList<>();
@@ -39,6 +39,7 @@ public class AppendRoutePage extends Page {
     routeLabel = new Label();
     setRouteLabel();
     makeScene(stage);
+    title = String.format("Append %s Route", route.getRouteType());
   }
 
   /**
@@ -72,15 +73,17 @@ public class AppendRoutePage extends Page {
     makeButton(grid,
         "Confirm",
         () ->
-            makeConfirmationAlert(
-                "Confirm Route?",
-                "",
-                "Would you like to confirm the creation of this route?",
-                () -> {
-                  this.route.setRouteStations(stationNames);
-                  this.route.saveRoute();
-                  stage.close();
-                }),
+        {
+          makeConfirmationAlert(
+            "Confirm Route?",
+            "",
+            "Would you like to confirm the creation of this route?",
+            () -> {
+              this.route.setRouteStations(stationNames);
+              this.route.saveRoute();
+              stage.close();
+            });
+        },
         20,
         20);
   }

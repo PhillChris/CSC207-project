@@ -2,6 +2,7 @@ package transit.pages;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import transit.system.Route;
@@ -34,29 +35,23 @@ public class RouteCreationPage extends Page {
   @Override
   void makeScene(Stage primaryStage) {
     /** Set the buttons of this page */
-    makeButton(grid, "Add subway route", () -> createRoute("Subway"), 0, 0);
-    makeButton(grid, "Add bus route", () -> createRoute("Bus"), 0, 2);
+
+    Button createSubway = makePopupButton(grid, new AppendRoutePage(new Stage(), new Route("Subway")), 0, 0);
+    createSubway.setText("Create Subway Route");
+    Button createBus = makePopupButton(grid, new AppendRoutePage(new Stage(), new Route("Bus")), 0, 2);
+    createBus.setText("Create Bus Route");
     makeLabel(grid, "Append to Existing Route:", 0, 4);
     /** Create a button to append to each possible route */
     for (String type : Route.getRoutesCopy().keySet()) {
       for (int i = 0; i < Route.getRoutesCopy().get(type).size(); i++) {
         Route route = Route.getRoutesCopy().get(type).get(i);
-        makeButton(grid, route.toString(), () -> appendExistingRoute(route), 0, 6 + 2 * i);
+        Button routeButton = makePopupButton(grid, new AppendRoutePage(new Stage(), route), 0, 6 + 2 * i);
+        routeButton.setText(route.toString());
+//        makeButton(grid, route.toString(), () -> appendExistingRoute(route), 0, 6 + 2 * i);
       }
     }
     this.scene = new Scene(grid, 600, 400);
   }
 
-  /** Creates a page to create a new subway route */
-  private void createRoute(String type) {
-    Route route = new Route(type);
-    AppendRoutePage appendPage = new AppendRoutePage(stage, route);
-    stage.setScene(appendPage.getScene());
-  }
 
-  /** Creates a page to append to an existing station */
-  private void appendExistingRoute(Route route) {
-    AppendRoutePage appendPage = new AppendRoutePage(stage, route);
-    stage.setScene(appendPage.getScene());
-  }
 }

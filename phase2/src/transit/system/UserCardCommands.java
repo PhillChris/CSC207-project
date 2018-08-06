@@ -2,6 +2,7 @@ package transit.system;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -104,6 +105,37 @@ public class UserCardCommands implements Serializable {
     } else {
       station.record("Tap Out", 1);
       tapOut(card, station);
+    }
+  }
+
+  public String getMostFrequentMessage() {
+    HashMap<Station, Integer> frequentStationCount = new HashMap<>();
+    for (Trip t : previousTrips) {
+      for (Station s : t.getPriorStops()) {
+        addStation(frequentStationCount, s);
+      }
+      addStation(frequentStationCount, t.endStation);
+    }
+    int maxTapValue = 0;
+    Station maxTapped = null;
+    for(Station s: frequentStationCount.keySet()) {
+      if (frequentStationCount.get(s) > maxTapValue) {
+        maxTapped = s;
+      }
+    }
+
+    if (maxTapped == null) {
+      return "No stations tapped";
+    } else {
+      return "Most frequent station is " + maxTapped + " with " + maxTapValue + " taps";
+    }
+  }
+
+  private void addStation(HashMap<Station, Integer> frequentStationCount, Station s) {
+    if (frequentStationCount.containsKey(s)) {
+      frequentStationCount.put(s, frequentStationCount.get(s) +1);
+    } else {
+      frequentStationCount.put(s, 1);
     }
   }
 

@@ -66,7 +66,7 @@ public class AnalyticsPage {
   }
 
   /** Sets up the graph for the user to view */
-  private void setUpStatGraph() {
+  protected void setUpStatGraph() {
     if (timeOptions.getValue().equals("Monthly")) {
       chart = graphFactory.makeYearChart(statOptions.getValue().generateMonthlyValues());
     } else {

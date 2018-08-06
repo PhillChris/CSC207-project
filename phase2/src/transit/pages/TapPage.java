@@ -48,7 +48,7 @@ public class TapPage extends Page {
    */
   @Override
   public void makeScene() {
-    makeLabel(grid, "Choose route type!", 0, 0);
+    factory.makeLabel(grid, "Choose route type!", 0, 0);
     ChoiceBox<String> routeType = new ChoiceBox<>();
     setupRouteTypeBox(routeType);
     grid.add(routeType, 1, 0);
@@ -99,7 +99,7 @@ public class TapPage extends Page {
    * @return the button created at this place in the grid
    */
   private Button placeStationButton(Station station, int col, int row) {
-    return makeButton(
+    return factory.makeButton(
         grid,
         station.toString(),
         () -> {
@@ -108,7 +108,7 @@ public class TapPage extends Page {
             user.getCardCommands().tap(card, station);
             if (card.getCurrentTrip() != null) {
               alert =
-                  makeAlert(
+                  factory.makeAlert(
                       "Tapped In",
                       "Tapped in",
                       String.format(
@@ -117,7 +117,7 @@ public class TapPage extends Page {
                       AlertType.CONFIRMATION);
             } else {
               alert =
-                  makeAlert(
+                  factory.makeAlert(
                       "Tapped Out",
                       "Tapped Out",
                       String.format(
@@ -129,7 +129,7 @@ public class TapPage extends Page {
             }
           } catch (Exception b) {
             alert =
-                makeAlert(
+                factory.makeAlert(
                     "Tap error",
                     "Tap error",
                     "There was a problem in tapping at this point, no tap request could be processed",

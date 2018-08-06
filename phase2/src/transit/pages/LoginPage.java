@@ -37,8 +37,8 @@ public class LoginPage extends Page {
 
     makeLoginPane();
 
-    addTrain();
-    addClock();
+    factory.addTrain(grid);
+    factory.addClock(grid);
 
     scene = new Scene(grid, 600, 375);
     scene.getStylesheets().add(getClass().getResource("styling/LoginPage.css").toExternalForm());
@@ -75,8 +75,8 @@ public class LoginPage extends Page {
    * @param loginPane the login pane being constructed in this LoginPage
    */
   private void makeIcons(GridPane loginPane) {
-    makeImage(loginPane, "transit/pages/assets/email.png", 0, 1);
-    makeImage(loginPane, "transit/pages/assets/key.png", 0, 2);
+    factory.makeImage(loginPane, "transit/pages/assets/email.png", 0, 1);
+    factory.makeImage(loginPane, "transit/pages/assets/key.png", 0, 2);
   }
 
   /**
@@ -85,10 +85,10 @@ public class LoginPage extends Page {
    * @param loginPane the login pane being constructed in this LoginPage
    */
   private void makeLabels(GridPane loginPane) {
-    Label login = makeLabel(loginPane, "Login", 0, 0);
+    Label login = factory.makeLabel(loginPane, "Login", 0, 0);
     login.setId("loginLabel");
     GridPane.setColumnSpan(login, 2);
-    Label noAccount = makeLabel(loginPane, "No account?", 0, 5);
+    Label noAccount = factory.makeLabel(loginPane, "No account?", 0, 5);
     noAccount.setId("noAccount");
     GridPane.setColumnSpan(noAccount, 2);
     ;
@@ -96,12 +96,12 @@ public class LoginPage extends Page {
 
   /** @return the password input field for this LoginPage */
   private PasswordField makePassInput(GridPane loginPane) {
-    return makePasswordField(loginPane, "Password", 1, 2);
+    return factory.makePasswordField(loginPane, "Password", 1, 2);
   }
 
   /** @return the email input field for this LoginPage */
   private TextField makeEmailInput(GridPane loginPane) {
-    return makeTextField(loginPane, "Email", 1, 1);
+    return factory.makeTextField(loginPane, "Email", 1, 1);
   }
 
   /**
@@ -109,7 +109,7 @@ public class LoginPage extends Page {
    * @return a label containing the appropriate error message
    */
   private Label makeErrorMessage(GridPane loginPane) {
-    Label errorMessage = makeLabel(loginPane, "", 1, 3);
+    Label errorMessage = factory.makeLabel(loginPane, "", 1, 3);
     errorMessage.setId("errorMessage");
     GridPane.setHalignment(errorMessage, HPos.RIGHT);
     return errorMessage;
@@ -155,7 +155,7 @@ public class LoginPage extends Page {
    * @param loginPane the second pane in this page used for styling
    */
   private void makeSeparator(GridPane loginPane) {
-    Separator horizontalSeparator = makeSeparator(loginPane, 0, 4);
+    Separator horizontalSeparator = factory.makeSeparator(loginPane, 0, 4);
     GridPane.setColumnSpan(horizontalSeparator, 2);
   }
 

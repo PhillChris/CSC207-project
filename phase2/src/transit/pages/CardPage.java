@@ -36,7 +36,7 @@ public class CardPage extends Page {
    */
   @Override
   protected void makeScene() {
-    makeButton(
+    factory.makeButton(
         grid,
         "Add card",
         () -> {
@@ -56,7 +56,7 @@ public class CardPage extends Page {
    * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   protected void addUserData() {
-    this.currentTrips = makeLabel(grid, generateCurrentTripMessage(user), 0, 1);
+    this.currentTrips = factory.makeLabel(grid, generateCurrentTripMessage(user), 0, 1);
     int i = 0;
     for (Integer id : this.user.getCardCommands().getCardsCopy().keySet()) {
       addCardButtons(id, i);
@@ -72,14 +72,14 @@ public class CardPage extends Page {
    * @param i the current iteration of the loop in CardPage.makeScene
    */
   private void addCardButtons(int id, int i) {
-    makeButton(
+    factory.makeButton(
         grid,
         "Tap",
         () -> new TapPage(user, user.getCardCommands().getCardsCopy().get(id), "Bus"),
         0,
         3 + i);
 
-    makeButton(
+    factory.makeButton(
         grid,
         "Add funds",
         () ->
@@ -87,11 +87,11 @@ public class CardPage extends Page {
         1,
         3 + i);
 
-    makeButton(
+    factory.makeButton(
         grid,
         "Remove This Card",
         () ->
-            makeConfirmationAlert(
+            factory.makeConfirmationAlert(
                 "Removal confirmation",
                 "Confirm removal:",
                 "Are you sure that you want to remove this card?",
@@ -104,7 +104,7 @@ public class CardPage extends Page {
 
     // if the current card is suspended
     if (!user.getCardCommands().getCardsCopy().get(id).isSuspended()) {
-      makeButton(
+      factory.makeButton(
           grid,
           "Report card stolen",
           () -> {
@@ -114,7 +114,7 @@ public class CardPage extends Page {
           3,
           3 + i);
     } else {
-      makeButton(
+      factory.makeButton(
           grid,
           "Activate this card",
           () -> {

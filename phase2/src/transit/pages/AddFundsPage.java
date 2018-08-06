@@ -29,7 +29,7 @@ public class AddFundsPage extends AuthenticatedPage {
    */
   public void makeScene() {
     this.card = card;
-    makeLabel(grid, "Add the following amount: ", 0, 0);
+    factory.makeLabel(grid, "Add the following amount: ", 0, 0);
     placeCostButton(10, 0, 1);
     placeCostButton(20, 0, 2);
     placeCostButton(50, 0, 3);
@@ -45,7 +45,7 @@ public class AddFundsPage extends AuthenticatedPage {
    * @param row The row number of the button
    */
   private void placeCostButton(int cost, int col, int row) {
-    makeButton(grid,
+    factory.makeButton(grid,
         "$" + cost,
         () -> {
           card.addBalance(cost * 100);

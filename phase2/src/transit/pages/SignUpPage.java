@@ -38,8 +38,8 @@ public class SignUpPage extends Page {
 
     makeSignUpPane();
 
-    addTrain();
-    addClock();
+    factory.addTrain(grid);
+    factory.addClock(grid);
 
     scene = new Scene(grid, 600, 375);
     scene.getStylesheets().add(getClass().getResource("styling/SignUpPage.css").toExternalForm());
@@ -75,20 +75,20 @@ public class SignUpPage extends Page {
   }
 
   private TextField makeUserInput(GridPane signUpPane) {
-    return makeTextField(signUpPane, "Username", 1, 1);
+    return factory.makeTextField(signUpPane, "Username", 1, 1);
   }
 
   private TextField makeEmailInput(GridPane signUpPane) {
-    return makeTextField(signUpPane, "Email", 1, 2);
+    return factory.makeTextField(signUpPane, "Email", 1, 2);
   }
 
   private PasswordField makePassInput(GridPane signUpPane) {
-    return makePasswordField(signUpPane, "Password (6+ chars)", 1, 3);
+    return factory.makePasswordField(signUpPane, "Password (6+ chars)", 1, 3);
   }
 
   private ComboBox<String> makeTypeCombo(GridPane signUpPane) {
     String[] choices = {"Standard", "Admin", "Student"};
-    ComboBox<String> userType = makeComboBox(signUpPane, choices, 1, 4);
+    ComboBox<String> userType = factory.makeComboBox(signUpPane, choices, 1, 4);
     GridPane.setColumnSpan(userType, 2);
     GridPane.setHalignment(userType, HPos.RIGHT);
     GridPane.setMargin(userType, new Insets(0, 9, 0, 0));
@@ -105,21 +105,21 @@ public class SignUpPage extends Page {
   }
 
   private Label makeErrorMessage(GridPane signUpPane) {
-    Label errorMessage = makeLabel(signUpPane, "", 1, 0);
+    Label errorMessage = factory.makeLabel(signUpPane, "", 1, 0);
     errorMessage.setId("errorMessage");
     GridPane.setHalignment(errorMessage, HPos.RIGHT);
     return errorMessage;
   }
 
   private void makeSeparator(GridPane signUpPane) {
-    Separator horizontalSeparator = makeSeparator(signUpPane, 0, 5);
+    Separator horizontalSeparator = factory.makeSeparator(signUpPane, 0, 5);
     GridPane.setColumnSpan(horizontalSeparator, 2);
   }
 
   private void makeIcons(GridPane signUpPane) {
-    makeImage(signUpPane, "transit/pages/assets/face.png", 0, 1);
-    makeImage(signUpPane, "transit/pages/assets/email.png", 0, 2);
-    makeImage(signUpPane, "transit/pages/assets/key.png", 0, 3);
+    factory.makeImage(signUpPane, "transit/pages/assets/face.png", 0, 1);
+    factory.makeImage(signUpPane, "transit/pages/assets/email.png", 0, 2);
+    factory.makeImage(signUpPane, "transit/pages/assets/key.png", 0, 3);
   }
 
   private void makeSignUpButton(

@@ -45,7 +45,7 @@ public class UserPage extends AuthenticatedPage {
   /** Adds the user-specific data on this page */
   protected void addGreeting() {
     Label greeting =
-        makeLabel(grid, String.format("Hello %s", user.getPersonalInfo().getUserName()), 0, 1);
+        factory.makeLabel(grid, String.format("Hello %s", user.getPersonalInfo().getUserName()), 0, 1);
     greeting.setId("greeting");
   }
 
@@ -55,18 +55,18 @@ public class UserPage extends AuthenticatedPage {
    * @param primaryStage the stage on which this page is served
    */
   private void placeUserButtons() {
-    makeButton(grid, "Cards", () -> new CardPage(user), 0, 2);
+    factory.makeButton(grid, "Cards", () -> new CardPage(user), 0, 2);
 
-    makeButton(
+    factory.makeButton(
         grid, "Get Stats", ()->new UserGraphPage(user.getCardCommands().getCardStatistics()), 0, 3);
     super.makeScene();
 
-    makeButton(
+    factory.makeButton(
         grid,
         "Get last 3 trips",
         () -> {
           Alert a =
-              makeAlert(
+              factory.makeAlert(
                   "Last 3 trips",
                   "Last 3 trips of user " + user,
                   "Nothing right now",
@@ -79,7 +79,7 @@ public class UserPage extends AuthenticatedPage {
 
     if (user.getCardCommands().getPermission().equals("admin")) {
       Button viewToggle =
-          makeButton(
+          factory.makeButton(
               grid,
               "Admin view",
               () -> new AdminUserPage(stage, user),

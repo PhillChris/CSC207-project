@@ -36,26 +36,26 @@ public class RouteCreationPage extends Page {
   void makeScene() {
     /** Set the buttons of this page */
     Button createSubway =
-        makeButton(
+        factory.makeButton(
             grid,
             "Create Subway Route",
             () -> new AppendRoutePage(new Route("Subway")),
             0,
             0);
     Button createBus =
-        makeButton(
+        factory.makeButton(
             grid,
             "Create Bus Route",
             () -> new AppendRoutePage(new Route("Bus")),
             0,
             2);
-    makeLabel(grid, "Append to Existing Route:", 0, 4);
+    factory.makeLabel(grid, "Append to Existing Route:", 0, 4);
     /** Create a button to append to each possible route */
     for (String type : Route.getRoutesCopy().keySet()) {
       for (int i = 0; i < Route.getRoutesCopy().get(type).size(); i++) {
         Route route = Route.getRoutesCopy().get(type).get(i);
         Button routeButton =
-            makeButton(
+            factory.makeButton(
                 grid, route.toString(), () -> new AppendRoutePage(route), 0, 6 + 2 * i);
       }
     }

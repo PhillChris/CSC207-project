@@ -36,9 +36,9 @@ public class ChangeNamePage extends Page {
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
-    makeLabel(grid, "New Username: ", 0, 0);
-    TextField newName = makeTextField(grid, "",1, 0);
-    makeButton(grid,
+    factory.makeLabel(grid, "New Username: ", 0, 0);
+    TextField newName = factory.makeTextField(grid, "",1, 0);
+    factory.makeButton(grid,
         "Change name!",
         () -> {
           user.getPersonalInfo().changeName(newName.getText());

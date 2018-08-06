@@ -50,30 +50,30 @@ public class AppendRoutePage extends Page {
   void makeScene() {
     /** Set the grid of this page */
     grid.add(routeLabel, 0, 0, 20, 2);
-    makeLabel(grid, "Enter the name of the new station here", 8, 9);
+    factory.makeLabel(grid, "Enter the name of the new station here", 8, 9);
     makeSceneButtons();
     this.scene = new Scene(grid, 1000, 200);
   }
 
   /** Constructs all buttons in this scene */
   private void makeSceneButtons() {
-    TextField textField = makeTextField(grid, "", 10, 10);
+    TextField textField = factory.makeTextField(grid, "", 10, 10);
 
-    makeButton(grid, "Add Station at Start", () -> {
+    factory.makeButton(grid, "Add Station at Start", () -> {
       addStationAtStart(textField);
       textField.clear();
     }, 10, 15);
 
-    makeButton(grid, "Add Station at End", () -> {
+    factory.makeButton(grid, "Add Station at End", () -> {
       addStationAtEnd(textField);
       textField.clear();
     }, 10, 16);
 
-    makeButton(grid,
+    factory.makeButton(grid,
         "Confirm",
         () ->
         {
-          makeConfirmationAlert(
+          factory.makeConfirmationAlert(
             "Confirm Route?",
             "",
             "Would you like to confirm the creation of this route?",
@@ -98,7 +98,7 @@ public class AppendRoutePage extends Page {
       if (!stationNames.contains(textField.getText())) {
         stationNames.add(0, textField.getText());
       } else {
-        makeAlert(
+        factory.makeAlert(
                 "Station Name In Use",
                 "Station Name In Use:",
                 "This station name is used in this route",
@@ -120,7 +120,7 @@ public class AppendRoutePage extends Page {
       if (!stationNames.contains(textField.getText())) {
         stationNames.add(textField.getText());
       } else {
-        makeAlert(
+        factory.makeAlert(
                 "Station Name In Use",
                 "Station Name In Use:",
                 "This station name is used in this route",

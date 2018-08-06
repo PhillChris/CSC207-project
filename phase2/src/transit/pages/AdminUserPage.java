@@ -39,7 +39,7 @@ public class AdminUserPage extends Page {
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
-    addClock();
+    factory.addClock(grid);
     makeSceneButtons();
 
     scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -56,16 +56,16 @@ public class AdminUserPage extends Page {
    */
   private void makeSceneButtons() {
 
-    makeButton(grid,"System Stats", () -> new SystemGraphPage(), 0, 2);
-    makeButton(grid, "Update Routes", () -> new RouteCreationPage(), 0, 1);
+    factory.makeButton(grid,"System Stats", () -> new SystemGraphPage(), 0, 2);
+    factory.makeButton(grid, "Update Routes", () -> new RouteCreationPage(), 0, 1);
 
-    Button toggle = makeButton(grid,
+    Button toggle = factory.makeButton(grid,
         "User view",
         () -> new UserPage(stage, this.adminUser),
         1,
         2);
     GridPane.setHalignment(toggle, HPos.RIGHT);
-    Button logout = makeButton(grid,
+    Button logout = factory.makeButton(grid,
         "Logout", () -> new LoginPage(stage), 1, 1);
     GridPane.setHalignment(logout, HPos.RIGHT);
   }

@@ -50,9 +50,9 @@ public abstract class AuthenticatedPage extends Page {
     newLogoutButton(2, 0);
     newRemoveAccountButton(0, 6);
 
-    makeButton(grid, "Change name", ()->new ChangeNamePage(stage, user), 0, 4);
-    makeButton(grid, "Change password", ()-> new ChangePasswordPage(user), 0, 5);
-    addClock();
+    factory.makeButton(grid, "Change name", ()->new ChangeNamePage(stage, user), 0, 4);
+    factory.makeButton(grid, "Change password", ()-> new ChangePasswordPage(user), 0, 5);
+    factory.addClock(grid);
     this.scene = new Scene(grid, 600, 375);
   }
 
@@ -63,11 +63,11 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this user info button is displayed
    */
   private void newUserInfoButton(int col, int row) {
-    Button info = makeButton(grid,
+    Button info = factory.makeButton(grid,
         "Info",
         () -> {
           Alert alert =
-              makeAlert(
+              factory.makeAlert(
                   "User Information",
                   "Your user information:",
                   getUserMessage(),
@@ -106,7 +106,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param col the column in the grid where this logout button is displayed
    * @param row the row in the grid where this logout button is displayed
    */
-  public void newLogoutButton(int col, int row) { Button logout = makeButton(grid,
+  public void newLogoutButton(int col, int row) { Button logout = factory.makeButton(grid,
         "Logout", () -> new LoginPage(stage), col, row);
     GridPane.setHalignment(logout, HPos.RIGHT);
     GridPane.setHgrow(logout, Priority.ALWAYS);
@@ -121,10 +121,10 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this remove account button is displayed
    */
   private void newRemoveAccountButton(int col, int row) {
-    makeButton(grid,
+    factory.makeButton(grid,
         "Remove this account!",
         () ->
-            makeConfirmationAlert(
+            factory.makeConfirmationAlert(
                 "Delete account confirmation",
                 "Confirm:",
                 "Are you sure you want this account to be removed?",

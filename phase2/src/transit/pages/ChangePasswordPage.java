@@ -38,12 +38,12 @@ public class ChangePasswordPage extends Page {
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
-    makeLabel(grid, "Current password: ", 0, 0);
-    makeLabel(grid, "New password: ", 0, 1);
-    Label changeSuccess = makeLabel(grid, "", 2, 1);
-    PasswordField currPassword = makePasswordField(grid, "", 1, 0);
-    PasswordField newPassword = makePasswordField(grid, "", 1, 1);
-    makeButton(
+    factory.makeLabel(grid, "Current password: ", 0, 0);
+    factory.makeLabel(grid, "New password: ", 0, 1);
+    Label changeSuccess = factory.makeLabel(grid, "", 2, 1);
+    PasswordField currPassword = factory.makePasswordField(grid, "", 1, 0);
+    PasswordField newPassword = factory.makePasswordField(grid, "", 1, 1);
+    factory.makeButton(
         grid,
         "Change password!",
         () -> {

@@ -8,7 +8,7 @@ import java.util.HashMap;
 /** A factory to produce new pages */
 public class PageCreator {
 
-    void makeAddFundsPage(Card card){ new AddFundsPage(Main.primaryStage, card);}
+    void makeAddFundsPage(Card card){ new AddFundsPage(Main.secondaryStage, card);}
 
     void makeAdminUserPage(User adminUser){new AdminUserPage(Main.primaryStage, adminUser);}
 
@@ -19,7 +19,7 @@ public class PageCreator {
 
     void makeCardPage(UserCardCommands cards){new CardPage(Main.secondaryStage, cards);}
 
-    void makeChangeNamePage(User user){new ChangeNamePage(Main.primaryStage, user);}
+    void makeChangeNamePage(User user){new ChangeNamePage(Main.secondaryStage, user);}
 
     void makeChangePasswordPage(User user){new ChangeNamePage(Main.secondaryStage, user);}
 
@@ -27,7 +27,7 @@ public class PageCreator {
 
     void makeRouteCreationPage(){new RouteCreationPage(Main.secondaryStage);}
 
-    void makeSignUpPage(){new SignUpPage(Main.secondaryStage);}
+    void makeSignUpPage(){new SignUpPage(Main.primaryStage);}
 
     void makeTapPage(UserCardCommands cards, Card card, String selectedType){
         new TapPage(Main.secondaryStage, cards, card, selectedType);

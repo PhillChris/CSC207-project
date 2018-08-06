@@ -15,19 +15,18 @@ public class LoginPage extends Page {
   /**
    * Initialized a new instance of LoginPace
    *
-   * @param primaryStage The stage for this page to be displayed
+   * @param stage The stage for this page to be displayed
    */
-  public LoginPage(Stage primaryStage) {
-    super(primaryStage);
-    stage.setTitle("Login");
+  public LoginPage(Stage stage) {
+    super(stage);
+    this.stage.setTitle("Login");
     makeScene();
-    stage.setScene(scene);
+    this.stage.setScene(scene);
   }
 
   /**
    * Sets the scene for this page
    *
-   * @param primaryStage the stage which this scene is being served on, passed for button-action
    */
   @Override
   protected void makeScene() {
@@ -124,7 +123,7 @@ public class LoginPage extends Page {
     signUpButton.setId("signUpButton");
     signUpButton.setOnAction(
         (data) -> {
-          new SignUpPage(primaryStage);
+          pageCreator.makeSignUpPage();
         });
     loginPane.add(signUpButton, 0, 6, 2, 1);
   }
@@ -191,11 +190,10 @@ public class LoginPage extends Page {
           throw new Exception();
         }
         if (checkAuthorization(emailInput, passInput)) {
-          Page userPage;
           if (user.getCardCommands().getPermission().equals("admin")) {
-            new AdminUserPage(primaryStage, user);
+            pageCreator.makeAdminUserPage(user);
           } else {
-            new UserPage(primaryStage, user);
+            pageCreator.makeUserPage(user);
           };
           LogWriter.getLogWriter()
               .logInfoMessage(

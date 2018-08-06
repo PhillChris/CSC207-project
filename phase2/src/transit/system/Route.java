@@ -9,7 +9,7 @@ import java.util.List;
 public class Route implements Serializable {
 
   /** The total number of routes in this station */
-  private static int numRoutes = 0;
+  private static int numRoutes;
   /** A list of all routes in the transit system */
   private static HashMap<String, ArrayList<Route>> routes = setRoutes();
   /**
@@ -31,6 +31,7 @@ public class Route implements Serializable {
   public Route(String type) {
     this.routeType = type;
     this.routeStations = new ArrayList<>();
+    numRoutes = routes.size();
     this.routeNum = numRoutes + 1;
   }
 

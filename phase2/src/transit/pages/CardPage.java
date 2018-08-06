@@ -73,7 +73,7 @@ public class CardPage extends Page {
         "Tap",
             () -> pageCreator.makeTapPage(cards, cards.getCardsCopy().get(id), "Bus"),
         0,
-        3 + i;
+        3 + i);
 
     factory.makeButton(
         grid,

@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.*;
@@ -21,27 +22,26 @@ public class TapPage extends Page {
   private Card card;
   /** The type selected in the selection bar upon creation of this TapPage */
   private String selectedType;
+  /** The grid where station buttons are placed */
+  private GridPane gridLayout;
 
   /**
    * Constructs a new TapPage
    *
    * @param card the card which is currently tapping
    */
-  public TapPage(Stage stage, UserCardCommands cards, Card card, String selectedType) {
+  public TapPage(Stage stage, UserCardCommands cards, Card card) {
     super(stage);
     this.cards = cards;
     this.card = card;
-    this.selectedType = selectedType;
+    this.selectedType = Station.POSSIBLE_TYPES[0];
     makeScene();
     stage.setTitle("Tap " + card);
     stage.setScene(scene);
     stage.show();
   }
 
-  /**
-   * Makes the scene which displays this page
-   *
-   */
+  /** Makes the scene which displays this page */
   @Override
   public void makeScene() {
     factory.makeLabel(grid, "Choose route type!", 0, 0);

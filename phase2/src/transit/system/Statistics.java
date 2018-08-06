@@ -15,9 +15,12 @@ public class Statistics implements Serializable {
 
   /** Log of the daily values stored by this statistic */
   HashMap<LocalDate, Integer> dailyLogs;
+  private String representation;
+
 
   /** Creates a new instance of Statistics */
-  public Statistics() {
+  public Statistics(String representation) {
+    this.representation = representation;
     dailyLogs = new HashMap<>();
     dailyLogs.put(TransitTime.getClock().getCurrentDate(), 0);
   }
@@ -35,9 +38,14 @@ public class Statistics implements Serializable {
       return stats;
     }
     HashMap<String, Statistics> newStats = new HashMap<>();
-    newStats.put("SystemTripLengh", new Statistics());
-    newStats.put("SystemRevenue", new Statistics());
+    newStats.put("SystemTripLengh", new Statistics("System Trip Length"));
+    newStats.put("SystemRevenue", new Statistics("Total System Revenue"));
     return newStats;
+  }
+
+  @Override
+  public String toString() {
+    return representation;
   }
 
   /**

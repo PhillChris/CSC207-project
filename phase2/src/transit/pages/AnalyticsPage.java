@@ -10,22 +10,9 @@ import transit.system.Statistics;
 import java.util.HashMap;
 
 /** A page designed to display analytical information */
-public class AnalyticsPage {
-
-  /** The chart displayed by this page */
-  protected LineChart<String, Number> chart;
-  /** The layout of this page */
-  protected BorderPane layout = new BorderPane();
+public class AnalyticsPage extends GraphPage {
   /** The statistics displayed by this analytics page */
-  protected HashMap<String, Statistics> statistics;
-  /** A factory to construct graphs */
-  protected GraphFactory graphFactory = new GraphFactory();
-  /** The drop down options displayed by this page */
-  HBox dropDowns = new HBox();
-  /** A combo box if the different statistics options for this page */
-  ComboBox<Statistics> statOptions = new ComboBox<>();
-  /** The time options displayed by this page */
-  ComboBox<String> timeOptions = new ComboBox<>();
+  protected HashMap<String, Statistics> statistics;;
 
   /**
    * Initialize a new instance of an AnalyticsPage.

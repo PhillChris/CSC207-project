@@ -88,7 +88,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param row the row in the grid where this logout button is displayed
    */
   protected void newLogoutButton(int col, int row) {
-    Button logout = factory.makeButton(grid, "Logout", () -> new LoginPage(stage), col, row);
+    Button logout = factory.makeButton(grid, "Logout", () -> logout(), col, row);
     GridPane.setHalignment(logout, HPos.RIGHT);
     GridPane.setHgrow(logout, Priority.ALWAYS);
   }

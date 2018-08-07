@@ -97,10 +97,10 @@ public class UserCardCommands implements Serializable {
     }
     cardStatistics.get("Taps").update(1);
     if (card.getCurrentTrip() == null) {
-      station.record("Tap In", 1);
+      station.record("Taps In", 1);
       tapIn(card, station);
     } else {
-      station.record("Tap Out", 1);
+      station.record("Taps Out", 1);
       tapOut(card, station);
     }
   }

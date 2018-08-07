@@ -24,12 +24,11 @@ public class AnalyticsPage extends Page {
    */
   private GraphFactory graphFactory = new GraphFactory();
   /** The drop down options displayed by this page */
-  protected HBox dropDown = new HBox();
+  private HBox dropDown = new HBox();
   /** A combo box if the different statistics options for this page */
   private ComboBox<Statistics> statOptions = new ComboBox<>();
   /** The time options displayed by this page */
   private ComboBox<String> timeOptions = new ComboBox<>();
-
   /**
    * Initialize a new instance of AnalyticsPage without setting the Stage. This allows for
    * subclasses to extend the scene of analytics page, then set the Stage themselves.
@@ -53,6 +52,10 @@ public class AnalyticsPage extends Page {
     this.stage.setScene(scene);
     this.stage.show();
     this.stage.setTitle("Transit System Simulator");
+  }
+
+  public HBox getDropDown() {
+    return dropDown;
   }
 
   public void setStatistics(HashMap<String, Statistics> statistics) {

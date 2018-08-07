@@ -11,7 +11,9 @@ import transit.system.User;
 
 public class ChangePasswordPage extends Page {
 
+  /** The user associated with this page */
   private User user;
+
   /**
    * Initialized a new instance of ChangeNamePage
    *
@@ -27,10 +29,6 @@ public class ChangePasswordPage extends Page {
     stage.show();
   }
 
-  /**
-   * Sets the scene for this page
-   *
-   */
   @Override
   public void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 20));

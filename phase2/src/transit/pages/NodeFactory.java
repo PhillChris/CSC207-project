@@ -7,9 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import transit.system.TransitTime;
 
-import transit.system.Card;
-
-import java.util.List;
 import java.util.Optional;
 
 /** A factor class designed to produce Nodes */
@@ -104,14 +101,6 @@ public class NodeFactory {
     comboBox.getSelectionModel().selectFirst();
     grid.add(comboBox, col, row);
     return comboBox;
-  }
-
-  protected ComboBox<Card> makeCardComboBox(GridPane grid, List<Card> cards, int col, int row) {
-    ComboBox<Card> cardComboBox = new ComboBox<>();
-    cardComboBox.getItems().addAll(cards);
-    cardComboBox.getSelectionModel().selectFirst();
-    grid.add(cardComboBox, col, row);
-    return cardComboBox;
   }
 
   /**

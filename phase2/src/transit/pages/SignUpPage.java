@@ -3,7 +3,12 @@ package transit.pages;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -53,58 +58,72 @@ public class SignUpPage extends Page {
 
   /** Makes the pane for this page */
   private void makeSignUpPane() {
+    // Configures the signUp grid
     this.signUpPane = new GridPane();
     signUpPane.setPadding(new Insets(0, 0, 0, 0));
     signUpPane.setHgap(10);
     signUpPane.setVgap(12);
 
+    // Places the labels and icons on the sign up page
     placeLabels();
     makeIcons();
 
-    this.userInput = makeUserInput();
-    this.emailInput = makeEmailInput();
-    this.passInput = makePassInput();
+    // Initializes the attributes of this page
+    this.userInput = factory.makeTextField(signUpPane, "Username", 1, 1);
+    ;
+    this.emailInput = factory.makeTextField(signUpPane, "Email", 1, 2);
+    ;
+    this.passInput = factory.makePasswordField(signUpPane, "Password (6+ chars)", 1, 3);
+    ;
     this.userType = makeTypeCombo();
     this.errorMessage = makeErrorMessage();
 
+    // Makes the buttons on the page
     makeSeparator();
     makeSignUpButton();
     makeBackButton();
 
+    // Add the signup pane to the larger grid
     grid.add(signUpPane, 0, 1);
   }
 
-  private TextField makeUserInput() {
-    return factory.makeTextField(signUpPane, "Username", 1, 1);
-  }
-
-  private TextField makeEmailInput() {
-    return factory.makeTextField(signUpPane, "Email", 1, 2);
-  }
-
-  private PasswordField makePassInput() {
-    return factory.makePasswordField(signUpPane, "Password (6+ chars)", 1, 3);
-  }
-
+  /**
+   * Makes the type combo box for the
+   *
+   * @return the type combo box
+   */
   private ComboBox<String> makeTypeCombo() {
-    String[] choices = {"Standard", "Admin", "Student"};
+    String[] choices = {"Standard", "Admin", "Student"}; // possible account types
     ComboBox<String> userType = factory.makeComboBox(signUpPane, choices, 1, 4);
+
+    // sets the dimensions of the combo box
     GridPane.setColumnSpan(userType, 2);
     GridPane.setHalignment(userType, HPos.RIGHT);
     GridPane.setMargin(userType, new Insets(0, 9, 0, 0));
+
     return userType;
   }
 
+  /**
+   * Make and place the sign up labels
+   */
   private void placeLabels() {
+    // Make and place the signup label
     Label signUp = new Label("Sign up");
     signUp.setId("signUpLabel");
     signUpPane.add(signUp, 0, 0, 2, 1);
 
+    // Make and place the user type label
     Label userType = new Label("User type:");
     userType.setId("typeLabel");
     signUpPane.add(userType, 0, 4, 2, 1);
   }
 
+  /**
+   * Makes the error message label
+   *
+   * @return the error message label
+   */
   private Label makeErrorMessage() {
     Label errorMessage = factory.makeLabel(signUpPane, "", 1, 0);
     errorMessage.setId("errorMessage");
@@ -112,18 +131,22 @@ public class SignUpPage extends Page {
     return errorMessage;
   }
 
+  /** Make a vertical line separator */
   private void makeSeparator() {
     Separator horizontalSeparator = factory.makeSeparator(signUpPane, 0, 5);
     GridPane.setColumnSpan(horizontalSeparator, 2);
   }
 
+  /** Make icons next to text fields */
   private void makeIcons() {
     factory.makeImage(signUpPane, "transit/pages/assets/face.png", 0, 1);
     factory.makeImage(signUpPane, "transit/pages/assets/email.png", 0, 2);
     factory.makeImage(signUpPane, "transit/pages/assets/key.png", 0, 3);
   }
 
+  /** Make the button creating a new account */
   private void makeSignUpButton() {
+    // Make and configure the signup button
     Button signUpButton = new Button("Sign Up");
     signUpButton.setOnAction(
         (data) -> {
@@ -142,14 +165,19 @@ public class SignUpPage extends Page {
           }
         });
     signUpPane.add(signUpButton, 0, 6, 2, 1);
+
+    // Set margins and alignment of button
     GridPane.setMargin(signUpButton, new Insets(2, 0, 0, 0));
     GridPane.setHalignment(signUpButton, HPos.LEFT);
   }
 
   private void makeBackButton() {
+    // Configure back button
     Button backButton = new Button("Go Back");
     backButton.setOnAction((data) -> pageCreator.makeLoginPage());
     signUpPane.add(backButton, 1, 6, 2, 1);
+
+    // Set alignment
     GridPane.setHalignment(backButton, HPos.RIGHT);
     GridPane.setMargin(backButton, new Insets(2, 10, 0, 0));
   }

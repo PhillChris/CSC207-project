@@ -50,8 +50,7 @@ public class TapPage extends Page {
     routeType.setOnAction(
         e -> {
           refreshRouteOptionItems();
-          stage.setMinHeight(grid.getHeight() + 200);
-          stage.setMinWidth(grid.getWidth());
+          stage.sizeToScene();
         });
     routeType.setMinWidth(100);
     refreshRouteOptionItems(); // do this action to load the buttons initially

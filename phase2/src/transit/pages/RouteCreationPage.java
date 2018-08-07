@@ -9,7 +9,6 @@ import transit.system.Route;
 
 /** Represents a page used to make maintenance changes to this system */
 public class RouteCreationPage extends Page {
-
   /**
    * Construct a new instance of RouteCreationPage
    *

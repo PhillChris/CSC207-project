@@ -155,6 +155,12 @@ public class Route implements Serializable {
     }
   }
 
+  public void removeRoute() {
+    ArrayList newRoutesType = routes.get(this.getRouteType());
+    newRoutesType.remove(this);
+    routes.put(this.getRouteType(), newRoutesType);
+  }
+
   public String getRouteType() {
     return routeType;
   }

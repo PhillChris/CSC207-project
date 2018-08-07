@@ -7,7 +7,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import transit.system.Statistics;
 
@@ -18,19 +17,18 @@ public class AnalyticsPage extends Page {
   /** The statistics displayed by this analytics page */
   protected HashMap<String, Statistics> statistics;
 
-  protected LineChart<String, Number> chart;
+  private LineChart<String, Number> chart;
 
-  protected Scene scene;
   /**
    * A factory to construct graphs
    */
-  protected GraphFactory graphFactory = new GraphFactory();
+  private GraphFactory graphFactory = new GraphFactory();
   /** The drop down options displayed by this page */
   protected HBox dropDown = new HBox();
   /** A combo box if the different statistics options for this page */
-  ComboBox<Statistics> statOptions = new ComboBox<>();
+  private ComboBox<Statistics> statOptions = new ComboBox<>();
   /** The time options displayed by this page */
-  ComboBox<String> timeOptions = new ComboBox<>();
+  private ComboBox<String> timeOptions = new ComboBox<>();
 
   /**
    * Initialize a new instance of AnalyticsPage without setting the Stage. This allows for
@@ -50,8 +48,8 @@ public class AnalyticsPage extends Page {
     scene = new Scene(grid, 800, 600);
     makeScene();
     scene
-      .getStylesheets()
-      .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
+            .getStylesheets()
+            .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
     this.stage.setScene(scene);
     this.stage.show();
     this.stage.setTitle("Transit System Simulator");
@@ -82,8 +80,7 @@ public class AnalyticsPage extends Page {
   /** Creates the drop down boxes to switch between statistics and different time frames. */
   public void setupStatOptions() {
     // set statOptions action to nothing while we change the stats
-    statOptions.setOnAction(actionEvent -> {
-    });
+    statOptions.setOnAction(actionEvent -> {});
 
     // setup the checkbox the statistics this page has access to
     statOptions.getItems().clear();

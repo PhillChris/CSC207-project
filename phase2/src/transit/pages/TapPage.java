@@ -43,15 +43,23 @@ public class TapPage extends Page {
   public void makeScene() {
     stationLayout.setVgap(10);
     stationLayout.setHgap(20);
-    Label choose = factory.makeLabel(grid, "Choose route type!", 0, 0);
+    Label choose = factory.makeLabel(grid, "Route type:", 0, 0);
+    choose.setMinWidth(100);
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     routeType.getSelectionModel().select(0);
-    routeType.setOnAction(e -> refreshRouteOptionItems());
+    routeType.setOnAction(
+        e -> {
+          refreshRouteOptionItems();
+          stage.setMinHeight(grid.getHeight() + 200);
+          stage.setMinWidth(grid.getWidth());
+        });
+    routeType.setMinWidth(100);
+    refreshRouteOptionItems(); // do this action to load the buttons initially
     grid.setHgap(10);
     grid.setHgap(10);
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.add(routeType, 1, 0);
-    grid.add(stationLayout, 0, 1, 50, 30);
+    grid.add(stationLayout, 0, 1, 50, 1);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }
@@ -65,7 +73,8 @@ public class TapPage extends Page {
     String type = routeType.getValue();
     int i = 1;
     for (Route route : Route.getRoutesCopy().get(type)) {
-      int j = 0;
+      stationLayout.add(new Label(route.toString().split("\n")[0]), 0, i);
+      int j = 1;
       for (Station station : route.getRouteStationsCopy()) {
         placeStationButton(stationLayout, station, j, i);
         j++;

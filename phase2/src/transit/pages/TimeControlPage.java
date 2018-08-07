@@ -1,6 +1,7 @@
 package transit.pages;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -21,6 +22,7 @@ public class TimeControlPage extends Page {
     stage.setScene(this.scene);
     stage.setTitle("Time Control Page");
     stage.show();
+    stage.setOnCloseRequest(Event::consume);
   }
 
   /**

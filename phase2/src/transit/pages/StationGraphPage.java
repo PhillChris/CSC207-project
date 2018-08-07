@@ -28,7 +28,11 @@ public class StationGraphPage extends AnalyticsPage {
     makeScene();
     // set the statistics stored in this graph page
     setStationStatistics();
+
+    // add the two drop downs general to all AnalyticsPages
+    super.makeScene();
     setAndShow("Transit System Simulator");
+
   }
 
   @Override
@@ -44,9 +48,6 @@ public class StationGraphPage extends AnalyticsPage {
 
     // add these dropdowns to the analytics page dropdowns
     getDropDown().getChildren().addAll(stationType, stationName);
-
-    // add the two drop downs general to all AnalyticsPages
-    super.makeScene();
   }
 
   /** Refreshes the list of stations */

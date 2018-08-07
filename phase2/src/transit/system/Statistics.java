@@ -15,8 +15,8 @@ public class Statistics implements Serializable {
 
   /** Log of the daily values stored by this statistic */
   HashMap<LocalDate, Integer> dailyLogs;
-  private String representation;
 
+  private String representation;
 
   /** Creates a new instance of Statistics */
   public Statistics(String representation) {
@@ -100,6 +100,10 @@ public class Statistics implements Serializable {
     refreshLogs();
   }
 
+  /**
+   * @param month A given month in the year
+   * @return The sum of all the statistics for each day in the given month
+   */
   private int calculateMonthlyCost(YearMonth month) {
     int sum = 0;
     LocalDate date = month.atEndOfMonth();

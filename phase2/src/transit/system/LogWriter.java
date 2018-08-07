@@ -1,12 +1,11 @@
 package transit.system;
 
+import transit.pages.LoginPage;
+import transit.pages.Page;
+import transit.pages.SignUpPage;
+
 import java.io.IOException;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 /** Handles all logging responsibilities in this system */
 public class LogWriter {
@@ -70,10 +69,146 @@ public class LogWriter {
     this.logger.logp(Level.WARNING, classLocation, methodLocation, message);
   }
 
+  /**
+   * Logs the addition of balance to card
+   *
+   * @param toAdd the balance added to a card
+   * @param id the id of the card added
+   */
+  public void logAddBalance(int toAdd, int id) {
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            Card.class.getName(),
+            "addBalance",
+            "Added $" + String.format("%.2f", toAdd / 100.0) + " to card #" + id);
+  }
+
+  /** Logs the ending of the program */
+  public void logEndProgram() {
+    LogWriter.getLogWriter()
+        .logInfoMessage(Page.class.getName(), "Page", "Program session terminated");
+    LogWriter.getLogWriter().closeHandlers();
+  }
+
+  /** @param username The username of the user removed by the program */
+  public void logRemoveUser(String username) {
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            User.class.getName(),
+            "removeUser",
+            "Removed user " + username + " from transit system");
+  }
+
+  /** @param id The id of the card being removed */
+  public void logRemoveCard(int id) {
+    LogWriter.getLogWriter()
+        .logInfoMessage(User.class.getName(), "removeCard", "User removed card #" + id);
+  }
+
+  /** Log the addition of a new card */
+  public void logAddCard() {
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            User.class.getName(), "addCard", "User added new card with default balance");
+  }
+
+  /**
+   * Logs a Tap In
+   *
+   * @param user User that tapped in
+   * @param station Station tapped at
+   * @param cardId Id of card use
+   */
+  public void logTapIn(String user, String station, int cardId) {
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            User.class.getName(),
+            "tapIn",
+            "User " + user + " tapped in at station " + station + " with card #" + cardId);
+  }
+
+  /**
+   * @param station Station tapped at
+   * @param cardId Id of card use
+   */
+  public void logInvalidTrip(String user, String station, int cardId) {
+    LogWriter.getLogWriter()
+        .logWarningMessage(
+            User.class.getName(),
+            "tapOut",
+            "User "
+                + user
+                + " tapped out improperly at station "
+                + station
+                + " with card #"
+                + cardId
+                + ", charged maximum possible fee.");
+  }
+
+  /** */
+  public void logTapOut(String user, String station, int cardId, int tripFee) {
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            User.class.getName(),
+            "tapOut",
+            "User "
+                + user
+                + " tapped out at station "
+                + station
+                + " with card #"
+                + cardId
+                + ", charged $"
+                + String.format("%.2f", tripFee / 100.0));
+  }
+
+  /** Logs a user not found */
+  public void logUserNotFound() {
+    LogWriter.getLogWriter()
+        .logWarningMessage(
+            LoginPage.class.getName(),
+            "parseLoginAttempt",
+            "Login attempt failed, user is not registered in the system");
+  }
+
+  /** @param user The user logging in */
+  public void logUserLogin(User user) {
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            LoginPage.class.getName(),
+            "parseLoginAttempt",
+            "Successfully logged in as + " + user.getPersonalInfo().getUserName());
+  }
+
+  /** Logs an invalid authorization */
+  public void logInvalidAuth() {
+    LogWriter.getLogWriter()
+        .logWarningMessage(
+            LoginPage.class.getName(),
+            "parseLoginAttempt",
+            "Login attempt failed, incorrect password");
+  }
+
   /** Closes all active handlers for this LogWriter */
   public void closeHandlers() {
     for (Handler h : this.logger.getHandlers()) {
       h.close();
     }
+  }
+
+  /**
+   * Logs an incorrect sugnup
+   *
+   * @param e
+   */
+  public void logIncorrectSignup(MessageTransitException e) {
+    LogWriter.getLogWriter()
+        .logWarningMessage(SignUpPage.class.getName(), "logIncorrectSignup", e.getMessage());
+  }
+
+  /** Logs a correct sign up */
+  public void logCorrectSignup() {
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            SignUpPage.class.getName(), "logCorrectSignup", "Account created successfully");
   }
 }

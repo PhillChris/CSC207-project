@@ -9,8 +9,8 @@ import transit.system.Statistics;
 import java.util.HashMap;
 
 public class StationGraphPage extends AnalyticsPage {
-  ComboBox<String> stationType = new ComboBox<>();
-  ComboBox<Station> stationName = new ComboBox<>();
+  private ComboBox<String> stationType = new ComboBox<>();
+  private ComboBox<Station> stationName = new ComboBox<>();
   /**
    * Initialize a new instance of an AnalyticsPage.
    *
@@ -33,7 +33,7 @@ public class StationGraphPage extends AnalyticsPage {
     stationType.setOnAction(actionEvent -> refreshStationOptions());
 
     refreshStationOptions();
-    dropDown.getChildren().addAll(stationType, stationName);
+    getDropDown().getChildren().addAll(stationType, stationName);
   }
 
   private void refreshStationOptions() {

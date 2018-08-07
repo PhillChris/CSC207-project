@@ -30,10 +30,13 @@ public class Route implements Serializable {
     this.routeNum = numRoutes + 1;
   }
 
+  /** @return A nested Hashmap of all the stations */
   public static HashMap<String, HashMap<String, Station>> getAllStationsCopy() {
     HashMap<String, HashMap<String, Station>> allStations = new HashMap<>();
+    // Loop through all station types
     for (String type : Station.POSSIBLE_TYPES) {
       allStations.put(type, new HashMap<>());
+      // Loop through al the stations in each route
       for (Route route : routes.get(type)) {
         for (Station station : route.getRouteStationsCopy()) {
           if (!allStations.get(type).containsKey(station.toString())) {

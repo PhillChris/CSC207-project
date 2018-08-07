@@ -5,7 +5,6 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import transit.pages.Page;
 import transit.pages.PageCreator;
 import transit.pages.TimeControlPage;
 
@@ -36,9 +35,7 @@ public class Main extends Application {
           public void handle(WindowEvent windowEvent) {
             Database.writeToDatabase();
             Platform.exit();
-            LogWriter.getLogWriter()
-                .logInfoMessage(Page.class.getName(), "Page", "Program session terminated");
-            LogWriter.getLogWriter().closeHandlers();
+            LogWriter.getLogWriter().logEndProgram();
           }
         });
 

@@ -1,14 +1,10 @@
 package transit.pages;
 
+import com.oracle.tools.packager.Log;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -18,12 +14,12 @@ import transit.system.User;
 
 /** Represents a page opened when making a new account in this transit system */
 public class SignUpPage extends Page {
-  GridPane signUpPane;
-  TextField userInput;
-  TextField emailInput;
-  PasswordField passInput;
-  ComboBox<String> userType;
-  Label errorMessage;
+  private GridPane signUpPane;
+  private TextField userInput;
+  private TextField emailInput;
+  private PasswordField passInput;
+  private ComboBox<String> userType;
+  private Label errorMessage;
 
   /**
    * Constructs a new SignUpPage
@@ -137,10 +133,10 @@ public class SignUpPage extends Page {
                 userType.getValue());
             errorMessage.setText("Account created");
             errorMessage.setTextFill(Color.web("#33AF54"));
-            logCorrectSignup();
+            LogWriter.getLogWriter().logCorrectSignup();
           } catch (MessageTransitException e) {
             e.setMessage(errorMessage);
-            logIncorrectSignup(e);
+            LogWriter.getLogWriter().logIncorrectSignup(e);
           }
         });
     signUpPane.add(signUpButton, 0, 6, 2, 1);
@@ -176,16 +172,5 @@ public class SignUpPage extends Page {
         new User(username, email, password, "user");
         break;
     }
-  }
-
-  private void logIncorrectSignup(MessageTransitException e) {
-    LogWriter.getLogWriter()
-        .logWarningMessage(SignUpPage.class.getName(), "logIncorrectSignup", e.getMessage());
-  }
-
-  private void logCorrectSignup() {
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            SignUpPage.class.getName(), "logCorrectSignup", "Account created successfully");
   }
 }

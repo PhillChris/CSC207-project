@@ -4,7 +4,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Card;
-import transit.system.User;
 
 /** Represents a page used by a user to add funds to a card */
 public class AddFundsPage extends Page {
@@ -44,7 +43,8 @@ public class AddFundsPage extends Page {
    * @param row The row number of the button
    */
   private void placeCostButton(int cost, int col, int row) {
-    factory.makeButton(grid,
+    factory.makeButton(
+            grid,
         "$" + cost,
         () -> {
           card.addBalance(cost * 100);

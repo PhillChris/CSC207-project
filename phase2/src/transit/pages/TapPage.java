@@ -15,7 +15,7 @@ import transit.system.*;
 /** Represents a page displaying all possibilities for tapping in this transit system */
 public class TapPage extends Page {
   /** The type selected in the selection bar upon creation of this TapPage */
-  ChoiceBox<String> routeType = new ChoiceBox<>();
+  private ChoiceBox<String> routeType = new ChoiceBox<>();
   /** The user whose card is currently tapping */
   private UserCardCommands cards;
   /** The card which is currently tapping */
@@ -72,7 +72,7 @@ public class TapPage extends Page {
     String type = routeType.getValue();
     int i = 1;
     for (Route route : Route.getRoutesCopy().get(type)) {
-      stationLayout.add(new Label(route.toString()), 0, i);
+      stationLayout.add(new Label(route.toString().split("\n")[0]), 0, i);
       int j = 1;
       for (Station station : route.getRouteStationsCopy()) {
         placeStationButton(stationLayout, station, j, i);

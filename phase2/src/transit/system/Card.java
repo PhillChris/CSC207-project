@@ -1,5 +1,7 @@
 package transit.system;
 
+import com.oracle.tools.packager.Log;
+
 import java.io.Serializable;
 
 /** Represents a travel card in a transit system */
@@ -90,11 +92,7 @@ public class Card implements Serializable {
    */
   public void addBalance(int toAdd) {
     this.balance += toAdd;
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            Card.class.getName(),
-            "addBalance",
-            "Added $" + String.format("%.2f", toAdd / 100.0) + " to card #" + this.getId());
+    LogWriter.getLogWriter().logAddBalance(toAdd, this.getId());
   }
 
   /** @return a string representation of this card */

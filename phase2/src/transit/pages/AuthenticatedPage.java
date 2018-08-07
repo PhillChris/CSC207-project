@@ -44,7 +44,7 @@ public abstract class AuthenticatedPage extends Page {
    * @param col the column in the grid where this user info button is displayed
    * @param row the row in the grid where this user info button is displayed
    */
-  protected void newUserInfoButton(int col, int row) {
+  protected Button newUserInfoButton(int col, int row) {
     Button info =
         factory.makeButton(
             grid,
@@ -60,8 +60,7 @@ public abstract class AuthenticatedPage extends Page {
             },
             col,
             row);
-    GridPane.setHalignment(info, HPos.RIGHT);
-    GridPane.setHgrow(info, Priority.ALWAYS);
+    return info;
   }
 
   /**
@@ -99,10 +98,10 @@ public abstract class AuthenticatedPage extends Page {
    * @param col the column in the grid where this remove account button is displayed
    * @param row the row in the grid where this remove account button is displayed
    */
-  protected void newRemoveAccountButton(int col, int row) {
-    factory.makeButton(
+  protected Button newRemoveAccountButton(int col, int row) {
+    return factory.makeButton(
         grid,
-        "Remove this account!",
+        "Remove account",
         () ->
             factory.makeConfirmationAlert(
                 "Delete account confirmation",
@@ -112,8 +111,8 @@ public abstract class AuthenticatedPage extends Page {
                   user.removeUser();
                   new LoginPage(stage);
                 }),
-        0,
-        6);
+        col,
+        row);
   }
 
   protected void logout() {

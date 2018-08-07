@@ -40,7 +40,7 @@ public class AdminUserPage extends AuthenticatedPage {
     factory.addClock(grid);
     makeSceneButtons();
 
-    scene = new Scene(grid, 370, 170);
+    scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene
         .getStylesheets()
         .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());

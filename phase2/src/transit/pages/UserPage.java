@@ -50,21 +50,30 @@ public class UserPage extends AuthenticatedPage {
    * Places the buttons on this UserPage
    */
   private void placeUserButtons() {
-    newUserInfoButton(1, 0);
+    Button cards = factory.makeButton(grid, "Cards", () -> pageCreator.makeCardPage(user.getCardCommands()), 0, 2);
+    GridPane.setColumnSpan(cards, 2);
+    cards.setMinWidth(320);
+    cards.setPadding(new Insets(30, 30, 30, 30));
+    GridPane.setMargin(cards, new Insets(30, 0, 0, 0));
+    Button info = newUserInfoButton(0, 5);
+    info.setMinWidth(cards.getMinWidth() / 2 - 10);
     newLogoutButton(2, 0);
-    newRemoveAccountButton(0, 6);
-    factory.makeButton(grid, "Change name", () -> pageCreator.makeChangeNamePage(user), 0, 4);
-    factory.makeButton(grid, "Change password", () -> pageCreator.makeChangePasswordPage(user), 0, 5);
-    factory.makeButton(grid, "Cards", () -> pageCreator.makeCardPage(user.getCardCommands()), 0, 2);
+    Button remove = newRemoveAccountButton(1, 5);
+    remove.setMinWidth(cards.getMinWidth() / 2 - 10);
+    Button name = factory.makeButton(grid, "Change name", () -> pageCreator.makeChangeNamePage(user), 0, 4);
+    name.setMinWidth(cards.getMinWidth() / 2 - 10);
+    Button pass = factory.makeButton(grid, "Change password", () -> pageCreator.makeChangePasswordPage(user), 1, 4);
+    pass.setMinWidth(cards.getMinWidth() / 2 - 10);
 
-    factory.makeButton(
+    Button stats = factory.makeButton(
         grid,
         "Get Stats",
             () -> pageCreator.makeUserAnalyticsPage(user),
         0,
         3);
+    stats.setMinWidth(cards.getMinWidth() / 2 - 10);
 
-    factory.makeButton(
+    Button lastThree = factory.makeButton(
         grid,
         "Get last 3 trips",
         () -> {
@@ -78,12 +87,13 @@ public class UserPage extends AuthenticatedPage {
           a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
           a.showAndWait();
         },
-        0,
-        7);
+        1,
+        3);
+    lastThree.setMinWidth(cards.getMinWidth() / 2 - 8);
 
     if (user.getCardCommands().getPermission().equals("admin")) {
       Button viewToggle =
-          factory.makeButton(grid, "Admin view", () -> new AdminUserPage(stage, user), 2, 7);
+          factory.makeButton(grid, "Admin view", () -> new AdminUserPage(stage, user), 2, 5);
       GridPane.setHalignment(viewToggle, HPos.RIGHT);
       GridPane.setHgrow(viewToggle, Priority.ALWAYS);
     }

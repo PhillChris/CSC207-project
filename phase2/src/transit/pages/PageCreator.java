@@ -35,7 +35,7 @@ public class PageCreator {
   }
 
   void makeChangePasswordPage(User user) {
-    new ChangeNamePage(secondaryStage, user);
+    new ChangePasswordPage(secondaryStage, user);
   }
 
   public void makeLoginPage() {

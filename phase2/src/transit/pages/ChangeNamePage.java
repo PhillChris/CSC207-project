@@ -46,7 +46,7 @@ public class ChangeNamePage extends Page {
         2,
         0);
 
-    scene = new Scene(grid, 550, 70);
+    scene = new Scene(grid, 530, 70);
     scene.getStylesheets().add(getClass().getResource("styling/ChangeInfoPage.css").toExternalForm());
   }
 }

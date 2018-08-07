@@ -91,6 +91,7 @@ public class AnalyticsPage extends Page {
 
   /** Sets up the graph for the user to view */
   protected void setUpStatGraph() {
+    grid.getChildren().remove(chart);
     if (timeOptions.getValue().equals("Monthly")) {
       chart = graphFactory.makeYearChart(statOptions.getValue().generateMonthlyValues());
     } else {

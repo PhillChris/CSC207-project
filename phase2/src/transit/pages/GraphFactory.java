@@ -58,7 +58,6 @@ public class GraphFactory {
     final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
     lineChart.setTitle(String.format(title, TransitTime.getClock().getCurrentDate().getYear()));
-    ;
 
     return lineChart;
   }

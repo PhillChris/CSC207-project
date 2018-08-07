@@ -47,7 +47,6 @@ public class AdminUserPage extends AuthenticatedPage {
 
   /**
    * Adds all buttons to the AdminUserPage
-   *
    */
   private void makeSceneButtons() {
     newLogoutButton(1, 0);

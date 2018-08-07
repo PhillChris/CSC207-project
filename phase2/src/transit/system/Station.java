@@ -23,6 +23,8 @@ public class Station implements Serializable {
   private String stationType;
   /** Stores associated statistics to this user */
   private HashMap<String, Statistics> statistics = new HashMap<>();
+  /** Stores the possible statistics recorded at each given station */
+  public static final String[] STATION_STATS = {"Tap In", "Tap Out"};
 
   /**
    * Create a new instance of transit.system.Station
@@ -33,8 +35,9 @@ public class Station implements Serializable {
     this.name = name;
     this.stationType = stationType;
     this.setFees();
-    statistics.put("Tap In", new Statistics("Taps In"));
-    statistics.put("Tap Out", new Statistics("Taps Out"));
+    for (String stat: STATION_STATS) {
+      statistics.put(stat, new Statistics(stat));
+    }
   }
 
   public HashMap<String, Statistics> getStatistics() {

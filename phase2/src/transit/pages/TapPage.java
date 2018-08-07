@@ -1,7 +1,6 @@
 package transit.pages;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -59,7 +58,6 @@ public class TapPage extends Page {
 
   /**
    * Refreshes the buttons displayed on the TapPage depending on which type is selected
-   *
    */
   private void refreshRouteOptionItems() {
     // Clear out all buttons
@@ -94,25 +92,37 @@ public class TapPage extends Page {
             cards.tap(card, station);
             if (card.getCurrentTrip() != null) {
               alert =
-                  factory.makeAlert(
-                      "Tapped In",
-                      "Tapped in",
-                      String.format(
-                          "Tap in at %s, at time %s",
-                          station.toString(), TransitTime.getClock().getCurrentTimeString()),
-                      AlertType.CONFIRMATION);
+                      factory.makeAlert(
+                              "Tapped In",
+                              "Tapped in",
+                              String.format(
+                                      "Tap in at %s, at time %s",
+                                      station.toString(), TransitTime.getClock().getCurrentTimeString()),
+                              AlertType.CONFIRMATION);
             } else {
               alert =
-                  factory.makeAlert(
-                      "Tapped Out",
-                      "Tapped Out",
-                      String.format(
-                          "Tap out at %s, at time %s, with trip fee $%.2f.",
-                          station.toString(),
-                          TransitTime.getClock().getCurrentTimeString(),
-                          (card.getLastTrip().getFee()) / 100.0),
-                      AlertType.CONFIRMATION);
+                      factory.makeAlert(
+                              "Tapped Out",
+                              "Tapped Out",
+                              String.format(
+                                      "Tap out at %s, at time %s, with trip fee $%.2f.",
+                                      station.toString(),
+                                      TransitTime.getClock().getCurrentTimeString(),
+                                      (card.getLastTrip().getFee()) / 100.0),
+                              AlertType.CONFIRMATION);
             }
+
+          } catch (TransitException e) {
+            alert =
+                    factory.makeAlert(
+                            "Invalid Trip",
+                            "Tapped Out",
+                            String.format(
+                                    "Tapped out on an invalid trip at %s at time %s, charged $%.2f ",
+                                    station.toString(),
+                                    TransitTime.getClock().getCurrentTimeString(),
+                                    (card.getLastTrip().getFee() / 100.0)),
+                            AlertType.WARNING);
           } catch (Exception b) {
             alert =
                 factory.makeAlert(

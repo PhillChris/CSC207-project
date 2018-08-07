@@ -8,7 +8,9 @@ import java.util.List;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-/** The commands stores and processes all user-card related commands */
+/**
+ * UserCardCommands processes all user-card related commands.
+ */
 public class UserCardCommands implements Serializable {
   /** An ArrayList of this transit.system.User's cards */
   private HashMap<Integer, Card> cards;
@@ -21,7 +23,7 @@ public class UserCardCommands implements Serializable {
   /** A list of the previous trips of the associated User */
   private List<Trip> previousTrips = new ArrayList<>();
 
-  /** Initialized a new instance of UserCardCommands */
+  /** Initialize a new instance of UserCardCommands */
   UserCardCommands(String permission) {
     this.cards = new HashMap<>();
     cardStatistics.put("Expenditure", new Statistics("Expenditure"));
@@ -35,15 +37,12 @@ public class UserCardCommands implements Serializable {
     return this.permission;
   }
 
-  /** @return The previous trips made by this user */
-  public List<Trip> getPreviousTrips() {
-    return previousTrips;
-  }
-
+  /** @return the string representation of the last three trips over all cards. */
   public String lastThreeTripsString() {
     String stringRep = "Recent trips:" + System.lineSeparator();
 
-    for (int i = 0; i < min(previousTrips.size(), 3); i++) {
+    // loop over the last 3 trips or all trips if there are less than 3 trips made.
+    for (int i = 0; i < min(previousTrips.size(), 3); i++) { // las
       stringRep +=
           previousTrips.get(previousTrips.size() - (1 + i)).toString() + System.lineSeparator();
     }
@@ -180,7 +179,7 @@ public class UserCardCommands implements Serializable {
    * @param card The card which this User taps
    * @param station The station which this User taps at
    */
-  private void tapOut(Card card, Station station) throws TransitException {
+  private void tapOut(Card card, Station station) {
     // Update Card and Trip information
     Trip trip = card.getCurrentTrip();
     trip.endTrip(station); // ends the trip

@@ -35,7 +35,7 @@ public class AdminUserPage extends AuthenticatedPage {
   protected void makeScene() {
     grid.setPadding(new Insets(30, 30, 30, 30));
     grid.setHgap(10);
-    grid.setVgap(13);
+    grid.setVgap(10);
     factory.addClock(grid);
     makeSceneButtons();
 

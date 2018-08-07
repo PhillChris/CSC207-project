@@ -21,7 +21,6 @@ public class UserAnalyticsPage extends AnalyticsPage {
 
   @Override
   void makeScene() {
-    super.makeScene();
     Label lastThree = new Label(user.getCardCommands().lastThreeTripsString());
     lastThree.setMinWidth(375);
     GridPane.setValignment(lastThree, VPos.TOP);

@@ -31,7 +31,7 @@ public class Route implements Serializable {
   public Route(String type) {
     this.routeType = type;
     this.routeStations = new ArrayList<>();
-    numRoutes = routes.size();
+    numRoutes = routes.get("Bus").size() + routes.get("Subway").size();
     this.routeNum = numRoutes + 1;
   }
 

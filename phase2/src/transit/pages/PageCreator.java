@@ -51,7 +51,7 @@ public class PageCreator {
   }
 
   void makeTapPage(UserCardCommands cards, Card card, String selectedType) {
-    new TapPage(secondaryStage, cards, card, selectedType);
+    new TapPage(secondaryStage, cards, card);
   }
 
   void makeUserPage(User user) {

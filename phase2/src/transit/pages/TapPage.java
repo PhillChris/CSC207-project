@@ -1,54 +1,54 @@
 package transit.pages;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.*;
 
-import java.util.ArrayList;
-
 /** Represents a page displaying all possibilities for tapping in this transit system */
 public class TapPage extends Page {
-  /** The tap options of a given card */
-  private ArrayList<Button> stationButtons = new ArrayList<>();
+  /** The type selected in the selection bar upon creation of this TapPage */
+  ChoiceBox<String> routeType = new ChoiceBox<>();
   /** The user whose card is currently tapping */
   private UserCardCommands cards;
   /** The card which is currently tapping */
   private Card card;
-  /** The type selected in the selection bar upon creation of this TapPage */
-  private String selectedType;
+  /** The grid where station buttons are placed */
+  private GridPane stationLayout = new GridPane();
 
   /**
    * Constructs a new TapPage
    *
    * @param card the card which is currently tapping
    */
-  public TapPage(Stage stage, UserCardCommands cards, Card card, String selectedType) {
+  public TapPage(Stage stage, UserCardCommands cards, Card card) {
     super(stage);
     this.cards = cards;
     this.card = card;
-    this.selectedType = selectedType;
     makeScene();
     stage.setTitle("Tap " + card);
     stage.setScene(scene);
     stage.show();
   }
 
-  /**
-   * Makes the scene which displays this page
-   *
-   */
+  /** Makes the scene which displays this page */
   @Override
   public void makeScene() {
+    stationLayout.setVgap(10);
+    stationLayout.setHgap(20);
     factory.makeLabel(grid, "Choose route type!", 0, 0);
-    ChoiceBox<String> routeType = new ChoiceBox<>();
-    setupRouteTypeBox(routeType);
+    routeType.getItems().addAll(Station.POSSIBLE_TYPES);
+    routeType.getSelectionModel().select(0);
+    routeType.setOnAction(e -> refreshRouteOptionItems());
     grid.add(routeType, 1, 0);
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    grid.add(stationLayout, 0, 1, 50, 30);
+    this.scene = new Scene(grid, 500, 300);
   }
 
   /**
@@ -56,30 +56,15 @@ public class TapPage extends Page {
    *
    * @param type the current type of routes being displayed
    */
-  private void refreshRouteOptionItems(String type) {
+  private void refreshRouteOptionItems() {
     // Clear out all buttons
-    while (!stationButtons.isEmpty()) {
-      grid.getChildren().remove(stationButtons.get(0));
-      stationButtons.remove(stationButtons.get(0));
-    }
-
-    // Add new buttons from the routes hash map of the given type
-    if (Route.getRoutesCopy().get(type) != null) {
-      makeStationButtons(type);
-    }
-  }
-
-  /**
-   * Makes all of the station buttons to be displayed
-   *
-   * @param type the type of stations currently being displayed
-   */
-  private void makeStationButtons(String type) {
+    stationLayout.getChildren().clear();
+    String type = routeType.getValue();
     int i = 1;
     for (Route route : Route.getRoutesCopy().get(type)) {
       int j = 0;
       for (Station station : route.getRouteStationsCopy()) {
-        stationButtons.add(placeStationButton(station, j, i));
+        placeStationButton(stationLayout, station, j, i);
         j++;
       }
       i++;
@@ -94,7 +79,7 @@ public class TapPage extends Page {
    * @param row the row where this button will be placed in this page's grid
    * @return the button created at this place in the grid
    */
-  private Button placeStationButton(Station station, int col, int row) {
+  private Button placeStationButton(GridPane grid, Station station, int col, int row) {
     return factory.makeButton(
         grid,
         station.toString(),
@@ -135,18 +120,5 @@ public class TapPage extends Page {
         },
         col,
         row);
-  }
-
-  /**
-   * Sets up and initializes the checkbox selecting which type of route to display
-   *
-   * @param routeType the checkbox selecting route type
-   */
-  private void setupRouteTypeBox(ChoiceBox<String> routeType) {
-    routeType.getItems().addAll(Station.POSSIBLE_TYPES);
-    refreshRouteOptionItems(this.selectedType); /* Loads the first round of buttons*/
-    routeType.getSelectionModel().select(this.selectedType);
-    routeType.setOnAction(e -> pageCreator.makeTapPage(cards, card, routeType.getValue()));
-    refreshRouteOptionItems(routeType.getValue());
   }
 }

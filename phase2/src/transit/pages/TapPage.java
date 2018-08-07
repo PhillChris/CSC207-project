@@ -47,14 +47,19 @@ public class TapPage extends Page {
     choose.setMinWidth(100);
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     routeType.getSelectionModel().select(0);
-    routeType.setOnAction(e -> refreshRouteOptionItems());
+    routeType.setOnAction(
+        e -> {
+          refreshRouteOptionItems();
+          stage.setMinHeight(grid.getHeight() + 200);
+          stage.setMinWidth(grid.getWidth());
+        });
     routeType.setMinWidth(100);
     refreshRouteOptionItems(); // do this action to load the buttons initially
     grid.setHgap(10);
     grid.setHgap(10);
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.add(routeType, 1, 0);
-    grid.add(stationLayout, 0, 1, 50, 30);
+    grid.add(stationLayout, 0, 1, 50, 1);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }

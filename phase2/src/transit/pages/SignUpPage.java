@@ -35,15 +35,18 @@ public class SignUpPage extends Page {
   /** Makes a scene for this SignUpPage */
   @Override
   protected void makeScene() {
+    // Set margins and borders
     grid.setPadding(new Insets(20, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
 
     makeSignUpPane();
 
+    // Add the train pictures and the clock to the given page
     factory.addTrain(grid);
     factory.addClock(grid);
 
+    // Sets the given scene and assigns CSS to it
     scene = new Scene(grid, 600, 375);
     scene.getStylesheets().add(getClass().getResource("styling/SignUpPage.css").toExternalForm());
   }

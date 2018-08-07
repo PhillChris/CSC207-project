@@ -48,9 +48,12 @@ public class RouteCreationPage extends Page {
         Route route = Route.getRoutesCopy().get(type).get(i);
         factory.makeButton(
                 grid, route.toString(), () -> pageCreator.makeAppendRoutePage(route), j, 6 + 2 * i);
+        factory.makeButton(
+            grid, "Remove this route!", () -> route.removeRoute(), j + 1, 6 + 2 * i);
       }
-      j++;
+      j += 2;
     }
+
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }

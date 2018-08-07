@@ -12,6 +12,7 @@ public class StationGraphPage extends AnalyticsPage {
 
   private ComboBox<String> stationType = new ComboBox<>();
   private ComboBox<Station> stationName = new ComboBox<>();
+
   /**
    * Initialize a new instance of an AnalyticsPage.
    *
@@ -30,8 +31,6 @@ public class StationGraphPage extends AnalyticsPage {
     refreshstationOptions();
     dropDowns.getChildren().addAll(stationType, stationName);
     super.setLayout();
-
-
   }
 
   private void refreshstationOptions() {

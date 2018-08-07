@@ -11,6 +11,7 @@ public class UserAnalyticsPage extends AnalyticsPage {
 
   public UserAnalyticsPage(Stage stage, User user) {
     super(stage, user.getCardCommands().getCardStatistics());
+    stage.setTitle("User Analytics Page");
     this.user = user;
   }
 

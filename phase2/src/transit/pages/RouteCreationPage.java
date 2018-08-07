@@ -17,10 +17,6 @@ public class RouteCreationPage extends Page {
    */
   public RouteCreationPage(Stage stage) {
     super(stage);
-    this.grid = new GridPane();
-    grid.setPadding(new Insets(30, 20, 20, 40));
-    grid.setHgap(10);
-    grid.setVgap(10);
     makeScene();
     stage.setTitle("Create/Edit Routes");
     stage.setScene(scene);
@@ -33,6 +29,9 @@ public class RouteCreationPage extends Page {
    */
   @Override
   void makeScene() {
+    grid.setPadding(new Insets(30, 20, 20, 40));
+    grid.setHgap(10);
+    grid.setVgap(10);
     /** Set the buttons of this page */
     Button createSubway =
         factory.makeButton(

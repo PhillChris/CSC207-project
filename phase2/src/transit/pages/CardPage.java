@@ -1,6 +1,7 @@
 package transit.pages;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -9,8 +10,7 @@ import javafx.stage.Stage;
 import transit.system.Card;
 import transit.system.UserCardCommands;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /** Represents a page containing all functionality associated with a user's set of cards */
 public class CardPage extends Page {
@@ -30,7 +30,8 @@ public class CardPage extends Page {
   public CardPage(Stage stage, UserCardCommands cards) {
     super(stage);
     this.cards = cards;
-    cardSelection = cards.getCardsCopy().get(1);
+    // Default selection should be card with minimum number
+    cardSelection = cards.getCardsCopy().get(Collections.min(cards.getCardsCopy().keySet()));
     addUserData();
     makeScene();
     stage.setTitle("Cards");
@@ -69,10 +70,12 @@ public class CardPage extends Page {
   }
 
   private void addCardComboBox() {
+    List<Integer> userCardKeys = new ArrayList<>(cards.getCardsCopy().keySet());
+    Collections.sort(userCardKeys);
     List<Card> userCards = new ArrayList<>();
 
-    for (int i = 1; i <= cards.getCardsCopy().size(); i++) {
-      userCards.add(cards.getCardsCopy().get(i));
+    for (Integer key : userCardKeys) {
+      userCards.add(cards.getCardsCopy().get(key));
     }
 
     cardComboBox = factory.makeCardComboBox(grid, userCards, 0, 2);
@@ -81,8 +84,6 @@ public class CardPage extends Page {
   /**
    * Adds the buttons specific to each card in this simulation
    *
-   * @param id the id of the current card being represented
-   * @param i the current iteration of the loop in CardPage.makeScene
    */
   private void addCardButtons() {
     Button tap = factory.makeButton(
@@ -104,15 +105,24 @@ public class CardPage extends Page {
     factory.makeButton(
         grid,
         "Remove This Card",
-        () ->
+        () -> {
+          if (cards.getCardsCopy().size() > 1) {
             factory.makeConfirmationAlert(
                 "Removal confirmation",
                 "Confirm removal:",
                 "Are you sure that you want to remove this card?",
                 () -> {
                   cards.removeCard(cardSelection);
+                  cardComboBox.getItems().remove(cardSelection);
                   pageCreator.makeCardPage(cards);
-                }),
+                });
+              }
+              else {
+            Alert warning = factory.makeAlert("Removal", "Removal denied:",
+              "Can't remove last card", Alert.AlertType.WARNING);
+            warning.showAndWait();
+          }
+              },
         2,
         3);
 

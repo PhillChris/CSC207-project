@@ -11,9 +11,16 @@ import transit.system.User;
 
 /** Represents a login page for this system */
 public class LoginPage extends Page {
+
+  /**
+   * A secondary pane on the login page for styling
+   */
   private GridPane loginPane;
+  /** The textbox containing the username text when logging in */
   private TextField emailInput;
+  /** The textbox containing the password text when logging in */
   private TextField passInput;
+  /** The label showing the error message upon error*/
   private Label errorMessage;
 
   /**
@@ -31,41 +38,45 @@ public class LoginPage extends Page {
   /** Sets the scene for this page */
   @Override
   protected void makeScene() {
+    // Set margins
     grid.setPadding(new Insets(20, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
 
     makeLoginPane();
 
+    // Put train image and clock on the grid
     factory.addTrain(grid);
     factory.addClock(grid);
 
+    // Sets the scene
     scene = new Scene(grid, 600, 375);
     scene.getStylesheets().add(getClass().getResource("styling/LoginPage.css").toExternalForm());
   }
 
   /** Makes the login GridPane for styling purposes */
   private void makeLoginPane() {
+    // Set secondary panes and margins
     this.loginPane = new GridPane();
     loginPane.setHgap(10);
     loginPane.setVgap(12);
+
+    // Add labels and icons
     makeLabels();
     makeIcons();
 
-    this.emailInput = makeEmailInput();
-    this.passInput = makePassInput();
-
+    this.emailInput = factory.makeTextField(loginPane, "Email", 1, 1);
+    this.passInput = factory.makePasswordField(loginPane, "Password", 1, 2);
     this.errorMessage = makeErrorMessage();
 
     makeSignUpButton();
     makeLoginButton();
 
     makeSeparator();
-
     grid.add(loginPane, 0, 1);
   }
 
-  /** Makes all icons in the login pane */
+  /** Imports and makes all icons in the login pane */
   private void makeIcons() {
     factory.makeImage(loginPane, "transit/pages/assets/email.png", 0, 1);
     factory.makeImage(loginPane, "transit/pages/assets/key.png", 0, 2);
@@ -79,17 +90,6 @@ public class LoginPage extends Page {
     Label noAccount = factory.makeLabel(loginPane, "No account?", 0, 5);
     noAccount.setId("noAccount");
     GridPane.setColumnSpan(noAccount, 2);
-    ;
-  }
-
-  /** @return the password input field for this LoginPage */
-  private PasswordField makePassInput() {
-    return factory.makePasswordField(loginPane, "Password", 1, 2);
-  }
-
-  /** @return the email input field for this LoginPage */
-  private TextField makeEmailInput() {
-    return factory.makeTextField(loginPane, "Email", 1, 1);
   }
 
   /** @return a label containing the appropriate error message */
@@ -137,30 +137,29 @@ public class LoginPage extends Page {
 
   /** Parses a login attempt */
   private void parseLoginAttempt() {
-    {
-      try {
-        User user;
-        if (User.getAllUsersCopy().containsKey(emailInput.getText())) {
-          user = User.getAllUsersCopy().get(emailInput.getText());
-        } else {
-          errorMessage.setText("User email not found.");
-          LogWriter.getLogWriter().logUserNotFound();
-          throw new Exception();
-        }
-        if (checkAuthorization()) {
-          if (user.getCardCommands().getPermission().equals("admin")) {
-            pageCreator.makeAdminUserPage(user);
-          } else {
-            pageCreator.makeUserPage(user);
-          }
-          LogWriter.getLogWriter().logUserLogin(user);
-        } else {
-          errorMessage.setText("Incorrect password.");
-          LogWriter.getLogWriter().logInvalidAuth();
-          throw new Exception();
-        }
-      } catch (Exception ignored) {
+    try {
+      User user;
+      if (User.getAllUsersCopy().containsKey(emailInput.getText())) {
+        user = User.getAllUsersCopy().get(emailInput.getText());
+      } else {
+        errorMessage.setText("User email not found.");
+        LogWriter.getLogWriter().logUserNotFound();
+        throw new Exception();
       }
+      if (checkAuthorization()) {
+        if (user.getCardCommands().getPermission().equals("admin")) {
+          pageCreator.makeAdminUserPage(user);
+        } else {
+          pageCreator.makeUserPage(user);
+        }
+        LogWriter.getLogWriter().logUserLogin(user);
+      } else {
+        errorMessage.setText("Incorrect password.");
+        LogWriter.getLogWriter().logInvalidAuth();
+        throw new Exception();
+      }
+    } catch (Exception ignored) {
+
     }
   }
 }

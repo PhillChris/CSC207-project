@@ -2,6 +2,7 @@ package transit.pages;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -35,11 +36,11 @@ public class AdminUserPage extends AuthenticatedPage {
   protected void makeScene() {
     grid.setPadding(new Insets(30, 30, 30, 30));
     grid.setHgap(10);
-    grid.setVgap(10);
+    grid.setVgap(13);
     factory.addClock(grid);
     makeSceneButtons();
 
-    scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    scene = new Scene(grid, 370, 170);
     scene
         .getStylesheets()
         .add(LoginPage.class.getResource("styling/UserPage.css").toExternalForm());
@@ -50,17 +51,18 @@ public class AdminUserPage extends AuthenticatedPage {
    *
    */
   private void makeSceneButtons() {
-    factory.makeLabel(grid, getUserMessage(), 1, 0);
-    newUserInfoButton(2, 0);
-    newLogoutButton(2, 1);
-    newRemoveAccountButton(2, 2);
+    newLogoutButton(1, 0);
 
-    factory.makeButton(grid, "System Stats", () -> pageCreator.makeAnalyticsPage(Statistics.getSystemStatistics()), 0, 2);
-    factory.makeButton(grid, "Station Stats", () -> pageCreator.makeStationGraphPage(), 0, 3);
-    factory.makeButton(grid, "Update Routes", () -> pageCreator.makeRouteCreationPage(), 0, 1);
-
+    Button system = factory.makeButton(grid, "System Stats", () -> pageCreator.makeAnalyticsPage(Statistics.getSystemStatistics()), 0, 1);
+    system.setMinWidth(150);
+    Button station = factory.makeButton(grid, "Station Stats", () -> pageCreator.makeStationGraphPage(), 1, 1);
+    station.setMinWidth(150);
+    GridPane.setHalignment(station, HPos.RIGHT);
+    Button update = factory.makeButton(grid, "Update Routes", () -> pageCreator.makeRouteCreationPage(), 0, 2);
+    update.setMinWidth(150);
     Button toggle =
         factory.makeButton(grid, "User view", () -> pageCreator.makeUserPage(user), 1, 2);
     GridPane.setHalignment(toggle, HPos.RIGHT);
+    toggle.setMinWidth(150);
   }
 }

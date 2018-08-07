@@ -27,9 +27,7 @@ public class UserAnalyticsPage extends AnalyticsPage {
     makeScene();
 
     // set and show the given scene
-    stage.setScene(scene);
-    stage.show();
-    stage.setTitle("Transit System Simulator");
+    setAndShow("Transit System Simulator");
   }
 
   @Override

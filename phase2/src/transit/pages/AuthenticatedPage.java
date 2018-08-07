@@ -25,9 +25,7 @@ public abstract class AuthenticatedPage extends Page {
     super(stage);
     this.user = user;
     makeScene();
-    this.stage.setTitle(String.format("%s's Control Panel", user));
-    this.stage.setScene(scene);
-    this.stage.show();
+    setAndShow(String.format("%s's Control Panel", user));
   }
 
   /** Adds the user-specific data on this page */

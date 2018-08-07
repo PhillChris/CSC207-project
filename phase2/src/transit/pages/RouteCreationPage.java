@@ -17,13 +17,11 @@ public class RouteCreationPage extends Page {
   public RouteCreationPage(Stage stage) {
     super(stage);
     makeScene();
-    stage.setTitle("Create/Edit Routes");
-    stage.setScene(scene);
-    stage.show();
+    setAndShow("Create/edit routes");
   }
 
-  /** Sets the scene of this page */
   @Override
+  /** Sets the scene of this page */
   void makeScene() {
     this.grid = new GridPane();
     grid.setPadding(new Insets(30, 20, 20, 40));

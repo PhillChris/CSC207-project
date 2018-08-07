@@ -43,9 +43,7 @@ public class CardPage extends Page {
             .get(Collections.min(userCardCommands.getCardsCopy().keySet()));
     addUserData();
     makeScene();
-    stage.setTitle("Cards");
-    stage.setScene(scene);
-    stage.show();
+    setAndShow("Cards");
   }
 
   @Override

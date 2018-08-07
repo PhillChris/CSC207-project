@@ -40,9 +40,7 @@ public class TapPage extends Page {
     this.cards = cards;
     this.card = card;
     makeScene();
-    stage.setTitle("Tap " + card);
-    stage.setScene(scene);
-    stage.show();
+    setAndShow("Tap " + card);
   }
 
   /** Makes the scene which displays this page */

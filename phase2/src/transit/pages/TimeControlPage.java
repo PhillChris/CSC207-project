@@ -24,11 +24,9 @@ public class TimeControlPage extends Page {
     makeScene();
     stage.setX(1000);
     stage.setY(200);
-    stage.setScene(this.scene);
-
     // Set and show the given scene
-    stage.setTitle("Time Control Page");
-    stage.show();
+
+    setAndShow("Time Control Page");
     stage.setOnCloseRequest(Event::consume);
   }
 

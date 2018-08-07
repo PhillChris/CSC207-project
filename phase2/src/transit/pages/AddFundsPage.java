@@ -19,9 +19,7 @@ public class AddFundsPage extends Page {
     super(stage);
     this.card = card;
     makeScene();
-    stage.setScene(scene);
-    stage.setTitle("Add funds page");
-    stage.show();
+    setAndShow("Add funds");
   }
 
   /**

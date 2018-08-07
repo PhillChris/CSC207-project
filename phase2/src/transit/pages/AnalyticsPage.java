@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,7 +26,7 @@ public class AnalyticsPage extends Page {
    */
   protected GraphFactory graphFactory = new GraphFactory();
   /** The drop down options displayed by this page */
-  protected VBox dropDown = new VBox();
+  protected HBox dropDown = new HBox();
   /** A combo box if the different statistics options for this page */
   ComboBox<Statistics> statOptions = new ComboBox<>();
   /** The time options displayed by this page */

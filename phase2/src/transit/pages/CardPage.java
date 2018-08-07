@@ -66,7 +66,7 @@ public class CardPage extends Page {
 
     // addClock();
     addCardButtons();
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, 250);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }
 
@@ -89,7 +89,7 @@ public class CardPage extends Page {
     }
 
     cardComboBox = factory.makeCardComboBox(grid, userCards, 0, 1);
-    cardComboBox.setMinWidth(350);
+    cardComboBox.setMinWidth(400);
     cardComboBox.setOnAction(event -> cardSelection = cardComboBox.getValue());
   }
   /**

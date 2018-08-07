@@ -33,6 +33,7 @@ public class TransitTime implements Serializable {
     updateTimeLabel();
   }
 
+  /** @return The system's clock at the beginning of the program */
   private static TransitTime setSystemClock() {
     LocalDateTime time = (LocalDateTime) Database.readObject(Database.TIME_LOCATION);
     if (time != null) {

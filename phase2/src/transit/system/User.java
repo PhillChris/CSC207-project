@@ -75,11 +75,7 @@ public class User implements Serializable {
   /** Removes this user from the system. */
   public void removeUser() {
     allUsers.remove(this.email);
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            User.class.getName(),
-            "removeUser",
-            "Removed user " + personalInfo.getUserName() + " from transit system");
+    LogWriter.getLogWriter().logRemoveUser(personalInfo.getUserName());
   }
 
   /** @return This User's email */
@@ -87,6 +83,7 @@ public class User implements Serializable {
     return this.email;
   }
 
+  /** @return The string representation of this user */
   public String toString() {
     return personalInfo.getUserName();
   }

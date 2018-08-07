@@ -44,7 +44,8 @@ public class UserCardCommands implements Serializable {
     String stringRep = "Recent trips:" + System.lineSeparator();
 
     for (int i = 0; i < min(previousTrips.size(), 3); i++) {
-      stringRep += previousTrips.get(previousTrips.size() - (1 + i)).toString() + System.lineSeparator();
+      stringRep +=
+          previousTrips.get(previousTrips.size() - (1 + i)).toString() + System.lineSeparator();
     }
     return stringRep.trim();
   }
@@ -75,17 +76,14 @@ public class UserCardCommands implements Serializable {
         this.cards.remove(card.getId(), card);
       }
     }
-    LogWriter.getLogWriter()
-        .logInfoMessage(User.class.getName(), "removeCard", "User removed card #" + card.getId());
+    LogWriter.getLogWriter().logRemoveCard(card.getId());
   }
 
   /** Add a card to this transit.system.User's list of cards. */
   public void addCard() {
     this.cards.put(cardCounter, new Card(cardCounter));
     cardCounter++;
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            User.class.getName(), "addCard", "User added new card with default balance");
+    LogWriter.getLogWriter().logAddCard();
   }
 
   /**
@@ -108,6 +106,7 @@ public class UserCardCommands implements Serializable {
     }
   }
 
+  /** @return A string representation of a User's most frequently viewed station */
   public String mostFrequentStationMessage() {
     HashMap<Station, Integer> frequentStationCount = new HashMap<>();
     for (Trip t : previousTrips) {
@@ -118,7 +117,7 @@ public class UserCardCommands implements Serializable {
     }
     int maxTapValue = 0;
     Station maxTapped = null;
-    for(Station s: frequentStationCount.keySet()) {
+    for (Station s : frequentStationCount.keySet()) {
       if (frequentStationCount.get(s) > maxTapValue) {
         maxTapped = s;
         maxTapValue = frequentStationCount.get(s);
@@ -128,14 +127,22 @@ public class UserCardCommands implements Serializable {
     if (maxTapped == null) {
       return "No stations tapped";
     } else {
-      return "Most frequent station: " + System.lineSeparator() + maxTapped +
-        " with " + maxTapValue + " taps";
+      return "Most frequent station: "
+          + System.lineSeparator()
+          + maxTapped
+          + " with "
+          + maxTapValue
+          + " taps";
     }
   }
 
+  /**
+   * @param frequentStationCount A hash map of stations to number of times tapped
+   * @param s the station
+   */
   private void updateCount(HashMap<Station, Integer> frequentStationCount, Station s) {
     if (frequentStationCount.containsKey(s)) {
-      frequentStationCount.put(s, frequentStationCount.get(s) +1);
+      frequentStationCount.put(s, frequentStationCount.get(s) + 1);
     } else {
       frequentStationCount.put(s, 1);
     }
@@ -164,16 +171,7 @@ public class UserCardCommands implements Serializable {
     if (!foundContinuousTrip) {
       card.setCurrentTrip(new Trip(station, permission));
     }
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            User.class.getName(),
-            "tapIn",
-            "User "
-                + this.toString()
-                + " tapped in at station "
-                + station
-                + " with card #"
-                + card.getId());
+    LogWriter.getLogWriter().logTapIn(this.toString(), station.toString(), card.getId());
   }
 
   /**
@@ -192,31 +190,10 @@ public class UserCardCommands implements Serializable {
     updateStatistic(trip);
     // Record various cardStatistics
     if (!trip.isValidTrip()) {
-      LogWriter.getLogWriter()
-          .logWarningMessage(
-              User.class.getName(),
-              "tapOut",
-              "User "
-                  + this.toString()
-                  + " tapped out improperly at station "
-                  + station
-                  + " with card #"
-                  + card.getId()
-                  + ", charged maximum possible fee.");
-      throw new TransitException();
+      LogWriter.getLogWriter().logInvalidTrip(this.toString(), station.toString(), card.getId());
     }
     LogWriter.getLogWriter()
-        .logInfoMessage(
-            User.class.getName(),
-            "tapOut",
-            "User "
-                + this.toString()
-                + " tapped out at station "
-                + station
-                + " with card #"
-                + card.getId()
-                + ", charged $"
-                + String.format("%.2f", trip.getFee() / 100.0));
+        .logTapOut(this.toString(), station.toString(), card.getId(), trip.getFee());
   }
 
   /** Updates the cardStatistics associated with this user and the system */
@@ -224,8 +201,6 @@ public class UserCardCommands implements Serializable {
     previousTrips.add(trip);
     cardStatistics.get("Expenditure").update(trip.getFee());
     Statistics.getSystemStatistics().get("SystemRevenue").update(trip.getFee());
-    Statistics.getSystemStatistics()
-        .get("SystemTripLengh")
-            .update(max(trip.getTripLegLength(), 0));
+    Statistics.getSystemStatistics().get("SystemTripLengh").update(max(trip.getTripLegLength(), 0));
   }
 }

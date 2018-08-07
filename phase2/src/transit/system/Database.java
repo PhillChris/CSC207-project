@@ -1,5 +1,7 @@
 package transit.system;
 
+import javafx.application.Platform;
+
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class Database {
       ObjectOutputStream out = new ObjectOutputStream(fileOut);
       out.writeObject(toWrite);
     } catch (IOException e) {
-      System.out.println("Couldn't find file");
+      Platform.exit();
     }
   }
 

@@ -23,7 +23,7 @@ public class CardPage extends Page {
   /** The label of current trips associated with the */
   private Label currentTrips;
   /** The combo box displaying the card options */
-  private ComboBox<Card> cardComboBox;
+  private ComboBox<Card> cardComboBox = new ComboBox<>();
   /** The selected card */
   private Card cardSelection;
 
@@ -82,11 +82,11 @@ public class CardPage extends Page {
   private void addCardComboBox() {
     List<Integer> userCardKeys = new ArrayList<>(cards.getCardsCopy().keySet());
     Collections.sort(userCardKeys);
-    ComboBox<Card> cardComboBox = new ComboBox<>();
     grid.add(cardComboBox, 0, 1);
     for (Integer key : userCardKeys) {
       cardComboBox.getItems().add(cards.getCardsCopy().get(key));
     }
+    cardComboBox.getSelectionModel().select(0);
     cardComboBox.setMinWidth(400);
     cardComboBox.setOnAction(event -> cardSelection = cardComboBox.getValue());
   }

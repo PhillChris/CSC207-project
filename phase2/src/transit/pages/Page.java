@@ -28,4 +28,13 @@ public abstract class Page {
 
   /** Places the the necessary elements to this page's scene */
   abstract void makeScene();
+
+  /**
+   * Sets a given title message to a stage and shows it
+   */
+  protected void setAndShow(String message) {
+    stage.setScene(this.scene);
+    stage.setTitle(message);
+    stage.show();
+  }
 }

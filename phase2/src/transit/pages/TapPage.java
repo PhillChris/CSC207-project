@@ -41,22 +41,29 @@ public class TapPage extends Page {
   /** Makes the scene which displays this page */
   @Override
   public void makeScene() {
+    // Add sub-grid borders
     stationLayout.setVgap(10);
     stationLayout.setHgap(20);
+    // Add route type label
     Label choose = factory.makeLabel(grid, "Route type:", 0, 0);
     choose.setMinWidth(100);
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     routeType.getSelectionModel().select(0);
+    // Set the action for the route type dropdown
     routeType.setOnAction(
         e -> {
           refreshRouteOptionItems();
           stage.sizeToScene();
         });
     routeType.setMinWidth(100);
-    refreshRouteOptionItems(); // do this action to load the buttons initially
+    // Load the initial set of buttons for tapping
+    refreshRouteOptionItems();
+    // Add grid borders
     grid.setHgap(10);
     grid.setHgap(10);
+    // Set the padding for the overall window
     grid.setPadding(new Insets(20, 20, 20, 20));
+    // Add the dropdown and subgrid to larger grid
     grid.add(routeType, 1, 0);
     grid.add(stationLayout, 0, 1, 50, 1);
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -85,7 +92,7 @@ public class TapPage extends Page {
   /**
    * Makes a button tapping at a given station, at the specified coordinates
    *
-   * @param station the station being tapped at
+   * @param station the station whose button is being made
    * @param col the column where this button will be placed in this page's grid
    * @param row the row where this button will be placed in this page's grid
    * @return the button created at this place in the grid
@@ -99,6 +106,7 @@ public class TapPage extends Page {
           try {
             cards.tap(card, station);
             if (card.getCurrentTrip() != null) {
+              // if this card tapped into a station
               alert =
                       factory.makeAlert(
                               "Tapped In",
@@ -108,6 +116,7 @@ public class TapPage extends Page {
                                       station.toString(), TransitTime.getClock().getCurrentTimeString()),
                               AlertType.CONFIRMATION);
             } else {
+              // if this card tapped out of a station
               alert =
                       factory.makeAlert(
                               "Tapped Out",
@@ -121,10 +130,11 @@ public class TapPage extends Page {
             }
 
           } catch (TransitException e) {
+            // if this card's trip tapped was an invalid trip (i.e. not along a single route)
             alert =
                     factory.makeAlert(
                             "Invalid Trip",
-                            "Tapped Out",
+                        "Invalid Trip",
                             String.format(
                                     "Tapped out on an invalid trip at %s at time %s, charged $%.2f ",
                                     station.toString(),
@@ -132,6 +142,7 @@ public class TapPage extends Page {
                                     (card.getLastTrip().getFee() / 100.0)),
                             AlertType.WARNING);
           } catch (Exception b) {
+            // if this card can't tap for some other
             alert =
                 factory.makeAlert(
                     "Tap error",
@@ -139,6 +150,7 @@ public class TapPage extends Page {
                     "There was a problem in tapping at this point, no tap request could be processed",
                     AlertType.ERROR);
           }
+          // show the given alert
           alert.getDialogPane().setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
           alert.showAndWait();
           stage.setTitle(card.toString());

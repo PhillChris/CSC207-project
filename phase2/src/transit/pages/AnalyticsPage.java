@@ -17,6 +17,9 @@ public class AnalyticsPage extends Page {
   /** The statistics displayed by this analytics page */
   protected HashMap<String, Statistics> statistics;
 
+  /**
+   * The chart to display to the screen
+   */
   private LineChart<String, Number> chart;
 
   /** A factory to construct graphs */
@@ -69,6 +72,7 @@ public class AnalyticsPage extends Page {
     setupStatOptions();
   }
 
+  /** Construct the scene of this page, making all elements to display to the page. */
   @Override
   void makeScene() {
     setupStatOptions();

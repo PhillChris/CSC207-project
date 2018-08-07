@@ -27,36 +27,36 @@ public class TimeControlPage extends Page {
 
   /**
    * Builds the contents of the TimeControlPage
-   *
    */
   void makeScene() {
+    // Set grid gaps
     grid.setHgap(10);
     grid.setVgap(10);
 
+    // Make resume/pause time button
     Button control = factory.makeButton(grid, "Pause time", () -> {}, 0, 0);
     control.setId("control");
     GridPane.setColumnSpan(control, 4);
     GridPane.setHalignment(control, HPos.CENTER);
-
-
-    control.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        if (TransitTime.getClock().isRunning()) {
-          TransitTime.getClock().pauseTime();
-          control.setText("Resume time");
-        } else {
-          TransitTime.getClock().startTime();
-          control.setText("Pause time");
-        }
-      }
-    });
+    control.setOnAction(
+        new EventHandler<ActionEvent>() {
+          @Override
+          public void handle(ActionEvent event) {
+            if (TransitTime.getClock().isRunning()) {
+              TransitTime.getClock().pauseTime();
+              control.setText("Resume time");
+            } else {
+              TransitTime.getClock().startTime();
+              control.setText("Pause time");
+            }
+          }
+        });
 
     control.setPrefWidth(250);
 
     factory.makeLabel(grid, "Jump ahead: ", 0, 1);
 
-    factory.makeButton(grid, "1 hour", () -> TransitTime.getClock().skipHours(), 1, 1);
+    factory.makeButton(grid, "1 hour", () -> TransitTime.getClock().skipHour(), 1, 1);
 
     factory.makeButton(grid, "1 day", () -> TransitTime.getClock().skipDay(), 2, 1);
 
@@ -65,6 +65,8 @@ public class TimeControlPage extends Page {
     grid.setAlignment(Pos.CENTER);
 
     this.scene = new Scene(grid, 360, 100);
-    scene.getStylesheets().add(TimeControlPage.class.getResource("styling/TimeControlPage.css").toExternalForm());
+    scene
+        .getStylesheets()
+        .add(TimeControlPage.class.getResource("styling/TimeControlPage.css").toExternalForm());
   }
 }

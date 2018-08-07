@@ -80,7 +80,7 @@ public class TransitTime implements Serializable {
   }
 
   /** Moves the simulation timeLabel forward one hour */
-  public void skipHours() {
+  public void skipHour() {
     clock.currentTime = clock.currentTime.plusMinutes(60);
   }
 

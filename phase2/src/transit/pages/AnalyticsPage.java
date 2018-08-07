@@ -49,7 +49,7 @@ public class AnalyticsPage {
     setLayout();
     scene
       .getStylesheets()
-      .add(LoginPage.class.getResource("styling/GraphPage.css").toExternalForm());
+      .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
     stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");

@@ -12,10 +12,10 @@ import transit.system.LogWriter.*;
 
 /** Represents a login page for this system */
 public class LoginPage extends Page {
-  GridPane loginPane;
-  TextField emailInput;
-  TextField passInput;
-  Label errorMessage;
+  private GridPane loginPane;
+  private TextField emailInput;
+  private TextField passInput;
+  private Label errorMessage;
 
   /**
    * Initialized a new instance of LoginPace

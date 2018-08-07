@@ -15,7 +15,7 @@ import transit.system.*;
 /** Represents a page displaying all possibilities for tapping in this transit system */
 public class TapPage extends Page {
   /** The type selected in the selection bar upon creation of this TapPage */
-  ChoiceBox<String> routeType = new ChoiceBox<>();
+  private ChoiceBox<String> routeType = new ChoiceBox<>();
   /** The user whose card is currently tapping */
   private UserCardCommands cards;
   /** The card which is currently tapping */

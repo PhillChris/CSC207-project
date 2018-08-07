@@ -4,12 +4,7 @@ import com.oracle.tools.packager.Log;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -19,12 +14,12 @@ import transit.system.User;
 
 /** Represents a page opened when making a new account in this transit system */
 public class SignUpPage extends Page {
-  GridPane signUpPane;
-  TextField userInput;
-  TextField emailInput;
-  PasswordField passInput;
-  ComboBox<String> userType;
-  Label errorMessage;
+  private GridPane signUpPane;
+  private TextField userInput;
+  private TextField emailInput;
+  private PasswordField passInput;
+  private ComboBox<String> userType;
+  private Label errorMessage;
 
   /**
    * Constructs a new SignUpPage

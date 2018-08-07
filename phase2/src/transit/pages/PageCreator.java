@@ -50,7 +50,7 @@ public class PageCreator {
     new SignUpPage(primaryStage);
   }
 
-  void makeTapPage(UserCardCommands cards, Card card, String selectedType) {
+  void makeTapPage(UserCardCommands cards, Card card) {
     new TapPage(secondaryStage, cards, card);
   }
 

@@ -27,6 +27,7 @@ public class UserCardCommands implements Serializable {
     cardStatistics.put("Expenditure", new Statistics("Expenditure"));
     cardStatistics.put("Taps", new Statistics("Taps"));
     this.permission = permission;
+    addCard();
   }
 
   /** @return The permission on this user */

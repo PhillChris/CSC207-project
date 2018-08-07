@@ -20,8 +20,6 @@ public class AnalyticsPage extends Page {
   protected LineChart<String, Number> chart;
 
   protected Scene scene;
-
-  protected GridPane grid = new GridPane();
   /**
    * A factory to construct graphs
    */

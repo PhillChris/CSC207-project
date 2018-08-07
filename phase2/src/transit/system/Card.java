@@ -1,7 +1,5 @@
 package transit.system;
 
-import com.oracle.tools.packager.Log;
-
 import java.io.Serializable;
 
 /** Represents a travel card in a transit system */

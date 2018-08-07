@@ -50,16 +50,20 @@ public class UserPage extends AuthenticatedPage {
     GridPane.setColumnSpan(cards, 2);
     cards.setMinWidth(320);
     cards.setPadding(new Insets(35, 0, 35, 0));
+
     // Make button to access user information
     Button info = newUserInfoButton(0, 5);
     info.setMinWidth(cards.getMinWidth() / 2 - 5);
     newLogoutButton(2, 0);
+
     // Make button to remove this account
     Button remove = newRemoveAccountButton(1, 5);
     remove.setMinWidth(cards.getMinWidth() / 2 - 5);
+
     // Make button to change this user's username
     Button name = factory.makeButton(grid, "Change name", () -> pageCreator.makeChangeNamePage(user), 0, 4);
     name.setMinWidth(cards.getMinWidth() / 2 - 5);
+
     // Make button to change this user's password
     Button pass = factory.makeButton(grid, "Change password", () -> pageCreator.makeChangePasswordPage(user), 1, 4);
     pass.setMinWidth(cards.getMinWidth() / 2 - 5);

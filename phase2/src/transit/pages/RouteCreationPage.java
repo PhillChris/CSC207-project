@@ -2,7 +2,6 @@ package transit.pages;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Route;
@@ -25,7 +24,6 @@ public class RouteCreationPage extends Page {
 
   /**
    * Sets the scene of this page
-   *
    */
   @Override
   void makeScene() {
@@ -33,20 +31,14 @@ public class RouteCreationPage extends Page {
     grid.setHgap(10);
     grid.setVgap(10);
     /** Set the buttons of this page */
-    Button createSubway =
-        factory.makeButton(
+    factory.makeButton(
             grid,
             "Create Subway Route",
-                () -> pageCreator.makeAppendRoutePage(new Route("Subway")),
+            () -> pageCreator.makeAppendRoutePage(new Route("Subway")),
             0,
             0);
-    Button createBus =
-        factory.makeButton(
-            grid,
-            "Create Bus Route",
-                () -> pageCreator.makeAppendRoutePage(new Route("Bus")),
-            0,
-            2);
+    factory.makeButton(
+            grid, "Create Bus Route", () -> pageCreator.makeAppendRoutePage(new Route("Bus")), 0, 2);
     factory.makeLabel(grid, "Append to Existing Route:", 0, 4);
     /** Create a button to append to each possible route */
     int j = 0;
@@ -54,9 +46,8 @@ public class RouteCreationPage extends Page {
       factory.makeLabel(grid, type + " Routes", j, 5);
       for (int i = 0; i < Route.getRoutesCopy().get(type).size(); i++) {
         Route route = Route.getRoutesCopy().get(type).get(i);
-        Button routeButton =
-            factory.makeButton(
-                    grid, route.toString(), () -> pageCreator.makeAppendRoutePage(route), j, 6 + 2 * i);
+        factory.makeButton(
+                grid, route.toString(), () -> pageCreator.makeAppendRoutePage(route), j, 6 + 2 * i);
       }
       j++;
     }

@@ -1,31 +1,36 @@
 package transit.pages;
 
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import transit.system.User;
 
 public class UserAnalyticsPage extends AnalyticsPage {
   private User user;
-  VBox content = new VBox();
 
   public UserAnalyticsPage(Stage stage, User user) {
-    super();
-    this.statistics = user.getCardCommands().getCardStatistics();
+    super(stage, user.getCardCommands().getCardStatistics());
     this.user = user;
-    Scene scene = new Scene(layout, 800, 600);
-    setLayout();
-    stage.setScene(scene);
-    stage.show();
-    stage.setTitle("Transit System Simulator");
+//    setLayout();
+//    stage.setScene(scene);
+//    stage.show();
+//    stage.setTitle("Transit System Simulator");
   }
 
   @Override
   void setLayout() {
-    content.getChildren().setAll(new Label(user.getCardCommands().lastThreeTripsString()));
-    content.getChildren().add(new Label(user.getCardCommands().mostFrequentStationMessage()));
-    layout.setRight(content);
     super.setLayout();
+    Label lastThree = new Label(user.getCardCommands().lastThreeTripsString());
+    lastThree.setMinWidth(375);
+    GridPane.setValignment(lastThree, VPos.TOP);
+    layout.add(lastThree, 1, 0);
+    Label mostTapped = new Label(user.getCardCommands().mostFrequentStationMessage());
+    layout.add(mostTapped, 2, 0);
+    mostTapped.setMinWidth(100);
+    GridPane.setValignment(mostTapped, VPos.TOP);
   }
 }

@@ -30,7 +30,7 @@ public class StationGraphPage extends AnalyticsPage {
     stationType.setOnAction(actionEvent -> refreshStationOptions(stationType, stationName));
 
     refreshStationOptions(stationType, stationName);
-    dropDowns.getChildren().addAll(stationType, stationName);
+    dropDown.getChildren().addAll(stationType, stationName);
     super.setLayout();
   }
 

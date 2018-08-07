@@ -1,10 +1,13 @@
 package transit.pages;
 
 import java.util.ArrayList;
+
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Route;
 import transit.system.Station;
@@ -36,7 +39,7 @@ public class AppendRoutePage extends Page {
     routeLabel = new Label();
     setRouteLabel();
     makeScene();
-    stage.setTitle(String.format("Append %s Route", route.getRouteType()));
+    stage.setTitle(String.format("Create/Append %s Route", route.getRouteType()));
     stage.setScene(scene);
     stage.show();
   }
@@ -48,25 +51,29 @@ public class AppendRoutePage extends Page {
   @Override
   void makeScene() {
     /** Set the grid of this page */
-    grid.add(routeLabel, 0, 0, 20, 2);
-    factory.makeLabel(grid, "Enter the name of the new station here", 8, 9);
+    grid.setPadding(new Insets(20, 20, 20, 20));
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.add(routeLabel, 0, 0);
+    factory.makeLabel(grid, "New station name:", 0, 1);
     makeSceneButtons();
-    this.scene = new Scene(grid, 1000, 200);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }
 
   /** Constructs all buttons in this scene */
   private void makeSceneButtons() {
-    TextField textField = factory.makeTextField(grid, "", 10, 10);
+    TextField textField = factory.makeTextField(grid, "", 0, 2);
 
-    factory.makeButton(grid, "Add Station at Start", () -> {
+    factory.makeButton(grid, "Add Station to Start", () -> {
       addStationAtStart(textField);
       textField.clear();
-    }, 10, 15);
+    }, 0, 3);
 
-    factory.makeButton(grid, "Add Station at End", () -> {
+    factory.makeButton(grid, "Add Station to End", () -> {
       addStationAtEnd(textField);
       textField.clear();
-    }, 10, 16);
+    }, 0, 4);
 
     factory.makeButton(grid,
         "Confirm",
@@ -82,8 +89,8 @@ public class AppendRoutePage extends Page {
               stage.close();
             });
         },
-        20,
-        20);
+        1,
+        0);
   }
 
   /**

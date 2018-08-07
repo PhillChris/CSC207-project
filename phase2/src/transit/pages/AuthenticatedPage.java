@@ -26,7 +26,6 @@ public abstract class AuthenticatedPage extends Page {
     super(stage);
     this.user = user;
     makeScene();
-    this.stage.setTitle("Page of " + user.toString());
     this.stage.setScene(scene);
     this.stage.show();
   }

@@ -41,12 +41,12 @@ public class UserCardCommands implements Serializable {
   }
 
   public String lastThreeTripsString() {
-    String stringRep = "";
+    String stringRep = "Recent trips:" + System.lineSeparator();
 
     for (int i = 0; i < min(previousTrips.size(), 3); i++) {
-      stringRep += previousTrips.get(previousTrips.size() - (1 + i)).toString() + "\n";
+      stringRep += previousTrips.get(previousTrips.size() - (1 + i)).toString() + System.lineSeparator();
     }
-    return stringRep;
+    return stringRep.trim();
   }
 
   /** @return HashMap of cardStatistics associated with this User */
@@ -128,7 +128,8 @@ public class UserCardCommands implements Serializable {
     if (maxTapped == null) {
       return "No stations tapped";
     } else {
-      return "Most frequent station is " + maxTapped + " with " + maxTapValue + " taps";
+      return "Most frequent station: " + System.lineSeparator() + maxTapped +
+        " with " + maxTapValue + " taps";
     }
   }
 

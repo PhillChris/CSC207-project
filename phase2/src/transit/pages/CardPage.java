@@ -66,8 +66,8 @@ public class CardPage extends Page {
 
     // addClock();
     addCardButtons();
-    this.scene = new Scene(grid, 650, 250);
-    scene.getStylesheets().add(getClass().getResource("styling/CardPage.css").toExternalForm());
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, 250);
+    scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }
 
   /**
@@ -76,6 +76,7 @@ public class CardPage extends Page {
    */
   protected void addUserData() {
     this.currentTrips = factory.makeLabel(grid, generateCurrentTripMessage(), 2, 0);
+    this.currentTrips.setMinWidth(200);
   }
 
   private void addCardComboBox() {

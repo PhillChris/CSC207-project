@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Route;
 
@@ -57,6 +58,7 @@ public class RouteCreationPage extends Page {
                     grid, route.toString(), () -> pageCreator.makeAppendRoutePage(route), 0, 6 + 2 * i);
       }
     }
-    this.scene = new Scene(grid, 600, 400);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }
 }

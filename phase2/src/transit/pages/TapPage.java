@@ -1,11 +1,13 @@
 package transit.pages;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -42,19 +44,22 @@ public class TapPage extends Page {
   public void makeScene() {
     stationLayout.setVgap(10);
     stationLayout.setHgap(20);
-    factory.makeLabel(grid, "Choose route type!", 0, 0);
+    Label choose = factory.makeLabel(grid, "Choose route type!", 0, 0);
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     routeType.getSelectionModel().select(0);
     routeType.setOnAction(e -> refreshRouteOptionItems());
+    grid.setHgap(10);
+    grid.setHgap(10);
+    grid.setPadding(new Insets(20, 20, 20, 20));
     grid.add(routeType, 1, 0);
     grid.add(stationLayout, 0, 1, 50, 30);
-    this.scene = new Scene(grid, 500, 300);
+    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }
 
   /**
    * Refreshes the buttons displayed on the TapPage depending on which type is selected
    *
-   * @param type the current type of routes being displayed
    */
   private void refreshRouteOptionItems() {
     // Clear out all buttons
@@ -116,7 +121,9 @@ public class TapPage extends Page {
                     "There was a problem in tapping at this point, no tap request could be processed",
                     AlertType.ERROR);
           }
+          alert.getDialogPane().setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
           alert.showAndWait();
+          stage.setTitle(card.toString());
         },
         col,
         row);

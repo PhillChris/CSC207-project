@@ -1,10 +1,10 @@
 package transit.pages;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import transit.system.Statistics;
 
@@ -16,7 +16,9 @@ public class AnalyticsPage {
   protected HashMap<String, Statistics> statistics;
   protected LineChart<String, Number> chart;
 
-  protected BorderPane layout = new BorderPane();
+  protected Scene scene;
+
+  protected GridPane layout = new GridPane();
   /**
    * A factory to construct graphs
    */
@@ -24,7 +26,7 @@ public class AnalyticsPage {
   /**
    * The drop down options displayed by this page
    */
-  HBox dropDowns = new HBox();
+  protected VBox dropDown = new VBox();
   /**
    * A combo box if the different statistics options for this page
    */
@@ -43,8 +45,11 @@ public class AnalyticsPage {
    */
   public AnalyticsPage(Stage stage, HashMap<String, Statistics> statistics) {
     this.statistics = statistics;
-    Scene scene = new Scene(layout, 800, 600);
+    scene = new Scene(layout, 800, 600);
     setLayout();
+    scene
+      .getStylesheets()
+      .add(LoginPage.class.getResource("styling/GraphPage.css").toExternalForm());
     stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");
@@ -59,9 +64,11 @@ public class AnalyticsPage {
 
   void setLayout() {
     setupStatOptions();
-    dropDowns.getChildren().addAll(timeOptions, statOptions);
-    layout.setTop(dropDowns);
-
+    dropDown.getChildren().addAll(timeOptions, statOptions);
+    dropDown.setSpacing(10);
+    layout.add(dropDown, 0, 0);
+    layout.setHgap(10);
+    layout.setPadding(new Insets(10, 10, 10, 10));
     // generate the Graph without having to click first
     setUpStatGraph();
   }
@@ -88,6 +95,9 @@ public class AnalyticsPage {
     } else {
       chart = graphFactory.makeWeekChart(statOptions.getValue().generateWeeklyValues());
     }
-    layout.setCenter(chart);
+    layout.add(chart, 0, 1);
+    chart.setPrefWidth(Double.MAX_VALUE);
+    GridPane.setVgrow(chart, Priority.ALWAYS);
+    GridPane.setColumnSpan(chart, 3);
   }
 }

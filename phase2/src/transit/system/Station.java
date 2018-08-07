@@ -24,7 +24,7 @@ public class Station implements Serializable {
   /** Stores associated statistics to this user */
   private HashMap<String, Statistics> statistics = new HashMap<>();
   /** Stores the possible statistics recorded at each given station */
-  public static final String[] STATION_STATS = {"Tap In", "Tap Out"};
+  public static final String[] STATION_STATS = {"Taps In", "Taps Out"};
 
   /**
    * Create a new instance of transit.system.Station

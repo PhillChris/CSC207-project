@@ -1,11 +1,8 @@
 package transit.pages;
 
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import transit.system.User;
 
@@ -13,17 +10,17 @@ public class UserAnalyticsPage extends AnalyticsPage {
   private User user;
 
   public UserAnalyticsPage(Stage stage, User user) {
-    super(stage, user.getCardCommands().getCardStatistics());
+    super();
     this.user = user;
-//    setLayout();
-//    stage.setScene(scene);
-//    stage.show();
-//    stage.setTitle("Transit System Simulator");
+    this.statistics = user.getCardCommands().getCardStatistics();
+    setLayout();
+    stage.setScene(scene);
+    stage.show();
+    stage.setTitle("Transit System Simulator");
   }
 
   @Override
   void setLayout() {
-    super.setLayout();
     Label lastThree = new Label(user.getCardCommands().lastThreeTripsString());
     lastThree.setMinWidth(375);
     GridPane.setValignment(lastThree, VPos.TOP);
@@ -32,5 +29,6 @@ public class UserAnalyticsPage extends AnalyticsPage {
     layout.add(mostTapped, 2, 0);
     mostTapped.setMinWidth(100);
     GridPane.setValignment(mostTapped, VPos.TOP);
+    super.setLayout();
   }
 }

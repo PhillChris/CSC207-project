@@ -4,7 +4,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import transit.system.Statistics;
 
@@ -14,6 +16,7 @@ import java.util.HashMap;
 public class AnalyticsPage {
   /** The statistics displayed by this analytics page */
   protected HashMap<String, Statistics> statistics;
+
   protected LineChart<String, Number> chart;
 
   protected Scene scene;
@@ -23,20 +26,22 @@ public class AnalyticsPage {
    * A factory to construct graphs
    */
   protected GraphFactory graphFactory = new GraphFactory();
-  /**
-   * The drop down options displayed by this page
-   */
+  /** The drop down options displayed by this page */
   protected VBox dropDown = new VBox();
-  /**
-   * A combo box if the different statistics options for this page
-   */
+  /** A combo box if the different statistics options for this page */
   ComboBox<Statistics> statOptions = new ComboBox<>();
-  /**
-   * The time options displayed by this page
-   */
+  /** The time options displayed by this page */
   ComboBox<String> timeOptions = new ComboBox<>();
 
+  /**
+   * Initialize a new instance of AnalyticsPage without setting the Stage. This allows for
+   * subclasses to extend the scene of analytics page, then set the Stage themselves.
+   */
   public AnalyticsPage() {
+    scene = new Scene(layout, 800, 600);
+    scene
+            .getStylesheets()
+            .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
   }
   /**
    * Initialize a new instance of an AnalyticsPage.
@@ -48,8 +53,8 @@ public class AnalyticsPage {
     scene = new Scene(layout, 800, 600);
     setLayout();
     scene
-      .getStylesheets()
-      .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
+            .getStylesheets()
+            .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
     stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");

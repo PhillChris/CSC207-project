@@ -1,6 +1,5 @@
 package transit.pages;
 
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import transit.system.Route;
@@ -17,7 +16,6 @@ public class StationGraphPage extends AnalyticsPage {
   public StationGraphPage(Stage stage) {
     super();
     setLayout();
-    Scene scene = new Scene(layout, 800, 600);
     stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");

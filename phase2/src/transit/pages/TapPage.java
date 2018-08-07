@@ -10,7 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.*;
+import transit.system.Card;
+import transit.system.Route;
+import transit.system.Station;
+import transit.system.TransitException;
+import transit.system.TransitTime;
+import transit.system.UserCardCommands;
 
 /** Represents a page displaying all possibilities for tapping in this transit system */
 public class TapPage extends Page {
@@ -26,6 +31,8 @@ public class TapPage extends Page {
   /**
    * Constructs a new TapPage
    *
+   * @param stage the given user's stage
+   * @param cards the given user's card commands
    * @param card the card which is currently tapping
    */
   public TapPage(Stage stage, UserCardCommands cards, Card card) {
@@ -44,11 +51,13 @@ public class TapPage extends Page {
     // Add sub-grid borders
     stationLayout.setVgap(10);
     stationLayout.setHgap(20);
+
     // Add route type label
     Label choose = factory.makeLabel(grid, "Route type:", 0, 0);
     choose.setMinWidth(100);
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     routeType.getSelectionModel().select(0);
+
     // Set the action for the route type dropdown
     routeType.setOnAction(
         e -> {
@@ -56,13 +65,17 @@ public class TapPage extends Page {
           stage.sizeToScene();
         });
     routeType.setMinWidth(100);
+
     // Load the initial set of buttons for tapping
     refreshRouteOptionItems();
+
     // Add grid borders
     grid.setHgap(10);
     grid.setHgap(10);
+
     // Set the padding for the overall window
     grid.setPadding(new Insets(20, 20, 20, 20));
+
     // Add the dropdown and subgrid to larger grid
     grid.add(routeType, 1, 0);
     grid.add(stationLayout, 0, 1, 50, 1);
@@ -108,39 +121,39 @@ public class TapPage extends Page {
             if (card.getCurrentTrip() != null) {
               // if this card tapped into a station
               alert =
-                      factory.makeAlert(
-                              "Tapped In",
-                              "Tapped in",
-                              String.format(
-                                      "Tap in at %s, at time %s",
-                                      station.toString(), TransitTime.getClock().getCurrentTimeString()),
-                              AlertType.CONFIRMATION);
+                  factory.makeAlert(
+                      "Tapped In",
+                      "Tapped in",
+                      String.format(
+                          "Tap in at %s, at time %s",
+                          station.toString(), TransitTime.getClock().getCurrentTimeString()),
+                      AlertType.CONFIRMATION);
             } else {
               // if this card tapped out of a station
               alert =
-                      factory.makeAlert(
-                              "Tapped Out",
-                              "Tapped Out",
-                              String.format(
-                                      "Tap out at %s, at time %s, with trip fee $%.2f.",
-                                      station.toString(),
-                                      TransitTime.getClock().getCurrentTimeString(),
-                                      (card.getLastTrip().getFee()) / 100.0),
-                              AlertType.CONFIRMATION);
+                  factory.makeAlert(
+                      "Tapped Out",
+                      "Tapped Out",
+                      String.format(
+                          "Tap out at %s, at time %s, with trip fee $%.2f.",
+                          station.toString(),
+                          TransitTime.getClock().getCurrentTimeString(),
+                          (card.getLastTrip().getFee()) / 100.0),
+                      AlertType.CONFIRMATION);
             }
 
           } catch (TransitException e) {
             // if this card's trip tapped was an invalid trip (i.e. not along a single route)
             alert =
-                    factory.makeAlert(
-                            "Invalid Trip",
-                        "Invalid Trip",
-                            String.format(
-                                    "Tapped out on an invalid trip at %s at time %s, charged $%.2f ",
-                                    station.toString(),
-                                    TransitTime.getClock().getCurrentTimeString(),
-                                    (card.getLastTrip().getFee() / 100.0)),
-                            AlertType.WARNING);
+                factory.makeAlert(
+                    "Invalid Trip",
+                    "Invalid Trip",
+                    String.format(
+                        "Tapped out on an invalid trip at %s at time %s, charged $%.2f ",
+                        station.toString(),
+                        TransitTime.getClock().getCurrentTimeString(),
+                        (card.getLastTrip().getFee() / 100.0)),
+                    AlertType.WARNING);
           } catch (Exception b) {
             // if this card can't tap for some other
             alert =

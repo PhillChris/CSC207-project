@@ -12,7 +12,7 @@ import transit.system.User;
 public class UserPage extends AuthenticatedPage {
 
   /**
-   * Constructs a new UserPage in this simulation
+   * Constructs and displays a new UserPage in this simulation
    *
    * @param primaryStage the stage on which this page is being served
    * @param user the user whose page is being displayed

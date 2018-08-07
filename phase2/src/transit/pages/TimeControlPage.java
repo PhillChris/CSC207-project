@@ -13,13 +13,20 @@ import transit.system.TransitTime;
 
 /** Represents a time control window in this simulation */
 public class TimeControlPage extends Page {
-  /** Constructs a new instance of TimeControlPage */
+
+  /**
+   * Constructs and displays new instance of TimeControlPage
+   *
+   * @param stage the stage on which this page is being served
+   */
   public TimeControlPage(Stage stage) {
     super(stage);
     makeScene();
     stage.setX(1000);
     stage.setY(200);
     stage.setScene(this.scene);
+
+    // Set and show the given scene
     stage.setTitle("Time Control Page");
     stage.show();
     stage.setOnCloseRequest(Event::consume);

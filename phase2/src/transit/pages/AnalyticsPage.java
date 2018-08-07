@@ -75,6 +75,7 @@ public class AnalyticsPage extends Page {
   /** Construct the scene of this page, making all elements to display to the page. */
   @Override
   void makeScene() {
+    // make the stat options drop down
     setupStatOptions();
     // make the time options drop down
     timeOptions.getItems().clear();
@@ -82,11 +83,13 @@ public class AnalyticsPage extends Page {
     timeOptions.getSelectionModel().select(0);
     timeOptions.setOnAction(actionEvent -> setUpStatGraph());
 
+    // place the drop
     dropDown.getChildren().addAll(timeOptions, statOptions);
     dropDown.setSpacing(10);
     grid.add(dropDown, 0, 0);
     grid.setHgap(10);
     grid.setPadding(new Insets(10, 10, 10, 10));
+
     // generate the Graph without having to click first
     setUpStatGraph();
   }

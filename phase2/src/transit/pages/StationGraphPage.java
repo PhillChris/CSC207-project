@@ -9,40 +9,61 @@ import transit.system.Statistics;
 import java.util.HashMap;
 
 public class StationGraphPage extends AnalyticsPage {
-  private ComboBox<String> stationType = new ComboBox<>();
-  private ComboBox<Station> stationName = new ComboBox<>();
+
   /**
-   * Initialize a new instance of an AnalyticsPage.
+   * The dropdown menu containing the type of station selected
+   */
+  private ComboBox<String> stationType = new ComboBox<>();
+  /** The dropdown menu containing the station selected */
+  private ComboBox<Station> stationName = new ComboBox<>();
+
+  /**
+   * Initializes a new instance of a StationGraphPage.
    *
-   * @param stage
+   * @param stage the stage which the StationGraphPage is being served on
    */
   public StationGraphPage(Stage stage) {
     super(stage);
+
+    // add the two drop downs specific to this page
     makeScene();
+    // set the statistics stored in this graph page
     setStationStatistics();
+    // add the two drop downs general to all AnalyticsPages
     super.makeScene();
+
+    // set and show the given scene
     stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");
   }
 
   @Override
+  /** Makes the scene containing the content of this StationGraphPage*/
   void makeScene() {
+    // configure the given station type dropdown
     stationType.getItems().addAll(Station.POSSIBLE_TYPES);
     stationType.getSelectionModel().select(0);
     stationType.setOnAction(actionEvent -> refreshStationOptions());
 
+    // configure the stations dropdown
     refreshStationOptions();
+
+    // add these dropdowns to the analytics page dropdowns
     getDropDown().getChildren().addAll(stationType, stationName);
   }
 
+  /** Refreshes the list of stations */
   private void refreshStationOptions() {
     // clear stationName's action before changing Station options
     stationName.setOnAction(actionEvent -> {
     });
+
+    // add all stations of the selected type
     stationName.getItems().clear();
     stationName.getItems().addAll(Route.getAllStationsCopy().get(stationType.getValue()).values());
     stationName.getSelectionModel().select(0);
+
     // reset action of stationName
     stationName.setOnAction(actionEvent -> setStatistics(stationName.getValue().getStatistics()));
 
@@ -52,6 +73,7 @@ public class StationGraphPage extends AnalyticsPage {
     }
   }
 
+  /** Sets the appropriate statistics map for the given station */
   private void setStationStatistics() {
     // Set the stats for this page to be the given station's or a dummy stat if there are no
     // stations

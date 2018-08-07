@@ -37,9 +37,13 @@ public class StationGraphPage extends AnalyticsPage {
   }
 
   private void refreshStationOptions() {
+    // clear stationName's action before changing Station options
+    stationName.setOnAction(actionEvent -> {
+    });
     stationName.getItems().clear();
     stationName.getItems().addAll(Route.getAllStationsCopy().get(stationType.getValue()).values());
     stationName.getSelectionModel().select(0);
+    // reset action of stationName
     stationName.setOnAction(actionEvent -> setStatistics(stationName.getValue().getStatistics()));
 
     // do this action to load the graph initially, if there are stations to be accessed

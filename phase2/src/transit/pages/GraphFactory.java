@@ -19,7 +19,7 @@ public class GraphFactory {
    */
   public LineChart<String, Number> makeWeekChart(HashMap<LocalDate, Integer> data) {
     // Set the chart
-    LineChart<String, Number> chart = makeChart("Days", "Week's Total");
+    LineChart<String, Number> chart = makeChart("Days", "Daily Total");
     XYChart.Series series = new XYChart.Series();
     series.setName("Daily Totals");
     LocalDate date = TransitTime.getClock().getCurrentDate();
@@ -37,7 +37,7 @@ public class GraphFactory {
    */
   public LineChart<String, Number> makeYearChart(HashMap<YearMonth, Integer> data) {
     // Set the chart
-    LineChart<String, Number> chart = makeChart("Months", "Month's Total");
+    LineChart<String, Number> chart = makeChart("Months", "Months Total");
     XYChart.Series series = new XYChart.Series();
     series.setName("Monthly Totals");
     YearMonth month = TransitTime.getClock().getCurrentMonth();
@@ -50,10 +50,10 @@ public class GraphFactory {
   }
 
   /** @return An empty chart */
-  private LineChart<String, Number> makeChart(String xAxixName, String title) {
+  private LineChart<String, Number> makeChart(String xAxisName, String title) {
     final CategoryAxis xAxis = new CategoryAxis();
     final NumberAxis yAxis = new NumberAxis();
-    xAxis.setLabel(xAxixName);
+    xAxis.setLabel(xAxisName);
 
     final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 

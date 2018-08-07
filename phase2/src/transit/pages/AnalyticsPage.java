@@ -99,9 +99,11 @@ public class AnalyticsPage extends Page {
     grid.getChildren().remove(chart);
     if (timeOptions.getValue().equals("Monthly")) {
       chart = graphFactory.makeYearChart(statOptions.getValue().generateMonthlyValues());
+      chart.getYAxis().setLabel(statOptions.toString());
     } else {
       chart = graphFactory.makeWeekChart(statOptions.getValue().generateWeeklyValues());
     }
+    chart.getYAxis().setLabel(statOptions.getValue().toString());
     grid.add(chart, 0, 1);
     chart.setPrefWidth(Double.MAX_VALUE);
     GridPane.setVgrow(chart, Priority.ALWAYS);

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Route;
@@ -78,7 +79,6 @@ public class AppendRoutePage extends Page {
     factory.makeButton(grid,
         "Confirm",
         () ->
-        {
           factory.makeConfirmationAlert(
             "Confirm Route?",
             "",
@@ -87,8 +87,7 @@ public class AppendRoutePage extends Page {
               this.route.setRouteStations(stationNames);
               this.route.saveRoute();
               stage.close();
-            });
-        },
+            }),
         1,
         0);
   }

@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import transit.system.LogWriter;
 import transit.system.User;
+import transit.system.LogWriter.*;
 
 /** Represents a login page for this system */
 public class LoginPage extends Page {
@@ -158,7 +159,7 @@ public class LoginPage extends Page {
           user = User.getAllUsersCopy().get(emailInput.getText());
         } else {
           errorMessage.setText("User email not found.");
-          logUserNotFound();
+          LogWriter.getLogWriter().logUserNotFound();
           throw new Exception();
         }
         if (checkAuthorization()) {
@@ -167,10 +168,10 @@ public class LoginPage extends Page {
           } else {
             pageCreator.makeUserPage(user);
           }
-          logUserLogin(user);
+          LogWriter.getLogWriter().logUserLogin(user);
         } else {
           errorMessage.setText("Incorrect password.");
-          logInvalidAuth();
+          LogWriter.getLogWriter().logInvalidAuth();
           throw new Exception();
         }
       } catch (Exception ignored) {
@@ -178,28 +179,4 @@ public class LoginPage extends Page {
     }
   }
 
-  private void logUserNotFound() {
-    LogWriter.getLogWriter()
-        .logWarningMessage(
-            LoginPage.class.getName(),
-            "parseLoginAttempt",
-            "Login attempt failed, user is not registered in the system");
-  }
-
-  private void logUserLogin(User user) {
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            LoginPage.class.getName(),
-            "parseLoginAttempt",
-            "Successfully logged in as + " + user.getPersonalInfo().getUserName());
-
-  }
-
-  private void logInvalidAuth() {
-    LogWriter.getLogWriter()
-        .logWarningMessage(
-            LoginPage.class.getName(),
-            "parseLoginAttempt",
-            "Login attempt failed, incorrect password");
-  }
 }

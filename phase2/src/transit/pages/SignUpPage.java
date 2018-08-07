@@ -1,5 +1,6 @@
 package transit.pages;
 
+import com.oracle.tools.packager.Log;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -137,10 +138,10 @@ public class SignUpPage extends Page {
                 userType.getValue());
             errorMessage.setText("Account created");
             errorMessage.setTextFill(Color.web("#33AF54"));
-            logCorrectSignup();
+            LogWriter.getLogWriter().logCorrectSignup();
           } catch (MessageTransitException e) {
             e.setMessage(errorMessage);
-            logIncorrectSignup(e);
+            LogWriter.getLogWriter().logIncorrectSignup(e);
           }
         });
     signUpPane.add(signUpButton, 0, 6, 2, 1);
@@ -176,16 +177,5 @@ public class SignUpPage extends Page {
         new User(username, email, password, "user");
         break;
     }
-  }
-
-  private void logIncorrectSignup(MessageTransitException e) {
-    LogWriter.getLogWriter()
-        .logWarningMessage(SignUpPage.class.getName(), "logIncorrectSignup", e.getMessage());
-  }
-
-  private void logCorrectSignup() {
-    LogWriter.getLogWriter()
-        .logInfoMessage(
-            SignUpPage.class.getName(), "logCorrectSignup", "Account created successfully");
   }
 }

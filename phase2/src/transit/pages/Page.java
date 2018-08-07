@@ -18,7 +18,7 @@ public abstract class Page {
   protected NodeFactory factory = new NodeFactory();
 
   /**
-   *
+   * Sets the stage attribute
    *
    * @param stage The stage for this page to be viewed on
    */

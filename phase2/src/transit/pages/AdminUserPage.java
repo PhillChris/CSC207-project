@@ -22,9 +22,7 @@ public class AdminUserPage extends AuthenticatedPage {
    */
   public AdminUserPage(Stage stage, User adminUser) {
     super(stage, adminUser);
-    stage.setScene(this.scene);
-    stage.setTitle("Admin Control Panel");
-    stage.show();
+    setAndShow("Admin Control Panel");
   }
 
   /**

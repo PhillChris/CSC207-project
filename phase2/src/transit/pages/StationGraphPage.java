@@ -28,7 +28,6 @@ public class StationGraphPage extends AnalyticsPage {
     makeScene();
     // set the statistics stored in this graph page
     setStationStatistics();
-
     setAndShow("Transit System Simulator");
   }
 

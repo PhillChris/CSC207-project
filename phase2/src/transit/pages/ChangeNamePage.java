@@ -22,9 +22,7 @@ public class ChangeNamePage extends Page {
     super(stage);
     this.user = user;
     makeScene();
-    stage.setTitle("Change Name Page");
-    stage.setScene(scene);
-    stage.show();
+    setAndShow("Change Name Page");
   }
 
   @Override

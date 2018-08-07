@@ -56,9 +56,7 @@ public class AnalyticsPage extends Page {
     scene
         .getStylesheets()
         .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
-    this.stage.setScene(scene);
-    this.stage.show();
-    this.stage.setTitle("Transit System Simulator");
+    setAndShow("Transit System Simulator");
   }
 
   /** @return The drop downs of this page */

@@ -43,10 +43,12 @@ public class TapPage extends Page {
   public void makeScene() {
     stationLayout.setVgap(10);
     stationLayout.setHgap(20);
-    Label choose = factory.makeLabel(grid, "Choose route type!", 0, 0);
+    Label choose = factory.makeLabel(grid, "Route type:", 0, 0);
+    choose.setMinWidth(100);
     routeType.getItems().addAll(Station.POSSIBLE_TYPES);
     routeType.getSelectionModel().select(0);
     routeType.setOnAction(e -> refreshRouteOptionItems());
+    routeType.setMinWidth(100);
     grid.setHgap(10);
     grid.setHgap(10);
     grid.setPadding(new Insets(20, 20, 20, 20));
@@ -65,7 +67,8 @@ public class TapPage extends Page {
     String type = routeType.getValue();
     int i = 1;
     for (Route route : Route.getRoutesCopy().get(type)) {
-      int j = 0;
+      stationLayout.add(new Label(route.toString()), 0, i);
+      int j = 1;
       for (Station station : route.getRouteStationsCopy()) {
         placeStationButton(stationLayout, station, j, i);
         j++;

@@ -24,8 +24,6 @@ public abstract class Page {
 
   /**
    * Places the the necessary elements to this page's scene
-   *
-   *
    */
   abstract void makeScene();
 }

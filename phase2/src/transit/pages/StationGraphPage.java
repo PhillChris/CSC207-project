@@ -14,22 +14,22 @@ public class StationGraphPage extends AnalyticsPage {
    * @param stage
    */
   public StationGraphPage(Stage stage) {
-    super();
-    setLayout();
+    super(stage);
+    makeScene();
     stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");
   }
 
   @Override
-  void setLayout() {
+  void makeScene() {
     stationType.getItems().addAll(Station.POSSIBLE_TYPES);
     stationType.getSelectionModel().select(0);
     stationType.setOnAction(actionEvent -> refreshStationOptions(stationType, stationName));
 
     refreshStationOptions(stationType, stationName);
     dropDown.getChildren().addAll(stationType, stationName);
-    super.setLayout();
+    super.makeScene();
   }
 
   private void refreshStationOptions(ComboBox<String> stationType, ComboBox<Station> stationName) {

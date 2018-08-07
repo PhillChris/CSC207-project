@@ -10,25 +10,26 @@ public class UserAnalyticsPage extends AnalyticsPage {
   private User user;
 
   public UserAnalyticsPage(Stage stage, User user) {
-    super();
+    super(stage);
     this.user = user;
     this.statistics = user.getCardCommands().getCardStatistics();
-    setLayout();
+    makeScene();
     stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");
   }
 
   @Override
-  void setLayout() {
+  void makeScene() {
+    super.makeScene();
     Label lastThree = new Label(user.getCardCommands().lastThreeTripsString());
     lastThree.setMinWidth(375);
     GridPane.setValignment(lastThree, VPos.TOP);
-    layout.add(lastThree, 1, 0);
+    grid.add(lastThree, 1, 0);
     Label mostTapped = new Label(user.getCardCommands().mostFrequentStationMessage());
-    layout.add(mostTapped, 2, 0);
+    grid.add(mostTapped, 2, 0);
     mostTapped.setMinWidth(100);
     GridPane.setValignment(mostTapped, VPos.TOP);
-    super.setLayout();
+    super.makeScene();
   }
 }

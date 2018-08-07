@@ -13,7 +13,7 @@ import transit.system.Statistics;
 import java.util.HashMap;
 
 /** A page designed to display analytical information */
-public class AnalyticsPage {
+public class AnalyticsPage extends Page {
   /** The statistics displayed by this analytics page */
   protected HashMap<String, Statistics> statistics;
 
@@ -21,7 +21,7 @@ public class AnalyticsPage {
 
   protected Scene scene;
 
-  protected GridPane layout = new GridPane();
+  protected GridPane grid = new GridPane();
   /**
    * A factory to construct graphs
    */
@@ -37,27 +37,25 @@ public class AnalyticsPage {
    * Initialize a new instance of AnalyticsPage without setting the Stage. This allows for
    * subclasses to extend the scene of analytics page, then set the Stage themselves.
    */
-  public AnalyticsPage() {
-    scene = new Scene(layout, 800, 600);
+  public AnalyticsPage(Stage stage) {
+    super(stage);
+    scene = new Scene(grid, 800, 600);
     scene
             .getStylesheets()
             .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
   }
-  /**
-   * Initialize a new instance of an AnalyticsPage.
-   *
-   * @param stage The stage for this page to be displayed
-   */
+
   public AnalyticsPage(Stage stage, HashMap<String, Statistics> statistics) {
+    super(stage);
     this.statistics = statistics;
-    scene = new Scene(layout, 800, 600);
-    setLayout();
+    scene = new Scene(grid, 800, 600);
+    makeScene();
     scene
-            .getStylesheets()
-            .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
-    stage.setScene(scene);
-    stage.show();
-    stage.setTitle("Transit System Simulator");
+      .getStylesheets()
+      .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
+    this.stage.setScene(scene);
+    this.stage.show();
+    this.stage.setTitle("Transit System Simulator");
   }
 
   public void setStatistics(HashMap<String, Statistics> statistics) {
@@ -67,13 +65,13 @@ public class AnalyticsPage {
     setupStatOptions();
   }
 
-  void setLayout() {
+  void makeScene() {
     setupStatOptions();
     dropDown.getChildren().addAll(timeOptions, statOptions);
     dropDown.setSpacing(10);
-    layout.add(dropDown, 0, 0);
-    layout.setHgap(10);
-    layout.setPadding(new Insets(10, 10, 10, 10));
+    grid.add(dropDown, 0, 0);
+    grid.setHgap(10);
+    grid.setPadding(new Insets(10, 10, 10, 10));
     // generate the Graph without having to click first
     setUpStatGraph();
   }
@@ -100,7 +98,7 @@ public class AnalyticsPage {
     } else {
       chart = graphFactory.makeWeekChart(statOptions.getValue().generateWeeklyValues());
     }
-    layout.add(chart, 0, 1);
+    grid.add(chart, 0, 1);
     chart.setPrefWidth(Double.MAX_VALUE);
     GridPane.setVgrow(chart, Priority.ALWAYS);
     GridPane.setColumnSpan(chart, 3);

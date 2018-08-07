@@ -31,7 +31,7 @@ public class UserPage extends AuthenticatedPage {
    */
   @Override
   protected void makeScene() {
-    // Set layout of grid
+    // Set grid of grid
     grid.setPadding(new Insets(20, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);

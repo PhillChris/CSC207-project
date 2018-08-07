@@ -1,19 +1,15 @@
 package transit.system;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /** Stores information related to a given user */
 public class UserInfo implements Serializable {
-  /** Records the last three trips associated to this log */
-  private ArrayList<Trip> tripLog;
   /** The name of the user associated with this log */
   private String name;
   /** This transit.system.User's password */
   private String password;
 
-  public UserInfo(String name, String password, String permission) {
+  public UserInfo(String name, String password) {
     this.name = name;
     this.password = password;
   }
@@ -21,7 +17,7 @@ public class UserInfo implements Serializable {
    * @param password A given password
    * @return Return whether the given password matched the password on record
    */
-  public boolean correctAuthentification(String password) {
+  public boolean correctAuthentication(String password) {
     return this.password.equals(password);
   }
 

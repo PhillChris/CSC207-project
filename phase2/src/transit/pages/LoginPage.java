@@ -8,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import transit.system.LogWriter;
 import transit.system.User;
-import transit.system.LogWriter.*;
 
 /** Represents a login page for this system */
 public class LoginPage extends Page {
@@ -148,7 +147,7 @@ public class LoginPage extends Page {
         && User.getAllUsersCopy()
             .get(emailInput.getText())
             .getPersonalInfo()
-            .correctAuthentification(passInput.getText());
+            .correctAuthentication(passInput.getText());
   }
 
   private void parseLoginAttempt() {

@@ -19,9 +19,7 @@ public class AnalyticsPage extends Page {
 
   private LineChart<String, Number> chart;
 
-  /**
-   * A factory to construct graphs
-   */
+  /** A factory to construct graphs */
   private GraphFactory graphFactory = new GraphFactory();
   /** The drop down options displayed by this page */
   private HBox dropDown = new HBox();
@@ -37,32 +35,41 @@ public class AnalyticsPage extends Page {
     super(stage);
     scene = new Scene(grid, 800, 600);
     scene
-            .getStylesheets()
-            .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
+        .getStylesheets()
+        .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
   }
 
+  /**
+   * The default constructor for Analytics Page
+   *
+   * @param stage The stage used by this page
+   * @param statistics The statistics used by this page
+   */
   public AnalyticsPage(Stage stage, HashMap<String, Statistics> statistics) {
     super(stage);
     this.statistics = statistics;
     scene = new Scene(grid, 800, 600);
     makeScene();
     scene
-            .getStylesheets()
-            .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
+        .getStylesheets()
+        .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
     this.stage.setScene(scene);
     this.stage.show();
     this.stage.setTitle("Transit System Simulator");
   }
 
+  /** @return The drop downs of this page */
   public HBox getDropDown() {
     return dropDown;
   }
 
+  /** @param statistics Sets the statistics of the page */
   public void setStatistics(HashMap<String, Statistics> statistics) {
     this.statistics = statistics;
     setupStatOptions();
   }
 
+  @Override
   void makeScene() {
     setupStatOptions();
     // make the time options drop down

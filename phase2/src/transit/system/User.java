@@ -5,14 +5,19 @@ import java.util.HashMap;
 
 import static transit.system.Database.readObject;
 
-/** Represents a transit.system.User in a transit system. */
+/**
+ * Represents a User in a transit system. Each User has access to commands that can used to execute
+ * actions in the transit system.
+ */
 public class User implements Serializable {
   /**
    * Email format regex (from https://howtodoinjava.com/regex/java-regex-validate-email-address/)
    */
   private static final String EMAILREGEX =
       "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-  /** HashMap linking each email to its transit.system.User */
+  /**
+   * HashMap linking each email to its User
+   */
   private static HashMap<String, User> allUsers = setAllUsers();
   /** The transit.system.User's email */
   private final String email;
@@ -30,7 +35,7 @@ public class User implements Serializable {
    */
   public User(String name, String email, String password, String permission)
       throws MessageTransitException {
-    if (!email.matches(EMAILREGEX)) {
+    if (!email.matches(EMAILREGEX)) { // check for valid email format
       throw new InvalidEmailException();
     }
     if (allUsers.keySet().contains(email)) { // If this transit.system.User already exists
@@ -41,7 +46,7 @@ public class User implements Serializable {
     }
     this.email = email;
     allUsers.put(email, this);
-    personalInfo = new UserInfo(name, password, permission);
+    personalInfo = new UserInfo(name, password);
     cardCommands = new UserCardCommands(permission);
   }
 
@@ -51,7 +56,7 @@ public class User implements Serializable {
     if (users != null) {
       return users;
     }
-    return new HashMap<String, User>();
+    return new HashMap<>();
   }
 
   /** @return a copy of the HashMap of all Users */
@@ -72,18 +77,13 @@ public class User implements Serializable {
     return personalInfo;
   }
 
-  /** Removes this user from the system. */
+  /** Removes this user from the transit system. */
   public void removeUser() {
     allUsers.remove(this.email);
     LogWriter.getLogWriter().logRemoveUser(personalInfo.getUserName());
   }
 
-  /** @return This User's email */
-  String getEmail() {
-    return this.email;
-  }
-
-  /** @return The string representation of this user */
+  /** @return The string representation of this user. */
   public String toString() {
     return personalInfo.getUserName();
   }

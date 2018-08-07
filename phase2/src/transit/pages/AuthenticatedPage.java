@@ -16,8 +16,7 @@ public abstract class AuthenticatedPage extends Page {
   protected User user;
 
   /**
-   * Abstract constructor: not to be called directly, associating the given user with this
-   * authenticated page
+   * Abstract constructor: associating the given user with this authenticated page
    *
    * @param stage the stage on which this authenticated page is served
    * @param user the user associated with this authenticated page
@@ -116,6 +115,7 @@ public abstract class AuthenticatedPage extends Page {
         row);
   }
 
+  /** Logs the user out */
   protected void logout() {
     new LoginPage(stage);
     LogWriter.getLogWriter()

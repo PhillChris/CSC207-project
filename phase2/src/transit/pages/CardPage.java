@@ -11,7 +11,6 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Card;
 import transit.system.UserCardCommands;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,20 +21,25 @@ public class CardPage extends Page {
   private UserCardCommands cards;
   /** The label of current trips associated with the */
   private Label currentTrips;
-
+  /** The combo box displaying the card options */
   private ComboBox<Card> cardComboBox;
-
+  /** The selected card */
   private Card cardSelection;
+
   /**
    * Initialize a new instance of CardPage
    *
    * @param stage The stage for this page to be displaced
+   * @param userCardCommands The card commands used by this page
    */
-  public CardPage(Stage stage, UserCardCommands cards) {
+  public CardPage(Stage stage, UserCardCommands userCardCommands) {
     super(stage);
-    this.cards = cards;
+    this.cards = userCardCommands;
     // Default selection should be card with minimum number
-    cardSelection = cards.getCardsCopy().get(Collections.min(cards.getCardsCopy().keySet()));
+    cardSelection =
+        userCardCommands
+            .getCardsCopy()
+            .get(Collections.min(userCardCommands.getCardsCopy().keySet()));
     addUserData();
     makeScene();
     stage.setTitle("Cards");
@@ -43,9 +47,6 @@ public class CardPage extends Page {
     stage.show();
   }
 
-  /**
-   * Constructs the scene for this page
-   */
   @Override
   protected void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 20));
@@ -53,19 +54,18 @@ public class CardPage extends Page {
     grid.setVgap(10);
     addCardComboBox();
     Button add =
-            factory.makeButton(
-                    grid,
-                    "Add card",
-                    () -> {
-                      cards.addCard();
-                      pageCreator.makeCardPage(cards);
-                    },
-                    0,
-                    0);
+        factory.makeButton(
+            grid,
+            "Add card",
+            () -> {
+              cards.addCard();
+              pageCreator.makeCardPage(cards);
+            },
+            0,
+            0);
     add.setMinWidth(cardComboBox.getMinWidth());
     GridPane.setColumnSpan(add, 2);
 
-    // addClock();
     addCardButtons();
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
@@ -77,6 +77,7 @@ public class CardPage extends Page {
     this.currentTrips.setMinWidth(200);
   }
 
+  /** Helper to add the card combo box */
   private void addCardComboBox() {
     List<Integer> userCardKeys = new ArrayList<>(cards.getCardsCopy().keySet());
     Collections.sort(userCardKeys);
@@ -93,85 +94,83 @@ public class CardPage extends Page {
 
   /** Adds the buttons specific to each card in this simulation */
   private void addCardButtons() {
-    Button tap = factory.makeButton(grid, "Tap", () -> {
-    }, 0, 2);
+    Button tap = factory.makeButton(grid, "Tap", () -> {}, 0, 2);
     tap.setMinWidth(cardComboBox.getMinWidth());
     if (!cardSelection.isSuspended()) {
       tap.setOnAction(evt -> pageCreator.makeTapPage(cards, cardSelection));
     } else {
       tap.setOnAction(
-              actionEvent -> {
-                Alert alert =
-                        factory.makeAlert(
-                                "Card Suspended",
-                                "Card Suspended",
-                                cardSelection.toString() + " is suspended, reactivate this card to tap it",
-                                Alert.AlertType.WARNING);
-                alert.showAndWait();
-              });
+          actionEvent -> {
+            Alert alert =
+                factory.makeAlert(
+                    "Card Suspended",
+                    "Card Suspended",
+                    cardSelection.toString() + " is suspended, reactivate this card to tap it",
+                    Alert.AlertType.WARNING);
+            alert.showAndWait();
+          });
     }
 
-    Button addFunds = factory.makeButton(grid, "Add funds", () -> {
-    }, 0, 3);
+    Button addFunds = factory.makeButton(grid, "Add funds", () -> {}, 0, 3);
     addFunds.setOnAction(evt -> pageCreator.makeAddFundsPage(cardSelection));
     addFunds.setMinWidth(cardComboBox.getMinWidth());
 
     GridPane bottom = new GridPane();
     bottom.setHgap(10);
     Button remove =
-            factory.makeButton(
-                    bottom,
-                    "Remove this card",
+        factory.makeButton(
+            bottom,
+            "Remove this card",
+            () -> {
+              if (cards.getCardsCopy().size() > 1) {
+                factory.makeConfirmationAlert(
+                    "Removal confirmation",
+                    "Confirm removal:",
+                    "Are you sure that you want to remove this card?",
                     () -> {
-                      if (cards.getCardsCopy().size() > 1) {
-                        factory.makeConfirmationAlert(
-                                "Removal confirmation",
-                                "Confirm removal:",
-                                "Are you sure that you want to remove this card?",
-                                () -> {
-                                  cards.removeCard(cardSelection);
-                                  cardComboBox.getItems().remove(cardSelection);
-                                  pageCreator.makeCardPage(cards);
-                                });
-                      } else {
-                        Alert warning =
-                                factory.makeAlert(
-                                        "Removal",
-                                        "Removal denied:",
-                                        "Can't remove last card",
-                                        Alert.AlertType.WARNING);
-                        warning.showAndWait();
-                      }
-                    },
-                    0,
-                    0);
+                      cards.removeCard(cardSelection);
+                      cardComboBox.getItems().remove(cardSelection);
+                      pageCreator.makeCardPage(cards);
+                    });
+              } else {
+                Alert warning =
+                    factory.makeAlert(
+                        "Removal",
+                        "Removal denied:",
+                        "Can't remove last card",
+                        Alert.AlertType.WARNING);
+                warning.showAndWait();
+              }
+            },
+            0,
+            0);
     remove.setMinWidth(cardComboBox.getMinWidth() / 2 - 5);
 
     // if the current card is suspended
     if (!cardSelection.isSuspended()) {
       Button report =
-              factory.makeButton(
-                      bottom,
-                      "Report card stolen",
-                      () -> {
-                        cardSelection.suspendCard();
-                        pageCreator.makeCardPage(cards);
-                      },
-                      1,
-                      0);
+          factory.makeButton(
+              bottom,
+              "Report card stolen",
+              () -> {
+                cardSelection.suspendCard();
+                pageCreator.makeCardPage(cards);
+              },
+              1,
+              0);
       report.setMinWidth(cardComboBox.getMinWidth() / 2 - 5);
 
     } else {
       Button activate =
-              factory.makeButton(
-                      bottom,
-                      "Activate this card",
-                      () -> {
-                        cardSelection.activateCard();
-                        pageCreator.makeCardPage(cards);
-                      },
-                      1,
-                      0);
+          factory.makeButton(
+              bottom,
+              "Activate this card",
+              () -> {
+                cardSelection.activateCard();
+                pageCreator.makeCardPage(cards);
+              },
+              1,
+              0);
       activate.setMinWidth(cardComboBox.getWidth() / 2 - 5);
     }
     grid.add(bottom, 0, 4);

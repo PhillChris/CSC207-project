@@ -26,8 +26,8 @@ public class AppendRoutePage extends Page {
   /**
    * Initializes a new instance of AppendRoutePage
    *
-   * @param stage
-   * @param route
+   * @param stage The stage used by this page
+   * @param route The route associated with page
    */
   public AppendRoutePage(Stage stage, Route route) {
     super(stage);

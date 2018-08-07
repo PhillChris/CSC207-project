@@ -3,7 +3,6 @@ package transit.pages;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Route;
@@ -50,13 +49,16 @@ public class RouteCreationPage extends Page {
             2);
     factory.makeLabel(grid, "Append to Existing Route:", 0, 4);
     /** Create a button to append to each possible route */
+    int j = 0;
     for (String type : Route.getRoutesCopy().keySet()) {
+      factory.makeLabel(grid, type + " Routes", j, 5);
       for (int i = 0; i < Route.getRoutesCopy().get(type).size(); i++) {
         Route route = Route.getRoutesCopy().get(type).get(i);
         Button routeButton =
             factory.makeButton(
-                    grid, route.toString(), () -> pageCreator.makeAppendRoutePage(route), 0, 6 + 2 * i);
+                    grid, route.toString(), () -> pageCreator.makeAppendRoutePage(route), j, 6 + 2 * i);
       }
+      j++;
     }
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());

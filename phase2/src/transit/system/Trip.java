@@ -2,7 +2,9 @@ package transit.system;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /** Represents an object of transit.system.Trip */
@@ -13,6 +15,8 @@ public class Trip implements Serializable {
   protected LocalDateTime timeStarted;
   /** The time ended by this trip */
   protected LocalDateTime timeEnded;
+  /** Time formatter */
+  protected DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
   /** The stops made along the trip before reaching the final station */
   protected ArrayList<Station> priorStops = new ArrayList<>();
   /** The station ended by this trip */
@@ -79,15 +83,15 @@ public class Trip implements Serializable {
     String endTime;
     String finalStation;
     if (timeEnded != null && endStation != null) {
-      endTime = timeEnded.toString();
+      endTime = timeEnded.format(dateTimeFormatter);
       finalStation = endStation.toString();
     } else {
       endTime = "Not Ended";
       finalStation = "Null";
     }
     return String.format(
-        "Trip started at %s (%s) and ended at %s (%s)",
-        timeStarted.toString(), priorStops.get(0), endTime, finalStation);
+        "%s (%s) to %s (%s)",
+      priorStops.get(0), timeStarted.format(dateTimeFormatter), finalStation, endTime);
   }
 
   /**

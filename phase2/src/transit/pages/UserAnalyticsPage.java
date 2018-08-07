@@ -11,7 +11,6 @@ public class UserAnalyticsPage extends AnalyticsPage {
   VBox content = new VBox();
 
   public UserAnalyticsPage(Stage stage, User user) {
-//    super(stage, user.getCardCommands().getCardStatistics());
     super();
     this.statistics = user.getCardCommands().getCardStatistics();
     this.user = user;

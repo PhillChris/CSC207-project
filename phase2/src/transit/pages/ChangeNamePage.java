@@ -27,7 +27,6 @@ public class ChangeNamePage extends Page {
     stage.show();
   }
 
-  /** Sets the scene for this page */
   @Override
   public void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 20));

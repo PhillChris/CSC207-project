@@ -28,9 +28,7 @@ public class LoginPage extends Page {
     this.stage.setScene(scene);
   }
 
-  /**
-   * Sets the scene for this page
-   */
+  /** Sets the scene for this page */
   @Override
   protected void makeScene() {
     grid.setPadding(new Insets(20, 20, 20, 40));
@@ -46,9 +44,7 @@ public class LoginPage extends Page {
     scene.getStylesheets().add(getClass().getResource("styling/LoginPage.css").toExternalForm());
   }
 
-  /**
-   * Makes the login GridPane for styling purposes
-   */
+  /** Makes the login GridPane for styling purposes */
   private void makeLoginPane() {
     this.loginPane = new GridPane();
     loginPane.setHgap(10);
@@ -69,18 +65,13 @@ public class LoginPage extends Page {
     grid.add(loginPane, 0, 1);
   }
 
-  /**
-   * Makes all icons in the login pane
-   *
-   */
+  /** Makes all icons in the login pane */
   private void makeIcons() {
     factory.makeImage(loginPane, "transit/pages/assets/email.png", 0, 1);
     factory.makeImage(loginPane, "transit/pages/assets/key.png", 0, 2);
   }
 
-  /**
-   * Makes all labels in the login pane
-   */
+  /** Makes all labels in the login pane */
   private void makeLabels() {
     Label login = factory.makeLabel(loginPane, "Login", 0, 0);
     login.setId("loginLabel");
@@ -101,9 +92,7 @@ public class LoginPage extends Page {
     return factory.makeTextField(loginPane, "Email", 1, 1);
   }
 
-  /**
-   * @return a label containing the appropriate error message
-   */
+  /** @return a label containing the appropriate error message */
   private Label makeErrorMessage() {
     Label errorMessage = factory.makeLabel(loginPane, "", 1, 3);
     errorMessage.setId("errorMessage");
@@ -114,8 +103,7 @@ public class LoginPage extends Page {
   private void makeSignUpButton() {
     Button signUpButton = new Button("Sign Up");
     signUpButton.setId("signUpButton");
-    signUpButton.setOnAction(
-        (data) -> pageCreator.makeSignUpPage());
+    signUpButton.setOnAction((data) -> pageCreator.makeSignUpPage());
     loginPane.add(signUpButton, 0, 6, 2, 1);
   }
 
@@ -123,15 +111,12 @@ public class LoginPage extends Page {
   private void makeLoginButton() {
     Button loginButton = new Button("Login");
     loginButton.setId("loginButton");
-    loginButton.setOnAction(
-        (data) -> parseLoginAttempt());
+    loginButton.setOnAction((data) -> parseLoginAttempt());
     loginPane.add(loginButton, 0, 3, 2, 1);
     GridPane.setMargin(loginButton, new Insets(3, 0, 0, 0));
   }
 
-  /**
-   * Places a horizontal separator on this page
-   */
+  /** Places a horizontal separator on this page */
   private void makeSeparator() {
     Separator horizontalSeparator = factory.makeSeparator(loginPane, 0, 4);
     GridPane.setColumnSpan(horizontalSeparator, 2);
@@ -150,6 +135,7 @@ public class LoginPage extends Page {
             .correctAuthentication(passInput.getText());
   }
 
+  /** Parses a login attempt */
   private void parseLoginAttempt() {
     {
       try {
@@ -177,5 +163,4 @@ public class LoginPage extends Page {
       }
     }
   }
-
 }

@@ -81,13 +81,11 @@ public class CardPage extends Page {
   private void addCardComboBox() {
     List<Integer> userCardKeys = new ArrayList<>(cards.getCardsCopy().keySet());
     Collections.sort(userCardKeys);
-    List<Card> userCards = new ArrayList<>();
-
+    ComboBox<Card> cardComboBox = new ComboBox<>();
+    grid.add(cardComboBox, 0, 1);
     for (Integer key : userCardKeys) {
-      userCards.add(cards.getCardsCopy().get(key));
+      cardComboBox.getItems().add(cards.getCardsCopy().get(key));
     }
-
-    cardComboBox = factory.makeCardComboBox(grid, userCards, 0, 1);
     cardComboBox.setMinWidth(400);
     cardComboBox.setOnAction(event -> cardSelection = cardComboBox.getValue());
   }

@@ -7,6 +7,8 @@ import java.util.HashMap;
 public class Station implements Serializable {
   /** All acceptable possible route types in this transit system */
   public static final String[] POSSIBLE_TYPES = {"Bus", "Subway"};
+  /** Stores the possible statistics recorded at each given station */
+  public static final String[] STATION_STATS = {"Taps In", "Taps Out"};
   /** The fee charged when starting a bus trip to non-students */
   private static final int BUS_INITIAL_FEE = 200;
   /** The fee charged when starting a bus trip to students */
@@ -23,8 +25,6 @@ public class Station implements Serializable {
   private String stationType;
   /** Stores associated statistics to this user */
   private HashMap<String, Statistics> statistics = new HashMap<>();
-  /** Stores the possible statistics recorded at each given station */
-  public static final String[] STATION_STATS = {"Taps In", "Taps Out"};
 
   /**
    * Create a new instance of transit.system.Station
@@ -35,13 +35,19 @@ public class Station implements Serializable {
     this.name = name;
     this.stationType = stationType;
     this.setFees();
-    for (String stat: STATION_STATS) {
+    for (String stat : STATION_STATS) {
       statistics.put(stat, new Statistics(stat));
     }
   }
 
+  /** @return The hashmap of statistics associated with this station */
   public HashMap<String, Statistics> getStatistics() {
     return statistics;
+  }
+
+  /** @return The station type of this station */
+  public String getStationType() {
+    return stationType;
   }
 
   @Override

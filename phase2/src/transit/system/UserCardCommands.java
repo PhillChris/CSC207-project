@@ -112,7 +112,7 @@ public class UserCardCommands implements Serializable {
       for (Station s : t.getPriorStops()) {
         updateCount(frequentStationCount, s);
       }
-      updateCount(frequentStationCount, t.endStation);
+      updateCount(frequentStationCount, t.getEndStation());
     }
     int maxTapValue = 0;
     Station maxTapped = null;
@@ -179,7 +179,7 @@ public class UserCardCommands implements Serializable {
    * @param card The card which this User taps
    * @param station The station which this User taps at
    */
-  private void tapOut(Card card, Station station) {
+  private void tapOut(Card card, Station station) throws TransitException {
     // Update Card and Trip information
     Trip trip = card.getCurrentTrip();
     trip.endTrip(station); // ends the trip
@@ -190,6 +190,7 @@ public class UserCardCommands implements Serializable {
     // Record various cardStatistics
     if (!trip.isValidTrip()) {
       LogWriter.getLogWriter().logInvalidTrip(this.toString(), station.toString(), card.getId());
+      throw new TransitException();
     }
     LogWriter.getLogWriter()
         .logTapOut(this.toString(), station.toString(), card.getId(), trip.getFee());

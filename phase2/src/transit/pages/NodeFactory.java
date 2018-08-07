@@ -105,14 +105,7 @@ public class NodeFactory {
     grid.add(comboBox, col, row);
     return comboBox;
   }
-
-  protected ComboBox<Card> makeCardComboBox(GridPane grid, List<Card> cards, int col, int row) {
-    ComboBox<Card> cardComboBox = new ComboBox<>();
-    cardComboBox.getItems().addAll(cards);
-    cardComboBox.getSelectionModel().selectFirst();
-    grid.add(cardComboBox, col, row);
-    return cardComboBox;
-  }
+  
 
   /**
    * Adds an image to this page

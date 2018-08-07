@@ -46,10 +46,14 @@ public class CardPage extends Page {
   }
 
   @Override
+  /** Make and sets the scene of this page */
   protected void makeScene() {
+    // Adds the margins for grid
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
+
+    // Add all elements onto the page
     addCardComboBox();
     Button addCard =
         factory.makeButton(
@@ -63,8 +67,9 @@ public class CardPage extends Page {
             0);
     addCard.setMinWidth(cardComboBox.getMinWidth());
     GridPane.setColumnSpan(addCard, 2);
-
     addCardButtons();
+
+    // Sets the scene
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }
@@ -80,9 +85,12 @@ public class CardPage extends Page {
     List<Integer> userCardKeys = new ArrayList<>(cards.getCardsCopy().keySet());
     Collections.sort(userCardKeys);
     grid.add(cardComboBox, 0, 1);
+
+    // Adds the options for the combo box
     for (Integer key : userCardKeys) {
       cardComboBox.getItems().add(cards.getCardsCopy().get(key));
     }
+
     cardComboBox.getSelectionModel().select(0);
     cardComboBox.setMinWidth(400);
     cardComboBox.setOnAction(event -> cardSelection = cardComboBox.getValue());
@@ -93,6 +101,8 @@ public class CardPage extends Page {
     // Makes the tap button
     Button tap = factory.makeButton(grid, "Tap", () -> {}, 0, 2);
     tap.setMinWidth(cardComboBox.getMinWidth());
+
+    // Sets the appropriate action for this card
     if (!cardSelection.isSuspended()) {
       tap.setOnAction(evt -> pageCreator.makeTapPage(cards, cardSelection));
     } else {
@@ -107,11 +117,13 @@ public class CardPage extends Page {
             alert.showAndWait();
           });
     }
+
     // Add a button to add funds
     Button addFunds =
         factory.makeButton(
             grid, "Add funds", () -> pageCreator.makeAddFundsPage(cardSelection), 0, 3);
     addFunds.setMinWidth(cardComboBox.getMinWidth());
+
     // Second grid with additional buttons
     GridPane bottom = makeBottom();
     grid.add(bottom, 0, 4);
@@ -121,6 +133,7 @@ public class CardPage extends Page {
   private GridPane makeBottom() {
     GridPane bottom = new GridPane();
     bottom.setHgap(10);
+
     // Remove card button
     Button remove =
         factory.makeButton(
@@ -166,6 +179,7 @@ public class CardPage extends Page {
       report.setMinWidth(cardComboBox.getMinWidth() / 2 - 5);
 
     }
+
     // Button to activate a card
     else {
       Button activate =

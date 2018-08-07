@@ -30,6 +30,7 @@ public class AnalyticsPage extends Page {
   private ComboBox<Statistics> statOptions = new ComboBox<>();
   /** The time options displayed by this page */
   private ComboBox<String> timeOptions = new ComboBox<>();
+
   /**
    * Initialize a new instance of AnalyticsPage without setting the Stage. This allows for
    * subclasses to extend the scene of analytics page, then set the Stage themselves.
@@ -70,8 +71,8 @@ public class AnalyticsPage extends Page {
     setupStatOptions();
   }
 
-  /** Construct the scene of this page, making all elements to display to the page. */
   @Override
+  /** Construct the scene of this page, making all elements to display to the page. */
   void makeScene() {
     // make the stat options drop down
     setupStatOptions();
@@ -108,7 +109,10 @@ public class AnalyticsPage extends Page {
 
   /** Sets up the graph for the user to view */
   protected void setUpStatGraph() {
+    // Clear whatever chart might have been there before
     grid.getChildren().remove(chart);
+
+    // Add the appropriate chart content
     if (timeOptions.getValue().equals("Monthly")) {
       chart = graphFactory.makeYearChart(statOptions.getValue().generateMonthlyValues());
       chart.getYAxis().setLabel(statOptions.toString());
@@ -116,6 +120,8 @@ public class AnalyticsPage extends Page {
       chart = graphFactory.makeWeekChart(statOptions.getValue().generateWeeklyValues());
     }
     chart.getYAxis().setLabel(statOptions.getValue().toString());
+
+    // Add and configure the chart
     grid.add(chart, 0, 1);
     chart.setPrefWidth(Double.MAX_VALUE);
     GridPane.setVgrow(chart, Priority.ALWAYS);

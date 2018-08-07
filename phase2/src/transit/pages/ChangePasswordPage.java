@@ -28,15 +28,23 @@ public class ChangePasswordPage extends Page {
   }
 
   @Override
+  /** Makes and sets the scene attribute */
   public void makeScene() {
+    // Initialize margins for grid
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
+
+    // Add labels to the scene
     factory.makeLabel(grid, "Current password: ", 0, 0);
     factory.makeLabel(grid, "New password: ", 0, 1);
     Label changeSuccess = factory.makeLabel(grid, "", 2, 1);
+
+    // Add password fields to the scene
     PasswordField currPassword = factory.makePasswordField(grid, "", 1, 0);
     PasswordField newPassword = factory.makePasswordField(grid, "", 1, 1);
+
+    // Make the change password button and set it on action
     factory.makeButton(
         grid,
         "Change password!",
@@ -52,6 +60,7 @@ public class ChangePasswordPage extends Page {
         2,
         0);
 
+    // Sets the scene
     scene = new Scene(grid, 575, 110);
     scene
         .getStylesheets()

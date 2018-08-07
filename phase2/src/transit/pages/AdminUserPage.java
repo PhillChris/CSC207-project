@@ -31,12 +31,16 @@ public class AdminUserPage extends AuthenticatedPage {
    */
   @Override
   protected void makeScene() {
+    // Add margins to grid
     grid.setPadding(new Insets(30, 30, 30, 30));
     grid.setHgap(10);
     grid.setVgap(10);
+
+    // Add elements to grid
     factory.addClock(grid);
     makeSceneButtons();
 
+    // Sets the scene
     scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene
         .getStylesheets()
@@ -49,13 +53,20 @@ public class AdminUserPage extends AuthenticatedPage {
   private void makeSceneButtons() {
     newLogoutButton(1, 0);
 
+    // Adds the system stats button
     Button system = factory.makeButton(grid, "System Stats", () -> pageCreator.makeAnalyticsPage(Statistics.getSystemStatistics()), 0, 1);
     system.setMinWidth(150);
+
+    // Add station stats button
     Button station = factory.makeButton(grid, "Station Stats", () -> pageCreator.makeStationGraphPage(), 1, 1);
     station.setMinWidth(150);
     GridPane.setHalignment(station, HPos.RIGHT);
+
+    // Add update routes button
     Button update = factory.makeButton(grid, "Update Routes", () -> pageCreator.makeRouteCreationPage(), 0, 2);
     update.setMinWidth(150);
+
+    // Add toggle view button
     Button toggle =
         factory.makeButton(grid, "User view", () -> pageCreator.makeUserPage(user), 1, 2);
     GridPane.setHalignment(toggle, HPos.RIGHT);

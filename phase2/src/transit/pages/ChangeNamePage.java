@@ -26,10 +26,14 @@ public class ChangeNamePage extends Page {
   }
 
   @Override
+  /** Makes and sets the scene attribute */
   public void makeScene() {
+    // Add the margins for the grid
     grid.setPadding(new Insets(20, 20, 20, 20));
     grid.setHgap(10);
     grid.setVgap(10);
+
+    // Make elements on the page
     factory.makeLabel(grid, "New Username: ", 0, 0);
     TextField newName = factory.makeTextField(grid, "", 1, 0);
     factory.makeButton(
@@ -42,6 +46,7 @@ public class ChangeNamePage extends Page {
         2,
         0);
 
+    // Sets the scene
     scene = new Scene(grid, 530, 70);
     scene
         .getStylesheets()

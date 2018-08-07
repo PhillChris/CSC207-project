@@ -61,4 +61,8 @@ public class PageCreator {
   void makeUserAnalyticsPage(User user) {
     new UserAnalyticsPage(secondaryStage, user);
   }
+
+  void makeStationGraphPage() {
+    new StationGraphPage(secondaryStage);
+  }
 }

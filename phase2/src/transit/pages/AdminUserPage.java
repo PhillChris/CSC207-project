@@ -7,11 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.Main;
 import transit.system.Statistics;
 import transit.system.User;
-
-import static transit.system.Main.secondaryStage;
 
 /** Represents the page seen by an AdminUser when logging into the transit system */
 public class AdminUserPage extends AuthenticatedPage {
@@ -59,6 +56,7 @@ public class AdminUserPage extends AuthenticatedPage {
     newRemoveAccountButton(2, 2);
 
     factory.makeButton(grid, "System Stats", () -> pageCreator.makeAnalyticsPage(Statistics.getSystemStatistics()), 0, 2);
+    factory.makeButton(grid, "Station Stats", () -> pageCreator.makeStationGraphPage(), 0, 3);
     factory.makeButton(grid, "Update Routes", () -> pageCreator.makeRouteCreationPage(), 0, 1);
 
     Button toggle =

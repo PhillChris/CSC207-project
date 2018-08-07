@@ -196,7 +196,7 @@ public class LogWriter {
   }
 
   /**
-   * Logs an incorrect sugnup
+   * Logs an incorrect sign up
    *
    * @param e
    */
@@ -210,5 +210,10 @@ public class LogWriter {
     LogWriter.getLogWriter()
         .logInfoMessage(
             SignUpPage.class.getName(), "logCorrectSignup", "Account created successfully");
+  }
+
+  public void logFirstTimeStartup() {
+    LogWriter.getLogWriter()
+            .logInfoMessage(Database.class.getName(), "readObject", "Beginning first time startup");
   }
 }

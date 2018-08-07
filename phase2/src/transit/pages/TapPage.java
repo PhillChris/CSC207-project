@@ -49,6 +49,7 @@ public class TapPage extends Page {
     routeType.getSelectionModel().select(0);
     routeType.setOnAction(e -> refreshRouteOptionItems());
     routeType.setMinWidth(100);
+    refreshRouteOptionItems(); // do this action to load the buttons initially
     grid.setHgap(10);
     grid.setHgap(10);
     grid.setPadding(new Insets(20, 20, 20, 20));

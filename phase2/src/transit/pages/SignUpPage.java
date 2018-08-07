@@ -1,6 +1,5 @@
 package transit.pages;
 
-import com.oracle.tools.packager.Log;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

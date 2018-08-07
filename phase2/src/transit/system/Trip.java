@@ -9,24 +9,25 @@ import java.util.ArrayList;
 /** Represents an object of transit.system.Trip */
 public class Trip implements Serializable {
   /** The maximum duration between the start of two continuous trips */
-  protected static final Duration MAX_TRIP_LENGTH = Duration.ofMinutes(120);
+  private static final Duration MAX_TRIP_LENGTH = Duration.ofMinutes(120);
+  /**
+   * The station ended by this trip
+   */
+  private Station endStation;
   /** The time started by this trip */
-  protected LocalDateTime timeStarted;
+  private LocalDateTime timeStarted;
   /** The time ended by this trip */
-  protected LocalDateTime timeEnded;
+  private LocalDateTime timeEnded;
   /** The stops made along the trip before reaching the final station */
-  protected ArrayList<Station> priorStops = new ArrayList<>();
-  /** The station ended by this trip */
-  protected Station endStation;
+  private ArrayList<Station> priorStops = new ArrayList<>();
   /** The current fee of this trip */
-  protected int tripFee;
+  private int tripFee;
   /** The maximum fee charged by this trip */
-  protected int maxFee = 600;
+  private int maxFee = 600;
   /** The fee this trip charges itself per station travelled */
-  protected int perStationFee;
+  private int perStationFee;
   /** The length of the most recent leg of this trip */
-  protected int tripLegLength;
-
+  private int tripLegLength;
   /**
    * Construct a new instance of transit.system.Trip
    *
@@ -38,6 +39,13 @@ public class Trip implements Serializable {
     perStationFee = station.getPerStationFee(permission);
     priorStops.add(station);
     tripLegLength = 0;
+  }
+
+  /**
+   * @return the end station of this trip.
+   */
+  public Station getEndStation() {
+    return endStation;
   }
 
   /** @return The length of the current leg of this trip */

@@ -112,7 +112,7 @@ public class UserCardCommands implements Serializable {
       for (Station s : t.getPriorStops()) {
         updateCount(frequentStationCount, s);
       }
-      updateCount(frequentStationCount, t.endStation);
+      updateCount(frequentStationCount, t.getEndStation());
     }
     int maxTapValue = 0;
     Station maxTapped = null;

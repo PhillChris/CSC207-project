@@ -21,7 +21,6 @@ public class ChangePasswordPage extends Page {
   public ChangePasswordPage(Stage stage, User user) {
     super(stage);
     this.user = user;
-    stage.setTitle("Change Password");
     makeScene();
     stage.setTitle("Change Password Page");
     stage.setScene(scene);

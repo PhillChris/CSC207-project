@@ -23,7 +23,7 @@ public class LoginPage extends Page {
    */
   public LoginPage(Stage stage) {
     super(stage);
-    this.stage.setTitle("Login");
+    this.stage.setTitle("Login Page");
     makeScene();
     this.stage.setScene(scene);
   }

@@ -7,7 +7,6 @@ import transit.system.Route;
 import transit.system.Station;
 
 public class StationGraphPage extends AnalyticsPage {
-
   ComboBox<String> stationType = new ComboBox<>();
   ComboBox<Station> stationName = new ComboBox<>();
   /**
@@ -33,8 +32,6 @@ public class StationGraphPage extends AnalyticsPage {
     refreshStationOptions(stationType, stationName);
     dropDowns.getChildren().addAll(stationType, stationName);
     super.setLayout();
-
-
   }
 
   private void refreshStationOptions(ComboBox<String> stationType, ComboBox<Station> stationName) {

@@ -11,7 +11,6 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Card;
 import transit.system.UserCardCommands;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -91,6 +90,7 @@ public class CardPage extends Page {
 
   /** Adds the buttons specific to each card in this simulation */
   private void addCardButtons() {
+    // Makes the tap button
     Button tap = factory.makeButton(grid, "Tap", () -> {}, 0, 2);
     tap.setMinWidth(cardComboBox.getMinWidth());
     if (!cardSelection.isSuspended()) {
@@ -107,13 +107,21 @@ public class CardPage extends Page {
             alert.showAndWait();
           });
     }
-
-    Button addFunds = factory.makeButton(grid, "Add funds", () -> {}, 0, 3);
-    addFunds.setOnAction(evt -> pageCreator.makeAddFundsPage(cardSelection));
+    // Add a button to add funds
+    Button addFunds =
+        factory.makeButton(
+            grid, "Add funds", () -> pageCreator.makeAddFundsPage(cardSelection), 0, 3);
     addFunds.setMinWidth(cardComboBox.getMinWidth());
+    // Second grid with additional buttons
+    GridPane bottom = makeBottom();
+    grid.add(bottom, 0, 4);
+  }
 
+  /** @return A grid with additional buttons */
+  private GridPane makeBottom() {
     GridPane bottom = new GridPane();
     bottom.setHgap(10);
+    // Remove card button
     Button remove =
         factory.makeButton(
             bottom,
@@ -143,7 +151,7 @@ public class CardPage extends Page {
             0);
     remove.setMinWidth(cardComboBox.getMinWidth() / 2 - 5);
 
-    // if the current card is suspended
+    // Button to suspend a card
     if (!cardSelection.isSuspended()) {
       Button report =
           factory.makeButton(
@@ -157,7 +165,9 @@ public class CardPage extends Page {
               0);
       report.setMinWidth(cardComboBox.getMinWidth() / 2 - 5);
 
-    } else {
+    }
+    // Button to activate a card
+    else {
       Button activate =
           factory.makeButton(
               bottom,
@@ -170,7 +180,7 @@ public class CardPage extends Page {
               0);
       activate.setMinWidth(cardComboBox.getWidth() / 2 - 5);
     }
-    grid.add(bottom, 0, 4);
+    return bottom;
   }
 
   /** @return the current trips message of this page */

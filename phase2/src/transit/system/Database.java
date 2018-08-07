@@ -7,16 +7,34 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * A utility class with methods to store objects relating to the persistence of the Transit System
+ * and the methods to read those same objects upon running the application.
+ */
 public class Database {
+  /**
+   * The location of the serialization file storing all Routes
+   */
   public static final String ROUTE_LOCATION =
-      "." + File.separator + "tmp" + File.separator + "routes.ser";
+          "." + File.separator + "tmp" + File.separator + "routes.ser";
+
+  /** The location of the serialization file storing all Users */
   public static final String USERS_LOCATION =
-      "." + File.separator + "tmp" + File.separator + "user.ser";
+          "." + File.separator + "tmp" + File.separator + "user.ser";
+  /**
+   * The location of the serialization file storing the TransitTime when the program was last closed
+   */
   public static final String TIME_LOCATION =
           "." + File.separator + "tmp" + File.separator + "time.ser";
+  /** The location of the serialization file storing system wide Statistics */
   public static final String SYSTEMSTATS_LOCATION =
           "." + File.separator + "tmp" + File.separator + "SystemStats.ser";
 
+  /**
+   * A method taking all static objects from classes in the Transit System which need to be
+   * reinitialized upon running the application and serializing them to the appropriate file
+   * location.
+   */
   public static void writeToDatabase() {
     // Save the current time
     LocalDateTime time = TransitTime.getClock().getCurrentTime();
@@ -61,8 +79,8 @@ public class Database {
       FileInputStream fileIn = new FileInputStream(fileLocation);
       ObjectInputStream in = new ObjectInputStream(fileIn);
       return in.readObject();
-    } catch (IOException e) {
-    } catch (ClassNotFoundException h) {
+    } catch (IOException | ClassNotFoundException e) {
+      LogWriter.getLogWriter().logFirstTimeStartup();
     }
     return null;
   }

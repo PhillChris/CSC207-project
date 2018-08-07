@@ -12,11 +12,6 @@ public class Route implements Serializable {
   private static int numRoutes;
   /** A list of all routes in the transit system */
   private static HashMap<String, ArrayList<Route>> routes = setRoutes();
-  /**
-   * HashMap containing HashMap of all stations of given types as values, where the keys of the
-   * inner HashMap are the station names.
-   */
-  private static HashMap<String, HashMap<String, Station>> allStations = setAllStations();
   /** List containing all the stations of this route in travel order */
   private List<Station> routeStations;
   /** The type of this route */
@@ -36,10 +31,6 @@ public class Route implements Serializable {
   }
 
   public static HashMap<String, HashMap<String, Station>> getAllStationsCopy() {
-    return allStations;
-  }
-
-  static HashMap<String, HashMap<String, Station>> setAllStations() {
     HashMap<String, HashMap<String, Station>> allStations = new HashMap<>();
     for (String type : Station.POSSIBLE_TYPES) {
       allStations.put(type, new HashMap<>());
@@ -57,17 +48,15 @@ public class Route implements Serializable {
   /**
    * Set the static routes attribute to the passed parameter. Note: this method should only be used
    * for deserialization of Route objects when the program is first being loaded in.
-   *
    */
   private static HashMap<String, ArrayList<Route>> setRoutes() {
     HashMap<String, ArrayList<Route>> storedRoutes =
         (HashMap<String, ArrayList<Route>>) Database.readObject(Database.ROUTE_LOCATION);
     if (storedRoutes != null) {
       return storedRoutes;
-    }
-    else{
+    } else {
       HashMap<String, ArrayList<Route>> routes = new HashMap<>();
-      for (String type: Station.POSSIBLE_TYPES){
+      for (String type : Station.POSSIBLE_TYPES) {
         routes.put(type, new ArrayList<>());
       }
       return routes;
@@ -77,7 +66,7 @@ public class Route implements Serializable {
   /** @return A shallow copy of the arrayList of all RouteNames */
   public static HashMap<String, ArrayList<Route>> getRoutesCopy() {
     HashMap<String, ArrayList<Route>> copy = new HashMap<>();
-    for (String type: routes.keySet()){
+    for (String type : routes.keySet()) {
       copy.put(type, new ArrayList<>(routes.get(type)));
     }
     return copy;
@@ -126,7 +115,9 @@ public class Route implements Serializable {
         routes.get(this.routeType).add(this); // Only add this route to hashmap if not already there
       }
     }
-    LogWriter.getLogWriter().logInfoMessage(Route.class.getName(), "saveRoute", "Route sucessfully saved to transit system");
+    LogWriter.getLogWriter()
+        .logInfoMessage(
+            Route.class.getName(), "saveRoute", "Route sucessfully saved to transit system");
   }
 
   /**
@@ -151,6 +142,7 @@ public class Route implements Serializable {
    * @return a Station with name name and type type.
    */
   private Station checkStationExists(String name, String type) {
+    HashMap<String, HashMap<String, Station>> allStations = getAllStationsCopy();
     if (allStations.get(type).containsKey(name)) {
       return allStations.get(type).get(name);
     } else {

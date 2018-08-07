@@ -25,7 +25,7 @@ public class UserAnalyticsPage extends AnalyticsPage {
   @Override
   void setLayout() {
     content.getChildren().setAll(new Label(user.getCardCommands().lastThreeTripsString()));
-    content.getChildren().add(new Label(user.getCardCommands().getMostFrequentMessage()));
+    content.getChildren().add(new Label(user.getCardCommands().mostFrequentStationMessage()));
     layout.setRight(content);
     super.setLayout();
   }

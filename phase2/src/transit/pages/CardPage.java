@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Card;
 import transit.system.UserCardCommands;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +54,7 @@ public class CardPage extends Page {
     grid.setHgap(10);
     grid.setVgap(10);
     addCardComboBox();
-    Button add =
+    Button addCard =
         factory.makeButton(
             grid,
             "Add card",
@@ -63,8 +64,8 @@ public class CardPage extends Page {
             },
             0,
             0);
-    add.setMinWidth(cardComboBox.getMinWidth());
-    GridPane.setColumnSpan(add, 2);
+    addCard.setMinWidth(cardComboBox.getMinWidth());
+    GridPane.setColumnSpan(addCard, 2);
 
     addCardButtons();
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);

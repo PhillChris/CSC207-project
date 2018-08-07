@@ -17,8 +17,8 @@ public class StationGraphPage extends AnalyticsPage {
    */
   public StationGraphPage(Stage stage) {
     super();
-    Scene scene = new Scene(layout, 800, 600);
     setLayout();
+    Scene scene = new Scene(layout, 800, 600);
     stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");
@@ -41,6 +41,9 @@ public class StationGraphPage extends AnalyticsPage {
     stationName.getItems().clear();
     stationName.getItems().addAll(Route.getAllStationsCopy().get(stationType.getValue()).values());
     stationName.getSelectionModel().select(0);
+    stationName.setOnAction(actionEvent -> setStatistics(stationName.getValue().getStatistics()));
+
+    // do this action to load the graph initially
     setStatistics(stationName.getValue().getStatistics());
     setUpStatGraph();
   }

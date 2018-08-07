@@ -54,6 +54,7 @@ public class AnalyticsPage {
     this.statistics = statistics;
     statOptions.getItems().clear();
     statOptions.getItems().addAll(statistics.values());
+    setupStatOptions();
   }
 
   void setLayout() {
@@ -68,8 +69,11 @@ public class AnalyticsPage {
   /** Creates the drop down boxes to switch between statistics and different time frames. */
   public void setupStatOptions() {
     // setup the checkbox the statistics this page has access to
+    statOptions.getItems().clear();
     statOptions.getItems().addAll(this.statistics.values());
     statOptions.getSelectionModel().select(0);
+
+    timeOptions.getItems().clear();
     timeOptions.getItems().addAll("Monthly", "Daily");
     timeOptions.getSelectionModel().select(0);
 

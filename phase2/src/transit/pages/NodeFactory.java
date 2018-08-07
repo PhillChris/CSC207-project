@@ -106,6 +106,14 @@ public class NodeFactory {
     return comboBox;
   }
 
+  /**
+   *
+   * @param grid
+   * @param cards
+   * @param col
+   * @param row
+   * @return
+   */
   protected ComboBox<Card> makeCardComboBox(GridPane grid, List<Card> cards, int col, int row) {
     ComboBox<Card> cardComboBox = new ComboBox<>();
     cardComboBox.getItems().addAll(cards);

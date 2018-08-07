@@ -34,6 +34,8 @@ public class AnalyticsPage {
    */
   ComboBox<String> timeOptions = new ComboBox<>();
 
+  public AnalyticsPage() {
+  }
   /**
    * Initialize a new instance of an AnalyticsPage.
    *
@@ -41,8 +43,8 @@ public class AnalyticsPage {
    */
   public AnalyticsPage(Stage stage, HashMap<String, Statistics> statistics) {
     this.statistics = statistics;
-    setLayout();
     Scene scene = new Scene(layout, 800, 600);
+    setLayout();
     stage.setScene(scene);
     stage.show();
     stage.setTitle("Transit System Simulator");
@@ -68,6 +70,8 @@ public class AnalyticsPage {
     // setup the checkbox the statistics this page has access to
     statOptions.getItems().addAll(this.statistics.values());
     statOptions.getSelectionModel().select(0);
+    timeOptions.getItems().addAll("Monthly", "Daily");
+    timeOptions.getSelectionModel().select(0);
 
     statOptions.setOnAction(actionEvent -> setUpStatGraph());
     timeOptions.setOnAction(actionEvent -> setUpStatGraph());

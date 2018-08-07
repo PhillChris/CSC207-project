@@ -1,10 +1,13 @@
 package transit.pages;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Card;
@@ -45,8 +48,11 @@ public class CardPage extends Page {
    */
   @Override
   protected void makeScene() {
+    grid.setPadding(new Insets(20, 20, 20, 20));
+    grid.setHgap(10);
+    grid.setVgap(10);
     addCardComboBox();
-    factory.makeButton(
+    Button add = factory.makeButton(
         grid,
         "Add card",
         () -> {
@@ -55,10 +61,13 @@ public class CardPage extends Page {
         },
         0,
         0);
+    add.setMinWidth(cardComboBox.getMinWidth());
+    GridPane.setColumnSpan(add, 2);
 
     // addClock();
     addCardButtons();
-    this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+    this.scene = new Scene(grid, 650, 250);
+    scene.getStylesheets().add(getClass().getResource("styling/CardPage.css").toExternalForm());
   }
 
   /**
@@ -66,7 +75,7 @@ public class CardPage extends Page {
    *
    */
   protected void addUserData() {
-    this.currentTrips = factory.makeLabel(grid, generateCurrentTripMessage(), 0, 1);
+    this.currentTrips = factory.makeLabel(grid, generateCurrentTripMessage(), 2, 0);
   }
 
   private void addCardComboBox() {
@@ -78,7 +87,8 @@ public class CardPage extends Page {
       userCards.add(cards.getCardsCopy().get(key));
     }
 
-    cardComboBox = factory.makeCardComboBox(grid, userCards, 0, 2);
+    cardComboBox = factory.makeCardComboBox(grid, userCards, 0, 1);
+    cardComboBox.setMinWidth(350);
     cardComboBox.setOnAction(event -> cardSelection = cardComboBox.getValue());
   }
   /**
@@ -91,20 +101,24 @@ public class CardPage extends Page {
         "Tap",
             () -> {},
         0,
-        3);
+        2);
     tap.setOnAction(evt -> pageCreator.makeTapPage(cards, cardSelection));
+    tap.setMinWidth(cardComboBox.getMinWidth());
 
     Button addFunds = factory.makeButton(
         grid,
         "Add funds",
         () -> {},
-        1,
+        0,
         3);
     addFunds.setOnAction(evt -> pageCreator.makeAddFundsPage(cardSelection));
+    addFunds.setMinWidth(cardComboBox.getMinWidth());
 
-    factory.makeButton(
-        grid,
-        "Remove This Card",
+    GridPane bottom = new GridPane();
+    bottom.setHgap(10);
+    Button remove = factory.makeButton(
+        bottom,
+        "Remove this card",
         () -> {
           if (cards.getCardsCopy().size() > 1) {
             factory.makeConfirmationAlert(
@@ -123,31 +137,38 @@ public class CardPage extends Page {
             warning.showAndWait();
           }
               },
-        2,
-        3);
+        0,
+        0);
+    remove.setMinWidth(cardComboBox.getMinWidth() / 2 - 5);
 
     // if the current card is suspended
     if (!cardSelection.isSuspended()) {
+      Button report =
       factory.makeButton(
-          grid,
+          bottom,
           "Report card stolen",
           () -> {
             cardSelection.suspendCard();
             pageCreator.makeCardPage(cards);
           },
-          3,
-          3);
+          1,
+          0);
+      report.setMinWidth(cardComboBox.getMinWidth() / 2 - 5);
+
     } else {
+      Button activate =
       factory.makeButton(
-          grid,
+          bottom,
           "Activate this card",
           () -> {
             cardSelection.activateCard();
             pageCreator.makeCardPage(cards);
           },
-          3,
-          3);
+          1,
+          0);
+      activate.setMinWidth(cardComboBox.getWidth() / 2 - 5);
     }
+    grid.add(bottom, 0, 4);
   }
 
   /** @return the current trips message of this page */

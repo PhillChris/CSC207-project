@@ -18,15 +18,18 @@ public class GraphFactory {
    * @return A line chart of days to number values
    */
   public LineChart<String, Number> makeWeekChart(HashMap<LocalDate, Integer> data) {
-    // Set the chart
+    // Initialize and configure series and chart
     LineChart<String, Number> chart = makeChart("Days", "Daily Total");
     XYChart.Series series = new XYChart.Series();
     series.setName("Daily Totals");
     LocalDate date = TransitTime.getClock().getCurrentDate();
+
+    // Add the data to the series
     for (int i = 0; i < data.keySet().size(); i++) {
       series.getData().add(0, new XYChart.Data(date.toString(), data.get(date)));
       date = date.minusDays(1);
     }
+
     chart.getData().add(series);
     return chart;
   }
@@ -36,15 +39,18 @@ public class GraphFactory {
    * @return A line chart of days to number values
    */
   public LineChart<String, Number> makeYearChart(HashMap<YearMonth, Integer> data) {
-    // Set the chart
+    // Initialize and configure series and chart
     LineChart<String, Number> chart = makeChart("Months", "Months Total");
     XYChart.Series series = new XYChart.Series();
     series.setName("Monthly Totals");
     YearMonth month = TransitTime.getClock().getCurrentMonth();
+
+    // Add the data to the series
     for (int i = 0; i < data.keySet().size(); i++) {
       series.getData().add(0, new XYChart.Data(month.toString(), data.get(month)));
       month = month.minusMonths(1);
     }
+
     chart.getData().add(series);
     return chart;
   }

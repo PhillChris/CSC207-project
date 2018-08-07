@@ -23,11 +23,13 @@ public class RouteCreationPage extends Page {
   @Override
   /** Sets the scene of this page */
   void makeScene() {
+    // initialize grid
     this.grid = new GridPane();
     grid.setPadding(new Insets(30, 20, 20, 40));
     grid.setHgap(10);
     grid.setVgap(10);
-    /** Set the buttons of this page */
+
+    // Set the buttons of this page
     factory.makeButton(
         grid,
         "Create Subway Route",
@@ -37,12 +39,17 @@ public class RouteCreationPage extends Page {
     factory.makeButton(
         grid, "Create Bus Route", () -> pageCreator.makeAppendRoutePage(new Route("Bus")), 0, 2);
     factory.makeLabel(grid, "Append to Existing Route:", 0, 4);
-    makeStationButtons();
+    makeRouteButtons();
+
+    // Set this scene
     this.scene = new Scene(grid, Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }
 
-  private void makeStationButtons() {
+  /**
+   * Make all of the route buttons linking to AppendRoutePages
+   */
+  private void makeRouteButtons() {
     int j = 0;
     for (String type : Route.getRoutesCopy().keySet()) {
       factory.makeLabel(grid, type + " Routes", j, 5);

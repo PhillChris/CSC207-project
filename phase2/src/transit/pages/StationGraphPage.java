@@ -1,11 +1,12 @@
 package transit.pages;
 
-import java.util.HashMap;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import transit.system.Route;
 import transit.system.Station;
 import transit.system.Statistics;
+
+import java.util.HashMap;
 
 public class StationGraphPage extends AnalyticsPage {
   ComboBox<String> stationType = new ComboBox<>();
@@ -44,7 +45,6 @@ public class StationGraphPage extends AnalyticsPage {
     // do this action to load the graph initially, if there are stations to be accessed
     if (!stationName.getItems().isEmpty()) {
       setStatistics(stationName.getValue().getStatistics());
-      setUpStatGraph();
     }
   }
 

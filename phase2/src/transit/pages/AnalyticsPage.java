@@ -59,13 +59,17 @@ public class AnalyticsPage extends Page {
 
   public void setStatistics(HashMap<String, Statistics> statistics) {
     this.statistics = statistics;
-    statOptions.getItems().clear();
-    statOptions.getItems().addAll(statistics.values());
     setupStatOptions();
   }
 
   void makeScene() {
     setupStatOptions();
+    // make the time options drop down
+    timeOptions.getItems().clear();
+    timeOptions.getItems().addAll("Monthly", "Daily");
+    timeOptions.getSelectionModel().select(0);
+    timeOptions.setOnAction(actionEvent -> setUpStatGraph());
+
     dropDown.getChildren().addAll(timeOptions, statOptions);
     dropDown.setSpacing(10);
     grid.add(dropDown, 0, 0);
@@ -77,17 +81,17 @@ public class AnalyticsPage extends Page {
 
   /** Creates the drop down boxes to switch between statistics and different time frames. */
   public void setupStatOptions() {
+    // set statOptions action to nothing while we change the stats
+    statOptions.setOnAction(actionEvent -> {
+    });
+
     // setup the checkbox the statistics this page has access to
     statOptions.getItems().clear();
     statOptions.getItems().addAll(this.statistics.values());
     statOptions.getSelectionModel().select(0);
 
-    timeOptions.getItems().clear();
-    timeOptions.getItems().addAll("Monthly", "Daily");
-    timeOptions.getSelectionModel().select(0);
-
+    // reset statOptions action
     statOptions.setOnAction(actionEvent -> setUpStatGraph());
-    timeOptions.setOnAction(actionEvent -> setUpStatGraph());
   }
 
   /** Sets up the graph for the user to view */

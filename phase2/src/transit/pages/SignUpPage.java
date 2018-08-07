@@ -137,7 +137,9 @@ public class SignUpPage extends Page {
     GridPane.setColumnSpan(horizontalSeparator, 2);
   }
 
-  /** Make icons next to text fields */
+  /**
+   * Import and make icons next to text fields
+   */
   private void makeIcons() {
     factory.makeImage(signUpPane, "transit/pages/assets/face.png", 0, 1);
     factory.makeImage(signUpPane, "transit/pages/assets/email.png", 0, 2);

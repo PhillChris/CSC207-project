@@ -27,7 +27,6 @@ public class AddFundsPage extends Page {
 
   /**
    * Sets the scene for this page
-   *
    */
   public void makeScene() {
     factory.makeLabel(grid, "Add the following amount: ", 0, 0);

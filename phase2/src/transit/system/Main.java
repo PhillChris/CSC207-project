@@ -22,7 +22,6 @@ public class Main extends Application {
    * Runs the transit system simulation, with event input from events.txt
    *
    * @param args standard Java argument
-   * @throws IOException
    */
   public static void main(String[] args) {
     launch(args);

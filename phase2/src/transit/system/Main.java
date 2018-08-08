@@ -33,7 +33,7 @@ public class Main extends Application {
         LogWriter.getInstance().logEndProgram();
       });
 
-    LogWriter.getLogWriter().clearFile();
+    LogWriter.getInstance().clearFile();
     Main.primaryStage = primaryStage;
     primaryStage.setTitle("Transit System Simulator");
     PageCreator pageCreator = new PageCreator();

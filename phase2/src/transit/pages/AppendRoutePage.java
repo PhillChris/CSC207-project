@@ -146,6 +146,9 @@ public class AppendRoutePage extends Page {
     routeLabel.setText(text);
   }
 
+  /**
+   * Make the route confirmation alert
+   */
   private void makeRouteConfirmation() {
     factory.makeConfirmationAlert(
         "Confirm Route?",
@@ -158,6 +161,7 @@ public class AppendRoutePage extends Page {
         });
   }
 
+  /** Make the station name in use alert*/
   private void makeNameInUseAlert() {
     factory
         .makeAlert(

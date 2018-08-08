@@ -1,5 +1,8 @@
 package transit.pages;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -11,9 +14,6 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Card;
 import transit.system.UserCardCommands;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /** Represents a page containing all functionality associated with a user's set of cards */
 public class CardPage extends Page {
@@ -195,6 +195,9 @@ public class CardPage extends Page {
     return message;
   }
 
+  /**
+   * @return a card suspended alert on tap attempt
+   */
   private Alert makeCardSuspendedAlert() {
     return factory.makeAlert(
         "Card Suspended",
@@ -203,6 +206,7 @@ public class CardPage extends Page {
         Alert.AlertType.WARNING);
   }
 
+  /** Makes a card removal confirmation alert */
   private void makeRemovalConfirmationAlert() {
     factory.makeConfirmationAlert(
         "Removal confirmation",
@@ -215,11 +219,9 @@ public class CardPage extends Page {
         });
   }
 
+  /** @return a removal denied alert */
   private Alert makeRemovalDeniedAlert() {
     return factory.makeAlert(
-        "Removal",
-        "Removal denied:",
-        "Can't remove last card",
-        Alert.AlertType.WARNING);
+        "Removal", "Removal denied:", "Can't remove last card", Alert.AlertType.WARNING);
   }
 }

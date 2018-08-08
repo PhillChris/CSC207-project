@@ -118,48 +118,21 @@ public class TapPage extends Page {
             cards.tap(card, station);
             if (card.getCurrentTrip() != null) {
               // if this card tapped into a station
-              alert =
-                  factory.makeAlert(
-                      "Tapped In",
-                      "Tapped in",
-                      String.format(
-                          "Tap in at %s, at time %s",
-                          station.toString(), TransitTime.getInstance().getCurrentTimeString()),
-                      AlertType.CONFIRMATION);
+              alert = makeTappedInAlert(station);
+
             } else {
               // if this card tapped out of a station
-              alert =
-                  factory.makeAlert(
-                      "Tapped Out",
-                      "Tapped Out",
-                      String.format(
-                          "Tap out at %s, at time %s, with trip fee $%.2f.",
-                          station.toString(),
-                          TransitTime.getInstance().getCurrentTimeString(),
-                          (card.getLastTrip().getFee()) / 100.0),
-                      AlertType.CONFIRMATION);
+              alert = makeTappedOutAlert(station);
+
             }
 
           } catch (TransitException e) {
             // if this card's trip tapped was an invalid trip (i.e. not along a single route)
-            alert =
-                factory.makeAlert(
-                    "Invalid Trip",
-                    "Invalid Trip",
-                    String.format(
-                        "Tapped out on an invalid trip at %s at time %s, charged $%.2f ",
-                        station.toString(),
-                        TransitTime.getInstance().getCurrentTimeString(),
-                        (card.getLastTrip().getFee() / 100.0)),
-                    AlertType.WARNING);
+            alert = makeInvalidTripAlert(station);
+
           } catch (Exception b) {
-            // if this card can't tap for some other
-            alert =
-                factory.makeAlert(
-                    "Tap error",
-                    "Tap error",
-                    "There was a problem in tapping at this point, no tap request could be processed",
-                    AlertType.ERROR);
+            // if this card can't tap for some other reason
+            alert = makeTapErrorAlert();
           }
           // show the given alert
           alert.getDialogPane().setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -168,5 +141,62 @@ public class TapPage extends Page {
         },
         col,
         row);
+  }
+
+  /**
+   * @param station the station whose alert is displaying
+   * @return the alert indicating tapping in
+   */
+  private Alert makeTappedInAlert(Station station) {
+    return factory.makeAlert(
+        "Tapped In",
+        "Tapped in",
+        String.format(
+            "Tap in at %s, at time %s",
+            station.toString(), TransitTime.getInstance().getCurrentTimeString()),
+        AlertType.CONFIRMATION);
+  }
+
+  /**
+   * @param station the station whose alert is displaying
+   * @return the alert indicating tapping out
+   */
+  private Alert makeTappedOutAlert(Station station) {
+    return factory.makeAlert(
+        "Tapped Out",
+        "Tapped Out",
+        String.format(
+            "Tap out at %s, at time %s, with trip fee $%.2f.",
+            station.toString(),
+            TransitTime.getInstance().getCurrentTimeString(),
+            (card.getLastTrip().getFee()) / 100.0),
+        AlertType.CONFIRMATION);
+  }
+
+  /**
+   * @param station the station whose alert is displaying
+   * @return the alert indicating an invalid trip occuring
+   */
+  private Alert makeInvalidTripAlert(Station station) {
+    return factory.makeAlert(
+        "Invalid Trip",
+        "Invalid Trip",
+        String.format(
+            "Tapped out on an invalid trip at %s at time %s, charged $%.2f ",
+            station.toString(),
+            TransitTime.getInstance().getCurrentTimeString(),
+            (card.getLastTrip().getFee() / 100.0)),
+        AlertType.WARNING);
+  }
+
+  /**
+   * @return the alert indicating an invalid tap occuring
+   */
+  private Alert makeTapErrorAlert() {
+    return factory.makeAlert(
+        "Tap error",
+        "Tap error",
+        "There was a problem in tapping at this point, no tap request could be processed",
+        AlertType.ERROR);
   }
 }

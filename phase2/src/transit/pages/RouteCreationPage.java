@@ -62,21 +62,26 @@ public class RouteCreationPage extends Page {
         factory.makeButton(
             grid,
             "Remove this route!",
-            () -> {
-              factory.makeConfirmationAlert(
-                  "Removal confirmation",
-                  "Removal confirmation",
-                  "Are you sure you want to remove this pages?",
-                  () -> {
-                    route.removeRoute();
-                    makeScene();
-                    stage.setScene(this.scene);
-                  });
-            },
+            () -> makeRemovalConfirmation(route),
             j + 1,
             6 + 2 * i);
       }
       j += 2;
     }
+  }
+
+  /**
+   * Makes a confirmation of the removal of a route
+   */
+  private void makeRemovalConfirmation(Route route) {
+    factory.makeConfirmationAlert(
+        "Removal confirmation",
+        "Removal confirmation",
+        "Are you sure you want to remove this pages?",
+        () -> {
+          route.removeRoute();
+          makeScene();
+          stage.setScene(this.scene);
+        });
   }
 }

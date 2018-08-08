@@ -41,9 +41,7 @@ public class Trip implements Serializable {
     tripLegLength = 0;
   }
 
-  /**
-   * @return the end station of this trip.
-   */
+  /** @return the end station of this trip. */
   public Station getEndStation() {
     return endStation;
   }
@@ -175,7 +173,8 @@ public class Trip implements Serializable {
             firstStationIndex = i;
           }
           // Check for equality in the end station for this leg
-          if (station.equals(endStation)) {
+          if (station.equals(endStation)
+                  && station.getStationType().equals(endStation.getStationType())) {
             secondStationIndex = i;
           }
         }

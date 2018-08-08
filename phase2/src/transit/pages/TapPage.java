@@ -10,12 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import transit.system.Card;
-import transit.system.Route;
-import transit.system.Station;
-import transit.system.TransitException;
-import transit.system.TransitTime;
-import transit.system.UserCardCommands;
+import transit.system.*;
 
 /** Represents a page displaying all possibilities for tapping in this transit system */
 public class TapPage extends Page {
@@ -81,9 +76,7 @@ public class TapPage extends Page {
     scene.getStylesheets().add(getClass().getResource("styling/GeneralStyle.css").toExternalForm());
   }
 
-  /**
-   * Refreshes the buttons displayed on the TapPage depending on which type is selected
-   */
+  /** Refreshes the buttons displayed on the TapPage depending on which type is selected */
   private void refreshRouteOptionItems() {
     // Clear out all buttons
     stationLayout.getChildren().clear();
@@ -123,9 +116,10 @@ public class TapPage extends Page {
             } else {
               // if this card tapped out of a station
               alert = makeTappedOutAlert(station);
-
             }
 
+          } catch (InsufficientFundsException d) {
+            alert = makeInsufficientFundsAlert();
           } catch (TransitException e) {
             // if this card's trip tapped was an invalid trip (i.e. not along a single route)
             alert = makeInvalidTripAlert(station);
@@ -189,14 +183,21 @@ public class TapPage extends Page {
         AlertType.WARNING);
   }
 
-  /**
-   * @return the alert indicating an invalid tap occuring
-   */
+  /** @return the alert indicating an invalid tap occuring */
   private Alert makeTapErrorAlert() {
     return factory.makeAlert(
         "Tap error",
         "Tap error",
         "There was a problem in tapping at this point, no tap request could be processed",
         AlertType.ERROR);
+  }
+
+  /** @return the alert indicating a user tapping with insufficient funds */
+  private Alert makeInsufficientFundsAlert() {
+    return factory.makeAlert(
+        "Insufficient Funds",
+        "Insufficient Funds",
+        "User attempted to tap with insufficient funds",
+        AlertType.WARNING);
   }
 }

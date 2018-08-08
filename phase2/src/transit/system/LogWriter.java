@@ -235,7 +235,14 @@ public class LogWriter {
 
   void logFirstTimeStartup() {
     LogWriter.getInstance()
-            .logInfoMessage(Database.class.getName(), "readObject", "Beginning first time startup");
+            .logInfoMessage(Database.class.getName(), "readObject",
+                    "Beginning first time startup");
+  }
+
+  void logInsufficientFunds(){
+    LogWriter.getInstance()
+            .logInfoMessage(User.class.getName(), "Tap",
+                    "User tried to tap with insufficient funds");
   }
 
   /**

@@ -1,4 +1,4 @@
 package transit.system;
 
-public class InsufficientFundsException {
-}
+/** An exception thrown for insufficient funds */
+public class InsufficientFundsException extends TransitException {}

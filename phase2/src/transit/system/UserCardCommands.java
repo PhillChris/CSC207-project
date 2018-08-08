@@ -8,9 +8,7 @@ import java.util.List;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-/**
- * UserCardCommands processes all user-card related commands.
- */
+/** UserCardCommands processes all user-card related commands. */
 public class UserCardCommands implements Serializable {
   /** An ArrayList of this transit.system.User's cards */
   private HashMap<Integer, Card> cards;
@@ -22,9 +20,7 @@ public class UserCardCommands implements Serializable {
   private String permission;
   /** A list of the previous trips of the associated User */
   private List<Trip> previousTrips = new ArrayList<>();
-  /**
-   * The name of the user associated with these commands.
-   */
+  /** The name of the user associated with these commands. */
   private String userName;
 
   /** Initialize a new instance of UserCardCommands */
@@ -53,7 +49,9 @@ public class UserCardCommands implements Serializable {
 
     // loop over the last 3 trips or all trips if there are less than 3 trips made.
     for (int i = 0; i < min(previousTrips.size(), 3); i++) { // las
-      stringRep.append(previousTrips.get(previousTrips.size() - (1 + i)).toString()).append(System.lineSeparator());
+      stringRep
+          .append(previousTrips.get(previousTrips.size() - (1 + i)).toString())
+          .append(System.lineSeparator());
     }
     return stringRep.toString().trim();
   }
@@ -176,7 +174,8 @@ public class UserCardCommands implements Serializable {
    */
   private void tapIn(Card card, Station station) throws TransitException {
     if (card.getBalance() <= 0) {
-      throw new TransitException(); // If there aren't enough funds
+      LogWriter.getInstance().logInsufficientFunds();
+      throw new InsufficientFundsException(); // If there aren't enough funds
     }
 
     // Check if this tap in is continuing a trip

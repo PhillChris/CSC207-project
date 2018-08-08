@@ -8,7 +8,7 @@ import transit.system.Statistics;
 
 import java.util.HashMap;
 
-public class StationGraphPage extends AnalyticsPage {
+public class StationAnalyticsPage extends AnalyticsPage {
 
   /**
    * The dropdown menu containing the type of station selected
@@ -18,11 +18,11 @@ public class StationGraphPage extends AnalyticsPage {
   private ComboBox<Station> stationName = new ComboBox<>();
 
   /**
-   * Initializes a new instance of a StationGraphPage.
+   * Initializes a new instance of a StationAnalyticsPage.
    *
-   * @param stage the stage which the StationGraphPage is being served on
+   * @param stage the stage which the StationAnalyticsPage is being served on
    */
-  public StationGraphPage(Stage stage) {
+  public StationAnalyticsPage(Stage stage) {
     super(stage);
     // add the two drop downs specific to this page
     makeScene();
@@ -36,7 +36,7 @@ public class StationGraphPage extends AnalyticsPage {
   }
 
   @Override
-  /** Makes the scene containing the content of this StationGraphPage*/
+  /** Makes the scene containing the content of this StationAnalyticsPage*/
   void makeScene() {
     // configure the given station type dropdown
     stationType.getItems().addAll(Station.POSSIBLE_TYPES);

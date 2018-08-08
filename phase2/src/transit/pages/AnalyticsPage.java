@@ -21,7 +21,6 @@ public class AnalyticsPage extends Page {
    * The chart to display to the screen
    */
   private LineChart<String, Number> chart;
-
   /** A factory to construct graphs */
   private GraphFactory graphFactory = new GraphFactory();
   /** The drop down options displayed by this page */

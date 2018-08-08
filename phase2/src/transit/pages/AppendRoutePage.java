@@ -40,6 +40,7 @@ public class AppendRoutePage extends Page {
     routeLabel = new Label();
     setRouteLabel();
     makeScene();
+    stage.setMaxWidth(1000);
     stage.setTitle(String.format("Create/Append %s Route", route.getRouteType()));
     stage.setScene(scene);
     stage.show();

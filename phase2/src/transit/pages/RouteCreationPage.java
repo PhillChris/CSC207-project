@@ -2,6 +2,7 @@ package transit.pages;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -55,8 +56,9 @@ public class RouteCreationPage extends Page {
       factory.makeLabel(grid, type + " Routes", j, 5);
       for (int i = 0; i < Route.getRoutesCopy().get(type).size(); i++) {
         Route route = Route.getRoutesCopy().get(type).get(i);
-        factory.makeButton(
+        Button routeButton = factory.makeButton(
             grid, route.toString(), () -> pageCreator.makeAppendRoutePage(route), j, 6 + 2 * i);
+        routeButton.setMaxWidth(250);
         factory.makeButton(
             grid,
             "Remove this route!",

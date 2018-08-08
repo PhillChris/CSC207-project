@@ -128,7 +128,7 @@ public class Route implements Serializable {
         routes.get(this.routeType).add(this); // Only add this route to hashmap if not already there
       }
     }
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(
             Route.class.getName(), "saveRoute", "Route sucessfully saved to transit system");
   }

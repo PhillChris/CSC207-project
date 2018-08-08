@@ -75,14 +75,14 @@ public class UserCardCommands implements Serializable {
         this.cards.remove(card.getId(), card);
       }
     }
-    LogWriter.getLogWriter().logRemoveCard(card.getId());
+    LogWriter.getInstance().logRemoveCard(card.getId());
   }
 
   /** Add a card to this transit.system.User's list of cards. */
   public void addCard() {
     this.cards.put(cardCounter, new Card(cardCounter));
     cardCounter++;
-    LogWriter.getLogWriter().logAddCard();
+    LogWriter.getInstance().logAddCard();
   }
 
   /**
@@ -184,7 +184,7 @@ public class UserCardCommands implements Serializable {
     if (!foundContinuousTrip) {
       card.setCurrentTrip(new Trip(station, permission));
     }
-    LogWriter.getLogWriter().logTapIn(this.toString(), station.toString(), card.getId());
+    LogWriter.getInstance().logTapIn(this.toString(), station.toString(), card.getId());
   }
 
   /**
@@ -204,10 +204,10 @@ public class UserCardCommands implements Serializable {
 
     // Record various cardStatistics
     if (!trip.isValidTrip()) {
-      LogWriter.getLogWriter().logInvalidTrip(this.toString(), station.toString(), card.getId());
+      LogWriter.getInstance().logInvalidTrip(this.toString(), station.toString(), card.getId());
       throw new TransitException();
     }
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logTapOut(this.toString(), station.toString(), card.getId(), trip.getFee());
   }
 

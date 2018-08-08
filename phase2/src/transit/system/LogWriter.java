@@ -39,7 +39,7 @@ public class LogWriter {
   /**
    * @return a LogWriter if one has been initialized, or creates a new one if none exists
    */
-  public static LogWriter getLogWriter() {
+  public static LogWriter getInstance() {
     if (thisLogWriter != null) {
       return thisLogWriter;
     }
@@ -75,7 +75,7 @@ public class LogWriter {
    * @param id the id of the card added
    */
   void logAddBalance(int toAdd, int id) {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(
             Card.class.getName(),
             "addBalance",
@@ -84,9 +84,9 @@ public class LogWriter {
 
   /** Logs the ending of the program */
   void logEndProgram() {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(Page.class.getName(), "Page", "Program session terminated");
-    LogWriter.getLogWriter().closeHandlers();
+    LogWriter.getInstance().closeHandlers();
   }
 
   /**
@@ -96,7 +96,7 @@ public class LogWriter {
    *
    */
   void logRemoveUser(String username) {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(
             User.class.getName(),
             "removeUser",
@@ -110,13 +110,13 @@ public class LogWriter {
    *
    */
   void logRemoveCard(int id) {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(User.class.getName(), "removeCard", "User removed card #" + id);
   }
 
   /** Log the addition of a new card */
   void logAddCard() {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(
             User.class.getName(), "addCard", "User added new card with default balance");
   }
@@ -129,7 +129,7 @@ public class LogWriter {
    * @param cardId Id of card use
    */
   void logTapIn(String user, String station, int cardId) {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(
             User.class.getName(),
             "tapIn",
@@ -141,7 +141,7 @@ public class LogWriter {
    * @param cardId Id of card use
    */
   void logInvalidTrip(String user, String station, int cardId) {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logWarningMessage(
             User.class.getName(),
             "tapOut",
@@ -163,7 +163,7 @@ public class LogWriter {
    * @param tripFee The fee charged for the trip
    */
   void logTapOut(String user, String station, int cardId, int tripFee) {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(
             User.class.getName(),
             "tapOut",
@@ -179,7 +179,7 @@ public class LogWriter {
 
   /** Logs a user not found */
   public void logUserNotFound() {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logWarningMessage(
             LoginPage.class.getName(),
             "parseLoginAttempt",
@@ -192,7 +192,7 @@ public class LogWriter {
    * @param user The user logging in
    */
   public void logUserLogin(User user) {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(
             LoginPage.class.getName(),
             "parseLoginAttempt",
@@ -201,7 +201,7 @@ public class LogWriter {
 
   /** Logs an invalid authorization */
   public void logInvalidAuth() {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logWarningMessage(
             LoginPage.class.getName(),
             "parseLoginAttempt",
@@ -221,19 +221,19 @@ public class LogWriter {
    * @param e The exception thrown by the incorrect signup
    */
   public void logIncorrectSignup(MessageTransitException e) {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logWarningMessage(SignUpPage.class.getName(), "logIncorrectSignup", e.getMessage());
   }
 
   /** Logs a correct sign up */
   public void logCorrectSignup() {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(
             SignUpPage.class.getName(), "logCorrectSignup", "Account created successfully");
   }
 
   void logFirstTimeStartup() {
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
             .logInfoMessage(Database.class.getName(), "readObject", "Beginning first time startup");
   }
 }

@@ -124,7 +124,7 @@ public class TapPage extends Page {
                       "Tapped in",
                       String.format(
                           "Tap in at %s, at time %s",
-                          station.toString(), TransitTime.getClock().getCurrentTimeString()),
+                          station.toString(), TransitTime.getInstance().getCurrentTimeString()),
                       AlertType.CONFIRMATION);
             } else {
               // if this card tapped out of a station
@@ -135,7 +135,7 @@ public class TapPage extends Page {
                       String.format(
                           "Tap out at %s, at time %s, with trip fee $%.2f.",
                           station.toString(),
-                          TransitTime.getClock().getCurrentTimeString(),
+                          TransitTime.getInstance().getCurrentTimeString(),
                           (card.getLastTrip().getFee()) / 100.0),
                       AlertType.CONFIRMATION);
             }
@@ -149,7 +149,7 @@ public class TapPage extends Page {
                     String.format(
                         "Tapped out on an invalid trip at %s at time %s, charged $%.2f ",
                         station.toString(),
-                        TransitTime.getClock().getCurrentTimeString(),
+                        TransitTime.getInstance().getCurrentTimeString(),
                         (card.getLastTrip().getFee() / 100.0)),
                     AlertType.WARNING);
           } catch (Exception b) {

@@ -74,13 +74,13 @@ public class Card implements Serializable {
   /** Activates this card, after having been found */
   public void activateCard() {
     isActive = true;
-    LogWriter.getLogWriter().logInfoMessage(Card.class.getName(), "activateCard", "Card activated");
+    LogWriter.getInstance().logInfoMessage(Card.class.getName(), "activateCard", "Card activated");
   }
 
   /** Suspends this card, after having been reported stolen */
   public void suspendCard() {
     isActive = false;
-    LogWriter.getLogWriter().logInfoMessage(Card.class.getName(), "suspendCard", "Card suspended");
+    LogWriter.getInstance().logInfoMessage(Card.class.getName(), "suspendCard", "Card suspended");
   }
 
   /**
@@ -90,7 +90,7 @@ public class Card implements Serializable {
    */
   public void addBalance(int toAdd) {
     this.balance += toAdd;
-    LogWriter.getLogWriter().logAddBalance(toAdd, this.getId());
+    LogWriter.getInstance().logAddBalance(toAdd, this.getId());
   }
 
   /** @return a string representation of this card */

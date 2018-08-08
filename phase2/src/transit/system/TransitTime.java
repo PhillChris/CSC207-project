@@ -44,7 +44,7 @@ public class TransitTime implements Serializable {
   }
 
   /** @return The clock used by the system */
-  public static TransitTime getClock() {
+  public static TransitTime getInstance() {
     return clock;
   }
 

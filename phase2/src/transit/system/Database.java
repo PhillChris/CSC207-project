@@ -37,7 +37,7 @@ public class Database {
    */
   public static void writeToDatabase() {
     // Save the current time
-    LocalDateTime time = TransitTime.getClock().getCurrentTime();
+    LocalDateTime time = TransitTime.getInstance().getCurrentTime();
     writeObject(TIME_LOCATION, time);
     // Save the system's Users
     HashMap<String, User> users = User.getAllUsersCopy();
@@ -80,7 +80,7 @@ public class Database {
       ObjectInputStream in = new ObjectInputStream(fileIn);
       return in.readObject();
     } catch (IOException | ClassNotFoundException e) {
-      LogWriter.getLogWriter().logFirstTimeStartup();
+      LogWriter.getInstance().logFirstTimeStartup();
     }
     return null;
   }

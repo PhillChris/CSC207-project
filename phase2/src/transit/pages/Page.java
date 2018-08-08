@@ -35,6 +35,7 @@ public abstract class Page {
   protected void setAndShow(String message) {
     stage.setScene(this.scene);
     stage.setTitle(message);
+    stage.sizeToScene();
     stage.show();
   }
 }

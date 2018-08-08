@@ -39,7 +39,7 @@ public class UserCardCommands implements Serializable {
 
   @Override
   public String toString() {
-    return "UserCardCommands for " + userName;
+    return userName;
   }
 
   /** @return The permission on this user */

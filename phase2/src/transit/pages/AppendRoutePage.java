@@ -1,17 +1,15 @@
 package transit.pages;
 
+import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import transit.system.Route;
 import transit.system.Station;
-
-import java.util.ArrayList;
 
 /** Page used to add new stations to a route */
 public class AppendRoutePage extends Page {
@@ -67,38 +65,29 @@ public class AppendRoutePage extends Page {
     TextField textField = factory.makeTextField(grid, "", 0, 2);
 
     factory.makeButton(
-            grid,
-            "Add Station to Start",
-            () -> {
-              addStationAtStart(textField);
-              textField.clear();
-            },
-            0,
-            3);
+        grid,
+        "Add Station to Start",
+        () -> {
+          addStationAtStart(textField);
+          textField.clear();
+        },
+        0,
+        3);
 
     factory.makeButton(
-            grid,
-            "Add Station to End",
-            () -> {
-              addStationAtEnd(textField);
-              textField.clear();
-            },
-            0,
-            4);
+        grid,
+        "Add Station to End",
+        () -> {
+          addStationAtEnd(textField);
+          textField.clear();
+        },
+        0,
+        4);
 
     factory.makeButton(
-            grid,
+        grid,
         "Confirm",
-            () ->
-                    factory.makeConfirmationAlert(
-                            "Confirm Route?",
-                            "",
-                            "Would you like to confirm the creation of this route?",
-                            () -> {
-                              this.route.setRouteStations(stationNames);
-                              this.route.saveRoute();
-                              stage.close();
-                            }),
+        () -> makeRouteConfirmation(),
         1,
         0);
   }
@@ -114,13 +103,7 @@ public class AppendRoutePage extends Page {
       if (!stationNames.contains(textField.getText())) {
         stationNames.add(0, textField.getText());
       } else {
-        factory
-                .makeAlert(
-                "Station Name In Use",
-                "Station Name In Use:",
-                "This station name is used in this route",
-                AlertType.ERROR)
-            .showAndWait();
+        makeNameInUseAlert();
       }
     }
     setRouteLabel();
@@ -139,7 +122,7 @@ public class AppendRoutePage extends Page {
         stationNames.add(textField.getText());
       } else {
         factory
-                .makeAlert(
+            .makeAlert(
                 "Station Name In Use",
                 "Station Name In Use:",
                 "This station name is used in this route",
@@ -161,5 +144,27 @@ public class AppendRoutePage extends Page {
       }
     }
     routeLabel.setText(text);
+  }
+
+  private void makeRouteConfirmation() {
+    factory.makeConfirmationAlert(
+        "Confirm Route?",
+        "",
+        "Would you like to confirm the creation of this route?",
+        () -> {
+          this.route.setRouteStations(stationNames);
+          this.route.saveRoute();
+          stage.close();
+        });
+  }
+
+  private void makeNameInUseAlert() {
+    factory
+        .makeAlert(
+            "Station Name In Use",
+            "Station Name In Use:",
+            "This station name is used in this route",
+            AlertType.ERROR)
+        .showAndWait();
   }
 }

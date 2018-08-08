@@ -108,12 +108,7 @@ public class CardPage extends Page {
     } else {
       tap.setOnAction(
           actionEvent -> {
-            Alert alert =
-                factory.makeAlert(
-                    "Card Suspended",
-                    "Card Suspended",
-                    cardSelection.toString() + " is suspended, reactivate this card to tap it",
-                    Alert.AlertType.WARNING);
+            Alert alert = makeCardSuspendedAlert();
             alert.showAndWait();
           });
     }
@@ -141,22 +136,9 @@ public class CardPage extends Page {
             "Remove this card",
             () -> {
               if (cards.getCardsCopy().size() > 1) {
-                factory.makeConfirmationAlert(
-                    "Removal confirmation",
-                    "Confirm removal:",
-                    "Are you sure that you want to remove this card?",
-                    () -> {
-                      cards.removeCard(cardSelection);
-                      cardComboBox.getItems().remove(cardSelection);
-                      pageCreator.makeCardPage(cards);
-                    });
+                makeRemovalConfirmationAlert();
               } else {
-                Alert warning =
-                    factory.makeAlert(
-                        "Removal",
-                        "Removal denied:",
-                        "Can't remove last card",
-                        Alert.AlertType.WARNING);
+                Alert warning = makeRemovalDeniedAlert();
                 warning.showAndWait();
               }
             },
@@ -211,5 +193,33 @@ public class CardPage extends Page {
       }
     }
     return message;
+  }
+
+  private Alert makeCardSuspendedAlert() {
+    return factory.makeAlert(
+        "Card Suspended",
+        "Card Suspended",
+        cardSelection.toString() + " is suspended, reactivate this card to tap it",
+        Alert.AlertType.WARNING);
+  }
+
+  private void makeRemovalConfirmationAlert() {
+    factory.makeConfirmationAlert(
+        "Removal confirmation",
+        "Confirm removal:",
+        "Are you sure that you want to remove this card?",
+        () -> {
+          cards.removeCard(cardSelection);
+          cardComboBox.getItems().remove(cardSelection);
+          pageCreator.makeCardPage(cards);
+        });
+  }
+
+  private Alert makeRemovalDeniedAlert() {
+    return factory.makeAlert(
+        "Removal",
+        "Removal denied:",
+        "Can't remove last card",
+        Alert.AlertType.WARNING);
   }
 }

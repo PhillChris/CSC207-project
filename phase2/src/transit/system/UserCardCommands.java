@@ -1,12 +1,12 @@
 package transit.system;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 /**
  * UserCardCommands processes all user-card related commands.
@@ -22,14 +22,24 @@ public class UserCardCommands implements Serializable {
   private String permission;
   /** A list of the previous trips of the associated User */
   private List<Trip> previousTrips = new ArrayList<>();
+  /**
+   * The name of the user associated with these commands.
+   */
+  private String userName;
 
   /** Initialize a new instance of UserCardCommands */
-  UserCardCommands(String permission) {
+  UserCardCommands(String permission, String userName) {
     this.cards = new HashMap<>();
     cardStatistics.put("Expenditure", new Statistics("Expenditure"));
     cardStatistics.put("Taps", new Statistics("Taps"));
     this.permission = permission;
+    this.userName = userName;
     addCard();
+  }
+
+  @Override
+  public String toString() {
+    return "UserCardCommands for " + userName;
   }
 
   /** @return The permission on this user */
@@ -39,14 +49,13 @@ public class UserCardCommands implements Serializable {
 
   /** @return the string representation of the last three trips over all cards. */
   public String lastThreeTripsString() {
-    String stringRep = "Recent trips:" + System.lineSeparator();
+    StringBuilder stringRep = new StringBuilder("Recent trips:" + System.lineSeparator());
 
     // loop over the last 3 trips or all trips if there are less than 3 trips made.
     for (int i = 0; i < min(previousTrips.size(), 3); i++) { // las
-      stringRep +=
-          previousTrips.get(previousTrips.size() - (1 + i)).toString() + System.lineSeparator();
+      stringRep.append(previousTrips.get(previousTrips.size() - (1 + i)).toString()).append(System.lineSeparator());
     }
-    return stringRep.trim();
+    return stringRep.toString().trim();
   }
 
   /** @return HashMap of cardStatistics associated with this User */
@@ -75,14 +84,14 @@ public class UserCardCommands implements Serializable {
         this.cards.remove(card.getId(), card);
       }
     }
-    LogWriter.getLogWriter().logRemoveCard(card.getId());
+    LogWriter.getInstance().logRemoveCard(card.getId());
   }
 
   /** Add a card to this transit.system.User's list of cards. */
   public void addCard() {
     this.cards.put(cardCounter, new Card(cardCounter));
     cardCounter++;
-    LogWriter.getLogWriter().logAddCard();
+    LogWriter.getInstance().logAddCard();
   }
 
   /**
@@ -111,7 +120,8 @@ public class UserCardCommands implements Serializable {
    * Finds the station most frequently tapped at (NOTE: intersections are only counted for one tap
    * in this statistic)
    *
-   * @return A string message of a User's most frequently viewed station, and the number of taps in it
+   * @return A string message of a User's most frequently viewed station, and the number of taps in
+   *     it
    */
   public String mostFrequentStationMessage() {
     // Makes the hash map mapping station to the number of taps this user
@@ -165,7 +175,7 @@ public class UserCardCommands implements Serializable {
    * @param station The station which this transit.system.User taps at
    */
   private void tapIn(Card card, Station station) throws TransitException {
-    if (card.getBalance()<=0) {
+    if (card.getBalance() <= 0) {
       throw new TransitException(); // If there aren't enough funds
     }
 
@@ -184,7 +194,7 @@ public class UserCardCommands implements Serializable {
     if (!foundContinuousTrip) {
       card.setCurrentTrip(new Trip(station, permission));
     }
-    LogWriter.getLogWriter().logTapIn(this.toString(), station.toString(), card.getId());
+    LogWriter.getInstance().logTapIn(this.toString(), station.toString(), card.getId());
   }
 
   /**
@@ -204,10 +214,10 @@ public class UserCardCommands implements Serializable {
 
     // Record various cardStatistics
     if (!trip.isValidTrip()) {
-      LogWriter.getLogWriter().logInvalidTrip(this.toString(), station.toString(), card.getId());
+      LogWriter.getInstance().logInvalidTrip(this.toString(), station.toString(), card.getId());
       throw new TransitException();
     }
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logTapOut(this.toString(), station.toString(), card.getId(), trip.getFee());
   }
 

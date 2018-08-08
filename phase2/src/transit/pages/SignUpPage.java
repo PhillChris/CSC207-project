@@ -160,10 +160,10 @@ public class SignUpPage extends Page {
                 userType.getValue());
             errorMessage.setText("Account created");
             errorMessage.setTextFill(Color.web("#33AF54"));
-            LogWriter.getLogWriter().logCorrectSignup();
+            LogWriter.getInstance().logCorrectSignup();
           } catch (MessageTransitException e) {
             e.setMessage(errorMessage);
-            LogWriter.getLogWriter().logIncorrectSignup(e);
+            LogWriter.getInstance().logIncorrectSignup(e);
           }
         });
     signUpPane.add(signUpButton, 0, 6, 2, 1);

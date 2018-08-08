@@ -114,7 +114,7 @@ public abstract class AuthenticatedPage extends Page {
   /** Logs the user out */
   protected void logout() {
     new LoginPage(stage);
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(
             AuthenticatedPage.class.getName(),
             "logout",

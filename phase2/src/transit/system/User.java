@@ -55,7 +55,7 @@ public class User implements Serializable {
     this.email = email;
     allUsers.put(email, this);
     personalInfo = new UserInfo(name, password);
-    cardCommands = new UserCardCommands(permission);
+    cardCommands = new UserCardCommands(permission, this.personalInfo.getUserName());
   }
 
   /** @return The set of all Users in the start of the program launch */
@@ -91,7 +91,7 @@ public class User implements Serializable {
   /** Removes this user from the transit system. */
   public void removeUser() {
     allUsers.remove(this.email);
-    LogWriter.getLogWriter().logRemoveUser(personalInfo.getUserName());
+    LogWriter.getInstance().logRemoveUser(personalInfo.getUserName());
   }
 
   /** @return The string representation of this user. */

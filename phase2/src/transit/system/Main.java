@@ -30,7 +30,7 @@ public class Main extends Application {
       windowEvent -> {
         Database.writeToDatabase();
         Platform.exit();
-        LogWriter.getLogWriter().logEndProgram();
+        LogWriter.getInstance().logEndProgram();
       });
 
     LogWriter.getLogWriter().clearFile();
@@ -40,7 +40,7 @@ public class Main extends Application {
     pageCreator.makeLoginPage();
     primaryStage.show();
     new TimeControlPage(new Stage());
-    LogWriter.getLogWriter()
+    LogWriter.getInstance()
         .logInfoMessage(Main.class.getName(), "start", "Program initialization complete");
   }
 }

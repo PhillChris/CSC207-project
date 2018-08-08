@@ -44,7 +44,7 @@ public class TransitTime implements Serializable {
   }
 
   /** @return The clock used by the system */
-  public static TransitTime getClock() {
+  public static TransitTime getInstance() {
     return clock;
   }
 
@@ -60,8 +60,7 @@ public class TransitTime implements Serializable {
 
   /** @return The current month in the transit system */
   public YearMonth getCurrentMonth() {
-    YearMonth month = YearMonth.of(clock.currentTime.getYear(), clock.currentTime.getMonth());
-    return month;
+    return YearMonth.of(clock.currentTime.getYear(), clock.currentTime.getMonth());
   }
 
   /** @return A label describing the current timeLabel of the simulation */
@@ -120,14 +119,11 @@ public class TransitTime implements Serializable {
     KeyFrame frame =
         new KeyFrame(
             Duration.seconds(1),
-            new EventHandler<ActionEvent>() {
-              @Override
-              public void handle(ActionEvent event) {
-                updateTime();
-                timeLabel.setTextFill(BLACK);
-                timeLabel.setText(getCurrentTimeString());
-              }
-            });
+          event -> {
+            updateTime();
+            timeLabel.setTextFill(BLACK);
+            timeLabel.setText(getCurrentTimeString());
+          });
     timeline.getKeyFrames().add(frame);
     timeline.playFromStart();
   }

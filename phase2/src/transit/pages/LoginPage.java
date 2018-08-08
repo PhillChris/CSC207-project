@@ -143,7 +143,7 @@ public class LoginPage extends Page {
         user = User.getAllUsersCopy().get(emailInput.getText());
       } else {
         errorMessage.setText("User email not found.");
-        LogWriter.getLogWriter().logUserNotFound();
+        LogWriter.getInstance().logUserNotFound();
         throw new Exception();
       }
       if (checkAuthorization()) {
@@ -152,10 +152,10 @@ public class LoginPage extends Page {
         } else {
           pageCreator.makeUserPage(user);
         }
-        LogWriter.getLogWriter().logUserLogin(user);
+        LogWriter.getInstance().logUserLogin(user);
       } else {
         errorMessage.setText("Incorrect password.");
-        LogWriter.getLogWriter().logInvalidAuth();
+        LogWriter.getInstance().logInvalidAuth();
         throw new Exception();
       }
     } catch (Exception ignored) {

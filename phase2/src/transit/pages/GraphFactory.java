@@ -22,7 +22,7 @@ public class GraphFactory {
     LineChart<String, Number> chart = makeChart("Days", "Daily Total");
     XYChart.Series series = new XYChart.Series();
     series.setName("Daily Totals");
-    LocalDate date = TransitTime.getClock().getCurrentDate();
+    LocalDate date = TransitTime.getInstance().getCurrentDate();
 
     // Add the data to the series
     for (int i = 0; i < data.keySet().size(); i++) {
@@ -43,7 +43,7 @@ public class GraphFactory {
     LineChart<String, Number> chart = makeChart("Months", "Months Total");
     XYChart.Series series = new XYChart.Series();
     series.setName("Monthly Totals");
-    YearMonth month = TransitTime.getClock().getCurrentMonth();
+    YearMonth month = TransitTime.getInstance().getCurrentMonth();
 
     // Add the data to the series
     for (int i = 0; i < data.keySet().size(); i++) {
@@ -63,7 +63,7 @@ public class GraphFactory {
 
     final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 
-    lineChart.setTitle(String.format(title, TransitTime.getClock().getCurrentDate().getYear()));
+    lineChart.setTitle(String.format(title, TransitTime.getInstance().getCurrentDate().getYear()));
 
     return lineChart;
   }

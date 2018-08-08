@@ -14,6 +14,7 @@ FARDIN:
 - Implemented live time update and added display
 - Statistics: implemented
 - Added route creation pages
+- Made factories
 - Extensive refactoring
 
 ANDRE:
@@ -26,8 +27,8 @@ ANDRE:
 - Extensive debugging
 
 REN:
-- Regex check for email / authentication checks
-- All page styling with CSS/JavaFx
+- Regex check for email / authentication and handling other user actions
+- All page styling/design with CSS/JavaFx
 - Implemented user/admin graphs
 - Made Graph factories
 

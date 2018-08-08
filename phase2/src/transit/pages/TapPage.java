@@ -146,7 +146,7 @@ public class TapPage extends Page {
         "Tapped In",
         "Tapped in",
         String.format(
-            "Tap in at %s, at time %s",
+            "Tap in at %s" + System.lineSeparator() + "%s",
             station.toString(), TransitTime.getInstance().getCurrentTimeString()),
         AlertType.CONFIRMATION);
   }
@@ -160,7 +160,7 @@ public class TapPage extends Page {
         "Tapped Out",
         "Tapped Out",
         String.format(
-            "Tap out at %s, at time %s, with trip fee $%.2f.",
+            "Tap out at %s" + System.lineSeparator() + "%s" + System.lineSeparator() + "Trip fee: $%.2f.",
             station.toString(),
             TransitTime.getInstance().getCurrentTimeString(),
             (card.getLastTrip().getFee()) / 100.0),
@@ -176,7 +176,7 @@ public class TapPage extends Page {
         "Invalid Trip",
         "Invalid Trip",
         String.format(
-            "Tapped out on an invalid trip at %s at time %s, charged $%.2f ",
+            "Tapped out on an invalid trip at %s" + System.lineSeparator() +  "%s" + System.lineSeparator() + "Charged $%.2f ",
             station.toString(),
             TransitTime.getInstance().getCurrentTimeString(),
             (card.getLastTrip().getFee() / 100.0)),

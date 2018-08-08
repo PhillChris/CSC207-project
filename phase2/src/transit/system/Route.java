@@ -8,7 +8,7 @@ import java.util.List;
 /** Represents a travel route in this transit system */
 public class Route implements Serializable {
 
-  /** The total number of routes in this station */
+  /** The total number of routes in the transit system */
   private static int numRoutes;
   /** A list of all routes in the transit system */
   private static HashMap<String, ArrayList<Route>> routes = setRoutes();
@@ -18,6 +18,7 @@ public class Route implements Serializable {
   private String routeType;
   /** The number of this route. */
   private int routeNum;
+
   /**
    * Constructs a new route
    *
@@ -30,7 +31,10 @@ public class Route implements Serializable {
     this.routeNum = numRoutes + 1;
   }
 
-  /** @return A nested Hashmap of all the stations */
+  /**
+   * Return a copy of all of the stations in this transit system.
+   * @return A nested hashmap of all the stations
+   */
   public static HashMap<String, HashMap<String, Station>> getAllStationsCopy() {
     HashMap<String, HashMap<String, Station>> allStations = new HashMap<>();
     // Loop through all station types
@@ -66,7 +70,10 @@ public class Route implements Serializable {
     }
   }
 
-  /** @return A shallow copy of the arrayList of all RouteNames */
+  /**
+   * Return a copy of the arrayList of all of routes in this system
+   * @return A shallow copy of the arrayList of all routes in this system
+   */
   public static HashMap<String, ArrayList<Route>> getRoutesCopy() {
     HashMap<String, ArrayList<Route>> copy = new HashMap<>();
     for (String type : routes.keySet()) {
@@ -75,7 +82,10 @@ public class Route implements Serializable {
     return copy;
   }
 
-  /** @return A string representation of this route */
+  /**
+   * Return the string representation of this route
+   * @return A string representation of this route
+   */
   public String toString() {
     String s = "Route Number: " + this.routeNum;
     s += System.lineSeparator();

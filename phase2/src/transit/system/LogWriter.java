@@ -38,7 +38,6 @@ public class LogWriter {
 
   /**
    * @return a LogWriter if one has been initialized, or creates a new one if none exists
-   * @throws IOException if log.txt is not found in the file path
    */
   public static LogWriter getLogWriter() {
     if (thisLogWriter != null) {
@@ -65,7 +64,7 @@ public class LogWriter {
    * @param classLocation the class in which this log is recorded
    * @param methodLocation the method in which this log is recorded
    */
-  public void logWarningMessage(String classLocation, String methodLocation, String message) {
+  void logWarningMessage(String classLocation, String methodLocation, String message) {
     this.logger.logp(Level.WARNING, classLocation, methodLocation, message);
   }
 
@@ -75,7 +74,7 @@ public class LogWriter {
    * @param toAdd the balance added to a card
    * @param id the id of the card added
    */
-  public void logAddBalance(int toAdd, int id) {
+  void logAddBalance(int toAdd, int id) {
     LogWriter.getLogWriter()
         .logInfoMessage(
             Card.class.getName(),
@@ -84,7 +83,7 @@ public class LogWriter {
   }
 
   /** Logs the ending of the program */
-  public void logEndProgram() {
+  void logEndProgram() {
     LogWriter.getLogWriter()
         .logInfoMessage(Page.class.getName(), "Page", "Program session terminated");
     LogWriter.getLogWriter().closeHandlers();
@@ -96,7 +95,7 @@ public class LogWriter {
    * @param username The username of the user removed by the program
    *
    */
-  public void logRemoveUser(String username) {
+  void logRemoveUser(String username) {
     LogWriter.getLogWriter()
         .logInfoMessage(
             User.class.getName(),
@@ -110,13 +109,13 @@ public class LogWriter {
    * @param id The id of the card being removed
    *
    */
-  public void logRemoveCard(int id) {
+  void logRemoveCard(int id) {
     LogWriter.getLogWriter()
         .logInfoMessage(User.class.getName(), "removeCard", "User removed card #" + id);
   }
 
   /** Log the addition of a new card */
-  public void logAddCard() {
+  void logAddCard() {
     LogWriter.getLogWriter()
         .logInfoMessage(
             User.class.getName(), "addCard", "User added new card with default balance");
@@ -129,7 +128,7 @@ public class LogWriter {
    * @param station Station tapped at
    * @param cardId Id of card use
    */
-  public void logTapIn(String user, String station, int cardId) {
+  void logTapIn(String user, String station, int cardId) {
     LogWriter.getLogWriter()
         .logInfoMessage(
             User.class.getName(),
@@ -141,7 +140,7 @@ public class LogWriter {
    * @param station Station tapped at
    * @param cardId Id of card use
    */
-  public void logInvalidTrip(String user, String station, int cardId) {
+  void logInvalidTrip(String user, String station, int cardId) {
     LogWriter.getLogWriter()
         .logWarningMessage(
             User.class.getName(),
@@ -163,7 +162,7 @@ public class LogWriter {
    * @param cardId The card used to tap out
    * @param tripFee The fee charged for the trip
    */
-  public void logTapOut(String user, String station, int cardId, int tripFee) {
+  void logTapOut(String user, String station, int cardId, int tripFee) {
     LogWriter.getLogWriter()
         .logInfoMessage(
             User.class.getName(),
@@ -210,7 +209,7 @@ public class LogWriter {
   }
 
   /** Closes all active handlers for this LogWriter */
-  public void closeHandlers() {
+  private void closeHandlers() {
     for (Handler h : this.logger.getHandlers()) {
       h.close();
     }
@@ -233,7 +232,7 @@ public class LogWriter {
             SignUpPage.class.getName(), "logCorrectSignup", "Account created successfully");
   }
 
-  public void logFirstTimeStartup() {
+  void logFirstTimeStartup() {
     LogWriter.getLogWriter()
             .logInfoMessage(Database.class.getName(), "readObject", "Beginning first time startup");
   }

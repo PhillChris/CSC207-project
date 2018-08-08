@@ -63,7 +63,7 @@ public class Station implements Serializable {
 
   /** @return the fare charged by this station at the start of a new trip portion */
   public int getInitialFee(String permission) {
-    if (permission == "student") {
+    if (permission.equals("student")) {
       return fees.get("initialStudentFee");
     }
     return fees.get("initialFee");
@@ -71,7 +71,7 @@ public class Station implements Serializable {
 
   /** @return the fare charged by this station when a user travels by it */
   public int getPerStationFee(String permission) {
-    if (permission == "student") {
+    if (permission.equals("student")) {
       return fees.get("perStationStudentFee");
     }
     return fees.get("perStationFee");

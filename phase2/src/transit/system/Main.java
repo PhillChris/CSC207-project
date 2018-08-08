@@ -33,7 +33,7 @@ public class Main extends Application {
         LogWriter.getInstance().logEndProgram();
       });
 
-    clearFile();
+    LogWriter.getLogWriter().clearFile();
     Main.primaryStage = primaryStage;
     primaryStage.setTitle("Transit System Simulator");
     PageCreator pageCreator = new PageCreator();
@@ -42,16 +42,5 @@ public class Main extends Application {
     new TimeControlPage(new Stage());
     LogWriter.getInstance()
         .logInfoMessage(Main.class.getName(), "start", "Program initialization complete");
-  }
-
-  /** Clear the log file */
-  private void clearFile() {
-    try {
-      PrintWriter fileClear = new PrintWriter("log.txt");
-      fileClear.write("");
-      fileClear.close();
-    } catch (IOException a) {
-      System.out.println("File to be cleared not found");
-    }
   }
 }

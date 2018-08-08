@@ -1,5 +1,6 @@
 package transit.system;
 
+import java.io.PrintWriter;
 import transit.pages.LoginPage;
 import transit.pages.Page;
 import transit.pages.SignUpPage;
@@ -196,7 +197,7 @@ public class LogWriter {
         .logInfoMessage(
             LoginPage.class.getName(),
             "parseLoginAttempt",
-            "Successfully logged in as + " + user.getPersonalInfo().getUserName());
+            "Successfully logged in as " + user.getPersonalInfo().getUserName());
   }
 
   /** Logs an invalid authorization */
@@ -235,5 +236,18 @@ public class LogWriter {
   void logFirstTimeStartup() {
     LogWriter.getInstance()
             .logInfoMessage(Database.class.getName(), "readObject", "Beginning first time startup");
+  }
+
+  /**
+   * Clear the log file
+   */
+  public void clearFile() {
+    try {
+      PrintWriter fileClear = new PrintWriter("log.txt");
+      fileClear.write("");
+      fileClear.close();
+    } catch (IOException a) {
+      System.out.println("File to be cleared not found");
+    }
   }
 }

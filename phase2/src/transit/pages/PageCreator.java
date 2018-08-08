@@ -108,7 +108,7 @@ public class PageCreator {
   }
 
   /**
-   * Makes a new Analyticspage
+   * Makes a new AnalyticsPage
    *
    * @param user Makes a new UserAnalyticsPage
    */

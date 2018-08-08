@@ -85,6 +85,7 @@ public class Trip implements Serializable {
   public String toString() {
     String endTime;
     String finalStation;
+    // If the trip is ongoing
     if (timeEnded != null && endStation != null) {
       endTime = timeEnded.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
       finalStation = endStation.toString();

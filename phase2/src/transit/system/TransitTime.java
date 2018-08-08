@@ -116,7 +116,7 @@ public class TransitTime implements Serializable {
   private void updateTimeLabel() {
     Timeline timeline = new Timeline();
     timeline.setCycleCount(Timeline.INDEFINITE);
-
+    // Set the time counting indefinitely
     KeyFrame frame =
         new KeyFrame(
             Duration.seconds(1),

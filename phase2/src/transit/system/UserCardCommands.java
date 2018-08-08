@@ -1,12 +1,12 @@
 package transit.system;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 /**
  * UserCardCommands processes all user-card related commands.
@@ -22,14 +22,24 @@ public class UserCardCommands implements Serializable {
   private String permission;
   /** A list of the previous trips of the associated User */
   private List<Trip> previousTrips = new ArrayList<>();
+  /**
+   * The name of the user associated with these commands.
+   */
+  private String userName;
 
   /** Initialize a new instance of UserCardCommands */
-  UserCardCommands(String permission) {
+  UserCardCommands(String permission, String userName) {
     this.cards = new HashMap<>();
     cardStatistics.put("Expenditure", new Statistics("Expenditure"));
     cardStatistics.put("Taps", new Statistics("Taps"));
     this.permission = permission;
+    this.userName = userName;
     addCard();
+  }
+
+  @Override
+  public String toString() {
+    return "UserCardCommands for " + userName;
   }
 
   /** @return The permission on this user */
@@ -111,7 +121,8 @@ public class UserCardCommands implements Serializable {
    * Finds the station most frequently tapped at (NOTE: intersections are only counted for one tap
    * in this statistic)
    *
-   * @return A string message of a User's most frequently viewed station, and the number of taps in it
+   * @return A string message of a User's most frequently viewed station, and the number of taps in
+   *     it
    */
   public String mostFrequentStationMessage() {
     // Makes the hash map mapping station to the number of taps this user
@@ -165,7 +176,7 @@ public class UserCardCommands implements Serializable {
    * @param station The station which this transit.system.User taps at
    */
   private void tapIn(Card card, Station station) throws TransitException {
-    if (card.getBalance()<=0) {
+    if (card.getBalance() <= 0) {
       throw new TransitException(); // If there aren't enough funds
     }
 

@@ -55,7 +55,7 @@ public class User implements Serializable {
     this.email = email;
     allUsers.put(email, this);
     personalInfo = new UserInfo(name, password);
-    cardCommands = new UserCardCommands(permission);
+    cardCommands = new UserCardCommands(permission, this.personalInfo.getUserName());
   }
 
   /** @return The set of all Users in the start of the program launch */

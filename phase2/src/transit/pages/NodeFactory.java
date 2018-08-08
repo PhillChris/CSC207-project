@@ -7,9 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import transit.system.TransitTime;
 
-import transit.system.Card;
-
-import java.util.List;
 import java.util.Optional;
 
 /** A factor class designed to produce Nodes */
@@ -167,7 +164,7 @@ public class NodeFactory {
 
   /** Adds a clock with live updating time on the user page */
   protected void addClock(GridPane grid) {
-    Label tempLabel = TransitTime.getClock().getTimeLabel();
+    Label tempLabel = TransitTime.getInstance().getTimeLabel();
     grid.add(tempLabel, 0, 0, 2, 1);
   }
 

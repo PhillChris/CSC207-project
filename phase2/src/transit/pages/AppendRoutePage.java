@@ -3,6 +3,7 @@ package transit.pages;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
@@ -122,6 +123,7 @@ public class AppendRoutePage extends Page {
       }
     }
     setRouteLabel();
+    stage.sizeToScene();
   }
 
   /**
@@ -145,6 +147,7 @@ public class AppendRoutePage extends Page {
       }
     }
     setRouteLabel();
+    stage.sizeToScene();
   }
 
   /** Sets the label describing the associated route */

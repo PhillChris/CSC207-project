@@ -37,7 +37,7 @@ public class AnalyticsPage extends Page {
    */
   public AnalyticsPage(Stage stage) {
     super(stage);
-    scene = new Scene(grid, 800, 600);
+    scene = new Scene(grid, 1000, 800);
     scene
         .getStylesheets()
         .add(LoginPage.class.getResource("styling/GeneralStyle.css").toExternalForm());
@@ -52,7 +52,7 @@ public class AnalyticsPage extends Page {
   public AnalyticsPage(Stage stage, HashMap<String, Statistics> statistics) {
     super(stage);
     this.statistics = statistics;
-    scene = new Scene(grid, 800, 600);
+    scene = new Scene(grid, 1000, 800);
     makeScene();
     scene
         .getStylesheets()

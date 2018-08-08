@@ -51,11 +51,11 @@ public class LogWriter {
    * Logs a message with level INFO to log.txt, with the given message at the given location
    *
    * @param message the message to be recorded
-   * @param classThrown the class in which this log is recorded
-   * @param methodThrown the method in which this log is recorded
+   * @param classLocation the class in which this log is recorded
+   * @param methodLocation the method in which this log is recorded
    */
-  public void logInfoMessage(String classThrown, String methodThrown, String message) {
-    this.logger.logp(Level.INFO, classThrown, methodThrown, message);
+  public void logInfoMessage(String classLocation, String methodLocation, String message) {
+    this.logger.logp(Level.INFO, classLocation, methodLocation, message);
   }
 
   /**
@@ -90,7 +90,12 @@ public class LogWriter {
     LogWriter.getLogWriter().closeHandlers();
   }
 
-  /** @param username The username of the user removed by the program */
+  /**
+   * Logs the removal of a user by the program
+   *
+   * @param username The username of the user removed by the program
+   *
+   */
   public void logRemoveUser(String username) {
     LogWriter.getLogWriter()
         .logInfoMessage(
@@ -99,7 +104,12 @@ public class LogWriter {
             "Removed user " + username + " from transit system");
   }
 
-  /** @param id The id of the card being removed */
+  /**
+   * Logs the removal of a card by the program
+   *
+   * @param id The id of the card being removed
+   *
+   */
   public void logRemoveCard(int id) {
     LogWriter.getLogWriter()
         .logInfoMessage(User.class.getName(), "removeCard", "User removed card #" + id);
@@ -145,7 +155,14 @@ public class LogWriter {
                 + ", charged maximum possible fee.");
   }
 
-  /** */
+  /**
+   * Logs the tapping out of a user at a station with a card
+   *
+   * @param user The user tapping out
+   * @param station The station tapped out at
+   * @param cardId The card used to tap out
+   * @param tripFee The fee charged for the trip
+   */
   public void logTapOut(String user, String station, int cardId, int tripFee) {
     LogWriter.getLogWriter()
         .logInfoMessage(
@@ -170,7 +187,11 @@ public class LogWriter {
             "Login attempt failed, user is not registered in the system");
   }
 
-  /** @param user The user logging in */
+  /**
+   * Logs a user logging in to the program
+   *
+   * @param user The user logging in
+   */
   public void logUserLogin(User user) {
     LogWriter.getLogWriter()
         .logInfoMessage(
@@ -198,7 +219,7 @@ public class LogWriter {
   /**
    * Logs an incorrect sign up
    *
-   * @param e
+   * @param e The exception thrown by the incorrect signup
    */
   public void logIncorrectSignup(MessageTransitException e) {
     LogWriter.getLogWriter()

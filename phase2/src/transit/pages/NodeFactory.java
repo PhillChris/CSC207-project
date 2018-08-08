@@ -7,6 +7,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import transit.system.TransitTime;
 
+import transit.system.Card;
+
+import java.util.List;
 import java.util.Optional;
 
 /** A factor class designed to produce Nodes */
@@ -102,6 +105,7 @@ public class NodeFactory {
     grid.add(comboBox, col, row);
     return comboBox;
   }
+
 
   /**
    * Adds an image to this page

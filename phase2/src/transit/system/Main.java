@@ -2,9 +2,7 @@ package transit.system;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import transit.pages.PageCreator;
 import transit.pages.TimeControlPage;
 
@@ -29,17 +27,14 @@ public class Main extends Application {
 
   public void start(Stage primaryStage) {
     primaryStage.setOnCloseRequest(
-        new EventHandler<WindowEvent>() {
-          @Override
-          public void handle(WindowEvent windowEvent) {
-            Database.writeToDatabase();
-            Platform.exit();
-            LogWriter.getLogWriter().logEndProgram();
-          }
-        });
+      windowEvent -> {
+        Database.writeToDatabase();
+        Platform.exit();
+        LogWriter.getLogWriter().logEndProgram();
+      });
 
-    clearFile("log.txt");
-    this.primaryStage = primaryStage;
+    clearFile();
+    Main.primaryStage = primaryStage;
     primaryStage.setTitle("Transit System Simulator");
     PageCreator pageCreator = new PageCreator();
     pageCreator.makeLoginPage();
@@ -49,9 +44,10 @@ public class Main extends Application {
         .logInfoMessage(Main.class.getName(), "start", "Program initialization complete");
   }
 
-  private void clearFile(String fileName) {
+  /** Clear the log file */
+  private void clearFile() {
     try {
-      PrintWriter fileClear = new PrintWriter(fileName);
+      PrintWriter fileClear = new PrintWriter("log.txt");
       fileClear.write("");
       fileClear.close();
     } catch (IOException a) {

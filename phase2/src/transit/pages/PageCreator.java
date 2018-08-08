@@ -116,8 +116,8 @@ public class PageCreator {
     new UserAnalyticsPage(secondaryStage, user);
   }
 
-  /** Makes a new StationGraphPage */
+  /** Makes a new StationAnalyticsPage */
   void makeStationGraphPage() {
-    new StationGraphPage(secondaryStage);
+    new StationAnalyticsPage(secondaryStage);
   }
 }

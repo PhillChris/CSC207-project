@@ -1,5 +1,6 @@
 package transit.system;
 
+import java.io.PrintWriter;
 import transit.pages.LoginPage;
 import transit.pages.Page;
 import transit.pages.SignUpPage;
@@ -236,5 +237,18 @@ public class LogWriter {
   public void logFirstTimeStartup() {
     LogWriter.getLogWriter()
             .logInfoMessage(Database.class.getName(), "readObject", "Beginning first time startup");
+  }
+
+  /**
+   * Clear the log file
+   */
+  public void clearFile() {
+    try {
+      PrintWriter fileClear = new PrintWriter("log.txt");
+      fileClear.write("");
+      fileClear.close();
+    } catch (IOException a) {
+      System.out.println("File to be cleared not found");
+    }
   }
 }

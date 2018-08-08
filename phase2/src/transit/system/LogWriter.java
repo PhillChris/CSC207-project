@@ -198,7 +198,7 @@ public class LogWriter {
         .logInfoMessage(
             LoginPage.class.getName(),
             "parseLoginAttempt",
-            "Successfully logged in as + " + user.getPersonalInfo().getUserName());
+            "Successfully logged in as " + user.getPersonalInfo().getUserName());
   }
 
   /** Logs an invalid authorization */

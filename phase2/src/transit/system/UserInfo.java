@@ -10,7 +10,7 @@ public class UserInfo implements Serializable {
   private String password;
 
   /**
-   * Constructs a new instance of UserInfo
+   * Constructs a new instance of UserInfohttps://outlook.office.com/owa/?realm=mail.utoronto.ca
    *
    * @param name the username of this user
    * @param password the password of this user

@@ -39,14 +39,13 @@ public class UserCardCommands implements Serializable {
 
   /** @return the string representation of the last three trips over all cards. */
   public String lastThreeTripsString() {
-    String stringRep = "Recent trips:" + System.lineSeparator();
+    StringBuilder stringRep = new StringBuilder("Recent trips:" + System.lineSeparator());
 
     // loop over the last 3 trips or all trips if there are less than 3 trips made.
     for (int i = 0; i < min(previousTrips.size(), 3); i++) { // las
-      stringRep +=
-          previousTrips.get(previousTrips.size() - (1 + i)).toString() + System.lineSeparator();
+      stringRep.append(previousTrips.get(previousTrips.size() - (1 + i)).toString()).append(System.lineSeparator());
     }
-    return stringRep.trim();
+    return stringRep.toString().trim();
   }
 
   /** @return HashMap of cardStatistics associated with this User */

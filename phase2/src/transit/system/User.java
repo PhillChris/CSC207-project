@@ -32,18 +32,26 @@ public class User implements Serializable {
    * @param name the name of this transit.system.User
    * @param email the email of this transit.system.User
    * @param password the password of ths transit.system.User
+   * @param permission the permission of this given user
    */
   public User(String name, String email, String password, String permission)
       throws MessageTransitException {
-    if (!email.matches(EMAILREGEX)) { // check for valid email format
+    // If the provided email is of invalid format
+    if (!email.matches(EMAILREGEX)) {
       throw new InvalidEmailException();
     }
-    if (allUsers.keySet().contains(email)) { // If this transit.system.User already exists
+
+    // If the given email already exists in the system
+    if (allUsers.keySet().contains(email)) {
       throw new EmailInUseException();
     }
+
+    // If the given password is of invalid format
     if (password.length() < 6) {
       throw new InvalidPasswordException();
     }
+
+    // Set all attributes if the given parameters are correct
     this.email = email;
     allUsers.put(email, this);
     personalInfo = new UserInfo(name, password);
@@ -73,6 +81,9 @@ public class User implements Serializable {
     return cardCommands;
   }
 
+  /**
+   * @return The personal info of this user
+   */
   public UserInfo getPersonalInfo() {
     return personalInfo;
   }

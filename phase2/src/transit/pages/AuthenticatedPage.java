@@ -79,7 +79,6 @@ public abstract class AuthenticatedPage extends Page {
   /**
    * A private helper method to add a logout button at the given coordinates
    *
-   * @param primaryStage the stage which this button is being served on, passed for button-action
    * @param col the column in the grid where this logout button is displayed
    * @param row the row in the grid where this logout button is displayed
    */
@@ -92,7 +91,6 @@ public abstract class AuthenticatedPage extends Page {
   /**
    * A private helper method to add a new remove account button at the given coordinates
    *
-   * @param primaryStage the stage which this button is being served on, passed for button-action
    * @param col the column in the grid where this remove account button is displayed
    * @param row the row in the grid where this remove account button is displayed
    */

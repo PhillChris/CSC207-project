@@ -22,6 +22,7 @@ public class AddFundsPage extends Page {
     setAndShow("Add funds");
   }
 
+  @Override
   /**
    * Sets the scene for this page
    */

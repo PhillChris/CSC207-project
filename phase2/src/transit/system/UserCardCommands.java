@@ -1,12 +1,12 @@
 package transit.system;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 /**
  * UserCardCommands processes all user-card related commands.
@@ -97,16 +97,24 @@ public class UserCardCommands implements Serializable {
     }
     cardStatistics.get("Taps").update(1);
     if (card.getCurrentTrip() == null) {
+      // if this card was not already on a trip
       station.record("Taps In", 1);
       tapIn(card, station);
     } else {
+      // if this card was already on a trip
       station.record("Taps Out", 1);
       tapOut(card, station);
     }
   }
 
-  /** @return A string representation of a User's most frequently viewed station */
+  /**
+   * Finds the station most frequently tapped at (NOTE: intersections are only counted for one tap
+   * in this statistic)
+   *
+   * @return A string message of a User's most frequently viewed station, and the number of taps in it
+   */
   public String mostFrequentStationMessage() {
+    // Makes the hash map mapping station to the number of taps this user
     HashMap<Station, Integer> frequentStationCount = new HashMap<>();
     for (Trip t : previousTrips) {
       for (Station s : t.getPriorStops()) {
@@ -114,6 +122,8 @@ public class UserCardCommands implements Serializable {
       }
       updateCount(frequentStationCount, t.getEndStation());
     }
+
+    // Finds the maximum tap value for this station
     int maxTapValue = 0;
     Station maxTapped = null;
     for (Station s : frequentStationCount.keySet()) {
@@ -123,6 +133,7 @@ public class UserCardCommands implements Serializable {
       }
     }
 
+    // If there are no stations in this list
     if (maxTapped == null) {
       return "No stations tapped";
     } else {
@@ -154,10 +165,11 @@ public class UserCardCommands implements Serializable {
    * @param station The station which this transit.system.User taps at
    */
   private void tapIn(Card card, Station station) throws TransitException {
-    if (card.getBalance() <= 0) throw new TransitException(); // Not enough fund
-    // Record cardStatistics
+    if (card.getBalance()<=0) {
+      throw new TransitException(); // If there aren't enough funds
+    }
 
-    // Check if this transit.system.User is continuing a transit.system.Trip
+    // Check if this tap in is continuing a trip
     boolean foundContinuousTrip = false;
     Trip lastTrip = card.getLastTrip();
     if (lastTrip != null) {
@@ -167,6 +179,8 @@ public class UserCardCommands implements Serializable {
         foundContinuousTrip = true;
       }
     }
+
+    // If this trip is not continuing
     if (!foundContinuousTrip) {
       card.setCurrentTrip(new Trip(station, permission));
     }
@@ -187,6 +201,7 @@ public class UserCardCommands implements Serializable {
     card.setLastTrip(trip);
     card.setCurrentTrip(null);
     updateStatistic(trip);
+
     // Record various cardStatistics
     if (!trip.isValidTrip()) {
       LogWriter.getLogWriter().logInvalidTrip(this.toString(), station.toString(), card.getId());

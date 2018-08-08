@@ -9,6 +9,12 @@ public class UserInfo implements Serializable {
   /** This transit.system.User's password */
   private String password;
 
+  /**
+   * Constructs a new instance of UserInfo
+   *
+   * @param name the username of this user
+   * @param password the password of this user
+   */
   public UserInfo(String name, String password) {
     this.name = name;
     this.password = password;
@@ -40,20 +46,23 @@ public class UserInfo implements Serializable {
   /**
    * @param currentPassword The current password of the user
    * @param newPassword The new password of the user
-   * @throws IncorrectPasswordException
-   * @throws InvalidPasswordException
+   * @throws IncorrectPasswordException if the current password doesn't match the stored password
+   * @throws InvalidPasswordException if the new password is less than six characters
    */
   public void changePassword(String currentPassword, String newPassword)
       throws IncorrectPasswordException, InvalidPasswordException {
     if (!currentPassword.equals(password)) {
+      // if the current password isn't as stored
       LogWriter.getLogWriter()
           .logWarningMessage(UserInfo.class.getName(), "changePassword", "Failed password change attempt: incorrect current password entered" );
       throw new IncorrectPasswordException();
     } else if (newPassword.length() < 6) {
+      // if the new password isn't in a valid format (less than 6 characters)
       LogWriter.getLogWriter()
           .logWarningMessage(UserInfo.class.getName(), "changePassword", "Failed password change attempt: new password too long" );
       throw new InvalidPasswordException();
     } else {
+      // the given information is valid: replace the given password
       password = newPassword;
       LogWriter.getLogWriter()
           .logInfoMessage(UserInfo.class.getName(), "changePassword", "User " + this.getUserName() + " password changed" );

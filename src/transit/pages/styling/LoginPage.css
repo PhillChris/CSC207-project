@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+.root {
+    -fx-background-color: #ececec;
+    -fx-font-family: Raleway;
+}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+}
+
+.separator {
+    -fx-padding: 8px 0px 0px 0px;
+}
+
+.button {
+    -fx-border-radius: 3px;
+    -fx-font-size: 16px;
+    -fx-padding: 7px;
+}
+
+.text-field {
+    -fx-prompt-text-fill: #757575;
+    -fx-background-color: #fcfcfc;
+    -fx-color: #757575;
+    -fx-padding: 10px;
+}
+
+.password-field {
+    -fx-prompt-text-fill: #757575;
+    -fx-background-color: #fcfcfc;
+    -fx-color: #757575;
+    -fx-padding: 10px;
+}
+
+#loginLabel {
+    -fx-color: #727272;
+    -fx-font-size: 20px;
+    -fx-padding: 0px 0px 0px 2px;
+}
+
+#noAccount {
+    -fx-color: #727272;
+    -fx-font-size: 18px;
+    -fx-padding: 0px 0px 3px 2px;
+}
+
+#errorMessage {
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
+}

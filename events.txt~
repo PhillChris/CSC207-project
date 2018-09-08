@@ -1,0 +1,12 @@
+INIT | 2 | 2
+Subway Route 1 | Station A
+Subway Route 2 | Station B | Station C
+Bus Route 1 | Station D
+Bus Route 2 | Station E | Station F
+ADDUSER | 2017-08-24 | yes | mango | s@fake.com
+ADDUSER | 2017-08-25 | yes | juice | s2@fake.com
+ADDUSER | 2017-08-26 | no | ice | 3@fake.com
+ADDUSER | 2017-08-27 | no | ice | 4@fake.com
+ADDCARD | 2017-08-28 | 4@fake.com 
+ADDCARD | 2017-08-29 | 3@fake.com
+TAP | 2017-08-30 | 3@fake.com | SUBWAY | Station A 

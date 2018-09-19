@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+.root {
+    -fx-background-color: #ececec;
+    -fx-font-family: Raleway;
+}
+
+.button {
+    -fx-font-size: 16px;
+}
+
+#greeting {
+    -fx-font-size: 30px;
+}

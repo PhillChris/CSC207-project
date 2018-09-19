@@ -1,0 +1,35 @@
+NOTE: For Phase 1 functionality, duties were not divided by class and person-specific updates
+& responsibilities were never dictated, and so no reports of phase1 duties here are possible.
+Everyone had at least a small part in all classes.
+
+PHILLIP: 
+- Main: refactored to launch window and time display window from reading in text file
+- Page & AuthenticatedPage: implemented core functionality (i.e. no styling) inherited by all other pages
+- Implemented core functionality for non-Admin and non-Graph pages
+- Extended program to charge different station fees on user status (i.e. user vs. student), and
+  added user authentication
+- Extensive debugging
+
+FARDIN:
+- Implemented live time update and added display
+- Statistics: implemented
+- Added route creation pages
+- Extensive refactoring
+
+ANDRE:
+- AdminUserPage: implemented core functionality (i.e. no styling)
+- Refactored station subclasses into Station superclass.
+- Sorted source files into appropriate packages
+- Added serialization
+- Added analytics pages
+- Assisted statistics design
+- Extensive debugging
+
+REN:
+- Regex check for email / authentication checks
+- All page styling with CSS/JavaFx
+- Implemented user/admin graphs
+- Made Graph factories
+
+ALL:
+- Minor refactoring in all classes
